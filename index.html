@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexoraSIM | Global eSIM Solutions for Seamless Travel</title>
+    <meta name="description" content="Stay connected in over 190 countries with NexoraSIM. Get instant eSIM activation for high-speed global data, save on roaming fees, and travel without limits.">
+    <meta name="keywords" content="eSIM, global data, international roaming, travel SIM, digital SIM, NexoraSIM, travel connectivity">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Sora:wght@700&display=swap" rel="stylesheet">
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'Manrope', sans-serif;
+      }
+      .font-sora {
+        font-family: 'Sora', sans-serif;
+      }
+      .globe-container {
+        perspective: 1000px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .globe {
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #7BD5FB, #181818 80%);
+        position: relative;
+        transform-style: preserve-3d;
+        animation: rotate-globe 30s linear infinite;
+        box-shadow: 0 0 50px rgba(123, 213, 251, 0.3), inset 0 0 40px rgba(123, 213, 251, 0.2);
+        border: 1px solid rgba(123, 213, 251, 0.4);
+      }
+      
+      .globe::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        background-image:
+            repeating-linear-gradient(90deg, transparent, transparent 49.8%, rgba(123, 213, 251, 0.15) 50%, rgba(123, 213, 251, 0.15) 50.2%, transparent 50.2%, transparent),
+            repeating-linear-gradient(0deg, transparent, transparent 49.8%, rgba(123, 213, 251, 0.15) 50%, rgba(123, 213, 251, 0.15) 50.2%, transparent 50.2%, transparent);
+        background-size: 100% 12.5%, 12.5% 100%;
+      }
+
+      @keyframes rotate-globe {
+        0% { transform: rotateY(0deg) rotateX(10deg); }
+        100% { transform: rotateY(360deg) rotateX(10deg); }
+      }
+
+      @keyframes fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.5s ease-out forwards;
+      }
+    </style>
+
+<link rel="stylesheet" href="/index.css">
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "@google/genai": "https://esm.sh/@google/genai@^1.14.0"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/assets/index-IMj1mEV9.js"></script>
+</head>
+<body class="bg-[#1B1B1B]">
+    <div id="root"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</body>
+</html>
