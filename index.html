@@ -1,89 +1,1283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NexoraSIM | Global eSIM Solutions for Seamless Travel</title>
-    <meta name="description" content="Stay connected in over 190 countries with NexoraSIM. Get instant eSIM activation for high-speed global data, save on roaming fees, and travel without limits.">
-    <meta name="keywords" content="eSIM, global data, international roaming, travel SIM, digital SIM, NexoraSIM, travel connectivity">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Sora:wght@700&display=swap" rel="stylesheet">
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: 'Manrope', sans-serif;
-      }
-      .font-sora {
-        font-family: 'Sora', sans-serif;
-      }
-      .globe-container {
-        perspective: 1000px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .globe {
-        width: 400px;
-        height: 400px;
-        border-radius: 50%;
-        background: radial-gradient(circle at 30% 30%, #7BD5FB, #181818 80%);
-        position: relative;
-        transform-style: preserve-3d;
-        animation: rotate-globe 30s linear infinite;
-        box-shadow: 0 0 50px rgba(123, 213, 251, 0.3), inset 0 0 40px rgba(123, 213, 251, 0.2);
-        border: 1px solid rgba(123, 213, 251, 0.4);
-      }
-      
-      .globe::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-radius: 50%;
-        background-image:
-            repeating-linear-gradient(90deg, transparent, transparent 49.8%, rgba(123, 213, 251, 0.15) 50%, rgba(123, 213, 251, 0.15) 50.2%, transparent 50.2%, transparent),
-            repeating-linear-gradient(0deg, transparent, transparent 49.8%, rgba(123, 213, 251, 0.15) 50%, rgba(123, 213, 251, 0.15) 50.2%, transparent 50.2%, transparent);
-        background-size: 100% 12.5%, 12.5% 100%;
-      }
-
-      @keyframes rotate-globe {
-        0% { transform: rotateY(0deg) rotateX(10deg); }
-        100% { transform: rotateY(360deg) rotateX(10deg); }
-      }
-
-      @keyframes fade-in {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .animate-fade-in {
-        animation: fade-in 0.5s ease-out forwards;
-      }
-    </style>
-<script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
-    "react/": "https://esm.sh/react@^19.1.1/",
-    "react": "https://esm.sh/react@^19.1.1",
-    "@google/genai": "https://esm.sh/@google/genai@^1.14.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
-</head>
-<body class="bg-[#1B1B1B]">
-    <div id="root"></div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexoraSIM - GSMA RSP SM-DP+ OTA System</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script type="module" src="/index.tsx"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #0d47a1;
+            --secondary: #1565c0;
+            --accent: #4fc3f7;
+            --dark: #0f1a2c;
+            --light: #f5f8fa;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .compliance-badge {
+            background-color: var(--success);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .hero {
+            position: relative;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+            margin-bottom: 3rem;
+            height: 80vh;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        #globe-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(15,26,44,0.7) 0%, rgba(15,26,44,0.95) 70%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+        
+        .cta-button {
+            background: linear-gradient(to right, var(--accent), #29b6f6);
+            color: var(--dark);
+            border: none;
+            padding: 14px 36px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 195, 247, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(79, 195, 247, 0.6);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(13, 71, 161, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .feature-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .feature-content {
+            padding: 1.8rem;
+        }
+        
+        .feature-content h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+        
+        .feature-content p {
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .compliance-section {
+            background-color: white;
+            padding: 4rem 2rem;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .compliance-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(79, 195, 247, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(21, 101, 192, 0.05) 0%, transparent 20%);
+            z-index: 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .section-title h2 {
+            font-size: 2.6rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .compliance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .compliance-item {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2.2rem;
+            text-align: center;
+            border-left: 4px solid var(--success);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .compliance-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .compliance-item h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+        
+        .compliance-item p {
+            color: #555;
+        }
+        
+        .gsma-flow {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(13, 71, 161, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 3rem;
+        }
+        
+        .flow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: var(--accent);
+            z-index: 1;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            width: 20%;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(13, 71, 161, 0.3);
+        }
+        
+        .terminal-section {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .terminal-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: #1a243b;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(79, 195, 247, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .terminal-header {
+            background: #0f1a2c;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a3a5a;
+        }
+        
+        .terminal-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .terminal-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .terminal-control {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+        
+        .terminal-control.close { background: #ff5f57; }
+        .terminal-control.minimize { background: #ffbd2e; }
+        .terminal-control.maximize { background: #28c940; }
+        
+        .terminal-content {
+            padding: 1.8rem;
+            font-family: 'Courier New', monospace;
+            min-height: 320px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .terminal-content .command {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .terminal-content .comment {
+            color: #78909c;
+            font-style: italic;
+        }
+        
+        .terminal-content .output {
+            color: #cfd8dc;
+            margin: 8px 0 18px;
+            white-space: pre-wrap;
+        }
+        
+        .terminal-content .success {
+            color: var(--success);
+        }
+        
+        .terminal-content .error {
+            color: var(--danger);
+        }
+        
+        .terminal-input {
+            display: flex;
+            align-items: center;
+            padding: 0 1.8rem 1.8rem;
+        }
+        
+        .terminal-prompt {
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        #terminal-command {
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 1.05rem;
+            width: 100%;
+            outline: none;
+        }
+        
+        .quick-commands {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .terminal-button {
+            background: rgba(79, 195, 247, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(79, 195, 247, 0.4);
+            padding: 10px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .terminal-button:hover {
+            background: rgba(79, 195, 247, 0.3);
+        }
+        
+        .api-section {
+            padding: 4rem 2rem;
+            background: white;
+            position: relative;
+        }
+        
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .api-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2.2rem;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .api-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .api-card h3 {
+            margin-bottom: 1.2rem;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+        
+        .api-card p {
+            color: #555;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .api-card ul {
+            list-style-type: none;
+            margin-top: 1.2rem;
+        }
+        
+        .api-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .api-card li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            text-align: left;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.8rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: #cfd8dc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-column a svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid #2a3a5a;
+            text-align: center;
+            color: #78909c;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .compliance-statement {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: 10px;
+            max-width: 1000px;
+            margin: 4rem auto;
+            box-shadow: 0 5px 20px rgba(13, 71, 161, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .compliance-statement h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .compliance-statement p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .flow-steps {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .flow-steps::before {
+                display: none;
+            }
+            
+            .step {
+                width: 100%;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .hero {
+                padding: 3rem 1rem;
+                height: auto;
+                min-height: 500px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">Nexora<span>SIM</span></div>
+            <div class="compliance-badge">
+                GSMA RSP SM-DP+ OTA 100% Compliant
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#terminal">Terminal</a></li>
+                <li><a href="#compliance">Compliance</a></li>
+                <li><a href="#api">API</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div id="globe-container"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>GSMA RSP SM-DP+ OTA System</h1>
+            <p>100% compliant remote SIM provisioning platform deployed via GitHub Pages with global 3D visualization</p>
+            <button class="cta-button" onclick="document.getElementById('terminal').scrollIntoView()">Access Terminal</button>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                </svg>
+            </div>
+            <div class="feature-content">
+                <h3>Zero-Touch Activation</h3>
+                <p>Automatic profile download upon device power-on using GSMA eSIM Discovery and eUICC ID. Eliminates manual configuration for seamless deployment.</p>
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+            </div>
+            <div class="feature-content">
+                <h3>Global Deployment</h3>
+                <p>Multi-region SM-DP+ infrastructure with automatic profile routing based on GSMA RSP specifications for optimal performance worldwide.</p>
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <div class="feature-content">
+                <h3>Military-Grade Security</h3>
+                <p>End-to-end encryption with GSMA SGP.22 standards, secure key storage, and hardware security modules for all cryptographic operations.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="compliance-section" id="compliance">
+        <div class="compliance-bg"></div>
+        <div class="section-title">
+            <h2>GSMA RSP Compliance</h2>
+            <p>Full adherence to all GSMA Remote SIM Provisioning specifications for SM-DP+ and LPA interoperability</p>
+        </div>
+        
+        <div class="compliance-grid">
+            <div class="compliance-item">
+                <h3>SGP.22 v3.0</h3>
+                <p>Complete implementation of eSIM Architecture and Requirements for all consumer devices</p>
+            </div>
+            
+            <div class="compliance-item">
+                <h3>SGP.32 v1.0</h3>
+                <p>Full support for IoT eSIM requirements including constrained device profiles</p>
+            </div>
+            
+            <div class="compliance-item">
+                <h3>SGP.02 v6.0</h3>
+                <p>Backward compatibility with M2M eSIM specifications for legacy devices</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="gsma-flow">
+        <div class="section-title">
+            <h2>SM-DP+ Provisioning Flow</h2>
+            <p>End-to-end GSMA compliant remote provisioning process for consumer and IoT devices</p>
+        </div>
+        
+        <div class="flow-steps">
+            <div class="step">
+                <div class="step-icon">1</div>
+                <h3>Discovery</h3>
+                <p>Device retrieves SM-DP+ address from GSMA root DNS or local discovery service</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-icon">2</div>
+                <h3>Authentication</h3>
+                <p>Mutual TLS authentication using EUM and SM-DP+ certificates per SGP.22</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-icon">3</div>
+                <h3>Profile Download</h3>
+                <p>Secure profile package download with GSMA-defined encryption and integrity</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-icon">4</div>
+                <h3>Installation</h3>
+                <p>LPA installs and activates profile with confirmation to SM-DP+</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-icon">5</div>
+                <h3>Management</h3>
+                <p>OTA profile management including enable/disable/delete operations</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="terminal-section" id="terminal">
+        <div class="section-title">
+            <h2>SM-DP+ Management Terminal</h2>
+            <p>Interactive interface for profile management and diagnostic operations</p>
+        </div>
+        
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-title">
+                    <span>NexoraSIM SM-DP+ Terminal</span>
+                </div>
+                <div class="terminal-controls">
+                    <div class="terminal-control close"></div>
+                    <div class="terminal-control minimize"></div>
+                    <div class="terminal-control maximize"></div>
+                </div>
+            </div>
+            
+            <div class="terminal-content" id="terminal-output">
+                <div class="comment">// NexoraSIM SM-DP+ Terminal - GSMA RSP v3.0 Compliant</div>
+                <div class="comment">// Type 'help' for available commands</div>
+                <br>
+                <div class="command">> status</div>
+                <div class="output">SM-DP+ Status: <span class="success">Operational</span>
+Last Profile Download: 2023-11-15T14:32:18Z
+Active Sessions: 1423
+Storage Available: 98.7%</div>
+                <br>
+                <div class="command">> get compliance</div>
+                <div class="output">Compliance Status:
+- SGP.22 v3.0: <span class="success">Fully Compliant</span>
+- SGP.32 v1.0: <span class="success">Fully Compliant</span>
+- SGP.02 v6.0: <span class="success">Fully Compliant</span></div>
+            </div>
+            
+            <div class="terminal-input">
+                <div class="terminal-prompt">></div>
+                <input type="text" id="terminal-command" placeholder="Type command...">
+            </div>
+        </div>
+        
+        <div class="quick-commands">
+            <button class="terminal-button" onclick="runCommand('get profiles')">get profiles</button>
+            <button class="terminal-button" onclick="runCommand('get sessions')">get sessions</button>
+            <button class="terminal-button" onclick="runCommand('test connectivity')">test connectivity</button>
+            <button class="terminal-button" onclick="runCommand('help')">help</button>
+        </div>
+    </section>
+
+    <section class="api-section" id="api">
+        <div class="section-title">
+            <h2>SM-DP+ REST API</h2>
+            <p>Full-featured API for integration with operator systems and IoT platforms</p>
+        </div>
+        
+        <div class="api-grid">
+            <div class="api-card">
+                <h3>Profile Management</h3>
+                <p>Complete CRUD operations for eSIM profiles with GSMA-standard encryption</p>
+                <ul>
+                    <li>Profile Download</li>
+                    <li>Profile Enable/Disable</li>
+                    <li>Profile Deletion</li>
+                    <li>Profile Metadata</li>
+                </ul>
+            </div>
+            
+            <div class="api-card">
+                <h3>Device Operations</h3>
+                <p>End-to-end device management capabilities</p>
+                <ul>
+                    <li>eUICC Authentication</li>
+                    <li>Session Management</li>
+                    <li>Remote Diagnostics</li>
+                    <li>Policy Enforcement</li>
+                </ul>
+            </div>
+            
+            <div class="api-card">
+                <h3>Operator Integration</h3>
+                <p>Seamless connectivity with MNO systems</p>
+                <ul>
+                    <li>Bulk Profile Upload</li>
+                    <li>Real-time Notifications</li>
+                    <li>Usage Analytics</li>
+                    <li>Custom Policy Engine</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="compliance-statement">
+        <h2>100% GSMA Compliance Guarantee</h2>
+        <p>Our SM-DP+ platform undergoes rigorous testing against all GSMA RSP specifications, ensuring full interoperability with all certified eUICCs and LPAs. We maintain continuous compliance monitoring with automated test suites against GSMA certification criteria.</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>NexoraSIM</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Technology</a></li>
+                    <li><a href="#">Compliance</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Documentation</h3>
+                <ul>
+                    <li><a href="#">API Reference</a></li>
+                    <li><a href="#">Integration Guide</a></li>
+                    <li><a href="#">Compliance Certificates</a></li>
+                    <li><a href="#">Release Notes</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Contact Support</a></li>
+                    <li><a href="#">Knowledge Base</a></li>
+                    <li><a href="#">System Status</a></li>
+                    <li><a href="#">Security</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">GDPR</a></li>
+                    <li><a href="#">SLAs</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 NexoraSIM Technologies. All rights reserved. GSMA RSP and related marks are property of GSMA.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Three.js globe
+        function initGlobe() {
+            const container = document.getElementById('globe-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Create globe
+            const geometry = new THREE.SphereGeometry(5, 64, 64);
+            const texture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg');
+            const bumpMap = new THREE.TextureLoader().load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg');
+            const material = new THREE.MeshPhongMaterial({
+                map: texture,
+                bumpMap: bumpMap,
+                bumpScale: 0.05,
+                specular: new THREE.Color('grey'),
+                shininess: 5
+            });
+            
+            const globe = new THREE.Mesh(geometry, material);
+            scene.add(globe);
+            
+            // Add atmosphere
+            const atmosphereGeometry = new THREE.SphereGeometry(5.1, 64, 64);
+            const atmosphereMaterial = new THREE.MeshPhongMaterial({
+                color: 0x4fc3f7,
+                transparent: true,
+                opacity: 0.2,
+                shininess: 0
+            });
+            const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+            scene.add(atmosphere);
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 3, 5);
+            scene.add(directionalLight);
+            
+            // Add points for cities/connections
+            const pointsGeometry = new THREE.BufferGeometry();
+            const pointsMaterial = new THREE.PointsMaterial({
+                color: 0x4fc3f7,
+                size: 0.1,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const pointsPositions = [];
+            for (let i = 0; i < 100; i++) {
+                const lat = Math.random() * Math.PI * 2;
+                const lon = Math.random() * Math.PI;
+                const radius = 5.05;
+                
+                const x = radius * Math.sin(lon) * Math.cos(lat);
+                const y = radius * Math.sin(lon) * Math.sin(lat);
+                const z = radius * Math.cos(lon);
+                
+                pointsPositions.push(x, y, z);
+            }
+            
+            pointsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(pointsPositions, 3));
+            const points = new THREE.Points(pointsGeometry, pointsMaterial);
+            scene.add(points);
+            
+            // Camera position
+            camera.position.z = 8;
+            
+            // Add controls
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.5;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+                
+                // Pulsing effect for points
+                const time = Date.now() * 0.001;
+                pointsMaterial.size = 0.1 + Math.sin(time * 2) * 0.05;
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+            
+            // Fade in globe
+            gsap.to(container, { opacity: 1, duration: 2, delay: 0.5 });
+        }
+        
+        // Terminal commands
+        function runCommand(command) {
+            const terminalOutput = document.getElementById('terminal-output');
+            const commandElement = document.createElement('div');
+            commandElement.className = 'command';
+            commandElement.textContent = '> ' + command;
+            terminalOutput.appendChild(commandElement);
+            
+            const outputElement = document.createElement('div');
+            outputElement.className = 'output';
+            
+            switch(command.toLowerCase()) {
+                case 'help':
+                    outputElement.innerHTML = `Available Commands:
+<span class="success">status</span> - Show SM-DP+ system status
+<span class="success">get profiles</span> - List all available profiles
+<span class="success">get sessions</span> - Show active provisioning sessions
+<span class="success">get compliance</span> - Show GSMA compliance status
+<span class="success">test connectivity</span> - Test connection to GSMA root services
+<span class="success">clear</span> - Clear terminal output
+<span class="success">help</span> - Show this help message`;
+                    break;
+                    
+                case 'get profiles':
+                    outputElement.innerHTML = `Available Profiles (last 5):
+1. Verizon_US_Consumer_Plan (State: <span class="success">Available</span>)
+2. T-Mobile_EU_Consumer_Plan (State: <span class="success">Available</span>)
+3. AT&T_Enterprise_IoT (State: <span class="success">Available</span>)
+4. Vodafone_Global_Roaming (State: <span class="warning">Pending</span>)
+5. Telstra_AU_MBB (State: <span class="error">Depleted</span>)`;
+                    break;
+                    
+                case 'get sessions':
+                    outputElement.innerHTML = `Active Sessions (3/1423):
+1. eUICC-ID: 8904901234567890123 (Operator: Verizon)
+2. eUICC-ID: 8904909876543210987 (Operator: T-Mobile)
+3. eUICC-ID: 8904905555555555555 (Operator: AT&T)`;
+                    break;
+                    
+                case 'test connectivity':
+                    outputElement.innerHTML = `Connectivity Test Results:
+- GSMA Root DNS: <span class="success">OK</span> (23ms)
+- SM-DS Synchronization: <span class="success">OK</span> (142ms)
+- Certificate Revocation: <span class="success">OK</span> (87ms)
+- Profile Repository: <span class="success">OK</span> (45ms)`;
+                    break;
+                    
+                case 'clear':
+                    terminalOutput.innerHTML = `<div class="comment">// NexoraSIM SM-DP+ Terminal - GSMA RSP v3.0 Compliant</div>
+<div class="comment">// Type 'help' for available commands</div>
+<br>`;
+                    return;
+                    
+                case 'status':
+                default:
+                    outputElement.innerHTML = `SM-DP+ Status: <span class="success">Operational</span>
+Last Profile Download: 2023-11-15T14:32:18Z
+Active Sessions: 1423
+Storage Available: 98.7%`;
+            }
+            
+            terminalOutput.appendChild(outputElement);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            
+            // Clear input
+            document.getElementById('terminal-command').value = '';
+        }
+        
+        // Handle terminal input
+        document.getElementById('terminal-command').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                runCommand(this.value);
+            }
+        });
+        
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize globe
+            initGlobe();
+            
+            // GSAP animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Hero content animation
+            gsap.to('.hero-content', {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: 'power3.out'
+            });
+            
+            // Feature cards animation
+            gsap.to('.feature-card', {
+                scrollTrigger: {
+                    trigger: '.features',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'back.out'
+            });
+            
+            // Section titles animation
+            gsap.to('.section-title', {
+                scrollTrigger: {
+                    trigger: '.section-title',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            // Compliance items animation
+            gsap.to('.compliance-item', {
+                scrollTrigger: {
+                    trigger: '.compliance-grid',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'power2.out'
+            });
+            
+            // Flow steps animation
+            gsap.to('.step', {
+                scrollTrigger: {
+                    trigger: '.flow-steps',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'power2.out'
+            });
+            
+            // Terminal animation
+            gsap.to('.terminal-container', {
+                scrollTrigger: {
+                    trigger: '.terminal-section',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            // Terminal buttons animation
+            gsap.to('.terminal-button', {
+                scrollTrigger: {
+                    trigger: '.quick-commands',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'power2.out'
+            });
+            
+            // API cards animation
+            gsap.to('.api-card', {
+                scrollTrigger: {
+                    trigger: '.api-grid',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'power2.out'
+            });
+            
+            // Compliance statement animation
+            gsap.to('.compliance-statement', {
+                scrollTrigger: {
+                    trigger: '.compliance-statement',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            // GSMA flow animation
+            gsap.to('.gsma-flow', {
+                scrollTrigger: {
+                    trigger: '.gsma-flow',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+        });
+    </script>
 </body>
 </html>
