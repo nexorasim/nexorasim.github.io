@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+      nodejs: 16
+    commands:
+      - pip install boto3 pytest opentelemetry-api
+      - npm install -g @aws-cdk/cli
+
+  pre_build:
+    commands:
+      - echo "Starting GSMA SAS-SM compliance validation..."
+      - aws sts get-caller-identity
+
+  build:
+    commands:
+      - python tests/compliance/sas_sm_validator.py
+      - python tests/eid/manufacturer_code_check.py
+      - python compliance-auditor.py
+      - cdk synth
+
+  post_build:
+    commands:
+      - echo "Compliance validation completed"
+      - aws cloudwatch put-metric-data --namespace "NexoraSIM/Build" --metric-data MetricName=BuildSuccess,Value=1,Unit=Count
+
+artifacts:
+  files:
+    - '**/*'
+  name: nexorasim-compliance-artifacts

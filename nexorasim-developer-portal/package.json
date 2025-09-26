@@ -1,0 +1,28 @@
+{
+  "name": "nexorasim-developer-portal",
+  "version": "1.0.0",
+  "description": "NexoraSIM Developer Portal with GSMA Compliance",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "backend": "cd backend && python app/app.py",
+    "install-backend": "cd backend && pip install -r requirements.txt",
+    "test": "python -m pytest tests/",
+    "lint": "eslint src/ --ext .vue,.js",
+    "compliance-check": "python tests/test_eid_validation.py"
+  },
+  "dependencies": {
+    "vue": "^3.3.0",
+    "axios": "^1.5.0",
+    "vue-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^5.0.0",
+    "jest": "^29.0.0",
+    "eslint": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

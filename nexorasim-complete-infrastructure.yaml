@@ -1,0 +1,234 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'NexoraSIM Complete Infrastructure with SAS-SM Compliance'
+
+Parameters:
+  EnvironmentType:
+    Type: String
+    AllowedValues: [dev, staging, prod]
+    Default: dev
+
+Resources:
+  # VPC Infrastructure
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: !Select [1, !GetAZs '']
+
+  # FIPS 140-3 Level 3 CloudHSM Cluster
+  ComplianceHSM:
+    Type: AWS::CloudHSM::Cluster
+    Properties:
+      SubnetIds: 
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      HsmType: 'hsm1.medium'
+      Tags:
+        - Key: Compliance
+          Value: FIPS-140-3-Level3
+
+  # EAL6+ Device Compatibility Table
+  CompatibilityTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub 'nexorasim-eal6-compatibility-${EnvironmentType}'
+      AttributeDefinitions:
+        - AttributeName: device_model
+          AttributeType: S
+        - AttributeName: eUICC_version
+          AttributeType: S
+      KeySchema:
+        - AttributeName: device_model
+          KeyType: HASH
+        - AttributeName: eUICC_version
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
+
+  # Security Group for OTEL Collector
+  OTELSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for OpenTelemetry collector
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 4317
+          ToPort: 4318
+          CidrIp: 10.0.0.0/16
+
+  # OpenTelemetry Collector EC2 Instance
+  OTELCollector:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: m5.large
+      ImageId: ami-0abcdef1234567890
+      SubnetId: !Ref PrivateSubnet1
+      SecurityGroupIds:
+        - !Ref OTELSecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum install -y wget
+          wget https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol_0.89.0_linux_amd64.tar.gz
+          tar -xzf otelcol_0.89.0_linux_amd64.tar.gz
+          ./otelcol --config=/etc/otel-config.yaml &
+
+  # S3 Bucket for Compliance Documents
+  ComplianceBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'nexorasim-compliance-bucket-${EnvironmentType}'
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  # KMS Key for FIPS 140-3 Compliance
+  ComplianceKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: 'NexoraSIM FIPS 140-3 Compliance Key'
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowRootAccess
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'kms:*'
+            Resource: '*'
+
+  # IAM Policy for SM-DP+ Developers
+  SMDPDeveloperPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Least privilege policy for SM-DP+ developers
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - cloudhsm:DescribeClusters
+              - cloudhsm:GetConfig
+            Resource: !GetAtt ComplianceHSM.ClusterCertificates
+          - Effect: Allow
+            Action:
+              - dynamodb:Query
+              - dynamodb:GetItem
+            Resource: !GetAtt CompatibilityTable.Arn
+
+  # SNS Topic for Compliance Alerts
+  ComplianceSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub 'nexorasim-compliance-alerts-${EnvironmentType}'
+
+  # CloudWatch Alarms
+  EIDValidationAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub 'HighEIDValidationFailureRate-${EnvironmentType}'
+      AlarmDescription: EID validation failure rate exceeds 5%
+      MetricName: ValidationFailureRate
+      Namespace: NexoraSIM/Compliance
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 5.0
+      ComparisonOperator: GreaterThanThreshold
+      AlarmActions:
+        - !Ref ComplianceSNSTopic
+
+  SASSMComplianceAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub 'SAS-SM-Compliance-Breach-${EnvironmentType}'
+      AlarmDescription: SAS-SM compliance metrics below threshold
+      MetricName: SAS-SM-Compliance-Score
+      Namespace: NexoraSIM/Compliance
+      Statistic: Minimum
+      Period: 3600
+      EvaluationPeriods: 1
+      Threshold: 99.9
+      ComparisonOperator: LessThanThreshold
+      AlarmActions:
+        - !Ref ComplianceSNSTopic
+
+  # CodeBuild Project for Compliance Testing
+  ComplianceBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub 'nexorasim-compliance-${EnvironmentType}'
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_MEDIUM
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
+      Source:
+        Type: NO_SOURCE
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              runtime-versions:
+                python: 3.9
+                nodejs: 16
+              commands:
+                - pip install boto3 pytest
+            build:
+              commands:
+                - python api-error-checker.py
+                - python test-data-apis.py
+
+  # CodeBuild IAM Role
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess
+
+Outputs:
+  HSMClusterId:
+    Description: CloudHSM Cluster ID
+    Value: !Ref ComplianceHSM
+  
+  CompatibilityTableName:
+    Description: EAL6+ Compatibility Table Name
+    Value: !Ref CompatibilityTable
+  
+  ComplianceAlertsTopicArn:
+    Description: SNS Topic for compliance alerts
+    Value: !Ref ComplianceSNSTopic
+    
+  ComplianceBucketName:
+    Description: S3 Bucket for compliance documents
+    Value: !Ref ComplianceBucket

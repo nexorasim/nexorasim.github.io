@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'NexoraSIM Compliance Monitoring Alarms'
+
+Resources:
+  ComplianceSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: nexorasim-compliance-alerts
+
+  EIDValidationAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: HighEIDValidationFailureRate
+      AlarmDescription: EID validation failure rate exceeds 5%
+      MetricName: ValidationFailureRate
+      Namespace: NexoraSIM/Compliance
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 5.0
+      ComparisonOperator: GreaterThanThreshold
+      AlarmActions:
+        - !Ref ComplianceSNSTopic
+
+  SASSMComplianceAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: SAS-SM-Compliance-Breach
+      AlarmDescription: SAS-SM compliance metrics below threshold
+      MetricName: SAS-SM-Compliance-Score
+      Namespace: NexoraSIM/Compliance
+      Statistic: Minimum
+      Period: 3600
+      EvaluationPeriods: 1
+      Threshold: 99.9
+      ComparisonOperator: LessThanThreshold
+      AlarmActions:
+        - !Ref ComplianceSNSTopic
+
+Outputs:
+  SNSTopicArn:
+    Description: SNS Topic for compliance alerts
+    Value: !Ref ComplianceSNSTopic
