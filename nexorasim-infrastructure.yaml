@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'NexoraSIM™ SM-DP+ Infrastructure with SAS-SM Compliance'
+
+Parameters:
+  EnvironmentType:
+    Type: String
+    AllowedValues: [dev, staging, prod]
+    Default: dev
+
+Resources:
+  # VPC and Networking
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: !Select [1, !GetAZs '']
+
+  # FIPS 140-3 Level 3 CloudHSM Cluster
+  ComplianceHSM:
+    Type: AWS::CloudHSM::Cluster
+    Properties:
+      SubnetIds: 
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      HsmType: 'hsm1.medium'
+      Tags:
+        - Key: Compliance
+          Value: FIPS-140-3-Level3
+
+  # Security Group for OTEL Collector
+  OTELSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for OpenTelemetry collector
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 4317
+          ToPort: 4318
+          CidrIp: 10.0.0.0/16
+
+  # OpenTelemetry Collector EC2 Instance
+  OTELCollector:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: m5.large
+      ImageId: ami-0abcdef1234567890
+      SubnetId: !Ref PrivateSubnet1
+      SecurityGroupIds:
+        - !Ref OTELSecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum install -y wget
+          wget https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol_0.89.0_linux_amd64.tar.gz
+          tar -xzf otelcol_0.89.0_linux_amd64.tar.gz
+          cat > /etc/otel-config.yaml << 'EOF'
+          receivers:
+            otlp:
+              protocols:
+                grpc:
+                  endpoint: 0.0.0.0:4317
+          processors:
+            batch:
+          exporters:
+            logging:
+              loglevel: debug
+          service:
+            pipelines:
+              traces:
+                receivers: [otlp]
+                processors: [batch]
+                exporters: [logging]
+          EOF
+          ./otelcol --config=/etc/otel-config.yaml &
+
+Outputs:
+  HSMClusterId:
+    Description: CloudHSM Cluster ID for FIPS compliance
+    Value: !Ref ComplianceHSM
+  
+  OTELCollectorIP:
+    Description: OpenTelemetry Collector private IP
+    Value: !GetAtt OTELCollector.PrivateIp

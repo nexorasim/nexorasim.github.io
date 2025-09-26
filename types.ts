@@ -1,4 +1,3 @@
-
 export type Language = 'en' | 'my';
 
 export interface BilingualString {
@@ -79,4 +78,58 @@ export interface CorporateFeature {
 export interface Partner {
     name: string;
     logoUrl: string;
+}
+
+// New types for AI Development Prompt System
+export interface PromptTemplate {
+    id: string;
+    title: BilingualString;
+    category: PromptCategory;
+    description: BilingualString;
+    template: string;
+    example: string;
+    tags: string[];
+    complexity: 'Basic' | 'Intermediate' | 'Advanced';
+}
+
+export interface PromptCategory {
+    id: string;
+    name: BilingualString;
+    description: BilingualString;
+    icon: string;
+    color: string;
+}
+
+export interface ComplianceStandard {
+    id: string;
+    name: string;
+    version: string;
+    description: BilingualString;
+    requirements: string[];
+    icon: string;
+}
+
+export interface QualityMetric {
+    id: string;
+    name: BilingualString;
+    description: BilingualString;
+    criteria: string[];
+    weight: number;
+}
+
+export interface OptimizationTechnique {
+    id: string;
+    title: BilingualString;
+    description: BilingualString;
+    technique: string;
+    example: string;
+    impact: 'Low' | 'Medium' | 'High';
+}
+
+export interface PromptComponent {
+    name: string;
+    description: BilingualString;
+    required: boolean;
+    example: string;
+    tips: string[];
 }

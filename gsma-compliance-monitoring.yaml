@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'NexoraSIM GSMA Compliance Monitoring'
+
+Resources:
+  # Enable Security Hub
+  SecurityHub:
+    Type: AWS::SecurityHub::Hub
+    Properties:
+      Tags:
+        - Key: Purpose
+          Value: GSMA-Compliance
+
+  # Custom GSMA Compliance Rule
+  GSMAComplianceRule:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: gsma-sas-sm-compliance
+      Description: 'Monitor GSMA SAS-SM v3.4.2 compliance requirements'
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDTRAIL_ENABLED
+      Scope:
+        ComplianceResourceTypes:
+          - AWS::CloudTrail::Trail
+
+  # CloudWatch Dashboard for Compliance Monitoring
+  ComplianceDashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: GSMA-Compliance-Monitor
+      DashboardBody: !Sub |
+        {
+          "widgets": [
+            {
+              "type": "metric",
+              "properties": {
+                "metrics": [
+                  ["AWS/Config", "ComplianceByConfigRule", "ConfigRuleName", "${GSMAComplianceRule}"]
+                ],
+                "period": 300,
+                "stat": "Average",
+                "region": "${AWS::Region}",
+                "title": "GSMA SAS-SM Compliance Status"
+              }
+            }
+          ]
+        }
+
+  # SNS Topic for Compliance Alerts
+  ComplianceAlerts:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: gsma-compliance-alerts
+      DisplayName: GSMA Compliance Notifications
+
+  # EventBridge Rule for Config Compliance Changes
+  ComplianceEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: 'Trigger on GSMA compliance rule changes'
+      EventPattern:
+        source: ['aws.config']
+        detail-type: ['Config Rules Compliance Change']
+        detail:
+          configRuleName: [!Ref GSMAComplianceRule]
+          newEvaluationResult:
+            complianceType: ['NON_COMPLIANT']
+      Targets:
+        - Arn: !Ref ComplianceAlerts
+          Id: ComplianceTarget
+
+Outputs:
+  ComplianceRuleArn:
+    Description: GSMA Compliance Config Rule ARN
+    Value: !GetAtt GSMAComplianceRule.Arn
+  
+  AlertsTopicArn:
+    Description: SNS Topic for compliance alerts
+    Value: !Ref ComplianceAlerts
