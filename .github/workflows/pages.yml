@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
+      - name: Run validation checks
+        run: |
+          npm run error:check
+          npm run validate:all
+          npm run health:check
+
       - name: Build
         run: npm run build
 

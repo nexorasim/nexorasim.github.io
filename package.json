@@ -18,7 +18,10 @@
     "deploy:prod": "npm run build && npm run deploy",
     "health:check": "node scripts/health-check.js",
     "api:validate": "node scripts/api-validation.js",
-    "test:all": "npm run error:check && npm run validate:all && npm run api:validate"
+    "test:all": "npm run error:check && npm run validate:all && npm run api:validate",
+    "site:health": "bash scripts/site_health_check.sh",
+    "deploy:github": "npm run build && gh-pages -d dist",
+    "ci:check": "npm run error:check && npm run validate:all && npm run health:check"
   },
   "dependencies": {
     "gsap": "^3.12.2",
