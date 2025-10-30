@@ -1,5 +1,5 @@
 export const apiDocs = {
-  version: "2.1",
+  version: "2.2",
   title: "NexoraSIM Enterprise eSIM API",
   description: "Secure REST API for enterprise eSIM provisioning, device management, and analytics",
   baseUrl: "https://api.nexorasim.com",
@@ -24,6 +24,11 @@ export const apiDocs = {
             access_token: "string",
             token_type: "Bearer",
             expires_in: 3600
+          },
+          errors: {
+            400: "Bad Request - Invalid parameters",
+            401: "Unauthorized - Invalid credentials",
+            500: "Internal Server Error"
           }
         }
       ]
@@ -38,12 +43,18 @@ export const apiDocs = {
           path: "/v2/esim/provision",
           description: "Provision new eSIM profile",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}",
+            "Content-Type": "application/json"
           },
           parameters: {
             operator: "mpt|mytel|atom|u9",
             device_id: "string",
             plan_id: "string"
+          },
+          response: {
+            iccid: "string",
+            status: "provisioned",
+            activation_code: "string"
           }
         },
         {
@@ -51,7 +62,12 @@ export const apiDocs = {
           path: "/v2/esim/{iccid}/status",
           description: "Get eSIM status",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}"
+          },
+          response: {
+            iccid: "string",
+            status: "enabled|disabled|deleted",
+            operator: "string"
           }
         }
       ]
@@ -66,7 +82,12 @@ export const apiDocs = {
           path: "/v2/devices",
           description: "List all devices",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}"
+          },
+          response: {
+            devices: "array",
+            total: "number",
+            page: "number"
           }
         },
         {
@@ -74,12 +95,18 @@ export const apiDocs = {
           path: "/v2/devices",
           description: "Register new device",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}",
+            "Content-Type": "application/json"
           },
           parameters: {
             device_id: "string",
             device_type: "string",
             operator: "string"
+          },
+          response: {
+            device_id: "string",
+            status: "registered",
+            created_at: "ISO 8601 date"
           }
         }
       ]
@@ -94,12 +121,17 @@ export const apiDocs = {
           path: "/v2/analytics/usage",
           description: "Get usage statistics",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}"
           },
           parameters: {
             device_id: "string (optional)",
             start_date: "ISO 8601 date",
             end_date: "ISO 8601 date"
+          },
+          response: {
+            usage_data: "array",
+            total_bytes: "number",
+            period: "string"
           }
         }
       ]
@@ -114,12 +146,18 @@ export const apiDocs = {
           path: "/v2/profiles",
           description: "Create new profile",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}",
+            "Content-Type": "application/json"
           },
           parameters: {
             operator: "string",
             plan_type: "consumer|iot|enterprise",
             activation_code: "string"
+          },
+          response: {
+            profile_id: "string",
+            iccid: "string",
+            status: "created"
           }
         },
         {
@@ -127,7 +165,11 @@ export const apiDocs = {
           path: "/v2/profiles/{iccid}/enable",
           description: "Enable profile",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}"
+          },
+          response: {
+            iccid: "string",
+            status: "enabled"
           }
         },
         {
@@ -135,7 +177,11 @@ export const apiDocs = {
           path: "/v2/profiles/{iccid}/disable",
           description: "Disable profile",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}"
+          },
+          response: {
+            iccid: "string",
+            status: "disabled"
           }
         },
         {
@@ -143,7 +189,11 @@ export const apiDocs = {
           path: "/v2/profiles/{iccid}",
           description: "Delete profile",
           headers: {
-            Authorization: "Bearer {access_token}"
+            Authorization: "Bearer {token}"
+          },
+          response: {
+            iccid: "string",
+            status: "deleted"
           }
         }
       ]
@@ -175,5 +225,12 @@ export const apiDocs = {
       technology: "4G/LTE-M",
       api_endpoint: "/operators/u9"
     }
+  },
+  
+  security: {
+    authentication: "OAuth 2.0 with PKCE",
+    encryption: "TLS 1.3",
+    rate_limiting: "1000 requests per minute",
+    cors: "Configured for production domains"
   }
 };
