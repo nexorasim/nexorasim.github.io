@@ -27,9 +27,9 @@ export const apiDocs = {
             expires_in: 3600
           },
           errors: {
-            400: "Bad Request - Invalid parameters",
-            401: "Unauthorized - Invalid credentials",
-            500: "Internal Server Error"
+            "400": "Bad Request - Invalid parameters",
+            "401": "Unauthorized - Invalid credentials",
+            "500": "Internal Server Error"
           }
         }
       ]
