@@ -100,6 +100,10 @@ export const apiDocs = {
             devices: "array",
             total: "number",
             page: "number"
+          },
+          errors: {
+            "401": "Unauthorized - Invalid or expired token",
+            "500": "Internal Server Error"
           }
         },
         {
@@ -119,6 +123,12 @@ export const apiDocs = {
             device_id: "string",
             status: "registered",
             created_at: "ISO 8601 date"
+          },
+          errors: {
+            "400": "Bad Request - Invalid device parameters",
+            "401": "Unauthorized - Invalid or expired token",
+            "409": "Conflict - Device already registered",
+            "500": "Internal Server Error"
           }
         }
       ]
