@@ -13,6 +13,7 @@
     "run:dev": "npm run dev",
     "run:prod": "npm run preview",
     "error:check": "node scripts/error-check.js",
+    "validate:all": "node scripts/validate-all.js",
     "enable:all": "node scripts/enable-all.js",
     "deploy:prod": "npm run build && npm run deploy",
     "health:check": "node scripts/health-check.js"
