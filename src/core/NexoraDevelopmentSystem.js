@@ -4,6 +4,8 @@ import { EUICCManager } from './EUICCManager.js'
 import { RSPManager } from './RSPComponents.js'
 import { ComplianceManager } from './ComplianceManager.js'
 import { AndroidIntegration } from './AndroidIntegration.js'
+import { ProfileLifecycle } from './ProfileLifecycle.js'
+import { SystemErrorCheck } from './SystemErrorCheck.js'
 
 import { ErrorHandler } from '../utils/errorHandler.js'
 import { DataValidator } from '../utils/dataValidator.js'
