@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { NexoraSIMSystem } from '../core/NexoraSIMSystem.js'
+import { NexoraDevelopmentSystem } from '../core/NexoraDevelopmentSystem.js'
 
 const SystemDashboard = () => {
-  const [system] = useState(new NexoraSIMSystem())
+  const [system] = useState(new NexoraDevelopmentSystem())
   const [status, setStatus] = useState('READY')
   const [report, setReport] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -10,7 +10,7 @@ const SystemDashboard = () => {
   const initiateSystem = async () => {
     setLoading(true)
     try {
-      const result = await system.initiate()
+      const result = await system.executeFullSystem()
       setReport(result)
       setStatus(result.status)
     } catch (error) {
@@ -47,7 +47,7 @@ const SystemDashboard = () => {
             disabled={loading}
             className="glass-button text-lg px-8 py-4 disabled:opacity-50"
           >
-            {loading ? 'EXECUTING FULL SYSTEM...' : 'INITIATE NEXORASIM AI DEVELOPMENT'}
+            {loading ? 'EXECUTING FULL SYSTEM...' : 'EXECUTE NEXORASIM COMPLETE TECHNICAL DEVELOPMENT'}
           </button>
         </div>
 
