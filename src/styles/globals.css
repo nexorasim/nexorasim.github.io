@@ -1,7 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import './main.css';
 
 @layer base {
@@ -16,23 +16,77 @@
   body {
     @apply bg-primary text-accent font-sans antialiased;
     background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+    min-height: 100vh;
+  }
+  
+  :focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-black;
   }
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-glass backdrop-blur-xl border border-white/10 rounded-2xl;
+    @apply bg-glass backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
+    transition: all 0.3s ease;
+  }
+  
+  .glass-panel:hover {
+    @apply border-white/20;
+    transform: translateY(-2px);
   }
   
   .glass-button {
-    @apply glass-panel px-6 py-3 hover:bg-white/10 transition-all duration-300;
+    @apply glass-panel px-6 py-3 hover:bg-white/10 transition-all duration-300 cursor-pointer;
+    font-weight: 500;
+  }
+  
+  .glass-button:active {
+    transform: scale(0.98);
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-white via-gray-200 to-gray-300 bg-clip-text text-transparent;
   }
   
   .nav-link {
-    @apply text-accent/80 hover:text-accent transition-colors duration-300 cursor-pointer;
+    @apply text-accent/80 hover:text-accent transition-colors duration-300 cursor-pointer relative;
+  }
+  
+  .nav-link:after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300;
+  }
+  
+  .nav-link:hover:after {
+    @apply w-full;
+  }
+  
+  .page-content {
+    @apply max-w-7xl mx-auto px-6 py-12;
+  }
+  
+  .page-title {
+    @apply text-4xl md:text-5xl font-bold mb-8;
+  }
+  
+  .container {
+    @apply w-full;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
