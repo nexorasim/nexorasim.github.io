@@ -185,6 +185,11 @@ export const apiDocs = {
             profile_id: "string",
             iccid: "string",
             status: "installed"
+          },
+          errors: {
+            "400": "Bad Request - Invalid profile parameters",
+            "401": "Unauthorized - Invalid or expired token",
+            "500": "Internal Server Error"
           }
         },
         {
@@ -201,6 +206,12 @@ export const apiDocs = {
           response: {
             profile_id: "string",
             status: "registered"
+          },
+          errors: {
+            "400": "Bad Request - Invalid device ID",
+            "401": "Unauthorized - Invalid or expired token",
+            "404": "Not Found - Profile not found",
+            "500": "Internal Server Error"
           }
         },
         {
@@ -214,6 +225,12 @@ export const apiDocs = {
             profile_id: "string",
             activation_code: "string",
             status: "downloaded"
+          },
+          errors: {
+            "401": "Unauthorized - Invalid or expired token",
+            "404": "Not Found - Profile not found",
+            "409": "Conflict - Profile not registered",
+            "500": "Internal Server Error"
           }
         },
         {
@@ -226,6 +243,12 @@ export const apiDocs = {
           response: {
             profile_id: "string",
             status: "running"
+          },
+          errors: {
+            "401": "Unauthorized - Invalid or expired token",
+            "404": "Not Found - Profile not found",
+            "409": "Conflict - Profile not downloaded",
+            "500": "Internal Server Error"
           }
         },
         {
@@ -238,6 +261,12 @@ export const apiDocs = {
           response: {
             profile_id: "string",
             status: "enabled"
+          },
+          errors: {
+            "401": "Unauthorized - Invalid or expired token",
+            "404": "Not Found - Profile not found",
+            "409": "Conflict - Profile not running",
+            "500": "Internal Server Error"
           }
         }
       ]
