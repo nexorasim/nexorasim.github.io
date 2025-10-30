@@ -13,7 +13,8 @@ const Developers = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>Version: <span className="text-green-400">{apiDocs.version}</span></div>
             <div>Base URL: <span className="text-blue-400">{apiDocs.baseUrl}</span></div>
-            <div>Security: <span className="text-yellow-400">{apiDocs.security}</span></div>
+            <div>Security: <span className="text-yellow-400">OAuth 2.0 + TLS 1.3</span></div>
+            <div>Data Validation: <span className="text-green-400">{apiDocs.dataValidation}</span></div>
           </div>
         </div>
 
