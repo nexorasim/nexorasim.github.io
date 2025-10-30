@@ -56,6 +56,12 @@ export const apiDocs = {
             iccid: "string",
             status: "provisioned",
             activation_code: "string"
+          },
+          errors: {
+            "400": "Bad Request - Invalid operator or parameters",
+            "401": "Unauthorized - Invalid or expired token",
+            "404": "Not Found - Plan not found",
+            "500": "Internal Server Error"
           }
         },
         {
@@ -69,6 +75,11 @@ export const apiDocs = {
             iccid: "string",
             status: "enabled|disabled|deleted",
             operator: "string"
+          },
+          errors: {
+            "401": "Unauthorized - Invalid or expired token",
+            "404": "Not Found - eSIM not found",
+            "500": "Internal Server Error"
           }
         }
       ]
