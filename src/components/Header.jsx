@@ -15,7 +15,7 @@ const Header = () => {
           
           <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
             <Link to="/" className="nav-link" aria-label="Go to home page">Home</Link>
-            <Link to="/system" className="nav-link" aria-label="System dashboard">System</Link>
+            <Link to="/epm" className="nav-link" aria-label="ePM dashboard">ePM</Link>
             <Link to="/operators" className="nav-link" aria-label="View operators">Operators</Link>
             <Link to="/developers" className="nav-link" aria-label="Developer resources">Developers</Link>
             <Link to="/pricing" className="nav-link" aria-label="View pricing">Pricing</Link>
