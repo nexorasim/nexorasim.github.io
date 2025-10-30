@@ -1,16 +1,25 @@
+import { ErrorHandler } from '../utils/errorHandler.js'
+import { DataValidator } from '../utils/dataValidator.js'
+
 export class ePMSystem {
   constructor() {
     this.zeroTrust = new CloudflareZeroTrust()
     this.carrierHub = new CarrierIntegrationHub()
     this.mdmManager = new MDMManager()
     this.profileManager = new ProfileManager()
+    this.errorHandler = ErrorHandler
+    this.validator = DataValidator
   }
 
   async initialize() {
-    await this.zeroTrust.setup()
-    await this.carrierHub.connect()
-    await this.mdmManager.configure()
-    return this.getSystemStatus()
+    return await this.errorHandler.safeExecute(async () => {
+      await this.zeroTrust.setup()
+      await this.carrierHub.connect()
+      await this.mdmManager.configure()
+      const status = this.getSystemStatus()
+      this.validator.validateSystemData(status)
+      return status
+    }, 'ePM System Initialization')
   }
 
   getSystemStatus() {
@@ -64,6 +73,14 @@ class CarrierIntegrationHub {
   }
 
   async provisionProfile(carrier, deviceInfo, profileConfig) {
+    if (!this.connectors[carrier]) {
+      throw new Error(`Unsupported carrier: ${carrier}`)
+    }
+    
+    if (!deviceInfo || !profileConfig) {
+      throw new Error('Device info and profile config are required')
+    }
+    
     const connector = this.connectors[carrier]
     return await connector.allocateProfile(deviceInfo, profileConfig)
   }
@@ -116,13 +133,19 @@ class ProfileManager {
   }
 
   async createProfile(deviceId, carrier, config) {
+    if (!deviceId || !carrier || !config) {
+      throw new Error('Device ID, carrier, and config are required')
+    }
+    
     const profile = {
       id: `profile-${Date.now()}`,
-      deviceId,
-      carrier,
+      deviceId: DataValidator.sanitizeInput(deviceId),
+      carrier: DataValidator.sanitizeInput(carrier),
       status: 'created',
-      config
+      config,
+      timestamp: new Date().toISOString()
     }
+    
     this.profiles.set(profile.id, profile)
     return profile
   }

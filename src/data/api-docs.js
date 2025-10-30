@@ -1,10 +1,11 @@
 export const apiDocs = {
-  version: "2.2",
+  version: "2.3",
   title: "NexoraSIM Enterprise eSIM API",
   description: "Secure REST API for enterprise eSIM provisioning, device management, and analytics",
   baseUrl: "https://api.nexorasim.com",
   security: "OAuth 2.0 + TLS 1.3",
   documentation: "https://nexorasim.github.io/#/developers",
+  dataValidation: "Comprehensive input validation and error handling",
   
   endpoints: {
     authentication: {

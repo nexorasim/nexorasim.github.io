@@ -5,6 +5,9 @@ import { RSPManager } from './RSPComponents.js'
 import { ComplianceManager } from './ComplianceManager.js'
 import { AndroidIntegration } from './AndroidIntegration.js'
 
+import { ErrorHandler } from '../utils/errorHandler.js'
+import { DataValidator } from '../utils/dataValidator.js'
+
 export class NexoraDevelopmentSystem {
   constructor() {
     this.core = new NexoraSIMCore()
@@ -14,34 +17,43 @@ export class NexoraDevelopmentSystem {
     this.compliance = new ComplianceManager()
     this.android = new AndroidIntegration()
     this.status = 'INITIALIZING'
+    this.errorHandler = ErrorHandler
+    this.validator = DataValidator
   }
 
   async executeFullSystem() {
-    try {
+    return await this.errorHandler.safeExecute(async () => {
       this.status = 'DEPLOYING_CORE_INFRASTRUCTURE'
-      await this.core.initialize()
+      await this.validateAndExecute(() => this.core.initialize(), 'Core Infrastructure')
 
       this.status = 'INITIALIZING_LPA_SERVICE'
-      await this.lpa.initialize()
+      await this.validateAndExecute(() => this.lpa.initialize(), 'LPA Service')
 
       this.status = 'CONFIGURING_EUICC_MANAGER'
-      await this.euicc.initialize()
+      await this.validateAndExecute(() => this.euicc.initialize(), 'eUICC Manager')
 
       this.status = 'STARTING_RSP_COMPONENTS'
-      await this.rsp.initialize()
+      await this.validateAndExecute(() => this.rsp.initialize(), 'RSP Components')
 
       this.status = 'VALIDATING_COMPLIANCE'
-      await this.compliance.initialize()
+      await this.validateAndExecute(() => this.compliance.initialize(), 'Compliance Framework')
 
       this.status = 'INTEGRATING_ANDROID_PLATFORM'
-      await this.android.initialize()
+      await this.validateAndExecute(() => this.android.initialize(), 'Android Integration')
 
       this.status = 'SYSTEM_OPERATIONAL'
-      return this.generateSystemReport()
+      const report = this.generateSystemReport()
+      this.validator.validateSystemData(report)
+      return report
+    }, 'System Execution')
+  }
 
+  async validateAndExecute(fn, component) {
+    try {
+      await fn()
     } catch (error) {
-      this.status = 'SYSTEM_ERROR'
-      return this.generateErrorReport(error)
+      this.status = `ERROR_${component.toUpperCase().replace(/\s+/g, '_')}`
+      throw new Error(`${component} initialization failed: ${error.message}`)
     }
   }
 
