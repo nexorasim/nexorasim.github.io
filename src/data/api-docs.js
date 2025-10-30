@@ -1,5 +1,5 @@
 export const apiDocs = {
-  version: "2.3",
+  version: "2.4",
   title: "NexoraSIM Enterprise eSIM API",
   description: "Secure REST API for enterprise eSIM provisioning, device management, and analytics",
   baseUrl: "https://api.nexorasim.com",

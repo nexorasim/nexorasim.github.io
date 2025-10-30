@@ -28,46 +28,56 @@ export class SystemErrorCheck {
 
   checkCore(results) {
     try {
+      if (!results) throw new Error('Results object required')
       results.components.core = 'operational'
     } catch (error) {
       results.errors.push(`Core: ${error.message}`)
       results.components.core = 'error'
+      this.logError('core', error)
     }
   }
 
   checkAPI(results) {
     try {
+      if (!results) throw new Error('Results object required')
       results.components.api = 'operational'
     } catch (error) {
       results.errors.push(`API: ${error.message}`)
       results.components.api = 'error'
+      this.logError('api', error)
     }
   }
 
   checkDatabase(results) {
     try {
+      if (!results) throw new Error('Results object required')
       results.components.database = 'operational'
     } catch (error) {
       results.errors.push(`Database: ${error.message}`)
       results.components.database = 'error'
+      this.logError('database', error)
     }
   }
 
   checkSecurity(results) {
     try {
+      if (!results) throw new Error('Results object required')
       results.components.security = 'operational'
     } catch (error) {
       results.errors.push(`Security: ${error.message}`)
       results.components.security = 'error'
+      this.logError('security', error)
     }
   }
 
   checkProfiles(results) {
     try {
+      if (!results) throw new Error('Results object required')
       results.components.profiles = 'operational'
     } catch (error) {
       results.errors.push(`Profiles: ${error.message}`)
       results.components.profiles = 'error'
+      this.logError('profiles', error)
     }
   }
 
