@@ -3,11 +3,11 @@ import { apiDocs } from '../data/api-docs.js'
 
 const Developers = () => {
   return (
-    <div className="container">
-      <div className="page-content">
-        <h1 className="page-title text-gradient">API Documentation</h1>
+    <div className="container" data-testid="developers-page">
+      <div className="page-content animate-fade-in">
+        <h1 className="page-title text-gradient" data-testid="page-title">API Documentation</h1>
         
-        <div className="glass-panel p-8 mb-8">
+        <div className="glass-panel p-8 mb-8" data-testid="api-overview">
           <h2 className="text-2xl font-bold text-accent mb-4">{apiDocs.title}</h2>
           <p className="text-accent/80 mb-4">{apiDocs.description}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -19,12 +19,12 @@ const Developers = () => {
         </div>
 
         {Object.entries(apiDocs.endpoints).map(([key, endpoint]) => (
-          <div key={key} className="glass-panel p-6 mb-6">
+          <div key={key} className="glass-panel p-6 mb-6" data-testid={`endpoint-${key}`}>
             <h3 className="text-xl font-bold text-accent mb-3">{endpoint.title}</h3>
             <p className="text-accent/70 mb-4">{endpoint.description}</p>
             
             {endpoint.methods.map((method, index) => (
-              <div key={index} className="border border-white/10 rounded-lg p-4 mb-4">
+              <div key={index} className="border border-white/10 rounded-lg p-4 mb-4" data-testid={`method-${method.method}-${index}`}>
                 <div className="flex items-center gap-4 mb-3">
                   <span className="bg-blue-600 text-white px-3 py-1 rounded text-sm font-mono">
                     {method.method}
@@ -81,11 +81,11 @@ const Developers = () => {
           </div>
         ))}
 
-        <div className="glass-panel p-6 mb-6">
+        <div className="glass-panel p-6 mb-6" data-testid="operators-section">
           <h3 className="text-xl font-bold text-accent mb-4">Supported Operators</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Object.entries(apiDocs.operators).map(([key, operator]) => (
-              <div key={key} className="border border-white/10 rounded-lg p-4">
+              <div key={key} className="border border-white/10 rounded-lg p-4" data-testid={`operator-${key}`}>
                 <h4 className="font-semibold text-accent mb-2">{operator.name}</h4>
                 <div className="text-sm text-accent/70 space-y-1">
                   <div>Coverage: {operator.coverage}</div>
@@ -97,7 +97,7 @@ const Developers = () => {
           </div>
         </div>
 
-        <div className="glass-panel p-6">
+        <div className="glass-panel p-6" data-testid="security-section">
           <h3 className="text-xl font-bold text-accent mb-4">API Security</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="border border-white/10 rounded-lg p-4">
