@@ -1,8 +1,20 @@
 import { ErrorHandler } from '../utils/errorHandler.js'
 import { DataValidator } from '../utils/dataValidator.js'
 
+import { registry } from './adapters/AdapterInterface.js'
+import MPTAdapter from './adapters/MPTAdapter.js'
+import ATOMAdapter from './adapters/ATOMAdapter.js'
+import U9Adapter from './adapters/U9Adapter.js'
+import MYTELAdapter from './adapters/MYTELAdapter.js'
+
 export class ePMSystem {
   constructor() {
+    // Register operator adapters for modular expansion
+    registry.register(new MPTAdapter())
+    registry.register(new ATOMAdapter())
+    registry.register(new U9Adapter())
+    registry.register(new MYTELAdapter())
+
     this.zeroTrust = new CloudflareZeroTrust()
     this.carrierHub = new CarrierIntegrationHub()
     this.mdmManager = new MDMManager()
@@ -25,7 +37,7 @@ export class ePMSystem {
   getSystemStatus() {
     return {
       zeroTrust: 'ACTIVE',
-      carriers: ['MPT', 'MYTEL', 'ATOM', 'U9'],
+      carriers: registry.list(),
       mdmIntegration: 'CONFIGURED',
       profileManagement: 'OPERATIONAL',
       security: 'ENFORCED'

@@ -1,0 +1,183 @@
+openapi: 3.0.3
+authors:
+  - NexoraSIM ePM Team
+info:
+  title: NexoraSIM ePM Orchestration API
+  version: 1.0.0
+  description: |
+    Core orchestration, provisioning, revocation, retry logic, inventory, analytics, audit, RBAC, and integration endpoints.
+servers:
+  - url: https://api.nexorasim.com/epm
+    description: Production API (behind Cloudflare Zero Trust)
+  - url: https://staging-api.nexorasim.com/epm
+    description: Staging API
+security:
+  - bearerAuth: []
+  - cfAccessJWT: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    cfAccessJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: CF-Access-JWT-V1
+  schemas:
+    TenantScoped:
+      type: object
+      properties:
+        tenantId: { type: string }
+        policyVersion: { type: string }
+    ProfileOrder:
+      allOf:
+        - $ref: '#/components/schemas/TenantScoped'
+        - type: object
+          required: [msisdn, iccid, eid, operator]
+          properties:
+            msisdn: { type: string }
+            iccid: { type: string }
+            eid: { type: string }
+            operator: { type: string, enum: [MPT, ATOM, U9, MYTEL] }
+            planId: { type: string }
+            metadata: { type: object, additionalProperties: true }
+    Profile:
+      type: object
+      properties:
+        id: { type: string }
+        state: { type: string, enum: [ordered, provisioning, provisioned, revoked, failed] }
+        operator: { type: string }
+        iccid: { type: string }
+        eid: { type: string }
+        retryCount: { type: integer }
+    AdapterHealth:
+      type: object
+      properties:
+        adapter: { type: string }
+        status: { type: string, enum: [healthy, degraded, down] }
+        lastCheck: { type: string, format: date-time }
+        details: { type: object }
+    AuditEvent:
+      type: object
+      properties:
+        id: { type: string }
+        ts: { type: string, format: date-time }
+        tenantId: { type: string }
+        subject: { type: string }
+        action: { type: string }
+        resource: { type: string }
+        policyVersion: { type: string }
+        result: { type: string }
+        data: { type: object }
+paths:
+  /profiles:
+    post:
+      summary: Order and start provisioning a profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProfileOrder' }
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Profile' }
+  /profiles/{id}:
+    get:
+      summary: Get profile by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Profile
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Profile' }
+  /profiles/{id}/revoke:
+    post:
+      summary: Revoke a profile
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '202':
+          description: Revocation started
+  /profiles/{id}/retry:
+    post:
+      summary: Retry failed provisioning
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '202':
+          description: Retry scheduled
+  /inventory:
+    get:
+      summary: List inventory
+      parameters:
+        - in: query
+          name: operator
+          schema: { type: string }
+        - in: query
+          name: state
+          schema: { type: string }
+      responses:
+        '200':
+          description: Inventory
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Profile' }
+  /adapters/health:
+    get:
+      summary: Health of all adapters
+      responses:
+        '200':
+          description: Health
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/AdapterHealth' }
+  /audit:
+    get:
+      summary: Audit logs (tenant-scoped)
+      responses:
+        '200':
+          description: Audit events
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/AuditEvent' }
+  /integrations/bss/orders:
+    post:
+      summary: BSS inbound order webhook
+      responses:
+        '202':
+          description: Accepted
+  /integrations/crm/events:
+    post:
+      summary: CRM event inbound
+      responses:
+        '202':
+          description: Accepted
+  /integrations/billing/usage:
+    post:
+      summary: Billing usage report
+      responses:
+        '202':
+          description: Accepted
