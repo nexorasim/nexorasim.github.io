@@ -144,8 +144,8 @@ export const apiDocs = {
       methods: [
         {
           method: "POST",
-          path: "/v2/profiles",
-          description: "Create new profile",
+          path: "/v2/profiles/install",
+          description: "Install new profile",
           headers: {
             Authorization: "Bearer {token}",
             "Content-Type": "application/json"
@@ -158,43 +158,97 @@ export const apiDocs = {
           response: {
             profile_id: "string",
             iccid: "string",
-            status: "created"
+            status: "installed"
+          }
+        },
+        {
+          method: "POST",
+          path: "/v2/profiles/{profile_id}/register",
+          description: "Register profile to device",
+          headers: {
+            Authorization: "Bearer {token}",
+            "Content-Type": "application/json"
+          },
+          parameters: {
+            device_id: "string"
+          },
+          response: {
+            profile_id: "string",
+            status: "registered"
+          }
+        },
+        {
+          method: "POST",
+          path: "/v2/profiles/{profile_id}/download",
+          description: "Download profile",
+          headers: {
+            Authorization: "Bearer {token}"
+          },
+          response: {
+            profile_id: "string",
+            activation_code: "string",
+            status: "downloaded"
+          }
+        },
+        {
+          method: "POST",
+          path: "/v2/profiles/{profile_id}/run",
+          description: "Run profile",
+          headers: {
+            Authorization: "Bearer {token}"
+          },
+          response: {
+            profile_id: "string",
+            status: "running"
           }
         },
         {
           method: "PUT",
-          path: "/v2/profiles/{iccid}/enable",
+          path: "/v2/profiles/{profile_id}/enable",
           description: "Enable profile",
           headers: {
             Authorization: "Bearer {token}"
           },
           response: {
-            iccid: "string",
+            profile_id: "string",
             status: "enabled"
           }
-        },
+        }
+      ]
+    },
+    
+    system: {
+      title: "System Error Check",
+      description: "System health and error checking",
+      methods: [
         {
-          method: "PUT",
-          path: "/v2/profiles/{iccid}/disable",
-          description: "Disable profile",
+          method: "GET",
+          path: "/v2/system/health",
+          description: "Full system health check",
           headers: {
             Authorization: "Bearer {token}"
           },
           response: {
-            iccid: "string",
-            status: "disabled"
+            status: "healthy|errors_detected",
+            components: "object",
+            errors: "array",
+            timestamp: "ISO 8601 date"
           }
         },
         {
-          method: "DELETE",
-          path: "/v2/profiles/{iccid}",
-          description: "Delete profile",
+          method: "GET",
+          path: "/v2/system/errors",
+          description: "Get system errors",
           headers: {
             Authorization: "Bearer {token}"
           },
+          parameters: {
+            component: "string (optional)",
+            limit: "number (optional)"
+          },
           response: {
-            iccid: "string",
-            status: "deleted"
+            errors: "array",
+            total: "number"
           }
         }
       ]

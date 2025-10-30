@@ -16,6 +16,8 @@ export class NexoraDevelopmentSystem {
     this.rsp = new RSPManager()
     this.compliance = new ComplianceManager()
     this.android = new AndroidIntegration()
+    this.profileLifecycle = new ProfileLifecycle()
+    this.systemErrorCheck = new SystemErrorCheck()
     this.status = 'INITIALIZING'
     this.errorHandler = ErrorHandler
     this.validator = DataValidator
