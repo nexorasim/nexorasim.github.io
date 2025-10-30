@@ -24,6 +24,7 @@ function App() {
                 <Route path="/system" element={<SystemDashboard />} />
                 <Route path="/developers" element={<Developers />} />
                 <Route path="/epm" element={<ePMDashboard />} />
+                <Route path="*" element={<Home />} />
               </Routes>
             </main>
             <Footer />
