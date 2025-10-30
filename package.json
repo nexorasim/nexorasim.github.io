@@ -7,7 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "install:system": "npm install && npm run build",
+    "install:production": "npm ci && npm run build",
+    "run:dev": "npm run dev",
+    "run:prod": "npm run preview",
+    "error:check": "node scripts/error-check.js",
+    "enable:all": "node scripts/enable-all.js",
+    "deploy:prod": "npm run build && npm run deploy",
+    "health:check": "node scripts/health-check.js"
   },
   "dependencies": {
     "gsap": "^3.12.2",

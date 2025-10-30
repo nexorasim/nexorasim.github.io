@@ -19,25 +19,26 @@ Enterprise-grade eSIM platform for MPT, MYTEL, ATOM, and U9 networks in Myanmar.
 ### Installation
 
 ```bash
-# Clone repository
+# Quick install (Linux/macOS)
+curl -sSL https://raw.githubusercontent.com/nexorasim/nexorasim.github.io/main/download.sh | bash
+
+# Manual installation
 git clone https://github.com/nexorasim/nexorasim.github.io.git
 cd nexorasim.github.io
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+pwsh install.ps1
 ```
 
-### Build and Deploy
+### System Operations
 
 ```bash
-# Build for production
-npm run build
-
-# Deploy to GitHub Pages
-npm run deploy
+npm run install:system          # Install development
+npm run install:production      # Install production
+npm run run:dev                 # Run development
+npm run run:prod                # Run production
+npm run error:check             # Error validation
+npm run enable:all              # Enable components
+npm run deploy:prod             # Deploy production
+npm run health:check            # Health monitoring
 ```
 
 ## Project Structure
