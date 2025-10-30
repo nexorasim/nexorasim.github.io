@@ -56,11 +56,22 @@ const Developers = () => {
                 )}
                 
                 {method.response && (
-                  <div>
+                  <div className="mb-3">
                     <h5 className="font-semibold text-accent mb-2">Response:</h5>
                     <div className="bg-black/30 p-3 rounded font-mono text-sm">
                       {Object.entries(method.response).map(([key, value]) => (
                         <div key={key}>{key}: {value}</div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {method.errors && (
+                  <div>
+                    <h5 className="font-semibold text-accent mb-2">Error Codes:</h5>
+                    <div className="bg-black/30 p-3 rounded font-mono text-sm">
+                      {Object.entries(method.errors).map(([code, description]) => (
+                        <div key={code} className="text-red-400">{code}: {description}</div>
                       ))}
                     </div>
                   </div>
