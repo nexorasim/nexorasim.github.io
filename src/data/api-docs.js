@@ -154,6 +154,11 @@ export const apiDocs = {
             usage_data: "array",
             total_bytes: "number",
             period: "string"
+          },
+          errors: {
+            "400": "Bad Request - Invalid date range",
+            "401": "Unauthorized - Invalid or expired token",
+            "500": "Internal Server Error"
           }
         }
       ]
