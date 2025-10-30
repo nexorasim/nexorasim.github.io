@@ -3,9 +3,11 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  base: process.env.NODE_ENV === 'production' ? './' : '/',
   build: {
     outDir: 'dist',
-    assetsDir: 'assets'
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild'
   }
 })

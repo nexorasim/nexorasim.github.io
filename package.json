@@ -1,5 +1,5 @@
 {
-  "name": "nexorasim-entitlement-server",
+  "name": "@nexorasim/entitlement-server",
   "version": "1.0.0",
   "type": "module",
   "homepage": "https://nexorasim.github.io",

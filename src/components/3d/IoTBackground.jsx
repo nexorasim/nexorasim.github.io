@@ -5,11 +5,22 @@ import * as random from 'maath/random/dist/maath-random.esm'
 
 function Particles(props) {
   const ref = useRef()
-  const [sphere] = useMemo(() => [random.inSphere(new Float32Array(5000), { radius: 1.5 })], [])
+  const [sphere] = useMemo(() => {
+    try {
+      return [random.inSphere(new Float32Array(5000), { radius: 1.5 })]
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to generate particles:', error)
+      }
+      return [new Float32Array(0)]
+    }
+  }, [])
 
   useFrame((state, delta) => {
-    ref.current.rotation.x -= delta / 10
-    ref.current.rotation.y -= delta / 15
+    if (ref.current) {
+      ref.current.rotation.x -= delta / 10
+      ref.current.rotation.y -= delta / 15
+    }
   })
 
   return (
@@ -30,7 +41,11 @@ function Particles(props) {
 export default function IoTBackground() {
   return (
     <div className="fixed inset-0 -z-10">
-      <Canvas camera={{ position: [0, 0, 1] }}>
+      <Canvas 
+        camera={{ position: [0, 0, 1] }}
+        gl={{ antialias: false, alpha: false }}
+        dpr={[1, 2]}
+      >
         <Particles />
       </Canvas>
     </div>

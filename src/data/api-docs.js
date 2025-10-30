@@ -13,12 +13,12 @@ export const apiDocs = {
           path: "/auth/token",
           description: "Obtain access token",
           parameters: {
-            client_id: "string",
-            client_secret: "string", 
+            client_id: "<CLIENT_ID>",
+            client_secret: "<CLIENT_SECRET>", 
             grant_type: "client_credentials"
           },
           response: {
-            access_token: "string",
+            access_token: "<ACCESS_TOKEN>",
             token_type: "Bearer",
             expires_in: 3600
           }
@@ -35,12 +35,12 @@ export const apiDocs = {
           path: "/v2/esim/provision",
           description: "Provision new eSIM profile",
           headers: {
-            Authorization: "Bearer {token}"
+            Authorization: "Bearer <ACCESS_TOKEN>"
           },
           parameters: {
             operator: "mpt|mytel|atom|u9",
-            device_id: "string",
-            plan_id: "string"
+            device_id: "<DEVICE_ID>",
+            plan_id: "<PLAN_ID>"
           }
         },
         {
@@ -48,7 +48,7 @@ export const apiDocs = {
           path: "/v2/esim/{iccid}/status",
           description: "Get eSIM status",
           headers: {
-            Authorization: "Bearer {token}"
+            Authorization: "Bearer <ACCESS_TOKEN>"
           }
         }
       ]
@@ -63,7 +63,7 @@ export const apiDocs = {
           path: "/v2/devices",
           description: "List all devices",
           headers: {
-            Authorization: "Bearer {token}"
+            Authorization: "Bearer <ACCESS_TOKEN>"
           }
         },
         {
@@ -71,12 +71,12 @@ export const apiDocs = {
           path: "/v2/devices",
           description: "Register new device",
           headers: {
-            Authorization: "Bearer {token}"
+            Authorization: "Bearer <ACCESS_TOKEN>"
           },
           parameters: {
-            device_id: "string",
-            device_type: "string",
-            operator: "string"
+            device_id: "<DEVICE_ID>",
+            device_type: "<DEVICE_TYPE>",
+            operator: "<OPERATOR>"
           }
         }
       ]
@@ -91,10 +91,10 @@ export const apiDocs = {
           path: "/v2/analytics/usage",
           description: "Get usage statistics",
           headers: {
-            Authorization: "Bearer {token}"
+            Authorization: "Bearer <ACCESS_TOKEN>"
           },
           parameters: {
-            device_id: "string (optional)",
+            device_id: "<DEVICE_ID> (optional)",
             start_date: "ISO 8601 date",
             end_date: "ISO 8601 date"
           }

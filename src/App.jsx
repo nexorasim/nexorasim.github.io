@@ -1,27 +1,32 @@
 import React from 'react'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { LanguageProvider } from './hooks/useLanguage'
+import ErrorBoundary from './components/ErrorBoundary'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import Compliance from './pages/Compliance'
+import SystemDashboard from './pages/SystemDashboard'
 
 function App() {
   return (
-    <LanguageProvider>
-      <Router>
-        <div className="min-h-screen bg-primary">
-          <Header />
-          <main className="pt-20">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/compliance" element={<Compliance />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </LanguageProvider>
+    <ErrorBoundary>
+      <LanguageProvider>
+        <Router>
+          <div className="min-h-screen bg-primary">
+            <Header />
+            <main className="pt-20">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/compliance" element={<Compliance />} />
+                <Route path="/system" element={<SystemDashboard />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </LanguageProvider>
+    </ErrorBoundary>
   )
 }
 

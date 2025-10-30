@@ -13,18 +13,19 @@ const Header = () => {
             NexoraSIM Entitlement Server
           </Link>
           
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="nav-link">Home</Link>
-            <span className="nav-link">Solutions</span>
-            <span className="nav-link">Operators</span>
-            <span className="nav-link">Developers</span>
-            <Link to="/pricing" className="nav-link">Pricing</Link>
-            <Link to="/support" className="nav-link">Support</Link>
+          <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
+            <Link to="/" className="nav-link" aria-label="Go to home page">Home</Link>
+            <Link to="/system" className="nav-link" aria-label="System dashboard">System</Link>
+            <Link to="/operators" className="nav-link" aria-label="View operators">Operators</Link>
+            <Link to="/developers" className="nav-link" aria-label="Developer resources">Developers</Link>
+            <Link to="/pricing" className="nav-link" aria-label="View pricing">Pricing</Link>
+            <Link to="/support" className="nav-link" aria-label="Get support">Support</Link>
           </nav>
           
           <button 
             onClick={toggleLanguage}
             className="glass-button text-sm font-medium"
+            aria-label={`Switch to ${language === 'en' ? 'Myanmar' : 'English'} language`}
           >
             {language === 'en' ? 'မြန်မာ' : 'EN'}
           </button>

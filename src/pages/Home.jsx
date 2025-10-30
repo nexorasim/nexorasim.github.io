@@ -44,10 +44,30 @@ const Home = () => {
               {t.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="glass-button text-lg px-8 py-4">
+              <button 
+                className="glass-button text-lg px-8 py-4 hover:scale-105 transition-transform"
+                onClick={() => {
+                  try {
+                    window.open('/docs', '_blank')
+                  } catch (e) {
+                    window.location.href = '/docs'
+                  }
+                }}
+                aria-label="Get started with NexoraSIM"
+              >
                 {t.cta1}
               </button>
-              <button className="glass-button text-lg px-8 py-4">
+              <button 
+                className="glass-button text-lg px-8 py-4 hover:scale-105 transition-transform"
+                onClick={() => {
+                  try {
+                    window.open('/docs/api-overview', '_blank')
+                  } catch (e) {
+                    window.location.href = '/docs/api-overview'
+                  }
+                }}
+                aria-label="View API documentation"
+              >
                 {t.cta2}
               </button>
             </div>
