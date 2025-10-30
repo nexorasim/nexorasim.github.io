@@ -70,7 +70,7 @@ const Developers = () => {
           </div>
         ))}
 
-        <div className="glass-panel p-6">
+        <div className="glass-panel p-6 mb-6">
           <h3 className="text-xl font-bold text-accent mb-4">Supported Operators</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Object.entries(apiDocs.operators).map(([key, operator]) => (
@@ -83,6 +83,28 @@ const Developers = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        <div className="glass-panel p-6">
+          <h3 className="text-xl font-bold text-accent mb-4">API Security</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-accent mb-2">Authentication</h4>
+              <div className="text-accent/70">{apiDocs.security.authentication}</div>
+            </div>
+            <div className="border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-accent mb-2">Encryption</h4>
+              <div className="text-accent/70">{apiDocs.security.encryption}</div>
+            </div>
+            <div className="border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-accent mb-2">Rate Limiting</h4>
+              <div className="text-accent/70">{apiDocs.security.rate_limiting}</div>
+            </div>
+            <div className="border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-accent mb-2">CORS</h4>
+              <div className="text-accent/70">{apiDocs.security.cors}</div>
+            </div>
           </div>
         </div>
       </div>
