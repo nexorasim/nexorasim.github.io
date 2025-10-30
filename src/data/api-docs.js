@@ -4,6 +4,7 @@ export const apiDocs = {
   description: "Secure REST API for enterprise eSIM provisioning, device management, and analytics",
   baseUrl: "https://api.nexorasim.com",
   security: "OAuth 2.0 + TLS 1.3",
+  documentation: "https://nexorasim.github.io/#/developers",
   
   endpoints: {
     authentication: {
@@ -99,6 +100,50 @@ export const apiDocs = {
             device_id: "string (optional)",
             start_date: "ISO 8601 date",
             end_date: "ISO 8601 date"
+          }
+        }
+      ]
+    },
+    
+    profiles: {
+      title: "Profile Management",
+      description: "Manage eSIM profiles and lifecycle",
+      methods: [
+        {
+          method: "POST",
+          path: "/v2/profiles",
+          description: "Create new profile",
+          headers: {
+            Authorization: "Bearer {access_token}"
+          },
+          parameters: {
+            operator: "string",
+            plan_type: "consumer|iot|enterprise",
+            activation_code: "string"
+          }
+        },
+        {
+          method: "PUT",
+          path: "/v2/profiles/{iccid}/enable",
+          description: "Enable profile",
+          headers: {
+            Authorization: "Bearer {access_token}"
+          }
+        },
+        {
+          method: "PUT",
+          path: "/v2/profiles/{iccid}/disable",
+          description: "Disable profile",
+          headers: {
+            Authorization: "Bearer {access_token}"
+          }
+        },
+        {
+          method: "DELETE",
+          path: "/v2/profiles/{iccid}",
+          description: "Delete profile",
+          headers: {
+            Authorization: "Bearer {access_token}"
           }
         }
       ]

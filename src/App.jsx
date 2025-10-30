@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Compliance from './pages/Compliance'
 import SystemDashboard from './pages/SystemDashboard'
+import Developers from './pages/Developers'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/compliance" element={<Compliance />} />
                 <Route path="/system" element={<SystemDashboard />} />
+                <Route path="/developers" element={<Developers />} />
               </Routes>
             </main>
             <Footer />
