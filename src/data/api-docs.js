@@ -1,7 +1,9 @@
 export const apiDocs = {
-  version: "2.0",
-  title: "NexoraSIM API Documentation",
-  description: "Complete REST API documentation for eSIM provisioning, device management, and analytics",
+  version: "2.1",
+  title: "NexoraSIM Enterprise eSIM API",
+  description: "Secure REST API for enterprise eSIM provisioning, device management, and analytics",
+  baseUrl: "https://api.nexorasim.com",
+  security: "OAuth 2.0 + TLS 1.3",
   
   endpoints: {
     authentication: {
@@ -13,12 +15,12 @@ export const apiDocs = {
           path: "/auth/token",
           description: "Obtain access token",
           parameters: {
-            client_id: "<CLIENT_ID>",
-            client_secret: "<CLIENT_SECRET>", 
+            client_id: "string",
+            client_secret: "string", 
             grant_type: "client_credentials"
           },
           response: {
-            access_token: "<ACCESS_TOKEN>",
+            access_token: "string",
             token_type: "Bearer",
             expires_in: 3600
           }
@@ -35,12 +37,12 @@ export const apiDocs = {
           path: "/v2/esim/provision",
           description: "Provision new eSIM profile",
           headers: {
-            Authorization: "Bearer <ACCESS_TOKEN>"
+            Authorization: "Bearer {access_token}"
           },
           parameters: {
             operator: "mpt|mytel|atom|u9",
-            device_id: "<DEVICE_ID>",
-            plan_id: "<PLAN_ID>"
+            device_id: "string",
+            plan_id: "string"
           }
         },
         {
@@ -48,7 +50,7 @@ export const apiDocs = {
           path: "/v2/esim/{iccid}/status",
           description: "Get eSIM status",
           headers: {
-            Authorization: "Bearer <ACCESS_TOKEN>"
+            Authorization: "Bearer {access_token}"
           }
         }
       ]
@@ -63,7 +65,7 @@ export const apiDocs = {
           path: "/v2/devices",
           description: "List all devices",
           headers: {
-            Authorization: "Bearer <ACCESS_TOKEN>"
+            Authorization: "Bearer {access_token}"
           }
         },
         {
@@ -71,12 +73,12 @@ export const apiDocs = {
           path: "/v2/devices",
           description: "Register new device",
           headers: {
-            Authorization: "Bearer <ACCESS_TOKEN>"
+            Authorization: "Bearer {access_token}"
           },
           parameters: {
-            device_id: "<DEVICE_ID>",
-            device_type: "<DEVICE_TYPE>",
-            operator: "<OPERATOR>"
+            device_id: "string",
+            device_type: "string",
+            operator: "string"
           }
         }
       ]
@@ -91,10 +93,10 @@ export const apiDocs = {
           path: "/v2/analytics/usage",
           description: "Get usage statistics",
           headers: {
-            Authorization: "Bearer <ACCESS_TOKEN>"
+            Authorization: "Bearer {access_token}"
           },
           parameters: {
-            device_id: "<DEVICE_ID> (optional)",
+            device_id: "string (optional)",
             start_date: "ISO 8601 date",
             end_date: "ISO 8601 date"
           }
