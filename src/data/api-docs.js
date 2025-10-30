@@ -288,6 +288,11 @@ export const apiDocs = {
             components: "object",
             errors: "array",
             timestamp: "ISO 8601 date"
+          },
+          errors: {
+            "401": "Unauthorized - Invalid or expired token",
+            "503": "Service Unavailable - System degraded",
+            "500": "Internal Server Error"
           }
         },
         {
@@ -304,6 +309,10 @@ export const apiDocs = {
           response: {
             errors: "array",
             total: "number"
+          },
+          errors: {
+            "401": "Unauthorized - Invalid or expired token",
+            "500": "Internal Server Error"
           }
         }
       ]
