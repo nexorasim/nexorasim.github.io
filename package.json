@@ -21,7 +21,18 @@
     "test:all": "npm run error:check && npm run validate:all && npm run api:validate",
     "site:health": "bash scripts/site_health_check.sh",
     "deploy:github": "npm run build && gh-pages -d dist",
-    "ci:check": "npm run error:check && npm run validate:all && npm run health:check"
+    "ci:check": "npm run error:check && npm run validate:all && npm run health:check",
+    "git:check": "node scripts/git-error-check.js",
+    "github:ops": "node scripts/github-operations.js",
+    "github:create": "node scripts/github-operations.js create",
+    "github:update": "node scripts/github-operations.js update",
+    "github:delete": "node scripts/github-operations.js delete",
+    "github:install": "node scripts/github-operations.js install",
+    "github:run": "node scripts/github-operations.js run",
+    "github:dev": "node scripts/github-operations.js dev",
+    "github:deploy": "node scripts/github-operations.js deploy",
+    "github:all": "node scripts/github-operations.js all",
+    "full:check": "npm run git:check && npm run test:all"
   },
   "dependencies": {
     "gsap": "^3.12.2",
