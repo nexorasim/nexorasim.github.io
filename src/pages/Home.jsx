@@ -47,24 +47,16 @@ const Home = () => {
               <button 
                 className="glass-button text-lg px-8 py-4 hover:scale-105 transition-transform"
                 onClick={() => {
-                  try {
-                    window.open('/docs', '_blank')
-                  } catch (e) {
-                    window.location.href = '/docs'
-                  }
+                  window.location.hash = '#/epm'
                 }}
-                aria-label="Get started with NexoraSIM"
+                aria-label="Get started with NexoraSIM ePM Dashboard"
               >
                 {t.cta1}
               </button>
               <button 
                 className="glass-button text-lg px-8 py-4 hover:scale-105 transition-transform"
                 onClick={() => {
-                  try {
-                    window.open('/docs/api-overview', '_blank')
-                  } catch (e) {
-                    window.location.href = '/docs/api-overview'
-                  }
+                  window.location.hash = '#/developers'
                 }}
                 aria-label="View API documentation"
               >

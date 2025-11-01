@@ -7,6 +7,8 @@ yarn-error.log*
 # Production builds
 dist/
 build/
+*.tgz
+*.tar.gz
 
 # Environment variables
 .env
@@ -48,6 +50,11 @@ logs/
 *.key
 config/secrets.json
 
-# Batch files (maintenance scripts)
-*.bat
-*.ps1
+# Batch files (maintenance scripts - keep fix script)
+# *.bat
+# *.ps1
+
+# Git and GitHub specific
+.git/
+*.orig
+*.rej
