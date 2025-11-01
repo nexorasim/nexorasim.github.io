@@ -51,4 +51,3 @@ config/secrets.json
 # Batch files (maintenance scripts)
 *.bat
 *.ps1
-node_modules
