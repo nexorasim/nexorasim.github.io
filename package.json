@@ -32,7 +32,16 @@
     "github:dev": "node scripts/github-operations.js dev",
     "github:deploy": "node scripts/github-operations.js deploy",
     "github:all": "node scripts/github-operations.js all",
-    "full:check": "npm run git:check && npm run test:all"
+    "full:check": "npm run git:check && npm run test:all",
+    "check:100": "node scripts/git-github-check.js",
+    "ops:all": "node scripts/operations-manager.js all",
+    "ops:update": "node scripts/operations-manager.js update",
+    "ops:create": "node scripts/operations-manager.js create",
+    "ops:delete": "node scripts/operations-manager.js delete",
+    "ops:install": "node scripts/operations-manager.js install",
+    "ops:run": "node scripts/operations-manager.js run",
+    "ops:dev": "node scripts/operations-manager.js dev",
+    "ops:deploy": "node scripts/operations-manager.js deploy"
   },
   "dependencies": {
     "gsap": "^3.12.2",
