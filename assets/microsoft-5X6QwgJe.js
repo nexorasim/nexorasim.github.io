@@ -1,4 +1,4 @@
-import { r as reactExports, g as getDefaultExportFromCjs, R as React$1, a as reactDomExports } from "./vendor-CNj5xcql.js";
+import { r as reactExports, g as getDefaultExportFromCjs, R as React, a as reactDomExports } from "./vendor-1ctSgPI3.js";
 function _mergeNamespaces(n2, m2) {
   for (var i = 0; i < m2.length; i++) {
     const e2 = m2[i];
@@ -18,7 +18,7 @@ function _mergeNamespaces(n2, m2) {
   }
   return Object.freeze(Object.defineProperty(n2, Symbol.toStringTag, { value: "Module" }));
 }
-var jsxRuntime$1 = { exports: {} };
+var jsxRuntime = { exports: {} };
 var reactJsxRuntime_production_min = {};
 /**
  * @license React
@@ -43,13 +43,13 @@ reactJsxRuntime_production_min.Fragment = l$1;
 reactJsxRuntime_production_min.jsx = q$1;
 reactJsxRuntime_production_min.jsxs = q$1;
 {
-  jsxRuntime$1.exports = reactJsxRuntime_production_min;
+  jsxRuntime.exports = reactJsxRuntime_production_min;
 }
-var jsxRuntimeExports = jsxRuntime$1.exports;
-const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+var jsxRuntimeExports = jsxRuntime.exports;
+const jsxRuntime_default = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
 const ReactRuntime = /* @__PURE__ */ _mergeNamespaces({
   __proto__: null,
-  default: jsxRuntime
+  default: jsxRuntime_default
 }, [jsxRuntimeExports]);
 const __GLOBAL__ = typeof window === "undefined" ? global : window;
 const __NAMESPACE_PREFIX__ = "@griffel/";
@@ -423,7 +423,7 @@ function canUseDOM$1() {
 const useInsertionEffect$2 = (
   // @ts-expect-error Hack to make sure that `useInsertionEffect` will not cause bundling issues in older React versions
   // eslint-disable-next-line no-useless-concat
-  React$1["useInsertionEffect"] ? React$1["useInsertionEffect"] : void 0
+  React["useInsertionEffect"] ? React["useInsertionEffect"] : void 0
 );
 const insertionFactory = () => {
   const insertionCache = {};
@@ -848,20 +848,6 @@ function getNativeElementProps(tagName, props, excludedPropNames) {
   allowedPropNames.as = 1;
   return getNativeProps(props, allowedPropNames, excludedPropNames);
 }
-const getPartitionedNativeProps = ({ primarySlotTagName, props, excludedPropNames }) => {
-  return {
-    root: {
-      style: props.style,
-      className: props.className
-    },
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    primary: getNativeElementProps(primarySlotTagName, props, [
-      ...excludedPropNames || [],
-      "style",
-      "className"
-    ])
-  };
-};
 const getIntrinsicElementProps = (tagName, props, excludedPropNames) => {
   var _props_as;
   return getNativeElementProps((_props_as = props.as) !== null && _props_as !== void 0 ? _props_as : tagName, props, excludedPropNames);
@@ -923,30 +909,18 @@ function useOverrides() {
   return (_React_useContext = reactExports.useContext(OverridesContext)) !== null && _React_useContext !== void 0 ? _React_useContext : {};
 }
 const CustomStyleHooksContext = reactExports.createContext(void 0);
-const noop$1 = () => {
+const noop = () => {
 };
 const CustomStyleHooksProvider = CustomStyleHooksContext.Provider;
 const useCustomStyleHook = (hook) => {
   var _React_useContext;
   var _React_useContext_hook;
-  return (_React_useContext_hook = (_React_useContext = reactExports.useContext(CustomStyleHooksContext)) === null || _React_useContext === void 0 ? void 0 : _React_useContext[hook]) !== null && _React_useContext_hook !== void 0 ? _React_useContext_hook : noop$1;
+  return (_React_useContext_hook = (_React_useContext = reactExports.useContext(CustomStyleHooksContext)) === null || _React_useContext === void 0 ? void 0 : _React_useContext[hook]) !== null && _React_useContext_hook !== void 0 ? _React_useContext_hook : noop;
 };
 const PortalMountNodeContext = reactExports.createContext(void 0);
 PortalMountNodeContext.Provider;
 function usePortalMountNode$1() {
   return reactExports.useContext(PortalMountNodeContext);
-}
-const setAnimationFrameNoop = (callback) => {
-  callback(0);
-  return 0;
-};
-const cancelAnimationFrameNoop = (handle) => handle;
-function useAnimationFrame() {
-  const { targetDocument } = useFluent();
-  const win = targetDocument === null || targetDocument === void 0 ? void 0 : targetDocument.defaultView;
-  const setAnimationFrame = win ? win.requestAnimationFrame : setAnimationFrameNoop;
-  const clearAnimationFrame = win ? win.cancelAnimationFrame : cancelAnimationFrameNoop;
-  return useBrowserTimer(setAnimationFrame, clearAnimationFrame);
 }
 function isFactoryDispatch(newState) {
   return typeof newState === "function";
@@ -1039,7 +1013,7 @@ function useId(prefix = "fui-", providedId) {
   "use no memo";
   const contextValue = useSSRContext();
   const idPrefix = useIdPrefix();
-  const _useId = React$1["useId"];
+  const _useId = React["useId"];
   if (_useId) {
     const generatedId = _useId();
     const escapedId = reactExports.useMemo(() => generatedId.replace(/:/g, ""), [
@@ -1079,153 +1053,6 @@ function useMergedRefs(...refs) {
   );
   return mergedCallback;
 }
-const DEFAULT_CONTAINS = (parent, child) => !!(parent === null || parent === void 0 ? void 0 : parent.contains(child));
-const useOnClickOutside = (options) => {
-  const { targetDocument } = useFluent();
-  const win = targetDocument === null || targetDocument === void 0 ? void 0 : targetDocument.defaultView;
-  const { refs, callback, element, disabled, disabledFocusOnIframe, contains = DEFAULT_CONTAINS } = options;
-  const timeoutId = reactExports.useRef(void 0);
-  useIFrameFocus({
-    element,
-    disabled: disabledFocusOnIframe || disabled,
-    callback,
-    refs,
-    contains
-  });
-  const isMouseDownInsideRef = reactExports.useRef(false);
-  const listener = useEventCallback((ev) => {
-    if (isMouseDownInsideRef.current) {
-      isMouseDownInsideRef.current = false;
-      return;
-    }
-    const target = ev.composedPath()[0];
-    const isOutside = refs.every((ref) => !contains(ref.current || null, target));
-    if (isOutside && !disabled) {
-      callback(ev);
-    }
-  });
-  const handleMouseDown = useEventCallback((ev) => {
-    isMouseDownInsideRef.current = refs.some((ref) => contains(ref.current || null, ev.target));
-  });
-  reactExports.useEffect(() => {
-    if (disabled) {
-      return;
-    }
-    let currentEvent = getWindowEvent(win);
-    const conditionalHandler = (event) => {
-      if (event === currentEvent) {
-        currentEvent = void 0;
-        return;
-      }
-      listener(event);
-    };
-    element === null || element === void 0 ? void 0 : element.addEventListener("click", conditionalHandler, true);
-    element === null || element === void 0 ? void 0 : element.addEventListener("touchstart", conditionalHandler, true);
-    element === null || element === void 0 ? void 0 : element.addEventListener("contextmenu", conditionalHandler, true);
-    element === null || element === void 0 ? void 0 : element.addEventListener("mousedown", handleMouseDown, true);
-    timeoutId.current = win === null || win === void 0 ? void 0 : win.setTimeout(() => {
-      currentEvent = void 0;
-    }, 1);
-    return () => {
-      element === null || element === void 0 ? void 0 : element.removeEventListener("click", conditionalHandler, true);
-      element === null || element === void 0 ? void 0 : element.removeEventListener("touchstart", conditionalHandler, true);
-      element === null || element === void 0 ? void 0 : element.removeEventListener("contextmenu", conditionalHandler, true);
-      element === null || element === void 0 ? void 0 : element.removeEventListener("mousedown", handleMouseDown, true);
-      win === null || win === void 0 ? void 0 : win.clearTimeout(timeoutId.current);
-      currentEvent = void 0;
-    };
-  }, [
-    listener,
-    element,
-    disabled,
-    handleMouseDown,
-    win
-  ]);
-};
-const getWindowEvent = (target) => {
-  if (target) {
-    var _target_ownerDocument_defaultView, _target_ownerDocument;
-    if (typeof target.window === "object" && target.window === target) {
-      return target.event;
-    }
-    var _target_ownerDocument_defaultView_event;
-    return (_target_ownerDocument_defaultView_event = (_target_ownerDocument = target.ownerDocument) === null || _target_ownerDocument === void 0 ? void 0 : (_target_ownerDocument_defaultView = _target_ownerDocument.defaultView) === null || _target_ownerDocument_defaultView === void 0 ? void 0 : _target_ownerDocument_defaultView.event) !== null && _target_ownerDocument_defaultView_event !== void 0 ? _target_ownerDocument_defaultView_event : void 0;
-  }
-  return void 0;
-};
-const FUI_FRAME_EVENT = "fuiframefocus";
-const useIFrameFocus = (options) => {
-  const { disabled, element: targetDocument, callback, contains = DEFAULT_CONTAINS, pollDuration = 100, refs } = options;
-  const timeoutRef = reactExports.useRef(void 0);
-  const listener = useEventCallback((e2) => {
-    const isOutside = refs.every((ref) => !contains(ref.current || null, e2.target));
-    if (isOutside && !disabled) {
-      callback(e2);
-    }
-  });
-  reactExports.useEffect(() => {
-    if (disabled) {
-      return;
-    }
-    targetDocument === null || targetDocument === void 0 ? void 0 : targetDocument.addEventListener(FUI_FRAME_EVENT, listener, true);
-    return () => {
-      targetDocument === null || targetDocument === void 0 ? void 0 : targetDocument.removeEventListener(FUI_FRAME_EVENT, listener, true);
-    };
-  }, [
-    targetDocument,
-    disabled,
-    listener
-  ]);
-  reactExports.useEffect(() => {
-    var _targetDocument_defaultView;
-    if (disabled) {
-      return;
-    }
-    timeoutRef.current = targetDocument === null || targetDocument === void 0 ? void 0 : (_targetDocument_defaultView = targetDocument.defaultView) === null || _targetDocument_defaultView === void 0 ? void 0 : _targetDocument_defaultView.setInterval(() => {
-      const activeElement = targetDocument === null || targetDocument === void 0 ? void 0 : targetDocument.activeElement;
-      if ((activeElement === null || activeElement === void 0 ? void 0 : activeElement.tagName) === "IFRAME" || (activeElement === null || activeElement === void 0 ? void 0 : activeElement.tagName) === "WEBVIEW") {
-        const event = new CustomEvent(FUI_FRAME_EVENT, {
-          bubbles: true
-        });
-        activeElement.dispatchEvent(event);
-      }
-    }, pollDuration);
-    return () => {
-      var _targetDocument_defaultView2;
-      targetDocument === null || targetDocument === void 0 ? void 0 : (_targetDocument_defaultView2 = targetDocument.defaultView) === null || _targetDocument_defaultView2 === void 0 ? void 0 : _targetDocument_defaultView2.clearInterval(timeoutRef.current);
-    };
-  }, [
-    targetDocument,
-    disabled,
-    pollDuration
-  ]);
-};
-const useOnScrollOutside = (options) => {
-  const { refs, callback, element, disabled, contains: containsProp } = options;
-  const listener = useEventCallback((ev) => {
-    const contains = containsProp || ((parent, child) => !!(parent === null || parent === void 0 ? void 0 : parent.contains(child)));
-    const target = ev.composedPath()[0];
-    const isOutside = refs.every((ref) => !contains(ref.current || null, target));
-    if (isOutside && !disabled) {
-      callback(ev);
-    }
-  });
-  reactExports.useEffect(() => {
-    if (disabled) {
-      return;
-    }
-    element === null || element === void 0 ? void 0 : element.addEventListener("wheel", listener);
-    element === null || element === void 0 ? void 0 : element.addEventListener("touchmove", listener);
-    return () => {
-      element === null || element === void 0 ? void 0 : element.removeEventListener("wheel", listener);
-      element === null || element === void 0 ? void 0 : element.removeEventListener("touchmove", listener);
-    };
-  }, [
-    listener,
-    element,
-    disabled
-  ]);
-};
 const setTimeoutNoop = (_callback) => -1;
 const clearTimeoutNoop = (_handle) => void 0;
 function useTimeout() {
@@ -1251,7 +1078,7 @@ function mergeCallbacks(callback1, callback2) {
     callback2 === null || callback2 === void 0 ? void 0 : callback2(...args);
   };
 }
-function isHTMLElement$2(element, options) {
+function isHTMLElement$1(element, options) {
   var _typedElement_ownerDocument;
   const typedElement = element;
   var _options_constructorName;
@@ -1310,27 +1137,6 @@ function getParent(child, options = {}) {
     return parent.host;
   }
   return parent;
-}
-function elementContains(parent, child) {
-  if (!parent || !child) {
-    return false;
-  }
-  if (parent === child) {
-    return true;
-  } else {
-    const set = /* @__PURE__ */ new WeakSet();
-    while (child) {
-      const nextParent = getParent(child, {
-        skipVirtual: set.has(child)
-      });
-      set.add(child);
-      if (nextParent === parent) {
-        return true;
-      }
-      child = nextParent;
-    }
-  }
-  return false;
 }
 function setVirtualParent(child, parent) {
   if (!child) {
@@ -1599,15 +1405,15 @@ var WeakRefInstance = class {
 var KEYBORG_FOCUSIN = "keyborg:focusin";
 var KEYBORG_FOCUSOUT = "keyborg:focusout";
 function canOverrideNativeFocus(win) {
-  const HTMLElement2 = win.HTMLElement;
-  const origFocus = HTMLElement2.prototype.focus;
+  const HTMLElement = win.HTMLElement;
+  const origFocus = HTMLElement.prototype.focus;
   let isCustomFocusCalled = false;
-  HTMLElement2.prototype.focus = function focus() {
+  HTMLElement.prototype.focus = function focus() {
     isCustomFocusCalled = true;
   };
   const btn = win.document.createElement("button");
   btn.focus();
-  HTMLElement2.prototype.focus = origFocus;
+  HTMLElement.prototype.focus = origFocus;
   return isCustomFocusCalled;
 }
 var _canOverrideNativeFocus = false;
@@ -2026,36 +1832,9 @@ const AsyncFocusSources = {
   Restorer: 2,
   Deloser: 3
 };
-const Visibilities = {
-  Invisible: 0,
-  PartiallyVisible: 1,
-  Visible: 2
-};
 const RestorerTypes = {
   Source: 0,
   Target: 1
-};
-const MoverDirections = {
-  Both: 0,
-  // Default, both left/up keys move to the previous, right/down move to the next.
-  Vertical: 1,
-  // Only up/down arrows move to the next/previous.
-  Horizontal: 2,
-  // Only left/right arrows move to the next/previous.
-  Grid: 3,
-  // Two-dimentional movement depending on the visual placement.
-  GridLinear: 4
-  // Two-dimentional movement depending on the visual placement. Allows linear movement.
-};
-const MoverKeys = {
-  ArrowUp: 1,
-  ArrowDown: 2,
-  ArrowLeft: 3,
-  ArrowRight: 4,
-  PageUp: 5,
-  PageDown: 6,
-  Home: 7,
-  End: 8
 };
 const GroupperTabbabilities = {
   Unlimited: 0,
@@ -2250,9 +2029,6 @@ const TabsterFocusOutEventName = "tabster:focusout";
 const TabsterMoveFocusEventName = "tabster:movefocus";
 const ModalizerActiveEventName = "tabster:modalizer:active";
 const ModalizerInactiveEventName = "tabster:modalizer:inactive";
-const MoverStateEventName = "tabster:mover:state";
-const MoverMoveFocusEventName = "tabster:mover:movefocus";
-const MoverMemorizedElementEventName = "tabster:mover:memorized-element";
 const GroupperMoveFocusEventName = "tabster:groupper:movefocus";
 const RestorerRestoreFocusEventName = "tabster:restorer:restore-focus";
 const RootFocusEventName = "tabster:root:focus";
@@ -2283,11 +2059,6 @@ class TabsterFocusOutEvent extends TabsterCustomEvent {
 class TabsterMoveFocusEvent extends TabsterCustomEvent {
   constructor(detail) {
     super(TabsterMoveFocusEventName, detail);
-  }
-}
-class MoverStateEvent extends TabsterCustomEvent {
-  constructor(detail) {
-    super(MoverStateEventName, detail);
   }
 }
 class ModalizerActiveEvent extends TabsterCustomEvent {
@@ -2376,14 +2147,6 @@ function setDOMAPI(domapi) {
  * Licensed under the MIT License.
  */
 let _isBrokenIE11;
-const _DOMRect = typeof DOMRect !== "undefined" ? DOMRect : class {
-  constructor(x, y2, width, height) {
-    this.left = x || 0;
-    this.top = y2 || 0;
-    this.right = (x || 0) + (width || 0);
-    this.bottom = (y2 || 0) + (height || 0);
-  }
-};
 let _uidCounter = 0;
 try {
   document.createTreeWalker(document, NodeFilter.SHOW_ELEMENT);
@@ -2392,8 +2155,8 @@ try {
   _isBrokenIE11 = true;
 }
 const _updateDummyInputsTimeout = 100;
-function getInstanceContext(getWindow2) {
-  const win = getWindow2();
+function getInstanceContext(getWindow) {
+  const win = getWindow();
   let ctx = win.__tabsterInstanceContext;
   if (!ctx) {
     ctx = {
@@ -2453,8 +2216,8 @@ class FakeWeakRef {
   }
 }
 class WeakHTMLElement {
-  constructor(getWindow2, element, data) {
-    const context = getInstanceContext(getWindow2);
+  constructor(getWindow, element, data) {
+    const context = getInstanceContext(getWindow);
     let ref;
     if (context.WeakRef) {
       ref = new context.WeakRef(element);
@@ -2480,29 +2243,29 @@ class WeakHTMLElement {
     return this._data;
   }
 }
-function cleanupFakeWeakRefs(getWindow2, forceRemove) {
-  const context = getInstanceContext(getWindow2);
+function cleanupFakeWeakRefs(getWindow, forceRemove) {
+  const context = getInstanceContext(getWindow);
   context.fakeWeakRefs = context.fakeWeakRefs.filter((e2) => !FakeWeakRef.cleanup(e2, forceRemove));
 }
-function startFakeWeakRefsCleanup(getWindow2) {
-  const context = getInstanceContext(getWindow2);
+function startFakeWeakRefsCleanup(getWindow) {
+  const context = getInstanceContext(getWindow);
   if (!context.fakeWeakRefsStarted) {
     context.fakeWeakRefsStarted = true;
     context.WeakRef = getWeakRef(context);
   }
   if (!context.fakeWeakRefsTimer) {
-    context.fakeWeakRefsTimer = getWindow2().setTimeout(() => {
+    context.fakeWeakRefsTimer = getWindow().setTimeout(() => {
       context.fakeWeakRefsTimer = void 0;
-      cleanupFakeWeakRefs(getWindow2);
-      startFakeWeakRefsCleanup(getWindow2);
+      cleanupFakeWeakRefs(getWindow);
+      startFakeWeakRefsCleanup(getWindow);
     }, 2 * 60 * 1e3);
   }
 }
-function stopFakeWeakRefsCleanupAndClearStorage(getWindow2) {
-  const context = getInstanceContext(getWindow2);
+function stopFakeWeakRefsCleanupAndClearStorage(getWindow) {
+  const context = getInstanceContext(getWindow);
   context.fakeWeakRefsStarted = false;
   if (context.fakeWeakRefsTimer) {
-    getWindow2().clearTimeout(context.fakeWeakRefsTimer);
+    getWindow().clearTimeout(context.fakeWeakRefsTimer);
     context.fakeWeakRefsTimer = void 0;
     context.fakeWeakRefs = [];
   }
@@ -2523,85 +2286,6 @@ function createElementTreeWalker(doc, root, acceptNode) {
     false
     /* Last argument is not optional for IE11! */
   );
-}
-function getBoundingRect(getWindow2, element) {
-  let cacheId = element.__tabsterCacheId;
-  const context = getInstanceContext(getWindow2);
-  const cached = cacheId ? context.containerBoundingRectCache[cacheId] : void 0;
-  if (cached) {
-    return cached.rect;
-  }
-  const scrollingElement = element.ownerDocument && element.ownerDocument.documentElement;
-  if (!scrollingElement) {
-    return new _DOMRect();
-  }
-  let left = 0;
-  let top = 0;
-  let right = scrollingElement.clientWidth;
-  let bottom = scrollingElement.clientHeight;
-  if (element !== scrollingElement) {
-    const r2 = element.getBoundingClientRect();
-    left = Math.max(left, r2.left);
-    top = Math.max(top, r2.top);
-    right = Math.min(right, r2.right);
-    bottom = Math.min(bottom, r2.bottom);
-  }
-  const rect = new _DOMRect(left < right ? left : -1, top < bottom ? top : -1, left < right ? right - left : 0, top < bottom ? bottom - top : 0);
-  if (!cacheId) {
-    cacheId = "r-" + ++context.lastContainerBoundingRectCacheId;
-    element.__tabsterCacheId = cacheId;
-  }
-  context.containerBoundingRectCache[cacheId] = {
-    rect,
-    element
-  };
-  if (!context.containerBoundingRectCacheTimer) {
-    context.containerBoundingRectCacheTimer = window.setTimeout(() => {
-      context.containerBoundingRectCacheTimer = void 0;
-      for (const cId of Object.keys(context.containerBoundingRectCache)) {
-        delete context.containerBoundingRectCache[cId].element.__tabsterCacheId;
-      }
-      context.containerBoundingRectCache = {};
-    }, 50);
-  }
-  return rect;
-}
-function isElementVerticallyVisibleInContainer(getWindow2, element, tolerance) {
-  const container = getScrollableContainer(element);
-  if (!container) {
-    return false;
-  }
-  const containerRect = getBoundingRect(getWindow2, container);
-  const elementRect = element.getBoundingClientRect();
-  const intersectionTolerance = elementRect.height * (1 - tolerance);
-  const topIntersection = Math.max(0, containerRect.top - elementRect.top);
-  const bottomIntersection = Math.max(0, elementRect.bottom - containerRect.bottom);
-  const totalIntersection = topIntersection + bottomIntersection;
-  return totalIntersection === 0 || totalIntersection <= intersectionTolerance;
-}
-function scrollIntoView(getWindow2, element, alignToTop) {
-  const container = getScrollableContainer(element);
-  if (container) {
-    const containerRect = getBoundingRect(getWindow2, container);
-    const elementRect = element.getBoundingClientRect();
-    if (alignToTop) {
-      container.scrollTop += elementRect.top - containerRect.top;
-    } else {
-      container.scrollTop += elementRect.bottom - containerRect.bottom;
-    }
-  }
-}
-function getScrollableContainer(element) {
-  const doc = element.ownerDocument;
-  if (doc) {
-    for (let el = dom.getParentElement(element); el; el = dom.getParentElement(el)) {
-      if (el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight) {
-        return el;
-      }
-    }
-    return doc.documentElement;
-  }
-  return null;
 }
 function makeFocusIgnored(element) {
   element.__shouldIgnoreFocus = true;
@@ -2630,19 +2314,19 @@ function getUId(wnd) {
   srnd.push(Date.now().toString(36));
   return srnd.join("");
 }
-function getElementUId(getWindow2, element) {
-  const context = getInstanceContext(getWindow2);
+function getElementUId(getWindow, element) {
+  const context = getInstanceContext(getWindow);
   let uid = element.__tabsterElementUID;
   if (!uid) {
-    uid = element.__tabsterElementUID = getUId(getWindow2());
+    uid = element.__tabsterElementUID = getUId(getWindow());
   }
   if (!context.elementByUId[uid] && documentContains(element.ownerDocument, element)) {
-    context.elementByUId[uid] = new WeakHTMLElement(getWindow2, element);
+    context.elementByUId[uid] = new WeakHTMLElement(getWindow, element);
   }
   return uid;
 }
-function clearElementCache(getWindow2, parent) {
-  const context = getInstanceContext(getWindow2);
+function clearElementCache(getWindow, parent) {
+  const context = getInstanceContext(getWindow);
   for (const key of Object.keys(context.elementByUId)) {
     const wel = context.elementByUId[key];
     const el = wel && wel.get();
@@ -2661,22 +2345,15 @@ function matchesSelector(element, selector) {
   const matches = element.matches || element.matchesSelector || element.msMatchesSelector || element.webkitMatchesSelector;
   return matches && matches.call(element, selector);
 }
-function getPromise(getWindow2) {
-  const context = getInstanceContext(getWindow2);
-  if (context.basics.Promise) {
-    return context.basics.Promise;
-  }
-  throw new Error("No Promise defined.");
-}
 function getWeakRef(context) {
   return context.basics.WeakRef;
 }
 let _lastTabsterPartId = 0;
 class TabsterPart {
   constructor(tabster, element, props) {
-    const getWindow2 = tabster.getWindow;
+    const getWindow = tabster.getWindow;
     this._tabster = tabster;
-    this._element = new WeakHTMLElement(getWindow2, element);
+    this._element = new WeakHTMLElement(getWindow, element);
     this._props = {
       ...props
     };
@@ -2695,7 +2372,7 @@ class TabsterPart {
   }
 }
 class DummyInput {
-  constructor(getWindow2, isOutside, props, element, fixedTarget) {
+  constructor(getWindow, isOutside, props, element, fixedTarget) {
     var _a;
     this._focusIn = (e2) => {
       if (this._fixedTarget) {
@@ -2722,7 +2399,7 @@ class DummyInput {
         this.onFocusOut(this, this._isBackward(false, input2, relatedTarget), relatedTarget);
       }
     };
-    const win = getWindow2();
+    const win = getWindow();
     const input = win.document.createElement("i");
     input.tabIndex = 0;
     input.setAttribute("role", "none");
@@ -2790,7 +2467,6 @@ class DummyInput {
 const DummyInputManagerPriorities = {
   Root: 1,
   Modalizer: 2,
-  Mover: 3,
   Groupper: 4
 };
 class DummyInputManager {
@@ -3350,12 +3026,9 @@ function getDummyInputContainer(element) {
  */
 function getTabsterAttribute(props, plain) {
   const attr = JSON.stringify(props);
-  if (plain === true) {
+  {
     return attr;
   }
-  return {
-    [TABSTER_ATTRIBUTE_NAME]: attr
-  };
 }
 function mergeTabsterProps(props, newProps) {
   for (const key of Object.keys(newProps)) {
@@ -3383,7 +3056,7 @@ function setTabsterAttribute(element, newProps, update) {
   }
   mergeTabsterProps(props, newProps);
   if (Object.keys(props).length > 0) {
-    element.setAttribute(TABSTER_ATTRIBUTE_NAME, getTabsterAttribute(props, true));
+    element.setAttribute(TABSTER_ATTRIBUTE_NAME, getTabsterAttribute(props));
   } else {
     element.removeAttribute(TABSTER_ATTRIBUTE_NAME);
   }
@@ -3583,8 +3256,8 @@ class RootAPI {
       roots[id].addDummyInputs();
     }
   }
-  static getRootByUId(getWindow2, id) {
-    const tabster = getWindow2().__tabsterInstance;
+  static getRootByUId(getWindow, id) {
+    const tabster = getWindow().__tabsterInstance;
     return tabster && tabster.root.rootById[id];
   }
   /**
@@ -4091,15 +3764,7 @@ class FocusableAPI {
 const Keys = {
   Tab: "Tab",
   Enter: "Enter",
-  Escape: "Escape",
-  PageUp: "PageUp",
-  PageDown: "PageDown",
-  End: "End",
-  Home: "Home",
-  ArrowLeft: "ArrowLeft",
-  ArrowUp: "ArrowUp",
-  ArrowRight: "ArrowRight",
-  ArrowDown: "ArrowDown"
+  Escape: "Escape"
 };
 /*!
  * Copyright (c) Microsoft Corporation. All rights reserved.
@@ -4124,7 +3789,7 @@ const AsyncFocusIntentPriorityBySource = {
   [AsyncFocusSources.EscapeGroupper]: 2
 };
 class FocusedElementState extends Subscribable {
-  constructor(tabster, getWindow2) {
+  constructor(tabster, getWindow) {
     super();
     this._init = () => {
       const win = this._win();
@@ -4235,7 +3900,7 @@ class FocusedElementState extends Subscribable {
       }
     };
     this._tabster = tabster;
-    this._win = getWindow2;
+    this._win = getWindow;
     tabster.queueInit(this._init);
   }
   dispose() {
@@ -4706,7 +4371,7 @@ class Groupper extends TabsterPart {
   }
 }
 class GroupperAPI {
-  constructor(tabster, getWindow2) {
+  constructor(tabster, getWindow) {
     this._current = {};
     this._grouppers = {};
     this._init = () => {
@@ -4764,7 +4429,7 @@ class GroupperAPI {
       }
     };
     this._tabster = tabster;
-    this._win = getWindow2;
+    this._win = getWindow;
     tabster.queueInit(this._init);
   }
   dispose() {
@@ -4919,12 +4584,12 @@ class GroupperAPI {
  * Licensed under the MIT License.
  */
 class KeyboardNavigationState extends Subscribable {
-  constructor(getWindow2) {
+  constructor(getWindow) {
     super();
     this._onChange = (isNavigatingWithKeyboard) => {
       this.setVal(isNavigatingWithKeyboard, void 0);
     };
-    this._keyborg = createKeyborg(getWindow2());
+    this._keyborg = createKeyborg(getWindow());
     this._keyborg.subscribe(this._onChange);
   }
   dispose() {
@@ -5408,7 +5073,7 @@ class ModalizerAPI {
     const allVisibleElements = visibleElements.length > 0 ? [...visibleElements, ...alwaysAccessibleElements] : void 0;
     const newAugmented = [];
     const newAugmentedMap = /* @__PURE__ */ new WeakMap();
-    const toggle = (element, hide2) => {
+    const toggle = (element, hide) => {
       var _a2;
       const tagName = element.tagName;
       if (tagName === "SCRIPT" || tagName === "STYLE") {
@@ -5416,13 +5081,13 @@ class ModalizerAPI {
       }
       let isAugmented = false;
       if (augmentedMap.has(element)) {
-        if (hide2) {
+        if (hide) {
           isAugmented = true;
         } else {
           augmentedMap.delete(element);
           augmentAttribute(tabster, element, _ariaHidden);
         }
-      } else if (hide2 && !((_a2 = this._accessibleCheck) === null || _a2 === void 0 ? void 0 : _a2.call(this, element, activeModalizerElements)) && augmentAttribute(tabster, element, _ariaHidden, "true")) {
+      } else if (hide && !((_a2 = this._accessibleCheck) === null || _a2 === void 0 ? void 0 : _a2.call(this, element, activeModalizerElements)) && augmentAttribute(tabster, element, _ariaHidden, "true")) {
         augmentedMap.set(element, true);
         isAugmented = true;
       }
@@ -5526,929 +5191,12 @@ class ModalizerAPI {
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
-const _inputSelector = /* @__PURE__ */ ["input", "textarea", "*[contenteditable]"].join(", ");
-class MoverDummyManager extends DummyInputManager {
-  constructor(element, tabster, getMemorized, sys) {
-    super(tabster, element, DummyInputManagerPriorities.Mover, sys);
-    this._onFocusDummyInput = (dummyInput) => {
-      var _a, _b;
-      const container = this._element.get();
-      const input = dummyInput.input;
-      if (container && input) {
-        const ctx = RootAPI.getTabsterContext(this._tabster, container);
-        let toFocus;
-        if (ctx) {
-          toFocus = (_a = FocusedElementState.findNextTabbable(this._tabster, ctx, void 0, input, void 0, !dummyInput.isFirst, true)) === null || _a === void 0 ? void 0 : _a.element;
-        }
-        const memorized = (_b = this._getMemorized()) === null || _b === void 0 ? void 0 : _b.get();
-        if (memorized && this._tabster.focusable.isFocusable(memorized)) {
-          toFocus = memorized;
-        }
-        if (toFocus) {
-          nativeFocus(toFocus);
-        }
-      }
-    };
-    this._tabster = tabster;
-    this._getMemorized = getMemorized;
-    this._setHandlers(this._onFocusDummyInput);
-  }
-}
-const _moverUpdateAdd = 1;
-const _moverUpdateAttr = 2;
-const _moverUpdateRemove = 3;
-class Mover extends TabsterPart {
-  constructor(tabster, element, onDispose, props, sys) {
-    var _a;
-    super(tabster, element, props);
-    this._visible = {};
-    this._onIntersection = (entries) => {
-      for (const entry of entries) {
-        const el = entry.target;
-        const id = getElementUId(this._win, el);
-        let newVisibility;
-        let fullyVisible = this._fullyVisible;
-        if (entry.intersectionRatio >= 0.25) {
-          newVisibility = entry.intersectionRatio >= 0.75 ? Visibilities.Visible : Visibilities.PartiallyVisible;
-          if (newVisibility === Visibilities.Visible) {
-            fullyVisible = id;
-          }
-        } else {
-          newVisibility = Visibilities.Invisible;
-        }
-        if (this._visible[id] !== newVisibility) {
-          if (newVisibility === void 0) {
-            delete this._visible[id];
-            if (fullyVisible === id) {
-              delete this._fullyVisible;
-            }
-          } else {
-            this._visible[id] = newVisibility;
-            this._fullyVisible = fullyVisible;
-          }
-          const state = this.getState(el);
-          if (state) {
-            el.dispatchEvent(new MoverStateEvent(state));
-          }
-        }
-      }
-    };
-    this._win = tabster.getWindow;
-    this.visibilityTolerance = (_a = props.visibilityTolerance) !== null && _a !== void 0 ? _a : 0.8;
-    if (this._props.trackState || this._props.visibilityAware) {
-      this._intersectionObserver = new IntersectionObserver(this._onIntersection, {
-        threshold: [0, 0.25, 0.5, 0.75, 1]
-      });
-      this._observeState();
-    }
-    this._onDispose = onDispose;
-    const getMemorized = () => props.memorizeCurrent ? this._current : void 0;
-    if (!tabster.controlTab) {
-      this.dummyManager = new MoverDummyManager(this._element, tabster, getMemorized, sys);
-    }
-  }
-  dispose() {
-    var _a;
-    this._onDispose(this);
-    if (this._intersectionObserver) {
-      this._intersectionObserver.disconnect();
-      delete this._intersectionObserver;
-    }
-    delete this._current;
-    delete this._fullyVisible;
-    delete this._allElements;
-    delete this._updateQueue;
-    if (this._unobserve) {
-      this._unobserve();
-      delete this._unobserve;
-    }
-    const win = this._win();
-    if (this._setCurrentTimer) {
-      win.clearTimeout(this._setCurrentTimer);
-      delete this._setCurrentTimer;
-    }
-    if (this._updateTimer) {
-      win.clearTimeout(this._updateTimer);
-      delete this._updateTimer;
-    }
-    (_a = this.dummyManager) === null || _a === void 0 ? void 0 : _a.dispose();
-    delete this.dummyManager;
-  }
-  setCurrent(element) {
-    if (element) {
-      this._current = new WeakHTMLElement(this._win, element);
-    } else {
-      this._current = void 0;
-    }
-    if ((this._props.trackState || this._props.visibilityAware) && !this._setCurrentTimer) {
-      this._setCurrentTimer = this._win().setTimeout(() => {
-        var _a;
-        delete this._setCurrentTimer;
-        const changed = [];
-        if (this._current !== this._prevCurrent) {
-          changed.push(this._current);
-          changed.push(this._prevCurrent);
-          this._prevCurrent = this._current;
-        }
-        for (const weak of changed) {
-          const el = weak === null || weak === void 0 ? void 0 : weak.get();
-          if (el && ((_a = this._allElements) === null || _a === void 0 ? void 0 : _a.get(el)) === this) {
-            const props = this._props;
-            if (el && (props.visibilityAware !== void 0 || props.trackState)) {
-              const state = this.getState(el);
-              if (state) {
-                el.dispatchEvent(new MoverStateEvent(state));
-              }
-            }
-          }
-        }
-      });
-    }
-  }
-  getCurrent() {
-    var _a;
-    return ((_a = this._current) === null || _a === void 0 ? void 0 : _a.get()) || null;
-  }
-  findNextTabbable(currentElement, referenceElement, isBackward, ignoreAccessibility) {
-    const container = this.getElement();
-    const currentIsDummy = container && getDummyInputContainer(currentElement) === container;
-    if (!container) {
-      return null;
-    }
-    let next = null;
-    let outOfDOMOrder = false;
-    let uncontrolled;
-    if (this._props.tabbable || currentIsDummy || currentElement && !dom.nodeContains(container, currentElement)) {
-      const findProps = {
-        currentElement,
-        referenceElement,
-        container,
-        ignoreAccessibility,
-        useActiveModalizer: true
-      };
-      const findPropsOut = {};
-      next = this._tabster.focusable[isBackward ? "findPrev" : "findNext"](findProps, findPropsOut);
-      outOfDOMOrder = !!findPropsOut.outOfDOMOrder;
-      uncontrolled = findPropsOut.uncontrolled;
-    }
-    return {
-      element: next,
-      uncontrolled,
-      outOfDOMOrder
-    };
-  }
-  acceptElement(element, state) {
-    var _a, _b;
-    if (!FocusedElementState.isTabbing) {
-      return ((_a = state.currentCtx) === null || _a === void 0 ? void 0 : _a.excludedFromMover) ? NodeFilter.FILTER_REJECT : void 0;
-    }
-    const {
-      memorizeCurrent,
-      visibilityAware,
-      hasDefault = true
-    } = this._props;
-    const moverElement = this.getElement();
-    if (moverElement && (memorizeCurrent || visibilityAware || hasDefault) && (!dom.nodeContains(moverElement, state.from) || getDummyInputContainer(state.from) === moverElement)) {
-      let found;
-      if (memorizeCurrent) {
-        const current = (_b = this._current) === null || _b === void 0 ? void 0 : _b.get();
-        if (current && state.acceptCondition(current)) {
-          found = current;
-        }
-      }
-      if (!found && hasDefault) {
-        found = this._tabster.focusable.findDefault({
-          container: moverElement,
-          useActiveModalizer: true
-        });
-      }
-      if (!found && visibilityAware) {
-        found = this._tabster.focusable.findElement({
-          container: moverElement,
-          useActiveModalizer: true,
-          isBackward: state.isBackward,
-          acceptCondition: (el) => {
-            var _a2;
-            const id = getElementUId(this._win, el);
-            const visibility = this._visible[id];
-            return moverElement !== el && !!((_a2 = this._allElements) === null || _a2 === void 0 ? void 0 : _a2.get(el)) && state.acceptCondition(el) && (visibility === Visibilities.Visible || visibility === Visibilities.PartiallyVisible && (visibilityAware === Visibilities.PartiallyVisible || !this._fullyVisible));
-          }
-        });
-      }
-      if (found) {
-        state.found = true;
-        state.foundElement = found;
-        state.rejectElementsFrom = moverElement;
-        state.skippedFocusable = true;
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    }
-    return void 0;
-  }
-  _observeState() {
-    const element = this.getElement();
-    if (this._unobserve || !element || typeof MutationObserver === "undefined") {
-      return;
-    }
-    const win = this._win();
-    const allElements = this._allElements = /* @__PURE__ */ new WeakMap();
-    const tabsterFocusable = this._tabster.focusable;
-    let updateQueue = this._updateQueue = [];
-    const observer = dom.createMutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        const target = mutation.target;
-        const removed = mutation.removedNodes;
-        const added = mutation.addedNodes;
-        if (mutation.type === "attributes") {
-          if (mutation.attributeName === "tabindex") {
-            updateQueue.push({
-              element: target,
-              type: _moverUpdateAttr
-            });
-          }
-        } else {
-          for (let i = 0; i < removed.length; i++) {
-            updateQueue.push({
-              element: removed[i],
-              type: _moverUpdateRemove
-            });
-          }
-          for (let i = 0; i < added.length; i++) {
-            updateQueue.push({
-              element: added[i],
-              type: _moverUpdateAdd
-            });
-          }
-        }
-      }
-      requestUpdate();
-    });
-    const setElement = (element2, remove) => {
-      var _a, _b;
-      const current = allElements.get(element2);
-      if (current && remove) {
-        (_a = this._intersectionObserver) === null || _a === void 0 ? void 0 : _a.unobserve(element2);
-        allElements.delete(element2);
-      }
-      if (!current && !remove) {
-        allElements.set(element2, this);
-        (_b = this._intersectionObserver) === null || _b === void 0 ? void 0 : _b.observe(element2);
-      }
-    };
-    const updateElement = (element2) => {
-      const isFocusable = tabsterFocusable.isFocusable(element2);
-      const current = allElements.get(element2);
-      if (current) {
-        if (!isFocusable) {
-          setElement(element2, true);
-        }
-      } else {
-        if (isFocusable) {
-          setElement(element2);
-        }
-      }
-    };
-    const addNewElements = (element2) => {
-      const {
-        mover
-      } = getMoverGroupper(element2);
-      if (mover && mover !== this) {
-        if (mover.getElement() === element2 && tabsterFocusable.isFocusable(element2)) {
-          setElement(element2);
-        } else {
-          return;
-        }
-      }
-      const walker = createElementTreeWalker(win.document, element2, (node) => {
-        const {
-          mover: mover2,
-          groupper
-        } = getMoverGroupper(node);
-        if (mover2 && mover2 !== this) {
-          return NodeFilter.FILTER_REJECT;
-        }
-        const groupperFirstFocusable = groupper === null || groupper === void 0 ? void 0 : groupper.getFirst(true);
-        if (groupper && groupper.getElement() !== node && groupperFirstFocusable && groupperFirstFocusable !== node) {
-          return NodeFilter.FILTER_REJECT;
-        }
-        if (tabsterFocusable.isFocusable(node)) {
-          setElement(node);
-        }
-        return NodeFilter.FILTER_SKIP;
-      });
-      if (walker) {
-        walker.currentNode = element2;
-        while (walker.nextNode()) {
-        }
-      }
-    };
-    const removeWalk = (element2) => {
-      const current = allElements.get(element2);
-      if (current) {
-        setElement(element2, true);
-      }
-      for (let el = dom.getFirstElementChild(element2); el; el = dom.getNextElementSibling(el)) {
-        removeWalk(el);
-      }
-    };
-    const requestUpdate = () => {
-      if (!this._updateTimer && updateQueue.length) {
-        this._updateTimer = win.setTimeout(() => {
-          delete this._updateTimer;
-          for (const {
-            element: element2,
-            type
-          } of updateQueue) {
-            switch (type) {
-              case _moverUpdateAttr:
-                updateElement(element2);
-                break;
-              case _moverUpdateAdd:
-                addNewElements(element2);
-                break;
-              case _moverUpdateRemove:
-                removeWalk(element2);
-                break;
-            }
-          }
-          updateQueue = this._updateQueue = [];
-        }, 0);
-      }
-    };
-    const getMoverGroupper = (element2) => {
-      const ret = {};
-      for (let el = element2; el; el = dom.getParentElement(el)) {
-        const toe = getTabsterOnElement(this._tabster, el);
-        if (toe) {
-          if (toe.groupper && !ret.groupper) {
-            ret.groupper = toe.groupper;
-          }
-          if (toe.mover) {
-            ret.mover = toe.mover;
-            break;
-          }
-        }
-      }
-      return ret;
-    };
-    updateQueue.push({
-      element,
-      type: _moverUpdateAdd
-    });
-    requestUpdate();
-    observer.observe(element, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ["tabindex"]
-    });
-    this._unobserve = () => {
-      observer.disconnect();
-    };
-  }
-  getState(element) {
-    const id = getElementUId(this._win, element);
-    if (id in this._visible) {
-      const visibility = this._visible[id] || Visibilities.Invisible;
-      const isCurrent = this._current ? this._current.get() === element : void 0;
-      return {
-        isCurrent,
-        visibility
-      };
-    }
-    return void 0;
-  }
-}
-function getDistance(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
-  const xDistance = ax2 < bx1 ? bx1 - ax2 : bx2 < ax1 ? ax1 - bx2 : 0;
-  const yDistance = ay2 < by1 ? by1 - ay2 : by2 < ay1 ? ay1 - by2 : 0;
-  return xDistance === 0 ? yDistance : yDistance === 0 ? xDistance : Math.sqrt(xDistance * xDistance + yDistance * yDistance);
-}
-class MoverAPI {
-  constructor(tabster, getWindow2) {
-    this._init = () => {
-      const win = this._win();
-      win.addEventListener("keydown", this._onKeyDown, true);
-      win.addEventListener(MoverMoveFocusEventName, this._onMoveFocus);
-      win.addEventListener(MoverMemorizedElementEventName, this._onMemorizedElement);
-      this._tabster.focusedElement.subscribe(this._onFocus);
-    };
-    this._onMoverDispose = (mover) => {
-      delete this._movers[mover.id];
-    };
-    this._onFocus = (element) => {
-      var _a;
-      let currentFocusableElement = element;
-      let deepestFocusableElement = element;
-      for (let el = dom.getParentElement(element); el; el = dom.getParentElement(el)) {
-        const mover = (_a = getTabsterOnElement(this._tabster, el)) === null || _a === void 0 ? void 0 : _a.mover;
-        if (mover) {
-          mover.setCurrent(deepestFocusableElement);
-          currentFocusableElement = void 0;
-        }
-        if (!currentFocusableElement && this._tabster.focusable.isFocusable(el)) {
-          currentFocusableElement = deepestFocusableElement = el;
-        }
-      }
-    };
-    this._onKeyDown = async (event) => {
-      var _a;
-      if (this._ignoredInputTimer) {
-        this._win().clearTimeout(this._ignoredInputTimer);
-        delete this._ignoredInputTimer;
-      }
-      (_a = this._ignoredInputResolve) === null || _a === void 0 ? void 0 : _a.call(this, false);
-      if (event.ctrlKey || event.altKey || event.shiftKey || event.metaKey) {
-        return;
-      }
-      const key = event.key;
-      let moverKey;
-      if (key === Keys.ArrowDown) {
-        moverKey = MoverKeys.ArrowDown;
-      } else if (key === Keys.ArrowRight) {
-        moverKey = MoverKeys.ArrowRight;
-      } else if (key === Keys.ArrowUp) {
-        moverKey = MoverKeys.ArrowUp;
-      } else if (key === Keys.ArrowLeft) {
-        moverKey = MoverKeys.ArrowLeft;
-      } else if (key === Keys.PageDown) {
-        moverKey = MoverKeys.PageDown;
-      } else if (key === Keys.PageUp) {
-        moverKey = MoverKeys.PageUp;
-      } else if (key === Keys.Home) {
-        moverKey = MoverKeys.Home;
-      } else if (key === Keys.End) {
-        moverKey = MoverKeys.End;
-      }
-      if (!moverKey) {
-        return;
-      }
-      const focused = this._tabster.focusedElement.getFocusedElement();
-      if (!focused || await this._isIgnoredInput(focused, key)) {
-        return;
-      }
-      this._moveFocus(focused, moverKey, event);
-    };
-    this._onMoveFocus = (e2) => {
-      var _a;
-      const element = e2.composedPath()[0];
-      const key = (_a = e2.detail) === null || _a === void 0 ? void 0 : _a.key;
-      if (element && key !== void 0 && !e2.defaultPrevented) {
-        this._moveFocus(element, key);
-        e2.stopImmediatePropagation();
-      }
-    };
-    this._onMemorizedElement = (e2) => {
-      var _a;
-      const target = e2.composedPath()[0];
-      let memorizedElement = (_a = e2.detail) === null || _a === void 0 ? void 0 : _a.memorizedElement;
-      if (target) {
-        const ctx = RootAPI.getTabsterContext(this._tabster, target);
-        const mover = ctx === null || ctx === void 0 ? void 0 : ctx.mover;
-        if (mover) {
-          if (memorizedElement && !dom.nodeContains(mover.getElement(), memorizedElement)) {
-            memorizedElement = void 0;
-          }
-          mover.setCurrent(memorizedElement);
-          e2.stopImmediatePropagation();
-        }
-      }
-    };
-    this._tabster = tabster;
-    this._win = getWindow2;
-    this._movers = {};
-    tabster.queueInit(this._init);
-  }
-  dispose() {
-    var _a;
-    const win = this._win();
-    this._tabster.focusedElement.unsubscribe(this._onFocus);
-    (_a = this._ignoredInputResolve) === null || _a === void 0 ? void 0 : _a.call(this, false);
-    if (this._ignoredInputTimer) {
-      win.clearTimeout(this._ignoredInputTimer);
-      delete this._ignoredInputTimer;
-    }
-    win.removeEventListener("keydown", this._onKeyDown, true);
-    win.removeEventListener(MoverMoveFocusEventName, this._onMoveFocus);
-    win.removeEventListener(MoverMemorizedElementEventName, this._onMemorizedElement);
-    Object.keys(this._movers).forEach((moverId) => {
-      if (this._movers[moverId]) {
-        this._movers[moverId].dispose();
-        delete this._movers[moverId];
-      }
-    });
-  }
-  createMover(element, props, sys) {
-    const newMover = new Mover(this._tabster, element, this._onMoverDispose, props, sys);
-    this._movers[newMover.id] = newMover;
-    return newMover;
-  }
-  moveFocus(fromElement, key) {
-    return this._moveFocus(fromElement, key);
-  }
-  _moveFocus(fromElement, key, relatedEvent) {
-    var _a, _b;
-    const tabster = this._tabster;
-    const ctx = RootAPI.getTabsterContext(tabster, fromElement, {
-      checkRtl: true
-    });
-    if (!ctx || !ctx.mover || ctx.excludedFromMover || relatedEvent && ctx.ignoreKeydown(relatedEvent)) {
-      return null;
-    }
-    const mover = ctx.mover;
-    const container = mover.getElement();
-    if (ctx.groupperBeforeMover) {
-      const groupper = ctx.groupper;
-      if (groupper && !groupper.isActive(true)) {
-        for (let el = dom.getParentElement(groupper.getElement()); el && el !== container; el = dom.getParentElement(el)) {
-          if ((_b = (_a = getTabsterOnElement(tabster, el)) === null || _a === void 0 ? void 0 : _a.groupper) === null || _b === void 0 ? void 0 : _b.isActive(true)) {
-            return null;
-          }
-        }
-      } else {
-        return null;
-      }
-    }
-    if (!container) {
-      return null;
-    }
-    const focusable = tabster.focusable;
-    const moverProps = mover.getProps();
-    const direction = moverProps.direction || MoverDirections.Both;
-    const isBoth = direction === MoverDirections.Both;
-    const isVertical = isBoth || direction === MoverDirections.Vertical;
-    const isHorizontal = isBoth || direction === MoverDirections.Horizontal;
-    const isGridLinear = direction === MoverDirections.GridLinear;
-    const isGrid = isGridLinear || direction === MoverDirections.Grid;
-    const isCyclic = moverProps.cyclic;
-    let next;
-    let scrollIntoViewArg;
-    let focusedElementRect;
-    let focusedElementX1 = 0;
-    let focusedElementX2 = 0;
-    if (isGrid) {
-      focusedElementRect = fromElement.getBoundingClientRect();
-      focusedElementX1 = Math.ceil(focusedElementRect.left);
-      focusedElementX2 = Math.floor(focusedElementRect.right);
-    }
-    if (ctx.rtl) {
-      if (key === MoverKeys.ArrowRight) {
-        key = MoverKeys.ArrowLeft;
-      } else if (key === MoverKeys.ArrowLeft) {
-        key = MoverKeys.ArrowRight;
-      }
-    }
-    if (key === MoverKeys.ArrowDown && isVertical || key === MoverKeys.ArrowRight && (isHorizontal || isGrid)) {
-      next = focusable.findNext({
-        currentElement: fromElement,
-        container,
-        useActiveModalizer: true
-      });
-      if (next && isGrid) {
-        const nextElementX1 = Math.ceil(next.getBoundingClientRect().left);
-        if (!isGridLinear && focusedElementX2 > nextElementX1) {
-          next = void 0;
-        }
-      } else if (!next && isCyclic) {
-        next = focusable.findFirst({
-          container,
-          useActiveModalizer: true
-        });
-      }
-    } else if (key === MoverKeys.ArrowUp && isVertical || key === MoverKeys.ArrowLeft && (isHorizontal || isGrid)) {
-      next = focusable.findPrev({
-        currentElement: fromElement,
-        container,
-        useActiveModalizer: true
-      });
-      if (next && isGrid) {
-        const nextElementX2 = Math.floor(next.getBoundingClientRect().right);
-        if (!isGridLinear && nextElementX2 > focusedElementX1) {
-          next = void 0;
-        }
-      } else if (!next && isCyclic) {
-        next = focusable.findLast({
-          container,
-          useActiveModalizer: true
-        });
-      }
-    } else if (key === MoverKeys.Home) {
-      if (isGrid) {
-        focusable.findElement({
-          container,
-          currentElement: fromElement,
-          useActiveModalizer: true,
-          isBackward: true,
-          acceptCondition: (el) => {
-            var _a2;
-            if (!focusable.isFocusable(el)) {
-              return false;
-            }
-            const nextElementX1 = Math.ceil((_a2 = el.getBoundingClientRect().left) !== null && _a2 !== void 0 ? _a2 : 0);
-            if (el !== fromElement && focusedElementX1 <= nextElementX1) {
-              return true;
-            }
-            next = el;
-            return false;
-          }
-        });
-      } else {
-        next = focusable.findFirst({
-          container,
-          useActiveModalizer: true
-        });
-      }
-    } else if (key === MoverKeys.End) {
-      if (isGrid) {
-        focusable.findElement({
-          container,
-          currentElement: fromElement,
-          useActiveModalizer: true,
-          acceptCondition: (el) => {
-            var _a2;
-            if (!focusable.isFocusable(el)) {
-              return false;
-            }
-            const nextElementX1 = Math.ceil((_a2 = el.getBoundingClientRect().left) !== null && _a2 !== void 0 ? _a2 : 0);
-            if (el !== fromElement && focusedElementX1 >= nextElementX1) {
-              return true;
-            }
-            next = el;
-            return false;
-          }
-        });
-      } else {
-        next = focusable.findLast({
-          container,
-          useActiveModalizer: true
-        });
-      }
-    } else if (key === MoverKeys.PageUp) {
-      focusable.findElement({
-        currentElement: fromElement,
-        container,
-        useActiveModalizer: true,
-        isBackward: true,
-        acceptCondition: (el) => {
-          if (!focusable.isFocusable(el)) {
-            return false;
-          }
-          if (isElementVerticallyVisibleInContainer(this._win, el, mover.visibilityTolerance)) {
-            next = el;
-            return false;
-          }
-          return true;
-        }
-      });
-      if (isGrid && next) {
-        const firstColumnX1 = Math.ceil(next.getBoundingClientRect().left);
-        focusable.findElement({
-          currentElement: next,
-          container,
-          useActiveModalizer: true,
-          acceptCondition: (el) => {
-            if (!focusable.isFocusable(el)) {
-              return false;
-            }
-            const nextElementX1 = Math.ceil(el.getBoundingClientRect().left);
-            if (focusedElementX1 < nextElementX1 || firstColumnX1 >= nextElementX1) {
-              return true;
-            }
-            next = el;
-            return false;
-          }
-        });
-      }
-      scrollIntoViewArg = false;
-    } else if (key === MoverKeys.PageDown) {
-      focusable.findElement({
-        currentElement: fromElement,
-        container,
-        useActiveModalizer: true,
-        acceptCondition: (el) => {
-          if (!focusable.isFocusable(el)) {
-            return false;
-          }
-          if (isElementVerticallyVisibleInContainer(this._win, el, mover.visibilityTolerance)) {
-            next = el;
-            return false;
-          }
-          return true;
-        }
-      });
-      if (isGrid && next) {
-        const lastColumnX1 = Math.ceil(next.getBoundingClientRect().left);
-        focusable.findElement({
-          currentElement: next,
-          container,
-          useActiveModalizer: true,
-          isBackward: true,
-          acceptCondition: (el) => {
-            if (!focusable.isFocusable(el)) {
-              return false;
-            }
-            const nextElementX1 = Math.ceil(el.getBoundingClientRect().left);
-            if (focusedElementX1 > nextElementX1 || lastColumnX1 <= nextElementX1) {
-              return true;
-            }
-            next = el;
-            return false;
-          }
-        });
-      }
-      scrollIntoViewArg = true;
-    } else if (isGrid) {
-      const isBackward = key === MoverKeys.ArrowUp;
-      const ax1 = focusedElementX1;
-      const ay1 = Math.ceil(focusedElementRect.top);
-      const ax2 = focusedElementX2;
-      const ay2 = Math.floor(focusedElementRect.bottom);
-      let targetElement;
-      let lastDistance;
-      let lastIntersection = 0;
-      focusable.findAll({
-        container,
-        currentElement: fromElement,
-        isBackward,
-        onElement: (el) => {
-          const rect = el.getBoundingClientRect();
-          const bx1 = Math.ceil(rect.left);
-          const by1 = Math.ceil(rect.top);
-          const bx2 = Math.floor(rect.right);
-          const by2 = Math.floor(rect.bottom);
-          if (isBackward && ay1 < by2 || !isBackward && ay2 > by1) {
-            return true;
-          }
-          const xIntersectionWidth = Math.ceil(Math.min(ax2, bx2)) - Math.floor(Math.max(ax1, bx1));
-          const minWidth = Math.ceil(Math.min(ax2 - ax1, bx2 - bx1));
-          if (xIntersectionWidth > 0 && minWidth >= xIntersectionWidth) {
-            const intersection = xIntersectionWidth / minWidth;
-            if (intersection > lastIntersection) {
-              targetElement = el;
-              lastIntersection = intersection;
-            }
-          } else if (lastIntersection === 0) {
-            const distance = getDistance(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2);
-            if (lastDistance === void 0 || distance < lastDistance) {
-              lastDistance = distance;
-              targetElement = el;
-            }
-          } else if (lastIntersection > 0) {
-            return false;
-          }
-          return true;
-        }
-      });
-      next = targetElement;
-    }
-    if (next && (!relatedEvent || relatedEvent && container.dispatchEvent(new TabsterMoveFocusEvent({
-      by: "mover",
-      owner: container,
-      next,
-      relatedEvent
-    })))) {
-      if (scrollIntoViewArg !== void 0) {
-        scrollIntoView(this._win, next, scrollIntoViewArg);
-      }
-      if (relatedEvent) {
-        relatedEvent.preventDefault();
-        relatedEvent.stopImmediatePropagation();
-      }
-      nativeFocus(next);
-      return next;
-    }
-    return null;
-  }
-  async _isIgnoredInput(element, key) {
-    if (element.getAttribute("aria-expanded") === "true" && element.hasAttribute("aria-activedescendant")) {
-      return true;
-    }
-    if (matchesSelector(element, _inputSelector)) {
-      let selectionStart = 0;
-      let selectionEnd = 0;
-      let textLength = 0;
-      let asyncRet;
-      if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
-        const type = element.type;
-        const value = element.value;
-        textLength = (value || "").length;
-        if (type === "email" || type === "number") {
-          if (textLength) {
-            const selection = dom.getSelection(element);
-            if (selection) {
-              const initialLength = selection.toString().length;
-              const isBackward = key === Keys.ArrowLeft || key === Keys.ArrowUp;
-              selection.modify("extend", isBackward ? "backward" : "forward", "character");
-              if (initialLength !== selection.toString().length) {
-                selection.modify("extend", isBackward ? "forward" : "backward", "character");
-                return true;
-              } else {
-                textLength = 0;
-              }
-            }
-          }
-        } else {
-          const selStart = element.selectionStart;
-          if (selStart === null) {
-            return type === "hidden";
-          }
-          selectionStart = selStart || 0;
-          selectionEnd = element.selectionEnd || 0;
-        }
-      } else if (element.contentEditable === "true") {
-        asyncRet = new (getPromise(this._win))((resolve) => {
-          this._ignoredInputResolve = (value) => {
-            delete this._ignoredInputResolve;
-            resolve(value);
-          };
-          const win = this._win();
-          if (this._ignoredInputTimer) {
-            win.clearTimeout(this._ignoredInputTimer);
-          }
-          const {
-            anchorNode: prevAnchorNode,
-            focusNode: prevFocusNode,
-            anchorOffset: prevAnchorOffset,
-            focusOffset: prevFocusOffset
-          } = dom.getSelection(element) || {};
-          this._ignoredInputTimer = win.setTimeout(() => {
-            var _a, _b, _c;
-            delete this._ignoredInputTimer;
-            const {
-              anchorNode,
-              focusNode,
-              anchorOffset,
-              focusOffset
-            } = dom.getSelection(element) || {};
-            if (anchorNode !== prevAnchorNode || focusNode !== prevFocusNode || anchorOffset !== prevAnchorOffset || focusOffset !== prevFocusOffset) {
-              (_a = this._ignoredInputResolve) === null || _a === void 0 ? void 0 : _a.call(this, false);
-              return;
-            }
-            selectionStart = anchorOffset || 0;
-            selectionEnd = focusOffset || 0;
-            textLength = ((_b = element.textContent) === null || _b === void 0 ? void 0 : _b.length) || 0;
-            if (anchorNode && focusNode) {
-              if (dom.nodeContains(element, anchorNode) && dom.nodeContains(element, focusNode)) {
-                if (anchorNode !== element) {
-                  let anchorFound = false;
-                  const addOffsets = (node) => {
-                    if (node === anchorNode) {
-                      anchorFound = true;
-                    } else if (node === focusNode) {
-                      return true;
-                    }
-                    const nodeText = node.textContent;
-                    if (nodeText && !dom.getFirstChild(node)) {
-                      const len = nodeText.length;
-                      if (anchorFound) {
-                        if (focusNode !== anchorNode) {
-                          selectionEnd += len;
-                        }
-                      } else {
-                        selectionStart += len;
-                        selectionEnd += len;
-                      }
-                    }
-                    let stop = false;
-                    for (let e2 = dom.getFirstChild(node); e2 && !stop; e2 = e2.nextSibling) {
-                      stop = addOffsets(e2);
-                    }
-                    return stop;
-                  };
-                  addOffsets(element);
-                }
-              }
-            }
-            (_c = this._ignoredInputResolve) === null || _c === void 0 ? void 0 : _c.call(this, true);
-          }, 0);
-        });
-      }
-      if (asyncRet && !await asyncRet) {
-        return true;
-      }
-      if (selectionStart !== selectionEnd) {
-        return true;
-      }
-      if (selectionStart > 0 && (key === Keys.ArrowLeft || key === Keys.ArrowUp || key === Keys.Home)) {
-        return true;
-      }
-      if (selectionStart < textLength && (key === Keys.ArrowRight || key === Keys.ArrowDown || key === Keys.End)) {
-        return true;
-      }
-    }
-    return false;
-  }
-}
-/*!
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- */
 function observeMutations(doc, tabster, updateTabsterByAttribute2, syncState) {
   if (typeof MutationObserver === "undefined") {
     return () => {
     };
   }
-  const getWindow2 = tabster.getWindow;
+  const getWindow = tabster.getWindow;
   let elementByUId;
   const onMutation = (mutations) => {
     var _a, _b, _c, _d, _e;
@@ -6481,7 +5229,7 @@ function observeMutations(doc, tabster, updateTabsterByAttribute2, syncState) {
   };
   function updateTabsterElements(node, removed) {
     if (!elementByUId) {
-      elementByUId = getInstanceContext(getWindow2).elementByUId;
+      elementByUId = getInstanceContext(getWindow).elementByUId;
     }
     processNode(node, removed);
     const walker = createElementTreeWalker(doc, node, (element) => {
@@ -6502,7 +5250,7 @@ function observeMutations(doc, tabster, updateTabsterByAttribute2, syncState) {
       if (removed) {
         delete elementByUId[uid];
       } else {
-        (_a = elementByUId[uid]) !== null && _a !== void 0 ? _a : elementByUId[uid] = new WeakHTMLElement(getWindow2, element);
+        (_a = elementByUId[uid]) !== null && _a !== void 0 ? _a : elementByUId[uid] = new WeakHTMLElement(getWindow, element);
       }
     }
     if (getTabsterOnElement(tabster, element) || element.hasAttribute(TABSTER_ATTRIBUTE_NAME)) {
@@ -6512,7 +5260,7 @@ function observeMutations(doc, tabster, updateTabsterByAttribute2, syncState) {
   }
   const observer = dom.createMutationObserver(onMutation);
   if (syncState) {
-    updateTabsterElements(getWindow2().document.body);
+    updateTabsterElements(getWindow().document.body);
   }
   observer.observe(doc, {
     childList: true,
@@ -6581,9 +5329,9 @@ class Restorer extends TabsterPart {
   }
 }
 class History {
-  constructor(getWindow2) {
+  constructor(getWindow) {
     this._stack = [];
-    this._getWindow = getWindow2;
+    this._getWindow = getWindow;
   }
   /**
    * Push a weak element to the top of the history stack.
@@ -6721,14 +5469,14 @@ class TabsterCore {
     };
     this._storage = createWeakMap(win);
     this._win = win;
-    const getWindow2 = this.getWindow;
+    const getWindow = this.getWindow;
     if (props === null || props === void 0 ? void 0 : props.DOMAPI) {
       setDOMAPI({
         ...props.DOMAPI
       });
     }
-    this.keyboardNavigation = new KeyboardNavigationState(getWindow2);
-    this.focusedElement = new FocusedElementState(this, getWindow2);
+    this.keyboardNavigation = new KeyboardNavigationState(getWindow);
+    this.focusedElement = new FocusedElementState(this, getWindow);
     this.focusable = new FocusableAPI(this);
     this.root = new RootAPI(this, props === null || props === void 0 ? void 0 : props.autoRoot);
     this.uncontrolled = new UncontrolledAPI(
@@ -6737,7 +5485,7 @@ class TabsterCore {
     );
     this.controlTab = (_a = props === null || props === void 0 ? void 0 : props.controlTab) !== null && _a !== void 0 ? _a : true;
     this.rootDummyInputs = !!(props === null || props === void 0 ? void 0 : props.rootDummyInputs);
-    this._dummyObserver = new DummyInputObserver(getWindow2);
+    this._dummyObserver = new DummyInputObserver(getWindow);
     this.getParent = (_b = props === null || props === void 0 ? void 0 : props.getParent) !== null && _b !== void 0 ? _b : dom.getParentNode;
     this.internal = {
       stopObserver: () => {
@@ -6748,12 +5496,12 @@ class TabsterCore {
       },
       resumeObserver: (syncState) => {
         if (!this._unobserve) {
-          const doc = getWindow2().document;
+          const doc = getWindow().document;
           this._unobserve = observeMutations(doc, this, updateTabsterByAttribute, syncState);
         }
       }
     };
-    startFakeWeakRefsCleanup(getWindow2);
+    startFakeWeakRefsCleanup(getWindow);
     this.queueInit(() => {
       this.internal.resumeObserver(true);
     });
@@ -6891,13 +5639,6 @@ function getGroupper(tabster) {
   }
   return tabsterCore.groupper;
 }
-function getMover(tabster) {
-  const tabsterCore = tabster.core;
-  if (!tabsterCore.mover) {
-    tabsterCore.mover = new MoverAPI(tabsterCore, tabsterCore.getWindow);
-  }
-  return tabsterCore.mover;
-}
 function getModalizer(tabster, alwaysAccessibleSelector, accessibleCheck) {
   const tabsterCore = tabster.core;
   if (!tabsterCore.modalizer) {
@@ -6960,54 +5701,13 @@ function useTabster(factory = DEFAULT_FACTORY) {
 }
 const useTabsterAttributes = (props) => {
   useTabster();
-  const strAttr = getTabsterAttribute(props, true);
+  const strAttr = getTabsterAttribute(props);
   return reactExports.useMemo(() => ({
     [TABSTER_ATTRIBUTE_NAME]: strAttr
   }), [
     strAttr
   ]);
 };
-const useArrowNavigationGroup = (options = {}) => {
-  const {
-    circular,
-    axis,
-    memorizeCurrent = true,
-    tabbable,
-    ignoreDefaultKeydown,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    unstable_hasDefault
-  } = options;
-  useTabster(getMover);
-  return useTabsterAttributes({
-    mover: {
-      cyclic: !!circular,
-      direction: axisToMoverDirection(axis !== null && axis !== void 0 ? axis : "vertical"),
-      memorizeCurrent,
-      tabbable,
-      hasDefault: unstable_hasDefault
-    },
-    ...ignoreDefaultKeydown && {
-      focusable: {
-        ignoreKeydown: ignoreDefaultKeydown
-      }
-    }
-  });
-};
-function axisToMoverDirection(axis) {
-  switch (axis) {
-    case "horizontal":
-      return MoverDirections.Horizontal;
-    case "grid":
-      return MoverDirections.Grid;
-    case "grid-linear":
-      return MoverDirections.GridLinear;
-    case "both":
-      return MoverDirections.Both;
-    case "vertical":
-    default:
-      return MoverDirections.Vertical;
-  }
-}
 const useFocusableGroup = (options) => {
   useTabster(getGroupper);
   return useTabsterAttributes({
@@ -7104,7 +5804,7 @@ function applyFocusVisiblePolyfill(scope, targetWindow) {
   };
   const keyborg = createKeyborg(targetWindow);
   function registerElementIfNavigating(el) {
-    if (keyborg.isNavigatingWithKeyboard() && isHTMLElement$2(el)) {
+    if (keyborg.isNavigatingWithKeyboard() && isHTMLElement$1(el)) {
       state.current = el;
       el.setAttribute(FOCUS_VISIBLE_ATTR, "");
     }
@@ -7128,7 +5828,7 @@ function applyFocusVisiblePolyfill(scope, targetWindow) {
     registerElementIfNavigating(target);
   };
   const blurListener = (e2) => {
-    if (!e2.relatedTarget || isHTMLElement$2(e2.relatedTarget) && !scope.contains(e2.relatedTarget)) {
+    if (!e2.relatedTarget || isHTMLElement$1(e2.relatedTarget) && !scope.contains(e2.relatedTarget)) {
       disposeCurrentElement();
     }
   };
@@ -7178,12 +5878,12 @@ function applyFocusWithinPolyfill(element, win) {
     }
   });
   const keyborgListener = (e2) => {
-    if (keyborg.isNavigatingWithKeyboard() && isHTMLElement$1(e2.target)) {
+    if (keyborg.isNavigatingWithKeyboard() && isHTMLElement(e2.target)) {
       applyFocusWithinClass(element);
     }
   };
   const blurListener = (e2) => {
-    if (!e2.relatedTarget || isHTMLElement$1(e2.relatedTarget) && !element.contains(e2.relatedTarget)) {
+    if (!e2.relatedTarget || isHTMLElement(e2.relatedTarget) && !element.contains(e2.relatedTarget)) {
       removeFocusWithinClass(element);
     }
   };
@@ -7201,7 +5901,7 @@ function applyFocusWithinClass(el) {
 function removeFocusWithinClass(el) {
   el.removeAttribute(FOCUS_WITHIN_ATTR);
 }
-function isHTMLElement$1(target) {
+function isHTMLElement(target) {
   if (!target) {
     return false;
   }
@@ -7255,14 +5955,6 @@ const useModalAttributes = (options = {}) => {
     triggerAttributes
   };
 };
-function useRestoreFocusSource() {
-  useTabster(getRestorer);
-  return getTabsterAttribute({
-    restorer: {
-      type: RestorerTypes.Source
-    }
-  });
-}
 const grey = {
   "14": "#242424",
   "16": "#292929",
@@ -8274,7 +6966,7 @@ const webLightTheme = createLightTheme(brandWeb);
 const fluentProviderClassNames = {
   root: "fui-FluentProvider"
 };
-const useStyles$c = /* @__PURE__ */ __styles$1({
+const useStyles$7 = /* @__PURE__ */ __styles$1({
   root: {
     sj55zd: "f19n0e5",
     De3pzq: "fxugw4r",
@@ -8290,7 +6982,7 @@ const useStyles$c = /* @__PURE__ */ __styles$1({
 const useFluentProviderStyles_unstable = (state) => {
   "use no memo";
   const renderer = useRenderer();
-  const styles = useStyles$c({
+  const styles = useStyles$7({
     dir: state.dir,
     renderer
   });
@@ -8491,190 +7183,203 @@ const FluentProvider = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
 });
 FluentProvider.displayName = "FluentProvider";
 var scheduler = { exports: {} };
-var scheduler_production_min = {};
+var scheduler_production = {};
 /**
  * @license React
- * scheduler.production.min.js
+ * scheduler.production.js
  *
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-(function(exports) {
-  function f2(a, b2) {
-    var c2 = a.length;
-    a.push(b2);
-    a: for (; 0 < c2; ) {
-      var d2 = c2 - 1 >>> 1, e2 = a[d2];
-      if (0 < g2(e2, b2)) a[d2] = b2, a[c2] = e2, c2 = d2;
+(function(exports$1) {
+  function push(heap, node) {
+    var index = heap.length;
+    heap.push(node);
+    a: for (; 0 < index; ) {
+      var parentIndex = index - 1 >>> 1, parent = heap[parentIndex];
+      if (0 < compare(parent, node))
+        heap[parentIndex] = node, heap[index] = parent, index = parentIndex;
       else break a;
     }
   }
-  function h2(a) {
-    return 0 === a.length ? null : a[0];
+  function peek(heap) {
+    return 0 === heap.length ? null : heap[0];
   }
-  function k2(a) {
-    if (0 === a.length) return null;
-    var b2 = a[0], c2 = a.pop();
-    if (c2 !== b2) {
-      a[0] = c2;
-      a: for (var d2 = 0, e2 = a.length, w2 = e2 >>> 1; d2 < w2; ) {
-        var m2 = 2 * (d2 + 1) - 1, C2 = a[m2], n2 = m2 + 1, x = a[n2];
-        if (0 > g2(C2, c2)) n2 < e2 && 0 > g2(x, C2) ? (a[d2] = x, a[n2] = c2, d2 = n2) : (a[d2] = C2, a[m2] = c2, d2 = m2);
-        else if (n2 < e2 && 0 > g2(x, c2)) a[d2] = x, a[n2] = c2, d2 = n2;
+  function pop(heap) {
+    if (0 === heap.length) return null;
+    var first = heap[0], last = heap.pop();
+    if (last !== first) {
+      heap[0] = last;
+      a: for (var index = 0, length = heap.length, halfLength = length >>> 1; index < halfLength; ) {
+        var leftIndex = 2 * (index + 1) - 1, left = heap[leftIndex], rightIndex = leftIndex + 1, right = heap[rightIndex];
+        if (0 > compare(left, last))
+          rightIndex < length && 0 > compare(right, left) ? (heap[index] = right, heap[rightIndex] = last, index = rightIndex) : (heap[index] = left, heap[leftIndex] = last, index = leftIndex);
+        else if (rightIndex < length && 0 > compare(right, last))
+          heap[index] = right, heap[rightIndex] = last, index = rightIndex;
         else break a;
       }
     }
-    return b2;
+    return first;
   }
-  function g2(a, b2) {
-    var c2 = a.sortIndex - b2.sortIndex;
-    return 0 !== c2 ? c2 : a.id - b2.id;
+  function compare(a, b2) {
+    var diff = a.sortIndex - b2.sortIndex;
+    return 0 !== diff ? diff : a.id - b2.id;
   }
+  exports$1.unstable_now = void 0;
   if ("object" === typeof performance && "function" === typeof performance.now) {
-    var l2 = performance;
-    exports.unstable_now = function() {
-      return l2.now();
+    var localPerformance = performance;
+    exports$1.unstable_now = function() {
+      return localPerformance.now();
     };
   } else {
-    var p2 = Date, q2 = p2.now();
-    exports.unstable_now = function() {
-      return p2.now() - q2;
+    var localDate = Date, initialTime = localDate.now();
+    exports$1.unstable_now = function() {
+      return localDate.now() - initialTime;
     };
   }
-  var r2 = [], t = [], u2 = 1, v2 = null, y2 = 3, z2 = false, A2 = false, B2 = false, D2 = "function" === typeof setTimeout ? setTimeout : null, E2 = "function" === typeof clearTimeout ? clearTimeout : null, F2 = "undefined" !== typeof setImmediate ? setImmediate : null;
-  "undefined" !== typeof navigator && void 0 !== navigator.scheduling && void 0 !== navigator.scheduling.isInputPending && navigator.scheduling.isInputPending.bind(navigator.scheduling);
-  function G2(a) {
-    for (var b2 = h2(t); null !== b2; ) {
-      if (null === b2.callback) k2(t);
-      else if (b2.startTime <= a) k2(t), b2.sortIndex = b2.expirationTime, f2(r2, b2);
+  var taskQueue = [], timerQueue = [], taskIdCounter = 1, currentTask = null, currentPriorityLevel = 3, isPerformingWork = false, isHostCallbackScheduled = false, isHostTimeoutScheduled = false, needsPaint = false, localSetTimeout = "function" === typeof setTimeout ? setTimeout : null, localClearTimeout = "function" === typeof clearTimeout ? clearTimeout : null, localSetImmediate = "undefined" !== typeof setImmediate ? setImmediate : null;
+  function advanceTimers(currentTime) {
+    for (var timer = peek(timerQueue); null !== timer; ) {
+      if (null === timer.callback) pop(timerQueue);
+      else if (timer.startTime <= currentTime)
+        pop(timerQueue), timer.sortIndex = timer.expirationTime, push(taskQueue, timer);
       else break;
-      b2 = h2(t);
+      timer = peek(timerQueue);
     }
   }
-  function H2(a) {
-    B2 = false;
-    G2(a);
-    if (!A2) if (null !== h2(r2)) A2 = true, I2(J);
-    else {
-      var b2 = h2(t);
-      null !== b2 && K(H2, b2.startTime - a);
-    }
-  }
-  function J(a, b2) {
-    A2 = false;
-    B2 && (B2 = false, E2(L), L = -1);
-    z2 = true;
-    var c2 = y2;
-    try {
-      G2(b2);
-      for (v2 = h2(r2); null !== v2 && (!(v2.expirationTime > b2) || a && !M()); ) {
-        var d2 = v2.callback;
-        if ("function" === typeof d2) {
-          v2.callback = null;
-          y2 = v2.priorityLevel;
-          var e2 = d2(v2.expirationTime <= b2);
-          b2 = exports.unstable_now();
-          "function" === typeof e2 ? v2.callback = e2 : v2 === h2(r2) && k2(r2);
-          G2(b2);
-        } else k2(r2);
-        v2 = h2(r2);
-      }
-      if (null !== v2) var w2 = true;
+  function handleTimeout(currentTime) {
+    isHostTimeoutScheduled = false;
+    advanceTimers(currentTime);
+    if (!isHostCallbackScheduled)
+      if (null !== peek(taskQueue))
+        isHostCallbackScheduled = true, isMessageLoopRunning || (isMessageLoopRunning = true, schedulePerformWorkUntilDeadline());
       else {
-        var m2 = h2(t);
-        null !== m2 && K(H2, m2.startTime - b2);
-        w2 = false;
+        var firstTimer = peek(timerQueue);
+        null !== firstTimer && requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
       }
-      return w2;
-    } finally {
-      v2 = null, y2 = c2, z2 = false;
+  }
+  var isMessageLoopRunning = false, taskTimeoutID = -1, frameInterval = 5, startTime = -1;
+  function shouldYieldToHost() {
+    return needsPaint ? true : exports$1.unstable_now() - startTime < frameInterval ? false : true;
+  }
+  function performWorkUntilDeadline() {
+    needsPaint = false;
+    if (isMessageLoopRunning) {
+      var currentTime = exports$1.unstable_now();
+      startTime = currentTime;
+      var hasMoreWork = true;
+      try {
+        a: {
+          isHostCallbackScheduled = false;
+          isHostTimeoutScheduled && (isHostTimeoutScheduled = false, localClearTimeout(taskTimeoutID), taskTimeoutID = -1);
+          isPerformingWork = true;
+          var previousPriorityLevel = currentPriorityLevel;
+          try {
+            b: {
+              advanceTimers(currentTime);
+              for (currentTask = peek(taskQueue); null !== currentTask && !(currentTask.expirationTime > currentTime && shouldYieldToHost()); ) {
+                var callback = currentTask.callback;
+                if ("function" === typeof callback) {
+                  currentTask.callback = null;
+                  currentPriorityLevel = currentTask.priorityLevel;
+                  var continuationCallback = callback(
+                    currentTask.expirationTime <= currentTime
+                  );
+                  currentTime = exports$1.unstable_now();
+                  if ("function" === typeof continuationCallback) {
+                    currentTask.callback = continuationCallback;
+                    advanceTimers(currentTime);
+                    hasMoreWork = true;
+                    break b;
+                  }
+                  currentTask === peek(taskQueue) && pop(taskQueue);
+                  advanceTimers(currentTime);
+                } else pop(taskQueue);
+                currentTask = peek(taskQueue);
+              }
+              if (null !== currentTask) hasMoreWork = true;
+              else {
+                var firstTimer = peek(timerQueue);
+                null !== firstTimer && requestHostTimeout(
+                  handleTimeout,
+                  firstTimer.startTime - currentTime
+                );
+                hasMoreWork = false;
+              }
+            }
+            break a;
+          } finally {
+            currentTask = null, currentPriorityLevel = previousPriorityLevel, isPerformingWork = false;
+          }
+          hasMoreWork = void 0;
+        }
+      } finally {
+        hasMoreWork ? schedulePerformWorkUntilDeadline() : isMessageLoopRunning = false;
+      }
     }
   }
-  var N = false, O = null, L = -1, P = 5, Q = -1;
-  function M() {
-    return exports.unstable_now() - Q < P ? false : true;
-  }
-  function R() {
-    if (null !== O) {
-      var a = exports.unstable_now();
-      Q = a;
-      var b2 = true;
-      try {
-        b2 = O(true, a);
-      } finally {
-        b2 ? S() : (N = false, O = null);
-      }
-    } else N = false;
-  }
-  var S;
-  if ("function" === typeof F2) S = function() {
-    F2(R);
-  };
+  var schedulePerformWorkUntilDeadline;
+  if ("function" === typeof localSetImmediate)
+    schedulePerformWorkUntilDeadline = function() {
+      localSetImmediate(performWorkUntilDeadline);
+    };
   else if ("undefined" !== typeof MessageChannel) {
-    var T = new MessageChannel(), U = T.port2;
-    T.port1.onmessage = R;
-    S = function() {
-      U.postMessage(null);
+    var channel = new MessageChannel(), port = channel.port2;
+    channel.port1.onmessage = performWorkUntilDeadline;
+    schedulePerformWorkUntilDeadline = function() {
+      port.postMessage(null);
     };
-  } else S = function() {
-    D2(R, 0);
-  };
-  function I2(a) {
-    O = a;
-    N || (N = true, S());
+  } else
+    schedulePerformWorkUntilDeadline = function() {
+      localSetTimeout(performWorkUntilDeadline, 0);
+    };
+  function requestHostTimeout(callback, ms) {
+    taskTimeoutID = localSetTimeout(function() {
+      callback(exports$1.unstable_now());
+    }, ms);
   }
-  function K(a, b2) {
-    L = D2(function() {
-      a(exports.unstable_now());
-    }, b2);
-  }
-  exports.unstable_IdlePriority = 5;
-  exports.unstable_ImmediatePriority = 1;
-  exports.unstable_LowPriority = 4;
-  exports.unstable_NormalPriority = 3;
-  exports.unstable_Profiling = null;
-  exports.unstable_UserBlockingPriority = 2;
-  exports.unstable_cancelCallback = function(a) {
-    a.callback = null;
+  exports$1.unstable_IdlePriority = 5;
+  exports$1.unstable_ImmediatePriority = 1;
+  exports$1.unstable_LowPriority = 4;
+  exports$1.unstable_NormalPriority = 3;
+  exports$1.unstable_Profiling = null;
+  exports$1.unstable_UserBlockingPriority = 2;
+  exports$1.unstable_cancelCallback = function(task) {
+    task.callback = null;
   };
-  exports.unstable_continueExecution = function() {
-    A2 || z2 || (A2 = true, I2(J));
+  exports$1.unstable_forceFrameRate = function(fps) {
+    0 > fps || 125 < fps ? console.error(
+      "forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"
+    ) : frameInterval = 0 < fps ? Math.floor(1e3 / fps) : 5;
   };
-  exports.unstable_forceFrameRate = function(a) {
-    0 > a || 125 < a ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : P = 0 < a ? Math.floor(1e3 / a) : 5;
+  exports$1.unstable_getCurrentPriorityLevel = function() {
+    return currentPriorityLevel;
   };
-  exports.unstable_getCurrentPriorityLevel = function() {
-    return y2;
-  };
-  exports.unstable_getFirstCallbackNode = function() {
-    return h2(r2);
-  };
-  exports.unstable_next = function(a) {
-    switch (y2) {
+  exports$1.unstable_next = function(eventHandler) {
+    switch (currentPriorityLevel) {
       case 1:
       case 2:
       case 3:
-        var b2 = 3;
+        var priorityLevel = 3;
         break;
       default:
-        b2 = y2;
+        priorityLevel = currentPriorityLevel;
     }
-    var c2 = y2;
-    y2 = b2;
+    var previousPriorityLevel = currentPriorityLevel;
+    currentPriorityLevel = priorityLevel;
     try {
-      return a();
+      return eventHandler();
     } finally {
-      y2 = c2;
+      currentPriorityLevel = previousPriorityLevel;
     }
   };
-  exports.unstable_pauseExecution = function() {
+  exports$1.unstable_requestPaint = function() {
+    needsPaint = true;
   };
-  exports.unstable_requestPaint = function() {
-  };
-  exports.unstable_runWithPriority = function(a, b2) {
-    switch (a) {
+  exports$1.unstable_runWithPriority = function(priorityLevel, eventHandler) {
+    switch (priorityLevel) {
       case 1:
       case 2:
       case 3:
@@ -8682,56 +7387,63 @@ var scheduler_production_min = {};
       case 5:
         break;
       default:
-        a = 3;
+        priorityLevel = 3;
     }
-    var c2 = y2;
-    y2 = a;
+    var previousPriorityLevel = currentPriorityLevel;
+    currentPriorityLevel = priorityLevel;
     try {
-      return b2();
+      return eventHandler();
     } finally {
-      y2 = c2;
+      currentPriorityLevel = previousPriorityLevel;
     }
   };
-  exports.unstable_scheduleCallback = function(a, b2, c2) {
-    var d2 = exports.unstable_now();
-    "object" === typeof c2 && null !== c2 ? (c2 = c2.delay, c2 = "number" === typeof c2 && 0 < c2 ? d2 + c2 : d2) : c2 = d2;
-    switch (a) {
+  exports$1.unstable_scheduleCallback = function(priorityLevel, callback, options) {
+    var currentTime = exports$1.unstable_now();
+    "object" === typeof options && null !== options ? (options = options.delay, options = "number" === typeof options && 0 < options ? currentTime + options : currentTime) : options = currentTime;
+    switch (priorityLevel) {
       case 1:
-        var e2 = -1;
+        var timeout = -1;
         break;
       case 2:
-        e2 = 250;
+        timeout = 250;
         break;
       case 5:
-        e2 = 1073741823;
+        timeout = 1073741823;
         break;
       case 4:
-        e2 = 1e4;
+        timeout = 1e4;
         break;
       default:
-        e2 = 5e3;
+        timeout = 5e3;
     }
-    e2 = c2 + e2;
-    a = { id: u2++, callback: b2, priorityLevel: a, startTime: c2, expirationTime: e2, sortIndex: -1 };
-    c2 > d2 ? (a.sortIndex = c2, f2(t, a), null === h2(r2) && a === h2(t) && (B2 ? (E2(L), L = -1) : B2 = true, K(H2, c2 - d2))) : (a.sortIndex = e2, f2(r2, a), A2 || z2 || (A2 = true, I2(J)));
-    return a;
+    timeout = options + timeout;
+    priorityLevel = {
+      id: taskIdCounter++,
+      callback,
+      priorityLevel,
+      startTime: options,
+      expirationTime: timeout,
+      sortIndex: -1
+    };
+    options > currentTime ? (priorityLevel.sortIndex = options, push(timerQueue, priorityLevel), null === peek(taskQueue) && priorityLevel === peek(timerQueue) && (isHostTimeoutScheduled ? (localClearTimeout(taskTimeoutID), taskTimeoutID = -1) : isHostTimeoutScheduled = true, requestHostTimeout(handleTimeout, options - currentTime))) : (priorityLevel.sortIndex = timeout, push(taskQueue, priorityLevel), isHostCallbackScheduled || isPerformingWork || (isHostCallbackScheduled = true, isMessageLoopRunning || (isMessageLoopRunning = true, schedulePerformWorkUntilDeadline())));
+    return priorityLevel;
   };
-  exports.unstable_shouldYield = M;
-  exports.unstable_wrapCallback = function(a) {
-    var b2 = y2;
+  exports$1.unstable_shouldYield = shouldYieldToHost;
+  exports$1.unstable_wrapCallback = function(callback) {
+    var parentPriorityLevel = currentPriorityLevel;
     return function() {
-      var c2 = y2;
-      y2 = b2;
+      var previousPriorityLevel = currentPriorityLevel;
+      currentPriorityLevel = parentPriorityLevel;
       try {
-        return a.apply(this, arguments);
+        return callback.apply(this, arguments);
       } finally {
-        y2 = c2;
+        currentPriorityLevel = previousPriorityLevel;
       }
     };
   };
-})(scheduler_production_min);
+})(scheduler_production);
 {
-  scheduler.exports = scheduler_production_min;
+  scheduler.exports = scheduler_production;
 }
 var schedulerExports = scheduler.exports;
 const createProvider = (Original) => {
@@ -8850,10 +7562,6 @@ function useHasParentContext(context) {
 }
 const Enter = "Enter";
 const Space = " ";
-const Tab = "Tab";
-const ArrowDown = "ArrowDown";
-const ArrowLeft = "ArrowLeft";
-const ArrowRight = "ArrowRight";
 const Escape = "Escape";
 function useARIAButtonProps(type, props) {
   const { disabled, disabledFocusable = false, ["aria-disabled"]: ariaDisabled, onClick, onKeyDown, onKeyUp, ...rest } = props !== null && props !== void 0 ? props : {};
@@ -8937,7 +7645,7 @@ function useARIAButtonProps(type, props) {
     return resultProps;
   }
 }
-const useStyles$b = __styles({
+const useStyles$6 = __styles({
   "root": {
     "mc9l5x": "f1w7gpdv",
     "Bg96gwp": "fez10in"
@@ -8955,7 +7663,7 @@ const useIconState = (props, options) => {
     title: void 0,
     fill: primaryFill
   };
-  const styles = useStyles$b();
+  const styles = useStyles$6();
   const iconContext = useIconContext();
   state.className = mergeClasses(styles.root, (options === null || options === void 0 ? void 0 : options.flipInRtl) && (iconContext === null || iconContext === void 0 ? void 0 : iconContext.textDirection) === "rtl" && styles.rtl, state.className);
   if (title) {
@@ -8968,7 +7676,7 @@ const useIconState = (props, options) => {
   }
   return state;
 };
-const useRootStyles$4 = __styles({
+const useRootStyles$3 = __styles({
   "root": {
     "B8gzw0y": "f1dd5bof"
   }
@@ -8980,7 +7688,7 @@ const useRootStyles$4 = __styles({
 const createFluentIcon = (displayName, width, pathsOrSvg, options) => {
   const viewBoxWidth = width === "1em" ? "20" : width;
   const Icon = reactExports.forwardRef((props, ref) => {
-    const styles = useRootStyles$4();
+    const styles = useRootStyles$3();
     const iconState = useIconState(props, { flipInRtl: options === null || options === void 0 ? void 0 : options.flipInRtl });
     const state = {
       ...iconState,
@@ -9000,49 +7708,14 @@ const createFluentIcon = (displayName, width, pathsOrSvg, options) => {
   Icon.displayName = displayName;
   return Icon;
 };
-const ChevronLeftFilled = /* @__PURE__ */ createFluentIcon("ChevronLeftFilled", "1em", ["M12.27 15.8a.75.75 0 0 1-1.06-.03l-5-5.25a.75.75 0 0 1 0-1.04l5-5.25a.75.75 0 1 1 1.08 1.04L7.8 10l4.5 4.73c.29.3.28.78-.02 1.06Z"]);
-const ChevronLeftRegular = /* @__PURE__ */ createFluentIcon("ChevronLeftRegular", "1em", ["M12.35 15.85a.5.5 0 0 1-.7 0L6.16 10.4a.55.55 0 0 1 0-.78l5.49-5.46a.5.5 0 1 1 .7.7L7.2 10l5.16 5.15c.2.2.2.5 0 .7Z"]);
-const ChevronRightFilled = /* @__PURE__ */ createFluentIcon("ChevronRightFilled", "1em", ["M7.73 4.2a.75.75 0 0 1 1.06.03l5 5.25c.28.3.28.75 0 1.04l-5 5.25a.75.75 0 1 1-1.08-1.04L12.2 10l-4.5-4.73a.75.75 0 0 1 .02-1.06Z"]);
-const ChevronRightRegular = /* @__PURE__ */ createFluentIcon("ChevronRightRegular", "1em", ["M7.65 4.15c.2-.2.5-.2.7 0l5.49 5.46c.21.22.21.57 0 .78l-5.49 5.46a.5.5 0 0 1-.7-.7L12.8 10 7.65 4.85a.5.5 0 0 1 0-.7Z"]);
-const Mail24Regular = /* @__PURE__ */ createFluentIcon("Mail24Regular", "24", ["M5.25 4h13.5a3.25 3.25 0 0 1 3.24 3.07l.01.18v9.5a3.25 3.25 0 0 1-3.07 3.24l-.18.01H5.25a3.25 3.25 0 0 1-3.24-3.07L2 16.75v-9.5a3.25 3.25 0 0 1 3.07-3.24L5.25 4h13.5-13.5ZM20.5 9.37l-8.15 4.3c-.19.1-.4.1-.6.04l-.1-.05L3.5 9.37v7.38c0 .92.7 1.67 1.6 1.74l.15.01h13.5c.92 0 1.67-.7 1.74-1.6l.01-.15V9.37ZM18.75 5.5H5.25c-.92 0-1.67.7-1.74 1.6l-.01.15v.43l8.5 4.47 8.5-4.47v-.43c0-.92-.7-1.67-1.6-1.74l-.15-.01Z"]);
-const Code24Regular = /* @__PURE__ */ createFluentIcon("Code24Regular", "24", ["m8.07 18.94 6.5-14.5a.75.75 0 0 1 1.4.52l-.04.1-6.5 14.5a.75.75 0 0 1-1.4-.52l.04-.1 6.5-14.5-6.5 14.5Zm-5.85-7.47 4.25-4.25a.75.75 0 0 1 1.13.98l-.07.08L3.81 12l3.72 3.72a.75.75 0 0 1-.98 1.13l-.08-.07-4.25-4.25a.75.75 0 0 1-.07-.98l.07-.08 4.25-4.25-4.25 4.25Zm14.25-4.25a.75.75 0 0 1 .98-.07l.08.07 4.25 4.25c.27.27.3.68.07.98l-.07.08-4.25 4.25a.75.75 0 0 1-1.13-.98l.07-.08L20.19 12l-3.72-3.72a.75.75 0 0 1 0-1.06Z"]);
 const Bot24Regular = /* @__PURE__ */ createFluentIcon("Bot24Regular", "24", ["M17.75 14C19 14 20 15 20 16.25v.9c0 1.1-.47 2.14-1.3 2.85-1.57 1.34-3.81 2-6.7 2s-5.13-.66-6.7-2A3.75 3.75 0 0 1 4 17.16v-.91C4 15 5.01 14 6.25 14h11.5Zm0 1.5H6.25a.75.75 0 0 0-.75.75v.9c0 .66.29 1.29.79 1.71C7.55 19.94 9.44 20.5 12 20.5s4.46-.56 5.72-1.64c.5-.43.78-1.05.78-1.7v-.91a.75.75 0 0 0-.75-.75ZM11.9 2h.1c.38 0 .7.28.74.65l.01.1v.75h3.5c1.24 0 2.25 1 2.25 2.25v4.5c0 1.25-1 2.25-2.25 2.25h-8.5c-1.24 0-2.25-1-2.25-2.25v-4.5c0-1.24 1-2.25 2.25-2.25h3.5v-.75c0-.38.28-.7.65-.74L12 2h-.1Zm4.35 3h-8.5a.75.75 0 0 0-.75.75v4.5c0 .42.34.75.75.75h8.5c.41 0 .75-.33.75-.75v-4.5a.75.75 0 0 0-.75-.75Zm-6.5 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm4.5 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z"]);
-const Server24Regular = /* @__PURE__ */ createFluentIcon("Server24Regular", "24", ["M9.25 6a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5ZM8.5 17.75c0-.41.34-.75.75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75ZM9.25 14a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5ZM6 5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V5Zm3-1.5c-.83 0-1.5.67-1.5 1.5v14c0 .83.67 1.5 1.5 1.5h6c.83 0 1.5-.67 1.5-1.5V5c0-.83-.67-1.5-1.5-1.5H9Z"]);
-const Copy24Regular = /* @__PURE__ */ createFluentIcon("Copy24Regular", "24", ["M5.5 4.63V17.25c0 1.8 1.46 3.25 3.25 3.25h8.62c-.31.88-1.15 1.5-2.13 1.5H8.75A4.75 4.75 0 0 1 4 17.25V6.75c0-.98.63-1.81 1.5-2.12ZM17.75 2C18.99 2 20 3 20 4.25v13c0 1.24-1 2.25-2.25 2.25h-9c-1.24 0-2.25-1-2.25-2.25v-13C6.5 3.01 7.5 2 8.75 2h9Zm0 1.5h-9a.75.75 0 0 0-.75.75v13c0 .41.34.75.75.75h9c.41 0 .75-.34.75-.75v-13a.75.75 0 0 0-.75-.75Z"]);
 const Globe24Regular = /* @__PURE__ */ createFluentIcon("Globe24Regular", "24", ["M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm2.94 14.5H9.06c.65 2.41 1.79 4 2.94 4s2.29-1.59 2.94-4Zm-7.43 0H4.79a8.53 8.53 0 0 0 4.09 3.41c-.52-.82-.95-1.85-1.27-3.02l-.1-.39Zm11.7 0H16.5c-.32 1.33-.79 2.5-1.37 3.41a8.53 8.53 0 0 0 3.9-3.13l.2-.28ZM7.1 10H3.74v.02a8.52 8.52 0 0 0 .3 4.98h3.18a20.3 20.3 0 0 1-.13-5Zm8.3 0H8.6a18.97 18.97 0 0 0 .14 5h6.52a18.5 18.5 0 0 0 .14-5Zm4.87 0h-3.35a20.85 20.85 0 0 1-.13 5h3.18a8.48 8.48 0 0 0 .3-5ZM8.88 4.09h-.02a8.53 8.53 0 0 0-4.61 4.4l3.05.01c.31-1.75.86-3.28 1.58-4.41Zm3.12-.6-.12.01c-1.26.12-2.48 2.12-3.05 5h6.34c-.56-2.87-1.78-4.87-3.04-5H12Zm3.12.6.1.17A12.64 12.64 0 0 1 16.7 8.5h3.05a8.53 8.53 0 0 0-4.34-4.29l-.29-.12Z"]);
 const Play24Regular = /* @__PURE__ */ createFluentIcon("Play24Regular", "24", ["M7.6 4.61a.75.75 0 0 0-1.1.66v13.46c0 .56.6.93 1.1.65l12.37-6.72a.75.75 0 0 0 0-1.32L7.61 4.61ZM5 5.27c0-1.7 1.83-2.79 3.33-1.97l12.36 6.72a2.25 2.25 0 0 1 0 3.96L8.33 20.7A2.25 2.25 0 0 1 5 18.73V5.27Z"]);
 const CloudSync24Regular = /* @__PURE__ */ createFluentIcon("CloudSync24Regular", "24", ["M12 4.5a4.5 4.5 0 0 0-4.5 4.29.75.75 0 0 1-.74.71H6.5a3 3 0 1 0 0 6h3.58a6.55 6.55 0 0 0-.06 1.5H6.5a4.5 4.5 0 0 1-.42-8.98 6 6 0 0 1 11.84 0 4.5 4.5 0 0 1 4.05 4.97 6.53 6.53 0 0 0-1.8-1.85A3 3 0 0 0 17.5 9.5h-.26a.75.75 0 0 1-.74-.71A4.5 4.5 0 0 0 12 4.5ZM16.5 22a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Zm2-7a2.5 2.5 0 0 0-3.86-.17.5.5 0 0 1-.75-.66 3.5 3.5 0 0 1 5.11-.12v-.55a.5.5 0 0 1 1 0v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h1ZM13 17.5c0-.28.22-.5.5-.5h2a.5.5 0 0 1 0 1h-1a2.5 2.5 0 0 0 3.86.17.5.5 0 0 1 .75.66 3.5 3.5 0 0 1-5.11.12v.55a.5.5 0 0 1-1 0v-2Z"]);
-const Navigation24Regular = /* @__PURE__ */ createFluentIcon("Navigation24Regular", "24", ["M2.75 18h18.5a.75.75 0 0 1 .1 1.5H2.75a.75.75 0 0 1-.1-1.5h18.6-18.5Zm0-6.5h18.5a.75.75 0 0 1 .1 1.5H2.75a.75.75 0 0 1-.1-1.5h18.6-18.5Zm0-6.5h18.5a.75.75 0 0 1 .1 1.5H2.75a.75.75 0 0 1-.1-1.49h18.6-18.5Z"]);
 const ArrowRight24Regular = /* @__PURE__ */ createFluentIcon("ArrowRight24Regular", "24", ["M13.27 4.2a.75.75 0 0 0-1.04 1.1l6.25 5.95H3.75a.75.75 0 0 0 0 1.5h14.73l-6.25 5.95a.75.75 0 0 0 1.04 1.1l7.42-7.08a1 1 0 0 0 0-1.44L13.27 4.2Z"]);
 const Shield24Regular = /* @__PURE__ */ createFluentIcon("Shield24Regular", "24", ["M3 5.75c0-.41.34-.75.75-.75 2.66 0 5.26-.94 7.8-2.85.27-.2.63-.2.9 0C14.99 4.05 17.59 5 20.25 5c.41 0 .75.34.75.75V11c0 5-2.96 8.68-8.73 10.95a.75.75 0 0 1-.54 0C5.96 19.68 3 16 3 11V5.75Zm1.5.73V11c0 4.26 2.45 7.38 7.5 9.44 5.05-2.06 7.5-5.18 7.5-9.44V6.48a14.36 14.36 0 0 1-7.5-2.8 14.36 14.36 0 0 1-7.5 2.8Z"]);
 const Dismiss20Regular = /* @__PURE__ */ createFluentIcon("Dismiss20Regular", "20", ["m4.09 4.22.06-.07a.5.5 0 0 1 .63-.06l.07.06L10 9.29l5.15-5.14a.5.5 0 0 1 .63-.06l.07.06c.18.17.2.44.06.63l-.06.07L10.71 10l5.14 5.15c.18.17.2.44.06.63l-.06.07a.5.5 0 0 1-.63.06l-.07-.06L10 10.71l-5.15 5.14a.5.5 0 0 1-.63.06l-.07-.06a.5.5 0 0 1-.06-.63l.06-.07L9.29 10 4.15 4.85a.5.5 0 0 1-.06-.63l.06-.07-.06.07Z"]);
 const Dismiss24Regular = /* @__PURE__ */ createFluentIcon("Dismiss24Regular", "24", ["m4.4 4.55.07-.08a.75.75 0 0 1 .98-.07l.08.07L12 10.94l6.47-6.47a.75.75 0 1 1 1.06 1.06L13.06 12l6.47 6.47c.27.27.3.68.07.98l-.07.08a.75.75 0 0 1-.98.07l-.08-.07L12 13.06l-6.47 6.47a.75.75 0 0 1-1.06-1.06L10.94 12 4.47 5.53a.75.75 0 0 1-.07-.98l.07-.08-.07.08Z"]);
-const iconFilledClassName = "fui-Icon-filled";
-const iconRegularClassName = "fui-Icon-regular";
-const useBundledIconStyles = __styles({
-  "root": {
-    "mc9l5x": "fjseox"
-  },
-  "visible": {
-    "mc9l5x": "f1w7gpdv"
-  }
-}, {
-  "d": [".fjseox{display:none;}", ".f1w7gpdv{display:inline;}"]
-});
-const bundleIcon = (FilledIcon, RegularIcon) => {
-  const Component = (props) => {
-    const { className, filled, ...rest } = props;
-    const styles = useBundledIconStyles();
-    return reactExports.createElement(
-      reactExports.Fragment,
-      null,
-      reactExports.createElement(FilledIcon, Object.assign({}, rest, { className: mergeClasses(styles.root, filled && styles.visible, iconFilledClassName, className) })),
-      reactExports.createElement(RegularIcon, Object.assign({}, rest, { className: mergeClasses(styles.root, !filled && styles.visible, iconRegularClassName, className) }))
-    );
-  };
-  Component.displayName = "CompoundIcon";
-  return Component;
-};
 const durations = {
   durationUltraFast: 50,
   durationFaster: 100,
@@ -9634,10 +8307,10 @@ createPresenceComponentVariant(Scale, {
   exitDuration: motionTokens.durationGentle
 });
 const useBadge_unstable = (props, ref) => {
-  const { shape = "circular", size: size2 = "medium", iconPosition = "before", appearance = "filled", color = "brand" } = props;
+  const { shape = "circular", size = "medium", iconPosition = "before", appearance = "filled", color = "brand" } = props;
   const state = {
     shape,
-    size: size2,
+    size,
     iconPosition,
     appearance,
     color,
@@ -9665,7 +8338,7 @@ const badgeClassNames = {
   icon: "fui-Badge__icon"
 };
 const useRootClassName = /* @__PURE__ */ __resetStyles("r1iycov", "r115jdol", [".r1iycov{display:inline-flex;box-sizing:border-box;align-items:center;justify-content:center;position:relative;font-family:var(--fontFamilyBase);font-size:var(--fontSizeBase200);font-weight:var(--fontWeightSemibold);line-height:var(--lineHeightBase200);height:20px;min-width:20px;padding:0 calc(var(--spacingHorizontalXS) + var(--spacingHorizontalXXS));border-radius:var(--borderRadiusCircular);border-color:var(--colorTransparentStroke);}", '.r1iycov::after{content:"";position:absolute;top:0;left:0;bottom:0;right:0;border-style:solid;border-color:inherit;border-width:var(--strokeWidthThin);border-radius:inherit;}', ".r115jdol{display:inline-flex;box-sizing:border-box;align-items:center;justify-content:center;position:relative;font-family:var(--fontFamilyBase);font-size:var(--fontSizeBase200);font-weight:var(--fontWeightSemibold);line-height:var(--lineHeightBase200);height:20px;min-width:20px;padding:0 calc(var(--spacingHorizontalXS) + var(--spacingHorizontalXXS));border-radius:var(--borderRadiusCircular);border-color:var(--colorTransparentStroke);}", '.r115jdol::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;border-style:solid;border-color:inherit;border-width:var(--strokeWidthThin);border-radius:inherit;}']);
-const useRootStyles$3 = /* @__PURE__ */ __styles({
+const useRootStyles$2 = /* @__PURE__ */ __styles({
   fontSmallToTiny: {
     Bahqtrf: "fk6fouc",
     Be2twd7: "f13mqy1h",
@@ -9973,7 +8646,7 @@ const useIconStyles$1 = /* @__PURE__ */ __styles({
 const useBadgeStyles_unstable = (state) => {
   "use no memo";
   const rootClassName = useRootClassName();
-  const rootStyles = useRootStyles$3();
+  const rootStyles = useRootStyles$2();
   const smallToTiny = state.size === "small" || state.size === "extra-small" || state.size === "tiny";
   state.root.className = mergeClasses(badgeClassNames.root, rootClassName, smallToTiny && rootStyles.fontSmallToTiny, rootStyles[state.size], rootStyles[state.shape], state.shape === "rounded" && smallToTiny && rootStyles.roundedSmallToTiny, state.appearance === "ghost" && rootStyles.borderGhost, rootStyles[state.appearance], rootStyles[`${state.appearance}-${state.color}`], state.root.className);
   const iconRootClassName = useIconRootClassName();
@@ -10007,2844 +8680,8 @@ const Badge = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return renderBadge_unstable(state);
 });
 Badge.displayName = "Badge";
-function createVirtualElementFromClick(nativeEvent) {
-  const left = nativeEvent.clientX;
-  const top = nativeEvent.clientY;
-  const right = left + 1;
-  const bottom = top + 1;
-  function getBoundingClientRect2() {
-    return {
-      left,
-      top,
-      right,
-      bottom,
-      x: left,
-      y: top,
-      height: 1,
-      width: 1
-    };
-  }
-  return {
-    getBoundingClientRect: getBoundingClientRect2
-  };
-}
-const DATA_POSITIONING_INTERSECTING = "data-popper-is-intersecting";
-const DATA_POSITIONING_ESCAPED = "data-popper-escaped";
-const DATA_POSITIONING_HIDDEN = "data-popper-reference-hidden";
-const DATA_POSITIONING_PLACEMENT = "data-popper-placement";
-const POSITIONING_END_EVENT = "fui-positioningend";
-const DEFAULT_CONFIGURATION = ({ options }) => {
-  return options;
-};
-const PositioningConfigurationContext = reactExports.createContext(void 0);
-PositioningConfigurationContext.Provider;
-const usePositioningConfiguration = () => {
-  var _React_useContext;
-  return (_React_useContext = reactExports.useContext(PositioningConfigurationContext)) !== null && _React_useContext !== void 0 ? _React_useContext : DEFAULT_CONFIGURATION;
-};
-const sides = ["top", "right", "bottom", "left"];
-const min = Math.min;
-const max = Math.max;
-const round = Math.round;
-const createCoords = (v2) => ({
-  x: v2,
-  y: v2
-});
-const oppositeSideMap = {
-  left: "right",
-  right: "left",
-  bottom: "top",
-  top: "bottom"
-};
-const oppositeAlignmentMap = {
-  start: "end",
-  end: "start"
-};
-function clamp(start, value, end) {
-  return max(start, min(value, end));
-}
-function evaluate(value, param) {
-  return typeof value === "function" ? value(param) : value;
-}
-function getSide(placement) {
-  return placement.split("-")[0];
-}
-function getAlignment(placement) {
-  return placement.split("-")[1];
-}
-function getOppositeAxis(axis) {
-  return axis === "x" ? "y" : "x";
-}
-function getAxisLength(axis) {
-  return axis === "y" ? "height" : "width";
-}
-const yAxisSides = /* @__PURE__ */ new Set(["top", "bottom"]);
-function getSideAxis(placement) {
-  return yAxisSides.has(getSide(placement)) ? "y" : "x";
-}
-function getAlignmentAxis(placement) {
-  return getOppositeAxis(getSideAxis(placement));
-}
-function getAlignmentSides(placement, rects, rtl) {
-  if (rtl === void 0) {
-    rtl = false;
-  }
-  const alignment = getAlignment(placement);
-  const alignmentAxis = getAlignmentAxis(placement);
-  const length = getAxisLength(alignmentAxis);
-  let mainAlignmentSide = alignmentAxis === "x" ? alignment === (rtl ? "end" : "start") ? "right" : "left" : alignment === "start" ? "bottom" : "top";
-  if (rects.reference[length] > rects.floating[length]) {
-    mainAlignmentSide = getOppositePlacement(mainAlignmentSide);
-  }
-  return [mainAlignmentSide, getOppositePlacement(mainAlignmentSide)];
-}
-function getExpandedPlacements(placement) {
-  const oppositePlacement = getOppositePlacement(placement);
-  return [getOppositeAlignmentPlacement(placement), oppositePlacement, getOppositeAlignmentPlacement(oppositePlacement)];
-}
-function getOppositeAlignmentPlacement(placement) {
-  return placement.replace(/start|end/g, (alignment) => oppositeAlignmentMap[alignment]);
-}
-const lrPlacement = ["left", "right"];
-const rlPlacement = ["right", "left"];
-const tbPlacement = ["top", "bottom"];
-const btPlacement = ["bottom", "top"];
-function getSideList(side, isStart, rtl) {
-  switch (side) {
-    case "top":
-    case "bottom":
-      if (rtl) return isStart ? rlPlacement : lrPlacement;
-      return isStart ? lrPlacement : rlPlacement;
-    case "left":
-    case "right":
-      return isStart ? tbPlacement : btPlacement;
-    default:
-      return [];
-  }
-}
-function getOppositeAxisPlacements(placement, flipAlignment, direction, rtl) {
-  const alignment = getAlignment(placement);
-  let list = getSideList(getSide(placement), direction === "start", rtl);
-  if (alignment) {
-    list = list.map((side) => side + "-" + alignment);
-    if (flipAlignment) {
-      list = list.concat(list.map(getOppositeAlignmentPlacement));
-    }
-  }
-  return list;
-}
-function getOppositePlacement(placement) {
-  return placement.replace(/left|right|bottom|top/g, (side) => oppositeSideMap[side]);
-}
-function expandPaddingObject(padding) {
-  return {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    ...padding
-  };
-}
-function getPaddingObject(padding) {
-  return typeof padding !== "number" ? expandPaddingObject(padding) : {
-    top: padding,
-    right: padding,
-    bottom: padding,
-    left: padding
-  };
-}
-function rectToClientRect(rect) {
-  const {
-    x,
-    y: y2,
-    width,
-    height
-  } = rect;
-  return {
-    width,
-    height,
-    top: y2,
-    left: x,
-    right: x + width,
-    bottom: y2 + height,
-    x,
-    y: y2
-  };
-}
-function computeCoordsFromPlacement(_ref, placement, rtl) {
-  let {
-    reference,
-    floating
-  } = _ref;
-  const sideAxis = getSideAxis(placement);
-  const alignmentAxis = getAlignmentAxis(placement);
-  const alignLength = getAxisLength(alignmentAxis);
-  const side = getSide(placement);
-  const isVertical = sideAxis === "y";
-  const commonX = reference.x + reference.width / 2 - floating.width / 2;
-  const commonY = reference.y + reference.height / 2 - floating.height / 2;
-  const commonAlign = reference[alignLength] / 2 - floating[alignLength] / 2;
-  let coords;
-  switch (side) {
-    case "top":
-      coords = {
-        x: commonX,
-        y: reference.y - floating.height
-      };
-      break;
-    case "bottom":
-      coords = {
-        x: commonX,
-        y: reference.y + reference.height
-      };
-      break;
-    case "right":
-      coords = {
-        x: reference.x + reference.width,
-        y: commonY
-      };
-      break;
-    case "left":
-      coords = {
-        x: reference.x - floating.width,
-        y: commonY
-      };
-      break;
-    default:
-      coords = {
-        x: reference.x,
-        y: reference.y
-      };
-  }
-  switch (getAlignment(placement)) {
-    case "start":
-      coords[alignmentAxis] -= commonAlign * (rtl && isVertical ? -1 : 1);
-      break;
-    case "end":
-      coords[alignmentAxis] += commonAlign * (rtl && isVertical ? -1 : 1);
-      break;
-  }
-  return coords;
-}
-const computePosition$1 = async (reference, floating, config) => {
-  const {
-    placement = "bottom",
-    strategy = "absolute",
-    middleware = [],
-    platform: platform2
-  } = config;
-  const validMiddleware = middleware.filter(Boolean);
-  const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(floating));
-  let rects = await platform2.getElementRects({
-    reference,
-    floating,
-    strategy
-  });
-  let {
-    x,
-    y: y2
-  } = computeCoordsFromPlacement(rects, placement, rtl);
-  let statefulPlacement = placement;
-  let middlewareData = {};
-  let resetCount = 0;
-  for (let i = 0; i < validMiddleware.length; i++) {
-    const {
-      name,
-      fn
-    } = validMiddleware[i];
-    const {
-      x: nextX,
-      y: nextY,
-      data,
-      reset
-    } = await fn({
-      x,
-      y: y2,
-      initialPlacement: placement,
-      placement: statefulPlacement,
-      strategy,
-      middlewareData,
-      rects,
-      platform: platform2,
-      elements: {
-        reference,
-        floating
-      }
-    });
-    x = nextX != null ? nextX : x;
-    y2 = nextY != null ? nextY : y2;
-    middlewareData = {
-      ...middlewareData,
-      [name]: {
-        ...middlewareData[name],
-        ...data
-      }
-    };
-    if (reset && resetCount <= 50) {
-      resetCount++;
-      if (typeof reset === "object") {
-        if (reset.placement) {
-          statefulPlacement = reset.placement;
-        }
-        if (reset.rects) {
-          rects = reset.rects === true ? await platform2.getElementRects({
-            reference,
-            floating,
-            strategy
-          }) : reset.rects;
-        }
-        ({
-          x,
-          y: y2
-        } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
-      }
-      i = -1;
-    }
-  }
-  return {
-    x,
-    y: y2,
-    placement: statefulPlacement,
-    strategy,
-    middlewareData
-  };
-};
-async function detectOverflow$1(state, options) {
-  var _await$platform$isEle;
-  if (options === void 0) {
-    options = {};
-  }
-  const {
-    x,
-    y: y2,
-    platform: platform2,
-    rects,
-    elements,
-    strategy
-  } = state;
-  const {
-    boundary = "clippingAncestors",
-    rootBoundary = "viewport",
-    elementContext = "floating",
-    altBoundary = false,
-    padding = 0
-  } = evaluate(options, state);
-  const paddingObject = getPaddingObject(padding);
-  const altContext = elementContext === "floating" ? "reference" : "floating";
-  const element = elements[altBoundary ? altContext : elementContext];
-  const clippingClientRect = rectToClientRect(await platform2.getClippingRect({
-    element: ((_await$platform$isEle = await (platform2.isElement == null ? void 0 : platform2.isElement(element))) != null ? _await$platform$isEle : true) ? element : element.contextElement || await (platform2.getDocumentElement == null ? void 0 : platform2.getDocumentElement(elements.floating)),
-    boundary,
-    rootBoundary,
-    strategy
-  }));
-  const rect = elementContext === "floating" ? {
-    x,
-    y: y2,
-    width: rects.floating.width,
-    height: rects.floating.height
-  } : rects.reference;
-  const offsetParent = await (platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(elements.floating));
-  const offsetScale = await (platform2.isElement == null ? void 0 : platform2.isElement(offsetParent)) ? await (platform2.getScale == null ? void 0 : platform2.getScale(offsetParent)) || {
-    x: 1,
-    y: 1
-  } : {
-    x: 1,
-    y: 1
-  };
-  const elementClientRect = rectToClientRect(platform2.convertOffsetParentRelativeRectToViewportRelativeRect ? await platform2.convertOffsetParentRelativeRectToViewportRelativeRect({
-    elements,
-    rect,
-    offsetParent,
-    strategy
-  }) : rect);
-  return {
-    top: (clippingClientRect.top - elementClientRect.top + paddingObject.top) / offsetScale.y,
-    bottom: (elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom) / offsetScale.y,
-    left: (clippingClientRect.left - elementClientRect.left + paddingObject.left) / offsetScale.x,
-    right: (elementClientRect.right - clippingClientRect.right + paddingObject.right) / offsetScale.x
-  };
-}
-const arrow$1 = (options) => ({
-  name: "arrow",
-  options,
-  async fn(state) {
-    const {
-      x,
-      y: y2,
-      placement,
-      rects,
-      platform: platform2,
-      elements,
-      middlewareData
-    } = state;
-    const {
-      element,
-      padding = 0
-    } = evaluate(options, state) || {};
-    if (element == null) {
-      return {};
-    }
-    const paddingObject = getPaddingObject(padding);
-    const coords = {
-      x,
-      y: y2
-    };
-    const axis = getAlignmentAxis(placement);
-    const length = getAxisLength(axis);
-    const arrowDimensions = await platform2.getDimensions(element);
-    const isYAxis = axis === "y";
-    const minProp = isYAxis ? "top" : "left";
-    const maxProp = isYAxis ? "bottom" : "right";
-    const clientProp = isYAxis ? "clientHeight" : "clientWidth";
-    const endDiff = rects.reference[length] + rects.reference[axis] - coords[axis] - rects.floating[length];
-    const startDiff = coords[axis] - rects.reference[axis];
-    const arrowOffsetParent = await (platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(element));
-    let clientSize = arrowOffsetParent ? arrowOffsetParent[clientProp] : 0;
-    if (!clientSize || !await (platform2.isElement == null ? void 0 : platform2.isElement(arrowOffsetParent))) {
-      clientSize = elements.floating[clientProp] || rects.floating[length];
-    }
-    const centerToReference = endDiff / 2 - startDiff / 2;
-    const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
-    const minPadding = min(paddingObject[minProp], largestPossiblePadding);
-    const maxPadding = min(paddingObject[maxProp], largestPossiblePadding);
-    const min$1 = minPadding;
-    const max2 = clientSize - arrowDimensions[length] - maxPadding;
-    const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
-    const offset2 = clamp(min$1, center, max2);
-    const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset2 && rects.reference[length] / 2 - (center < min$1 ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
-    const alignmentOffset = shouldAddOffset ? center < min$1 ? center - min$1 : center - max2 : 0;
-    return {
-      [axis]: coords[axis] + alignmentOffset,
-      data: {
-        [axis]: offset2,
-        centerOffset: center - offset2 - alignmentOffset,
-        ...shouldAddOffset && {
-          alignmentOffset
-        }
-      },
-      reset: shouldAddOffset
-    };
-  }
-});
-const flip$2 = function(options) {
-  if (options === void 0) {
-    options = {};
-  }
-  return {
-    name: "flip",
-    options,
-    async fn(state) {
-      var _middlewareData$arrow, _middlewareData$flip;
-      const {
-        placement,
-        middlewareData,
-        rects,
-        initialPlacement,
-        platform: platform2,
-        elements
-      } = state;
-      const {
-        mainAxis: checkMainAxis = true,
-        crossAxis: checkCrossAxis = true,
-        fallbackPlacements: specifiedFallbackPlacements,
-        fallbackStrategy = "bestFit",
-        fallbackAxisSideDirection = "none",
-        flipAlignment = true,
-        ...detectOverflowOptions
-      } = evaluate(options, state);
-      if ((_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
-        return {};
-      }
-      const side = getSide(placement);
-      const initialSideAxis = getSideAxis(initialPlacement);
-      const isBasePlacement = getSide(initialPlacement) === initialPlacement;
-      const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating));
-      const fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipAlignment ? [getOppositePlacement(initialPlacement)] : getExpandedPlacements(initialPlacement));
-      const hasFallbackAxisSideDirection = fallbackAxisSideDirection !== "none";
-      if (!specifiedFallbackPlacements && hasFallbackAxisSideDirection) {
-        fallbackPlacements.push(...getOppositeAxisPlacements(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl));
-      }
-      const placements = [initialPlacement, ...fallbackPlacements];
-      const overflow = await detectOverflow$1(state, detectOverflowOptions);
-      const overflows = [];
-      let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
-      if (checkMainAxis) {
-        overflows.push(overflow[side]);
-      }
-      if (checkCrossAxis) {
-        const sides2 = getAlignmentSides(placement, rects, rtl);
-        overflows.push(overflow[sides2[0]], overflow[sides2[1]]);
-      }
-      overflowsData = [...overflowsData, {
-        placement,
-        overflows
-      }];
-      if (!overflows.every((side2) => side2 <= 0)) {
-        var _middlewareData$flip2, _overflowsData$filter;
-        const nextIndex = (((_middlewareData$flip2 = middlewareData.flip) == null ? void 0 : _middlewareData$flip2.index) || 0) + 1;
-        const nextPlacement = placements[nextIndex];
-        if (nextPlacement) {
-          const ignoreCrossAxisOverflow = checkCrossAxis === "alignment" ? initialSideAxis !== getSideAxis(nextPlacement) : false;
-          if (!ignoreCrossAxisOverflow || // We leave the current main axis only if every placement on that axis
-          // overflows the main axis.
-          overflowsData.every((d2) => getSideAxis(d2.placement) === initialSideAxis ? d2.overflows[0] > 0 : true)) {
-            return {
-              data: {
-                index: nextIndex,
-                overflows: overflowsData
-              },
-              reset: {
-                placement: nextPlacement
-              }
-            };
-          }
-        }
-        let resetPlacement = (_overflowsData$filter = overflowsData.filter((d2) => d2.overflows[0] <= 0).sort((a, b2) => a.overflows[1] - b2.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
-        if (!resetPlacement) {
-          switch (fallbackStrategy) {
-            case "bestFit": {
-              var _overflowsData$filter2;
-              const placement2 = (_overflowsData$filter2 = overflowsData.filter((d2) => {
-                if (hasFallbackAxisSideDirection) {
-                  const currentSideAxis = getSideAxis(d2.placement);
-                  return currentSideAxis === initialSideAxis || // Create a bias to the `y` side axis due to horizontal
-                  // reading directions favoring greater width.
-                  currentSideAxis === "y";
-                }
-                return true;
-              }).map((d2) => [d2.placement, d2.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a, b2) => a[1] - b2[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
-              if (placement2) {
-                resetPlacement = placement2;
-              }
-              break;
-            }
-            case "initialPlacement":
-              resetPlacement = initialPlacement;
-              break;
-          }
-        }
-        if (placement !== resetPlacement) {
-          return {
-            reset: {
-              placement: resetPlacement
-            }
-          };
-        }
-      }
-      return {};
-    }
-  };
-};
-function getSideOffsets(overflow, rect) {
-  return {
-    top: overflow.top - rect.height,
-    right: overflow.right - rect.width,
-    bottom: overflow.bottom - rect.height,
-    left: overflow.left - rect.width
-  };
-}
-function isAnySideFullyClipped(overflow) {
-  return sides.some((side) => overflow[side] >= 0);
-}
-const hide$1 = function(options) {
-  if (options === void 0) {
-    options = {};
-  }
-  return {
-    name: "hide",
-    options,
-    async fn(state) {
-      const {
-        rects
-      } = state;
-      const {
-        strategy = "referenceHidden",
-        ...detectOverflowOptions
-      } = evaluate(options, state);
-      switch (strategy) {
-        case "referenceHidden": {
-          const overflow = await detectOverflow$1(state, {
-            ...detectOverflowOptions,
-            elementContext: "reference"
-          });
-          const offsets = getSideOffsets(overflow, rects.reference);
-          return {
-            data: {
-              referenceHiddenOffsets: offsets,
-              referenceHidden: isAnySideFullyClipped(offsets)
-            }
-          };
-        }
-        case "escaped": {
-          const overflow = await detectOverflow$1(state, {
-            ...detectOverflowOptions,
-            altBoundary: true
-          });
-          const offsets = getSideOffsets(overflow, rects.floating);
-          return {
-            data: {
-              escapedOffsets: offsets,
-              escaped: isAnySideFullyClipped(offsets)
-            }
-          };
-        }
-        default: {
-          return {};
-        }
-      }
-    }
-  };
-};
-const originSides = /* @__PURE__ */ new Set(["left", "top"]);
-async function convertValueToCoords(state, options) {
-  const {
-    placement,
-    platform: platform2,
-    elements
-  } = state;
-  const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating));
-  const side = getSide(placement);
-  const alignment = getAlignment(placement);
-  const isVertical = getSideAxis(placement) === "y";
-  const mainAxisMulti = originSides.has(side) ? -1 : 1;
-  const crossAxisMulti = rtl && isVertical ? -1 : 1;
-  const rawValue = evaluate(options, state);
-  let {
-    mainAxis,
-    crossAxis,
-    alignmentAxis
-  } = typeof rawValue === "number" ? {
-    mainAxis: rawValue,
-    crossAxis: 0,
-    alignmentAxis: null
-  } : {
-    mainAxis: rawValue.mainAxis || 0,
-    crossAxis: rawValue.crossAxis || 0,
-    alignmentAxis: rawValue.alignmentAxis
-  };
-  if (alignment && typeof alignmentAxis === "number") {
-    crossAxis = alignment === "end" ? alignmentAxis * -1 : alignmentAxis;
-  }
-  return isVertical ? {
-    x: crossAxis * crossAxisMulti,
-    y: mainAxis * mainAxisMulti
-  } : {
-    x: mainAxis * mainAxisMulti,
-    y: crossAxis * crossAxisMulti
-  };
-}
-const offset$2 = function(options) {
-  if (options === void 0) {
-    options = 0;
-  }
-  return {
-    name: "offset",
-    options,
-    async fn(state) {
-      var _middlewareData$offse, _middlewareData$arrow;
-      const {
-        x,
-        y: y2,
-        placement,
-        middlewareData
-      } = state;
-      const diffCoords = await convertValueToCoords(state, options);
-      if (placement === ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse.placement) && (_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
-        return {};
-      }
-      return {
-        x: x + diffCoords.x,
-        y: y2 + diffCoords.y,
-        data: {
-          ...diffCoords,
-          placement
-        }
-      };
-    }
-  };
-};
-const shift$2 = function(options) {
-  if (options === void 0) {
-    options = {};
-  }
-  return {
-    name: "shift",
-    options,
-    async fn(state) {
-      const {
-        x,
-        y: y2,
-        placement
-      } = state;
-      const {
-        mainAxis: checkMainAxis = true,
-        crossAxis: checkCrossAxis = false,
-        limiter = {
-          fn: (_ref) => {
-            let {
-              x: x2,
-              y: y3
-            } = _ref;
-            return {
-              x: x2,
-              y: y3
-            };
-          }
-        },
-        ...detectOverflowOptions
-      } = evaluate(options, state);
-      const coords = {
-        x,
-        y: y2
-      };
-      const overflow = await detectOverflow$1(state, detectOverflowOptions);
-      const crossAxis = getSideAxis(getSide(placement));
-      const mainAxis = getOppositeAxis(crossAxis);
-      let mainAxisCoord = coords[mainAxis];
-      let crossAxisCoord = coords[crossAxis];
-      if (checkMainAxis) {
-        const minSide = mainAxis === "y" ? "top" : "left";
-        const maxSide = mainAxis === "y" ? "bottom" : "right";
-        const min2 = mainAxisCoord + overflow[minSide];
-        const max2 = mainAxisCoord - overflow[maxSide];
-        mainAxisCoord = clamp(min2, mainAxisCoord, max2);
-      }
-      if (checkCrossAxis) {
-        const minSide = crossAxis === "y" ? "top" : "left";
-        const maxSide = crossAxis === "y" ? "bottom" : "right";
-        const min2 = crossAxisCoord + overflow[minSide];
-        const max2 = crossAxisCoord - overflow[maxSide];
-        crossAxisCoord = clamp(min2, crossAxisCoord, max2);
-      }
-      const limitedCoords = limiter.fn({
-        ...state,
-        [mainAxis]: mainAxisCoord,
-        [crossAxis]: crossAxisCoord
-      });
-      return {
-        ...limitedCoords,
-        data: {
-          x: limitedCoords.x - x,
-          y: limitedCoords.y - y2,
-          enabled: {
-            [mainAxis]: checkMainAxis,
-            [crossAxis]: checkCrossAxis
-          }
-        }
-      };
-    }
-  };
-};
-const limitShift$1 = function(options) {
-  if (options === void 0) {
-    options = {};
-  }
-  return {
-    options,
-    fn(state) {
-      const {
-        x,
-        y: y2,
-        placement,
-        rects,
-        middlewareData
-      } = state;
-      const {
-        offset: offset2 = 0,
-        mainAxis: checkMainAxis = true,
-        crossAxis: checkCrossAxis = true
-      } = evaluate(options, state);
-      const coords = {
-        x,
-        y: y2
-      };
-      const crossAxis = getSideAxis(placement);
-      const mainAxis = getOppositeAxis(crossAxis);
-      let mainAxisCoord = coords[mainAxis];
-      let crossAxisCoord = coords[crossAxis];
-      const rawOffset = evaluate(offset2, state);
-      const computedOffset = typeof rawOffset === "number" ? {
-        mainAxis: rawOffset,
-        crossAxis: 0
-      } : {
-        mainAxis: 0,
-        crossAxis: 0,
-        ...rawOffset
-      };
-      if (checkMainAxis) {
-        const len = mainAxis === "y" ? "height" : "width";
-        const limitMin = rects.reference[mainAxis] - rects.floating[len] + computedOffset.mainAxis;
-        const limitMax = rects.reference[mainAxis] + rects.reference[len] - computedOffset.mainAxis;
-        if (mainAxisCoord < limitMin) {
-          mainAxisCoord = limitMin;
-        } else if (mainAxisCoord > limitMax) {
-          mainAxisCoord = limitMax;
-        }
-      }
-      if (checkCrossAxis) {
-        var _middlewareData$offse, _middlewareData$offse2;
-        const len = mainAxis === "y" ? "width" : "height";
-        const isOriginSide = originSides.has(getSide(placement));
-        const limitMin = rects.reference[crossAxis] - rects.floating[len] + (isOriginSide ? ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse[crossAxis]) || 0 : 0) + (isOriginSide ? 0 : computedOffset.crossAxis);
-        const limitMax = rects.reference[crossAxis] + rects.reference[len] + (isOriginSide ? 0 : ((_middlewareData$offse2 = middlewareData.offset) == null ? void 0 : _middlewareData$offse2[crossAxis]) || 0) - (isOriginSide ? computedOffset.crossAxis : 0);
-        if (crossAxisCoord < limitMin) {
-          crossAxisCoord = limitMin;
-        } else if (crossAxisCoord > limitMax) {
-          crossAxisCoord = limitMax;
-        }
-      }
-      return {
-        [mainAxis]: mainAxisCoord,
-        [crossAxis]: crossAxisCoord
-      };
-    }
-  };
-};
-const size$1 = function(options) {
-  if (options === void 0) {
-    options = {};
-  }
-  return {
-    name: "size",
-    options,
-    async fn(state) {
-      var _state$middlewareData, _state$middlewareData2;
-      const {
-        placement,
-        rects,
-        platform: platform2,
-        elements
-      } = state;
-      const {
-        apply = () => {
-        },
-        ...detectOverflowOptions
-      } = evaluate(options, state);
-      const overflow = await detectOverflow$1(state, detectOverflowOptions);
-      const side = getSide(placement);
-      const alignment = getAlignment(placement);
-      const isYAxis = getSideAxis(placement) === "y";
-      const {
-        width,
-        height
-      } = rects.floating;
-      let heightSide;
-      let widthSide;
-      if (side === "top" || side === "bottom") {
-        heightSide = side;
-        widthSide = alignment === (await (platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating)) ? "start" : "end") ? "left" : "right";
-      } else {
-        widthSide = side;
-        heightSide = alignment === "end" ? "top" : "bottom";
-      }
-      const maximumClippingHeight = height - overflow.top - overflow.bottom;
-      const maximumClippingWidth = width - overflow.left - overflow.right;
-      const overflowAvailableHeight = min(height - overflow[heightSide], maximumClippingHeight);
-      const overflowAvailableWidth = min(width - overflow[widthSide], maximumClippingWidth);
-      const noShift = !state.middlewareData.shift;
-      let availableHeight = overflowAvailableHeight;
-      let availableWidth = overflowAvailableWidth;
-      if ((_state$middlewareData = state.middlewareData.shift) != null && _state$middlewareData.enabled.x) {
-        availableWidth = maximumClippingWidth;
-      }
-      if ((_state$middlewareData2 = state.middlewareData.shift) != null && _state$middlewareData2.enabled.y) {
-        availableHeight = maximumClippingHeight;
-      }
-      if (noShift && !alignment) {
-        const xMin = max(overflow.left, 0);
-        const xMax = max(overflow.right, 0);
-        const yMin = max(overflow.top, 0);
-        const yMax = max(overflow.bottom, 0);
-        if (isYAxis) {
-          availableWidth = width - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max(overflow.left, overflow.right));
-        } else {
-          availableHeight = height - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max(overflow.top, overflow.bottom));
-        }
-      }
-      await apply({
-        ...state,
-        availableWidth,
-        availableHeight
-      });
-      const nextDimensions = await platform2.getDimensions(elements.floating);
-      if (width !== nextDimensions.width || height !== nextDimensions.height) {
-        return {
-          reset: {
-            rects: true
-          }
-        };
-      }
-      return {};
-    }
-  };
-};
-function hasWindow() {
-  return typeof window !== "undefined";
-}
-function getNodeName(node) {
-  if (isNode(node)) {
-    return (node.nodeName || "").toLowerCase();
-  }
-  return "#document";
-}
-function getWindow(node) {
-  var _node$ownerDocument;
-  return (node == null || (_node$ownerDocument = node.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
-}
-function getDocumentElement(node) {
-  var _ref;
-  return (_ref = (isNode(node) ? node.ownerDocument : node.document) || window.document) == null ? void 0 : _ref.documentElement;
-}
-function isNode(value) {
-  if (!hasWindow()) {
-    return false;
-  }
-  return value instanceof Node || value instanceof getWindow(value).Node;
-}
-function isElement(value) {
-  if (!hasWindow()) {
-    return false;
-  }
-  return value instanceof Element || value instanceof getWindow(value).Element;
-}
-function isHTMLElement(value) {
-  if (!hasWindow()) {
-    return false;
-  }
-  return value instanceof HTMLElement || value instanceof getWindow(value).HTMLElement;
-}
-function isShadowRoot(value) {
-  if (!hasWindow() || typeof ShadowRoot === "undefined") {
-    return false;
-  }
-  return value instanceof ShadowRoot || value instanceof getWindow(value).ShadowRoot;
-}
-const invalidOverflowDisplayValues = /* @__PURE__ */ new Set(["inline", "contents"]);
-function isOverflowElement(element) {
-  const {
-    overflow,
-    overflowX,
-    overflowY,
-    display
-  } = getComputedStyle$1(element);
-  return /auto|scroll|overlay|hidden|clip/.test(overflow + overflowY + overflowX) && !invalidOverflowDisplayValues.has(display);
-}
-const tableElements = /* @__PURE__ */ new Set(["table", "td", "th"]);
-function isTableElement(element) {
-  return tableElements.has(getNodeName(element));
-}
-const topLayerSelectors = [":popover-open", ":modal"];
-function isTopLayer(element) {
-  return topLayerSelectors.some((selector) => {
-    try {
-      return element.matches(selector);
-    } catch (_e) {
-      return false;
-    }
-  });
-}
-const transformProperties = ["transform", "translate", "scale", "rotate", "perspective"];
-const willChangeValues = ["transform", "translate", "scale", "rotate", "perspective", "filter"];
-const containValues = ["paint", "layout", "strict", "content"];
-function isContainingBlock(elementOrCss) {
-  const webkit = isWebKit();
-  const css = isElement(elementOrCss) ? getComputedStyle$1(elementOrCss) : elementOrCss;
-  return transformProperties.some((value) => css[value] ? css[value] !== "none" : false) || (css.containerType ? css.containerType !== "normal" : false) || !webkit && (css.backdropFilter ? css.backdropFilter !== "none" : false) || !webkit && (css.filter ? css.filter !== "none" : false) || willChangeValues.some((value) => (css.willChange || "").includes(value)) || containValues.some((value) => (css.contain || "").includes(value));
-}
-function getContainingBlock(element) {
-  let currentNode = getParentNode$1(element);
-  while (isHTMLElement(currentNode) && !isLastTraversableNode(currentNode)) {
-    if (isContainingBlock(currentNode)) {
-      return currentNode;
-    } else if (isTopLayer(currentNode)) {
-      return null;
-    }
-    currentNode = getParentNode$1(currentNode);
-  }
-  return null;
-}
-function isWebKit() {
-  if (typeof CSS === "undefined" || !CSS.supports) return false;
-  return CSS.supports("-webkit-backdrop-filter", "none");
-}
-const lastTraversableNodeNames = /* @__PURE__ */ new Set(["html", "body", "#document"]);
-function isLastTraversableNode(node) {
-  return lastTraversableNodeNames.has(getNodeName(node));
-}
-function getComputedStyle$1(element) {
-  return getWindow(element).getComputedStyle(element);
-}
-function getNodeScroll(element) {
-  if (isElement(element)) {
-    return {
-      scrollLeft: element.scrollLeft,
-      scrollTop: element.scrollTop
-    };
-  }
-  return {
-    scrollLeft: element.scrollX,
-    scrollTop: element.scrollY
-  };
-}
-function getParentNode$1(node) {
-  if (getNodeName(node) === "html") {
-    return node;
-  }
-  const result = (
-    // Step into the shadow DOM of the parent of a slotted node.
-    node.assignedSlot || // DOM Element detected.
-    node.parentNode || // ShadowRoot detected.
-    isShadowRoot(node) && node.host || // Fallback.
-    getDocumentElement(node)
-  );
-  return isShadowRoot(result) ? result.host : result;
-}
-function getNearestOverflowAncestor(node) {
-  const parentNode = getParentNode$1(node);
-  if (isLastTraversableNode(parentNode)) {
-    return node.ownerDocument ? node.ownerDocument.body : node.body;
-  }
-  if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
-    return parentNode;
-  }
-  return getNearestOverflowAncestor(parentNode);
-}
-function getOverflowAncestors(node, list, traverseIframes) {
-  var _node$ownerDocument2;
-  if (list === void 0) {
-    list = [];
-  }
-  const scrollableAncestor = getNearestOverflowAncestor(node);
-  const isBody = scrollableAncestor === ((_node$ownerDocument2 = node.ownerDocument) == null ? void 0 : _node$ownerDocument2.body);
-  const win = getWindow(scrollableAncestor);
-  if (isBody) {
-    getFrameElement(win);
-    return list.concat(win, win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : [], []);
-  }
-  return list.concat(scrollableAncestor, getOverflowAncestors(scrollableAncestor, []));
-}
-function getFrameElement(win) {
-  return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
-}
-function getCssDimensions(element) {
-  const css = getComputedStyle$1(element);
-  let width = parseFloat(css.width) || 0;
-  let height = parseFloat(css.height) || 0;
-  const hasOffset = isHTMLElement(element);
-  const offsetWidth = hasOffset ? element.offsetWidth : width;
-  const offsetHeight = hasOffset ? element.offsetHeight : height;
-  const shouldFallback = round(width) !== offsetWidth || round(height) !== offsetHeight;
-  if (shouldFallback) {
-    width = offsetWidth;
-    height = offsetHeight;
-  }
-  return {
-    width,
-    height,
-    $: shouldFallback
-  };
-}
-function unwrapElement(element) {
-  return !isElement(element) ? element.contextElement : element;
-}
-function getScale(element) {
-  const domElement = unwrapElement(element);
-  if (!isHTMLElement(domElement)) {
-    return createCoords(1);
-  }
-  const rect = domElement.getBoundingClientRect();
-  const {
-    width,
-    height,
-    $
-  } = getCssDimensions(domElement);
-  let x = ($ ? round(rect.width) : rect.width) / width;
-  let y2 = ($ ? round(rect.height) : rect.height) / height;
-  if (!x || !Number.isFinite(x)) {
-    x = 1;
-  }
-  if (!y2 || !Number.isFinite(y2)) {
-    y2 = 1;
-  }
-  return {
-    x,
-    y: y2
-  };
-}
-const noOffsets = /* @__PURE__ */ createCoords(0);
-function getVisualOffsets(element) {
-  const win = getWindow(element);
-  if (!isWebKit() || !win.visualViewport) {
-    return noOffsets;
-  }
-  return {
-    x: win.visualViewport.offsetLeft,
-    y: win.visualViewport.offsetTop
-  };
-}
-function shouldAddVisualOffsets(element, isFixed, floatingOffsetParent) {
-  if (isFixed === void 0) {
-    isFixed = false;
-  }
-  if (!floatingOffsetParent || isFixed && floatingOffsetParent !== getWindow(element)) {
-    return false;
-  }
-  return isFixed;
-}
-function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetParent) {
-  if (includeScale === void 0) {
-    includeScale = false;
-  }
-  if (isFixedStrategy === void 0) {
-    isFixedStrategy = false;
-  }
-  const clientRect = element.getBoundingClientRect();
-  const domElement = unwrapElement(element);
-  let scale = createCoords(1);
-  if (includeScale) {
-    if (offsetParent) {
-      if (isElement(offsetParent)) {
-        scale = getScale(offsetParent);
-      }
-    } else {
-      scale = getScale(element);
-    }
-  }
-  const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
-  let x = (clientRect.left + visualOffsets.x) / scale.x;
-  let y2 = (clientRect.top + visualOffsets.y) / scale.y;
-  let width = clientRect.width / scale.x;
-  let height = clientRect.height / scale.y;
-  if (domElement) {
-    const win = getWindow(domElement);
-    const offsetWin = offsetParent && isElement(offsetParent) ? getWindow(offsetParent) : offsetParent;
-    let currentWin = win;
-    let currentIFrame = getFrameElement(currentWin);
-    while (currentIFrame && offsetParent && offsetWin !== currentWin) {
-      const iframeScale = getScale(currentIFrame);
-      const iframeRect = currentIFrame.getBoundingClientRect();
-      const css = getComputedStyle$1(currentIFrame);
-      const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
-      const top = iframeRect.top + (currentIFrame.clientTop + parseFloat(css.paddingTop)) * iframeScale.y;
-      x *= iframeScale.x;
-      y2 *= iframeScale.y;
-      width *= iframeScale.x;
-      height *= iframeScale.y;
-      x += left;
-      y2 += top;
-      currentWin = getWindow(currentIFrame);
-      currentIFrame = getFrameElement(currentWin);
-    }
-  }
-  return rectToClientRect({
-    width,
-    height,
-    x,
-    y: y2
-  });
-}
-function getWindowScrollBarX(element, rect) {
-  const leftScroll = getNodeScroll(element).scrollLeft;
-  if (!rect) {
-    return getBoundingClientRect(getDocumentElement(element)).left + leftScroll;
-  }
-  return rect.left + leftScroll;
-}
-function getHTMLOffset(documentElement, scroll) {
-  const htmlRect = documentElement.getBoundingClientRect();
-  const x = htmlRect.left + scroll.scrollLeft - getWindowScrollBarX(documentElement, htmlRect);
-  const y2 = htmlRect.top + scroll.scrollTop;
-  return {
-    x,
-    y: y2
-  };
-}
-function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
-  let {
-    elements,
-    rect,
-    offsetParent,
-    strategy
-  } = _ref;
-  const isFixed = strategy === "fixed";
-  const documentElement = getDocumentElement(offsetParent);
-  const topLayer = elements ? isTopLayer(elements.floating) : false;
-  if (offsetParent === documentElement || topLayer && isFixed) {
-    return rect;
-  }
-  let scroll = {
-    scrollLeft: 0,
-    scrollTop: 0
-  };
-  let scale = createCoords(1);
-  const offsets = createCoords(0);
-  const isOffsetParentAnElement = isHTMLElement(offsetParent);
-  if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-    if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
-      scroll = getNodeScroll(offsetParent);
-    }
-    if (isHTMLElement(offsetParent)) {
-      const offsetRect = getBoundingClientRect(offsetParent);
-      scale = getScale(offsetParent);
-      offsets.x = offsetRect.x + offsetParent.clientLeft;
-      offsets.y = offsetRect.y + offsetParent.clientTop;
-    }
-  }
-  const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll) : createCoords(0);
-  return {
-    width: rect.width * scale.x,
-    height: rect.height * scale.y,
-    x: rect.x * scale.x - scroll.scrollLeft * scale.x + offsets.x + htmlOffset.x,
-    y: rect.y * scale.y - scroll.scrollTop * scale.y + offsets.y + htmlOffset.y
-  };
-}
-function getClientRects(element) {
-  return Array.from(element.getClientRects());
-}
-function getDocumentRect(element) {
-  const html = getDocumentElement(element);
-  const scroll = getNodeScroll(element);
-  const body = element.ownerDocument.body;
-  const width = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
-  const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
-  let x = -scroll.scrollLeft + getWindowScrollBarX(element);
-  const y2 = -scroll.scrollTop;
-  if (getComputedStyle$1(body).direction === "rtl") {
-    x += max(html.clientWidth, body.clientWidth) - width;
-  }
-  return {
-    width,
-    height,
-    x,
-    y: y2
-  };
-}
-const SCROLLBAR_MAX = 25;
-function getViewportRect(element, strategy) {
-  const win = getWindow(element);
-  const html = getDocumentElement(element);
-  const visualViewport = win.visualViewport;
-  let width = html.clientWidth;
-  let height = html.clientHeight;
-  let x = 0;
-  let y2 = 0;
-  if (visualViewport) {
-    width = visualViewport.width;
-    height = visualViewport.height;
-    const visualViewportBased = isWebKit();
-    if (!visualViewportBased || visualViewportBased && strategy === "fixed") {
-      x = visualViewport.offsetLeft;
-      y2 = visualViewport.offsetTop;
-    }
-  }
-  const windowScrollbarX = getWindowScrollBarX(html);
-  if (windowScrollbarX <= 0) {
-    const doc = html.ownerDocument;
-    const body = doc.body;
-    const bodyStyles = getComputedStyle(body);
-    const bodyMarginInline = doc.compatMode === "CSS1Compat" ? parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight) || 0 : 0;
-    const clippingStableScrollbarWidth = Math.abs(html.clientWidth - body.clientWidth - bodyMarginInline);
-    if (clippingStableScrollbarWidth <= SCROLLBAR_MAX) {
-      width -= clippingStableScrollbarWidth;
-    }
-  } else if (windowScrollbarX <= SCROLLBAR_MAX) {
-    width += windowScrollbarX;
-  }
-  return {
-    width,
-    height,
-    x,
-    y: y2
-  };
-}
-const absoluteOrFixed = /* @__PURE__ */ new Set(["absolute", "fixed"]);
-function getInnerBoundingClientRect(element, strategy) {
-  const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
-  const top = clientRect.top + element.clientTop;
-  const left = clientRect.left + element.clientLeft;
-  const scale = isHTMLElement(element) ? getScale(element) : createCoords(1);
-  const width = element.clientWidth * scale.x;
-  const height = element.clientHeight * scale.y;
-  const x = left * scale.x;
-  const y2 = top * scale.y;
-  return {
-    width,
-    height,
-    x,
-    y: y2
-  };
-}
-function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) {
-  let rect;
-  if (clippingAncestor === "viewport") {
-    rect = getViewportRect(element, strategy);
-  } else if (clippingAncestor === "document") {
-    rect = getDocumentRect(getDocumentElement(element));
-  } else if (isElement(clippingAncestor)) {
-    rect = getInnerBoundingClientRect(clippingAncestor, strategy);
-  } else {
-    const visualOffsets = getVisualOffsets(element);
-    rect = {
-      x: clippingAncestor.x - visualOffsets.x,
-      y: clippingAncestor.y - visualOffsets.y,
-      width: clippingAncestor.width,
-      height: clippingAncestor.height
-    };
-  }
-  return rectToClientRect(rect);
-}
-function hasFixedPositionAncestor(element, stopNode) {
-  const parentNode = getParentNode$1(element);
-  if (parentNode === stopNode || !isElement(parentNode) || isLastTraversableNode(parentNode)) {
-    return false;
-  }
-  return getComputedStyle$1(parentNode).position === "fixed" || hasFixedPositionAncestor(parentNode, stopNode);
-}
-function getClippingElementAncestors(element, cache) {
-  const cachedResult = cache.get(element);
-  if (cachedResult) {
-    return cachedResult;
-  }
-  let result = getOverflowAncestors(element, []).filter((el) => isElement(el) && getNodeName(el) !== "body");
-  let currentContainingBlockComputedStyle = null;
-  const elementIsFixed = getComputedStyle$1(element).position === "fixed";
-  let currentNode = elementIsFixed ? getParentNode$1(element) : element;
-  while (isElement(currentNode) && !isLastTraversableNode(currentNode)) {
-    const computedStyle = getComputedStyle$1(currentNode);
-    const currentNodeIsContaining = isContainingBlock(currentNode);
-    if (!currentNodeIsContaining && computedStyle.position === "fixed") {
-      currentContainingBlockComputedStyle = null;
-    }
-    const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === "static" && !!currentContainingBlockComputedStyle && absoluteOrFixed.has(currentContainingBlockComputedStyle.position) || isOverflowElement(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
-    if (shouldDropCurrentNode) {
-      result = result.filter((ancestor) => ancestor !== currentNode);
-    } else {
-      currentContainingBlockComputedStyle = computedStyle;
-    }
-    currentNode = getParentNode$1(currentNode);
-  }
-  cache.set(element, result);
-  return result;
-}
-function getClippingRect(_ref) {
-  let {
-    element,
-    boundary,
-    rootBoundary,
-    strategy
-  } = _ref;
-  const elementClippingAncestors = boundary === "clippingAncestors" ? isTopLayer(element) ? [] : getClippingElementAncestors(element, this._c) : [].concat(boundary);
-  const clippingAncestors = [...elementClippingAncestors, rootBoundary];
-  const firstClippingAncestor = clippingAncestors[0];
-  const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor) => {
-    const rect = getClientRectFromClippingAncestor(element, clippingAncestor, strategy);
-    accRect.top = max(rect.top, accRect.top);
-    accRect.right = min(rect.right, accRect.right);
-    accRect.bottom = min(rect.bottom, accRect.bottom);
-    accRect.left = max(rect.left, accRect.left);
-    return accRect;
-  }, getClientRectFromClippingAncestor(element, firstClippingAncestor, strategy));
-  return {
-    width: clippingRect.right - clippingRect.left,
-    height: clippingRect.bottom - clippingRect.top,
-    x: clippingRect.left,
-    y: clippingRect.top
-  };
-}
-function getDimensions(element) {
-  const {
-    width,
-    height
-  } = getCssDimensions(element);
-  return {
-    width,
-    height
-  };
-}
-function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
-  const isOffsetParentAnElement = isHTMLElement(offsetParent);
-  const documentElement = getDocumentElement(offsetParent);
-  const isFixed = strategy === "fixed";
-  const rect = getBoundingClientRect(element, true, isFixed, offsetParent);
-  let scroll = {
-    scrollLeft: 0,
-    scrollTop: 0
-  };
-  const offsets = createCoords(0);
-  function setLeftRTLScrollbarOffset() {
-    offsets.x = getWindowScrollBarX(documentElement);
-  }
-  if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-    if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
-      scroll = getNodeScroll(offsetParent);
-    }
-    if (isOffsetParentAnElement) {
-      const offsetRect = getBoundingClientRect(offsetParent, true, isFixed, offsetParent);
-      offsets.x = offsetRect.x + offsetParent.clientLeft;
-      offsets.y = offsetRect.y + offsetParent.clientTop;
-    } else if (documentElement) {
-      setLeftRTLScrollbarOffset();
-    }
-  }
-  if (isFixed && !isOffsetParentAnElement && documentElement) {
-    setLeftRTLScrollbarOffset();
-  }
-  const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll) : createCoords(0);
-  const x = rect.left + scroll.scrollLeft - offsets.x - htmlOffset.x;
-  const y2 = rect.top + scroll.scrollTop - offsets.y - htmlOffset.y;
-  return {
-    x,
-    y: y2,
-    width: rect.width,
-    height: rect.height
-  };
-}
-function isStaticPositioned(element) {
-  return getComputedStyle$1(element).position === "static";
-}
-function getTrueOffsetParent(element, polyfill) {
-  if (!isHTMLElement(element) || getComputedStyle$1(element).position === "fixed") {
-    return null;
-  }
-  if (polyfill) {
-    return polyfill(element);
-  }
-  let rawOffsetParent = element.offsetParent;
-  if (getDocumentElement(element) === rawOffsetParent) {
-    rawOffsetParent = rawOffsetParent.ownerDocument.body;
-  }
-  return rawOffsetParent;
-}
-function getOffsetParent(element, polyfill) {
-  const win = getWindow(element);
-  if (isTopLayer(element)) {
-    return win;
-  }
-  if (!isHTMLElement(element)) {
-    let svgOffsetParent = getParentNode$1(element);
-    while (svgOffsetParent && !isLastTraversableNode(svgOffsetParent)) {
-      if (isElement(svgOffsetParent) && !isStaticPositioned(svgOffsetParent)) {
-        return svgOffsetParent;
-      }
-      svgOffsetParent = getParentNode$1(svgOffsetParent);
-    }
-    return win;
-  }
-  let offsetParent = getTrueOffsetParent(element, polyfill);
-  while (offsetParent && isTableElement(offsetParent) && isStaticPositioned(offsetParent)) {
-    offsetParent = getTrueOffsetParent(offsetParent, polyfill);
-  }
-  if (offsetParent && isLastTraversableNode(offsetParent) && isStaticPositioned(offsetParent) && !isContainingBlock(offsetParent)) {
-    return win;
-  }
-  return offsetParent || getContainingBlock(element) || win;
-}
-const getElementRects = async function(data) {
-  const getOffsetParentFn = this.getOffsetParent || getOffsetParent;
-  const getDimensionsFn = this.getDimensions;
-  const floatingDimensions = await getDimensionsFn(data.floating);
-  return {
-    reference: getRectRelativeToOffsetParent(data.reference, await getOffsetParentFn(data.floating), data.strategy),
-    floating: {
-      x: 0,
-      y: 0,
-      width: floatingDimensions.width,
-      height: floatingDimensions.height
-    }
-  };
-};
-function isRTL(element) {
-  return getComputedStyle$1(element).direction === "rtl";
-}
-const platform = {
-  convertOffsetParentRelativeRectToViewportRelativeRect,
-  getDocumentElement,
-  getClippingRect,
-  getOffsetParent,
-  getElementRects,
-  getClientRects,
-  getDimensions,
-  getScale,
-  isElement,
-  isRTL
-};
-const detectOverflow = detectOverflow$1;
-const offset$1 = offset$2;
-const shift$1 = shift$2;
-const flip$1 = flip$2;
-const size = size$1;
-const hide = hide$1;
-const arrow = arrow$1;
-const limitShift = limitShift$1;
-const computePosition = (reference, floating, options) => {
-  const cache = /* @__PURE__ */ new Map();
-  const mergedOptions = {
-    platform,
-    ...options
-  };
-  const platformWithCache = {
-    ...mergedOptions.platform,
-    _c: cache
-  };
-  return computePosition$1(reference, floating, {
-    ...mergedOptions,
-    platform: platformWithCache
-  });
-};
-function parseFloatingUIPlacement(placement) {
-  const tokens = placement.split("-");
-  return {
-    side: tokens[0],
-    alignment: tokens[1]
-  };
-}
-const getParentNode = (node) => {
-  if (node.nodeName === "HTML") {
-    return node;
-  }
-  return node.parentNode || node.host;
-};
-const getStyleComputedProperty = (node) => {
-  var _node_ownerDocument;
-  if (node.nodeType !== 1) {
-    return {};
-  }
-  const targetWindow = (_node_ownerDocument = node.ownerDocument) === null || _node_ownerDocument === void 0 ? void 0 : _node_ownerDocument.defaultView;
-  if (targetWindow) {
-    return targetWindow.getComputedStyle(node, null);
-  }
-  return {};
-};
-const getScrollParent = (node) => {
-  const parentNode = node && getParentNode(node);
-  if (!parentNode) return document.body;
-  switch (parentNode.nodeName) {
-    case "HTML":
-    case "BODY":
-      return parentNode.ownerDocument.body;
-    case "#document":
-      return parentNode.body;
-  }
-  const { overflow, overflowX, overflowY } = getStyleComputedProperty(parentNode);
-  if (/(auto|scroll|overlay)/.test(overflow + overflowY + overflowX)) {
-    return parentNode;
-  }
-  return getScrollParent(parentNode);
-};
-const hasScrollParent = (node) => {
-  var _scrollParentElement_ownerDocument;
-  const scrollParentElement = getScrollParent(node);
-  return scrollParentElement ? scrollParentElement !== ((_scrollParentElement_ownerDocument = scrollParentElement.ownerDocument) === null || _scrollParentElement_ownerDocument === void 0 ? void 0 : _scrollParentElement_ownerDocument.body) : false;
-};
-function getBoundary(element, boundary) {
-  if (boundary === "window") {
-    return element === null || element === void 0 ? void 0 : element.ownerDocument.documentElement;
-  }
-  if (boundary === "clippingParents") {
-    return "clippingAncestors";
-  }
-  if (boundary === "scrollParent") {
-    let boundariesNode = getScrollParent(element);
-    if (boundariesNode.nodeName === "BODY") {
-      boundariesNode = element === null || element === void 0 ? void 0 : element.ownerDocument.documentElement;
-    }
-    return boundariesNode;
-  }
-  return boundary;
-}
-function toFloatingUIPadding(padding, isRtl) {
-  if (typeof padding === "number") {
-    return padding;
-  }
-  const { start, end, ...verticalPadding } = padding;
-  const paddingObject = verticalPadding;
-  const left = isRtl ? "end" : "start";
-  const right = isRtl ? "start" : "end";
-  if (padding[left]) {
-    paddingObject.left = padding[left];
-  }
-  if (padding[right]) {
-    paddingObject.right = padding[right];
-  }
-  return paddingObject;
-}
-const getPositionMap$1 = (rtl) => ({
-  above: "top",
-  below: "bottom",
-  before: rtl ? "right" : "left",
-  after: rtl ? "left" : "right"
-});
-const getAlignmentMap$1 = () => ({
-  start: "start",
-  end: "end",
-  top: "start",
-  bottom: "end",
-  center: void 0
-});
-const shouldAlignToCenter = (p2, a) => {
-  const positionedVertically = p2 === "above" || p2 === "below";
-  const alignedVertically = a === "top" || a === "bottom";
-  return positionedVertically && alignedVertically || !positionedVertically && !alignedVertically;
-};
-const toFloatingUIPlacement = (align, position, rtl) => {
-  const alignment = shouldAlignToCenter(position, align) ? "center" : align;
-  const computedPosition = position && getPositionMap$1(rtl)[position];
-  const computedAlignment = alignment && getAlignmentMap$1()[alignment];
-  if (computedPosition && computedAlignment) {
-    return `${computedPosition}-${computedAlignment}`;
-  }
-  return computedPosition;
-};
-const getPositionMap = () => ({
-  top: "above",
-  bottom: "below",
-  right: "after",
-  left: "before"
-});
-const getAlignmentMap = (position) => {
-  if (position === "above" || position === "below") {
-    return {
-      start: "start",
-      end: "end"
-    };
-  }
-  return {
-    start: "top",
-    end: "bottom"
-  };
-};
-const fromFloatingUIPlacement = (placement) => {
-  const { side, alignment: floatingUIAlignment } = parseFloatingUIPlacement(placement);
-  const position = getPositionMap()[side];
-  const alignment = floatingUIAlignment && getAlignmentMap(position)[floatingUIAlignment];
-  return {
-    position,
-    alignment
-  };
-};
-const shorthandLookup = {
-  above: {
-    position: "above",
-    align: "center"
-  },
-  "above-start": {
-    position: "above",
-    align: "start"
-  },
-  "above-end": {
-    position: "above",
-    align: "end"
-  },
-  below: {
-    position: "below",
-    align: "center"
-  },
-  "below-start": {
-    position: "below",
-    align: "start"
-  },
-  "below-end": {
-    position: "below",
-    align: "end"
-  },
-  before: {
-    position: "before",
-    align: "center"
-  },
-  "before-top": {
-    position: "before",
-    align: "top"
-  },
-  "before-bottom": {
-    position: "before",
-    align: "bottom"
-  },
-  after: {
-    position: "after",
-    align: "center"
-  },
-  "after-top": {
-    position: "after",
-    align: "top"
-  },
-  "after-bottom": {
-    position: "after",
-    align: "bottom"
-  }
-};
-function resolvePositioningShorthand(shorthand) {
-  if (shorthand === void 0 || shorthand === null) {
-    return {};
-  }
-  if (typeof shorthand === "string") {
-    return shorthandLookup[shorthand];
-  }
-  return shorthand;
-}
-function useCallbackRef(initialValue, callback, skipInitialResolve) {
-  const isFirst = reactExports.useRef(true);
-  const [ref] = reactExports.useState(() => ({
-    // value
-    value: initialValue,
-    // last callback
-    callback,
-    // "memoized" public interface
-    facade: {
-      get current() {
-        return ref.value;
-      },
-      set current(value) {
-        const last = ref.value;
-        if (last !== value) {
-          ref.value = value;
-          ref.callback(value, last);
-        }
-      }
-    }
-  }));
-  useIsomorphicLayoutEffect(() => {
-    isFirst.current = false;
-  }, []);
-  ref.callback = callback;
-  return ref.facade;
-}
-function debounce(fn) {
-  let pending;
-  return () => {
-    if (!pending) {
-      pending = new Promise((resolve) => {
-        Promise.resolve().then(() => {
-          pending = void 0;
-          resolve(fn());
-        });
-      });
-    }
-    return pending;
-  };
-}
-function writeArrowUpdates(options) {
-  const { arrow: arrow2, middlewareData } = options;
-  if (!middlewareData.arrow || !arrow2) {
-    return;
-  }
-  const { x: arrowX, y: arrowY } = middlewareData.arrow;
-  Object.assign(arrow2.style, {
-    left: arrowX !== null && arrowX !== void 0 ? `${arrowX}px` : "",
-    top: arrowY !== null && arrowY !== void 0 ? `${arrowY}px` : ""
-  });
-}
-function writeContainerUpdates(options) {
-  var _middlewareData_hide, _middlewareData_hide1, _container_ownerDocument_defaultView;
-  const { container, placement, middlewareData, strategy, lowPPI, coordinates, useTransform = true } = options;
-  if (!container) {
-    return;
-  }
-  container.setAttribute(DATA_POSITIONING_PLACEMENT, placement);
-  container.removeAttribute(DATA_POSITIONING_INTERSECTING);
-  if (middlewareData.intersectionObserver.intersecting) {
-    container.setAttribute(DATA_POSITIONING_INTERSECTING, "");
-  }
-  container.removeAttribute(DATA_POSITIONING_ESCAPED);
-  if ((_middlewareData_hide = middlewareData.hide) === null || _middlewareData_hide === void 0 ? void 0 : _middlewareData_hide.escaped) {
-    container.setAttribute(DATA_POSITIONING_ESCAPED, "");
-  }
-  container.removeAttribute(DATA_POSITIONING_HIDDEN);
-  if ((_middlewareData_hide1 = middlewareData.hide) === null || _middlewareData_hide1 === void 0 ? void 0 : _middlewareData_hide1.referenceHidden) {
-    container.setAttribute(DATA_POSITIONING_HIDDEN, "");
-  }
-  const devicePixelRatio = ((_container_ownerDocument_defaultView = container.ownerDocument.defaultView) === null || _container_ownerDocument_defaultView === void 0 ? void 0 : _container_ownerDocument_defaultView.devicePixelRatio) || 1;
-  const x = Math.round(coordinates.x * devicePixelRatio) / devicePixelRatio;
-  const y2 = Math.round(coordinates.y * devicePixelRatio) / devicePixelRatio;
-  Object.assign(container.style, {
-    position: strategy
-  });
-  if (useTransform) {
-    Object.assign(container.style, {
-      transform: lowPPI ? `translate(${x}px, ${y2}px)` : `translate3d(${x}px, ${y2}px, 0)`
-    });
-    return;
-  }
-  Object.assign(container.style, {
-    left: `${x}px`,
-    top: `${y2}px`
-  });
-}
-const normalizeAutoSize = (autoSize) => {
-  switch (autoSize) {
-    case "always":
-    case true:
-      return {
-        applyMaxWidth: true,
-        applyMaxHeight: true
-      };
-    case "width-always":
-    case "width":
-      return {
-        applyMaxWidth: true,
-        applyMaxHeight: false
-      };
-    case "height-always":
-    case "height":
-      return {
-        applyMaxWidth: false,
-        applyMaxHeight: true
-      };
-    default:
-      return false;
-  }
-};
-function listScrollParents(node) {
-  const scrollParents = [];
-  let cur = node;
-  while (cur) {
-    const scrollParent = getScrollParent(cur);
-    if (node.ownerDocument.body === scrollParent) {
-      scrollParents.push(scrollParent);
-      break;
-    }
-    if (scrollParent.nodeName === "BODY" && scrollParent !== node.ownerDocument.body) {
-      break;
-    }
-    scrollParents.push(scrollParent);
-    cur = scrollParent;
-  }
-  return scrollParents;
-}
-function createResizeObserver(targetWindow, callback) {
-  return new targetWindow.ResizeObserver(callback);
-}
-function createPositionManager(options) {
-  let isDestroyed = false;
-  const { container, target, arrow: arrow2, strategy, middleware, placement, useTransform = true, disableUpdateOnResize = false } = options;
-  const targetWindow = container.ownerDocument.defaultView;
-  if (!target || !container || !targetWindow) {
-    return {
-      updatePosition: () => void 0,
-      dispose: () => void 0
-    };
-  }
-  const resizeObserver = disableUpdateOnResize ? null : createResizeObserver(targetWindow, (entries) => {
-    const shouldUpdateOnResize = entries.every((entry) => {
-      return entry.contentRect.width > 0 && entry.contentRect.height > 0;
-    });
-    if (shouldUpdateOnResize) {
-      updatePosition();
-    }
-  });
-  let isFirstUpdate = true;
-  const scrollParents = /* @__PURE__ */ new Set();
-  Object.assign(container.style, {
-    position: "fixed",
-    left: 0,
-    top: 0,
-    margin: 0
-  });
-  const forceUpdate = () => {
-    if (isDestroyed) {
-      return;
-    }
-    if (isFirstUpdate) {
-      listScrollParents(container).forEach((scrollParent) => scrollParents.add(scrollParent));
-      if (isHTMLElement$2(target)) {
-        listScrollParents(target).forEach((scrollParent) => scrollParents.add(scrollParent));
-      }
-      scrollParents.forEach((scrollParent) => {
-        scrollParent.addEventListener("scroll", updatePosition, {
-          passive: true
-        });
-      });
-      resizeObserver === null || resizeObserver === void 0 ? void 0 : resizeObserver.observe(container);
-      if (isHTMLElement$2(target)) {
-        resizeObserver === null || resizeObserver === void 0 ? void 0 : resizeObserver.observe(target);
-      }
-      isFirstUpdate = false;
-    }
-    Object.assign(container.style, {
-      position: strategy
-    });
-    computePosition(target, container, {
-      placement,
-      middleware,
-      strategy
-    }).then(({ x, y: y2, middlewareData, placement: computedPlacement }) => {
-      if (isDestroyed) {
-        return;
-      }
-      writeArrowUpdates({
-        arrow: arrow2,
-        middlewareData
-      });
-      writeContainerUpdates({
-        container,
-        middlewareData,
-        placement: computedPlacement,
-        coordinates: {
-          x,
-          y: y2
-        },
-        lowPPI: ((targetWindow === null || targetWindow === void 0 ? void 0 : targetWindow.devicePixelRatio) || 1) <= 1,
-        strategy,
-        useTransform
-      });
-      container.dispatchEvent(new CustomEvent(POSITIONING_END_EVENT));
-    }).catch((err) => {
-    });
-  };
-  const updatePosition = debounce(() => forceUpdate());
-  const dispose = () => {
-    isDestroyed = true;
-    if (targetWindow) {
-      targetWindow.removeEventListener("scroll", updatePosition);
-      targetWindow.removeEventListener("resize", updatePosition);
-    }
-    scrollParents.forEach((scrollParent) => {
-      scrollParent.removeEventListener("scroll", updatePosition);
-    });
-    scrollParents.clear();
-    resizeObserver === null || resizeObserver === void 0 ? void 0 : resizeObserver.disconnect();
-  };
-  if (targetWindow) {
-    targetWindow.addEventListener("scroll", updatePosition, {
-      passive: true
-    });
-    targetWindow.addEventListener("resize", updatePosition);
-  }
-  updatePosition();
-  return {
-    updatePosition,
-    dispose
-  };
-}
-function coverTarget() {
-  return {
-    name: "coverTarget",
-    fn: (middlewareArguments) => {
-      const { placement, rects, x, y: y2 } = middlewareArguments;
-      const basePlacement = parseFloatingUIPlacement(placement).side;
-      const newCoords = {
-        x,
-        y: y2
-      };
-      switch (basePlacement) {
-        case "bottom":
-          newCoords.y -= rects.reference.height;
-          break;
-        case "top":
-          newCoords.y += rects.reference.height;
-          break;
-        case "left":
-          newCoords.x += rects.reference.width;
-          break;
-        case "right":
-          newCoords.x -= rects.reference.width;
-          break;
-      }
-      return newCoords;
-    }
-  };
-}
-function flip(options) {
-  const { hasScrollableElement, flipBoundary, container, fallbackPositions = [], isRtl } = options;
-  const fallbackPlacements = fallbackPositions.reduce((acc, shorthand) => {
-    const { position, align } = resolvePositioningShorthand(shorthand);
-    const placement = toFloatingUIPlacement(align, position, isRtl);
-    if (placement) {
-      acc.push(placement);
-    }
-    return acc;
-  }, []);
-  return flip$1({
-    ...hasScrollableElement && {
-      boundary: "clippingAncestors"
-    },
-    ...flipBoundary && {
-      altBoundary: true,
-      boundary: getBoundary(container, flipBoundary)
-    },
-    fallbackStrategy: "bestFit",
-    ...fallbackPlacements.length && {
-      fallbackPlacements
-    }
-  });
-}
-function intersecting() {
-  return {
-    name: "intersectionObserver",
-    fn: async (middlewareArguments) => {
-      const floatingRect = middlewareArguments.rects.floating;
-      const altOverflow = await detectOverflow(middlewareArguments, {
-        altBoundary: true
-      });
-      const isIntersectingTop = altOverflow.top < floatingRect.height && altOverflow.top > 0;
-      const isIntersectingBottom = altOverflow.bottom < floatingRect.height && altOverflow.bottom > 0;
-      const isIntersecting = isIntersectingTop || isIntersectingBottom;
-      return {
-        data: {
-          intersecting: isIntersecting
-        }
-      };
-    }
-  };
-}
-const resetMaxSize = (autoSize) => ({
-  name: "resetMaxSize",
-  fn({ middlewareData, elements }) {
-    var _middlewareData_resetMaxSize;
-    if ((_middlewareData_resetMaxSize = middlewareData.resetMaxSize) === null || _middlewareData_resetMaxSize === void 0 ? void 0 : _middlewareData_resetMaxSize.maxSizeAlreadyReset) {
-      return {};
-    }
-    const { applyMaxWidth, applyMaxHeight } = autoSize;
-    if (applyMaxWidth) {
-      elements.floating.style.removeProperty("box-sizing");
-      elements.floating.style.removeProperty("max-width");
-      elements.floating.style.removeProperty("width");
-    }
-    if (applyMaxHeight) {
-      elements.floating.style.removeProperty("box-sizing");
-      elements.floating.style.removeProperty("max-height");
-      elements.floating.style.removeProperty("height");
-    }
-    return {
-      data: {
-        maxSizeAlreadyReset: true
-      },
-      reset: {
-        rects: true
-      }
-    };
-  }
-});
-function maxSize(autoSize, options) {
-  const { container, overflowBoundary, overflowBoundaryPadding, isRtl } = options;
-  return size({
-    ...overflowBoundaryPadding && {
-      padding: toFloatingUIPadding(overflowBoundaryPadding, isRtl)
-    },
-    ...overflowBoundary && {
-      altBoundary: true,
-      boundary: getBoundary(container, overflowBoundary)
-    },
-    apply({ availableHeight, availableWidth, elements, rects }) {
-      const applyMaxSizeStyles = (apply, dimension, availableSize) => {
-        if (!apply) {
-          return;
-        }
-        elements.floating.style.setProperty("box-sizing", "border-box");
-        elements.floating.style.setProperty(`max-${dimension}`, `${availableSize}px`);
-        if (rects.floating[dimension] > availableSize) {
-          elements.floating.style.setProperty(dimension, `${availableSize}px`);
-          const axis = dimension === "width" ? "x" : "y";
-          if (!elements.floating.style.getPropertyValue(`overflow-${axis}`)) {
-            elements.floating.style.setProperty(`overflow-${axis}`, "auto");
-          }
-        }
-      };
-      const { applyMaxWidth, applyMaxHeight } = autoSize;
-      applyMaxSizeStyles(applyMaxWidth, "width", availableWidth);
-      applyMaxSizeStyles(applyMaxHeight, "height", availableHeight);
-    }
-  });
-}
-function getFloatingUIOffset(rawOffset) {
-  if (!rawOffset) {
-    return rawOffset;
-  }
-  if (typeof rawOffset === "number" || typeof rawOffset === "object") {
-    return rawOffset;
-  }
-  return ({ rects: { floating, reference }, placement }) => {
-    const { position, alignment } = fromFloatingUIPlacement(placement);
-    return rawOffset({
-      positionedRect: floating,
-      targetRect: reference,
-      position,
-      alignment
-    });
-  };
-}
-function offset(offsetValue) {
-  const floatingUIOffset = getFloatingUIOffset(offsetValue);
-  return offset$1(floatingUIOffset);
-}
-function shift(options) {
-  const { hasScrollableElement, shiftToCoverTarget, disableTether, overflowBoundary, container, overflowBoundaryPadding, isRtl } = options;
-  return shift$1({
-    ...hasScrollableElement && {
-      boundary: "clippingAncestors"
-    },
-    ...shiftToCoverTarget && {
-      crossAxis: true,
-      limiter: limitShift({
-        crossAxis: true,
-        mainAxis: false
-      })
-    },
-    ...disableTether && {
-      crossAxis: disableTether === "all",
-      limiter: limitShift({
-        crossAxis: disableTether !== "all",
-        mainAxis: false
-      })
-    },
-    ...overflowBoundaryPadding && {
-      padding: toFloatingUIPadding(overflowBoundaryPadding, isRtl)
-    },
-    ...overflowBoundary && {
-      altBoundary: true,
-      boundary: getBoundary(container, overflowBoundary)
-    }
-  });
-}
-const matchTargetSizeCssVar = "--fui-match-target-size";
-function matchTargetSize() {
-  return {
-    name: "matchTargetSize",
-    fn: async (middlewareArguments) => {
-      const { rects: { reference: referenceRect, floating: floatingRect }, elements: { floating: floatingElement }, middlewareData: { matchTargetSize: { matchTargetSizeAttempt = false } = {} } } = middlewareArguments;
-      if (referenceRect.width === floatingRect.width || matchTargetSizeAttempt) {
-        return {};
-      }
-      const { width } = referenceRect;
-      floatingElement.style.setProperty(matchTargetSizeCssVar, `${width}px`);
-      if (!floatingElement.style.width) {
-        floatingElement.style.width = `var(${matchTargetSizeCssVar})`;
-      }
-      return {
-        data: {
-          matchTargetSizeAttempt: true
-        },
-        reset: {
-          rects: true
-        }
-      };
-    }
-  };
-}
-function usePositioningConfigFn(configFn, options) {
-  const {
-    align,
-    arrowPadding,
-    autoSize,
-    coverTarget: coverTarget2,
-    disableUpdateOnResize,
-    flipBoundary,
-    offset: offset2,
-    overflowBoundary,
-    pinned,
-    position,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    unstable_disableTether,
-    strategy,
-    overflowBoundaryPadding,
-    fallbackPositions,
-    useTransform,
-    matchTargetSize: matchTargetSize2,
-    shiftToCoverTarget
-  } = options;
-  return reactExports.useCallback((container, arrow2) => {
-    return configFn({
-      container,
-      arrow: arrow2,
-      options: {
-        autoSize,
-        disableUpdateOnResize,
-        matchTargetSize: matchTargetSize2,
-        offset: offset2,
-        strategy,
-        coverTarget: coverTarget2,
-        flipBoundary,
-        overflowBoundary,
-        useTransform,
-        overflowBoundaryPadding,
-        pinned,
-        arrowPadding,
-        align,
-        fallbackPositions,
-        shiftToCoverTarget,
-        position,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        unstable_disableTether
-      }
-    });
-  }, [
-    autoSize,
-    disableUpdateOnResize,
-    matchTargetSize2,
-    offset2,
-    strategy,
-    coverTarget2,
-    flipBoundary,
-    overflowBoundary,
-    useTransform,
-    overflowBoundaryPadding,
-    pinned,
-    arrowPadding,
-    align,
-    fallbackPositions,
-    shiftToCoverTarget,
-    position,
-    unstable_disableTether,
-    configFn
-  ]);
-}
-function usePositioningOptions(options) {
-  const { dir, targetDocument } = useFluent();
-  const isRtl = dir === "rtl";
-  const configFn = usePositioningConfigFn(usePositioningConfiguration(), options);
-  const {
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    positionFixed
-  } = options;
-  return reactExports.useCallback((container, arrow$12) => {
-    const hasScrollableElement = hasScrollParent(container);
-    const optionsAfterEnhancement = configFn(container, arrow$12);
-    const {
-      autoSize,
-      disableUpdateOnResize,
-      matchTargetSize: matchTargetSize$1,
-      offset: offset$12,
-      coverTarget: coverTarget$1,
-      flipBoundary,
-      overflowBoundary,
-      useTransform,
-      overflowBoundaryPadding,
-      pinned,
-      position,
-      arrowPadding,
-      strategy,
-      align,
-      fallbackPositions,
-      shiftToCoverTarget,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      unstable_disableTether
-    } = optionsAfterEnhancement;
-    const normalizedAutoSize = normalizeAutoSize(autoSize);
-    const middleware = [
-      normalizedAutoSize && resetMaxSize(normalizedAutoSize),
-      matchTargetSize$1 && matchTargetSize(),
-      offset$12 && offset(offset$12),
-      coverTarget$1 && coverTarget(),
-      !pinned && flip({
-        container,
-        flipBoundary,
-        hasScrollableElement,
-        isRtl,
-        fallbackPositions
-      }),
-      shift({
-        container,
-        hasScrollableElement,
-        overflowBoundary,
-        disableTether: unstable_disableTether,
-        overflowBoundaryPadding,
-        isRtl,
-        shiftToCoverTarget
-      }),
-      normalizedAutoSize && maxSize(normalizedAutoSize, {
-        container,
-        overflowBoundary,
-        overflowBoundaryPadding,
-        isRtl
-      }),
-      intersecting(),
-      arrow$12 && arrow({
-        element: arrow$12,
-        padding: arrowPadding
-      }),
-      hide({
-        strategy: "referenceHidden"
-      }),
-      hide({
-        strategy: "escaped"
-      }),
-      false
-    ].filter(Boolean);
-    const placement = toFloatingUIPlacement(align, position, isRtl);
-    return {
-      placement,
-      middleware,
-      strategy: (strategy !== null && strategy !== void 0 ? strategy : positionFixed) ? "fixed" : "absolute",
-      disableUpdateOnResize,
-      useTransform
-    };
-  }, [
-    configFn,
-    isRtl,
-    targetDocument,
-    positionFixed
-  ]);
-}
-function usePositioning(options) {
-  "use no memo";
-  const managerRef = reactExports.useRef(null);
-  const targetRef = reactExports.useRef(null);
-  const overrideTargetRef = reactExports.useRef(null);
-  const containerRef = reactExports.useRef(null);
-  const arrowRef = reactExports.useRef(null);
-  const { enabled = true } = options;
-  const resolvePositioningOptions = usePositioningOptions(options);
-  const updatePositionManager = reactExports.useCallback(() => {
-    if (managerRef.current) {
-      managerRef.current.dispose();
-    }
-    managerRef.current = null;
-    var _overrideTargetRef_current;
-    const target = (_overrideTargetRef_current = overrideTargetRef.current) !== null && _overrideTargetRef_current !== void 0 ? _overrideTargetRef_current : targetRef.current;
-    if (enabled && canUseDOM() && target && containerRef.current) {
-      managerRef.current = createPositionManager({
-        container: containerRef.current,
-        target,
-        arrow: arrowRef.current,
-        ...resolvePositioningOptions(containerRef.current, arrowRef.current)
-      });
-    }
-  }, [
-    enabled,
-    resolvePositioningOptions
-  ]);
-  const setOverrideTarget = useEventCallback((target) => {
-    overrideTargetRef.current = target;
-    updatePositionManager();
-  });
-  reactExports.useImperativeHandle(options.positioningRef, () => ({
-    updatePosition: () => {
-      var _managerRef_current;
-      return (_managerRef_current = managerRef.current) === null || _managerRef_current === void 0 ? void 0 : _managerRef_current.updatePosition();
-    },
-    setTarget: (target) => {
-      if (options.target && false) ;
-      setOverrideTarget(target);
-    }
-  }), [
-    options.target,
-    setOverrideTarget
-  ]);
-  useIsomorphicLayoutEffect(() => {
-    var _options_target;
-    setOverrideTarget((_options_target = options.target) !== null && _options_target !== void 0 ? _options_target : null);
-  }, [
-    options.target,
-    setOverrideTarget
-  ]);
-  useIsomorphicLayoutEffect(() => {
-    updatePositionManager();
-  }, [
-    updatePositionManager
-  ]);
-  const setTarget = useCallbackRef(null, (target) => {
-    if (targetRef.current !== target) {
-      targetRef.current = target;
-      updatePositionManager();
-    }
-  });
-  const onPositioningEnd = useEventCallback(() => {
-    var _options_onPositioningEnd;
-    return (_options_onPositioningEnd = options.onPositioningEnd) === null || _options_onPositioningEnd === void 0 ? void 0 : _options_onPositioningEnd.call(options);
-  });
-  const setContainer = useCallbackRef(null, (container) => {
-    if (containerRef.current !== container) {
-      var _containerRef_current;
-      (_containerRef_current = containerRef.current) === null || _containerRef_current === void 0 ? void 0 : _containerRef_current.removeEventListener(POSITIONING_END_EVENT, onPositioningEnd);
-      container === null || container === void 0 ? void 0 : container.addEventListener(POSITIONING_END_EVENT, onPositioningEnd);
-      containerRef.current = container;
-      updatePositionManager();
-    }
-  });
-  const setArrow = useCallbackRef(null, (arrow2) => {
-    if (arrowRef.current !== arrow2) {
-      arrowRef.current = arrow2;
-      updatePositionManager();
-    }
-  });
-  return {
-    targetRef: setTarget,
-    containerRef: setContainer,
-    arrowRef: setArrow
-  };
-}
-const usePositioningMouseTarget = (initialState) => {
-  const [virtualElement, setVirtualElement] = reactExports.useState(initialState);
-  const setVirtualMouseTarget = (event) => {
-    if (event === void 0 || event === null) {
-      setVirtualElement(void 0);
-      return;
-    }
-    let mouseevent;
-    if (!(event instanceof MouseEvent)) {
-      mouseevent = event.nativeEvent;
-    } else {
-      mouseevent = event;
-    }
-    const contextTarget = createVirtualElementFromClick(mouseevent);
-    setVirtualElement(contextTarget);
-  };
-  return [
-    virtualElement,
-    setVirtualMouseTarget
-  ];
-};
-function createSafeZoneAreaStateStore() {
-  let isActive = false;
-  const listeners = [];
-  return {
-    isActive() {
-      return isActive;
-    },
-    toggleActive(newIsActive) {
-      if (isActive === newIsActive) {
-        return;
-      }
-      isActive = newIsActive;
-      listeners.forEach((listener) => listener(isActive));
-    },
-    subscribe(listener) {
-      listeners.push(listener);
-      return () => {
-        const index = listeners.indexOf(listener);
-        if (index > -1) {
-          listeners.splice(index, 1);
-        }
-      };
-    }
-  };
-}
-var shim$1 = { exports: {} };
-var useSyncExternalStoreShim_production = {};
-/**
- * @license React
- * use-sync-external-store-shim.production.js
- *
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var React = reactExports;
-function is(x, y2) {
-  return x === y2 && (0 !== x || 1 / x === 1 / y2) || x !== x && y2 !== y2;
-}
-var objectIs = "function" === typeof Object.is ? Object.is : is, useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue = React.useDebugValue;
-function useSyncExternalStore$2(subscribe, getSnapshot) {
-  var value = getSnapshot(), _useState = useState({ inst: { value, getSnapshot } }), inst = _useState[0].inst, forceUpdate = _useState[1];
-  useLayoutEffect(
-    function() {
-      inst.value = value;
-      inst.getSnapshot = getSnapshot;
-      checkIfSnapshotChanged(inst) && forceUpdate({ inst });
-    },
-    [subscribe, value, getSnapshot]
-  );
-  useEffect(
-    function() {
-      checkIfSnapshotChanged(inst) && forceUpdate({ inst });
-      return subscribe(function() {
-        checkIfSnapshotChanged(inst) && forceUpdate({ inst });
-      });
-    },
-    [subscribe]
-  );
-  useDebugValue(value);
-  return value;
-}
-function checkIfSnapshotChanged(inst) {
-  var latestGetSnapshot = inst.getSnapshot;
-  inst = inst.value;
-  try {
-    var nextValue = latestGetSnapshot();
-    return !objectIs(inst, nextValue);
-  } catch (error) {
-    return true;
-  }
-}
-function useSyncExternalStore$1(subscribe, getSnapshot) {
-  return getSnapshot();
-}
-var shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-useSyncExternalStoreShim_production.useSyncExternalStore = void 0 !== React.useSyncExternalStore ? React.useSyncExternalStore : shim;
-{
-  shim$1.exports = useSyncExternalStoreShim_production;
-}
-var shimExports = shim$1.exports;
-function getRectCorners(rect, offset2) {
-  return {
-    topLeft: [
-      rect.left - offset2[0],
-      rect.top - offset2[1]
-    ],
-    topRight: [
-      rect.right - offset2[0],
-      rect.top - offset2[1]
-    ],
-    bottomRight: [
-      rect.right - offset2[0],
-      rect.bottom - offset2[1]
-    ],
-    bottomLeft: [
-      rect.left - offset2[0],
-      rect.bottom - offset2[1]
-    ]
-  };
-}
-const OFFSET_DISTANCE = 20;
-function measureDistance(a, b2) {
-  return Math.sqrt((a[0] - b2[0]) ** 2 + (a[1] - b2[1]) ** 2);
-}
-function getUnitVector(a, b2) {
-  const distance = measureDistance(a, b2);
-  if (distance === 0) {
-    return [
-      0,
-      0
-    ];
-  }
-  return [
-    (a[0] - b2[0]) / distance,
-    (a[1] - b2[1]) / distance
-  ];
-}
-function getMouseAnchor(topLeftCorner, bottomRightCorner, mouseCoordinates) {
-  const containerCenter = [
-    (topLeftCorner[0] + bottomRightCorner[0]) / 2,
-    (topLeftCorner[1] + bottomRightCorner[1]) / 2
-  ];
-  const unitVector = getUnitVector([
-    mouseCoordinates[0],
-    mouseCoordinates[1]
-  ], [
-    containerCenter[0],
-    containerCenter[1]
-  ]);
-  const distance = measureDistance([
-    containerCenter[0],
-    containerCenter[1]
-  ], [
-    mouseCoordinates[0],
-    mouseCoordinates[1]
-  ]);
-  return [
-    containerCenter[0] + unitVector[0] * (distance + OFFSET_DISTANCE),
-    containerCenter[1] + unitVector[1] * (distance + OFFSET_DISTANCE)
-  ];
-}
-function pointsToSvgPath(points) {
-  return `M ${points} z`;
-}
-const useStyles$a = /* @__PURE__ */ __styles({
-  wrapper: {
-    mc9l5x: "fjseox",
-    Bqenvij: "fniina8",
-    a9b677: "f3tsq5r",
-    Bkecrkj: "f1aehjj5"
-  },
-  wrapperActive: {
-    mc9l5x: "ftgm304"
-  },
-  svg: {
-    Bkfmm31: "f1au8mb3",
-    Bkecrkj: "f1aehjj5",
-    qhf8xq: "f19dog8a",
-    Bhzewxz: "f15twtuk",
-    oyh7mz: ["f1vgc2s3", "f1e31b4d"]
-  },
-  triangle: {
-    Bkecrkj: "f1cguypg"
-  },
-  triangleDebug: {
-    Bceei9c: "f7116n6",
-    Bkfmm31: "f1xab38x"
-  },
-  rectDebug: {
-    Bkfmm31: "fyegryc"
-  }
-}, {
-  d: [".fjseox{display:none;}", ".fniina8{height:0;}", ".f3tsq5r{width:0;}", ".f1aehjj5{pointer-events:none;}", ".ftgm304{display:block;}", ".f1au8mb3{fill:transparent;}", ".f19dog8a{position:fixed;}", ".f15twtuk{top:0;}", ".f1vgc2s3{left:0;}", ".f1e31b4d{right:0;}", ".f1cguypg{pointer-events:auto;}", ".f7116n6{cursor:crosshair;}", ".f1xab38x{fill:color-mix(in srgb, var(--colorPaletteGreenBackground3) 20%, transparent);}", ".fyegryc{fill:color-mix(in srgb, var(--colorPaletteRedBackground3) 20%, transparent);}"]
-});
-function drawRectangle(rect) {
-  if (rect.width <= 0 || rect.height <= 0) {
-    return "";
-  }
-  let pathData = "";
-  pathData += `M ${rect.x},${rect.y} `;
-  pathData += `V ${rect.y + rect.height} `;
-  pathData += `H ${rect.x + rect.width} `;
-  pathData += `V ${rect.y} `;
-  pathData += `H ${rect.x} `;
-  pathData += `Z `;
-  return pathData;
-}
-function computeOutsideClipPath(svgWidth, svgHeight, targetRect, containerRect) {
-  let pathData = `M 0,0 H ${svgWidth} V ${svgHeight} H 0 Z `;
-  pathData += drawRectangle(targetRect);
-  pathData += drawRectangle(containerRect);
-  return pathData;
-}
-const EMPTY_RECT = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  width: 0,
-  height: 0,
-  x: 0,
-  y: 0,
-  toJSON() {
-    return "";
-  }
-};
-function isSameRect(a, b2) {
-  return a.top === b2.top && a.right === b2.right && a.bottom === b2.bottom && a.left === b2.left && a.width === b2.width && a.height === b2.height;
-}
-function isSameCoordinates(a, b2) {
-  return a[0] === b2[0] && a[1] === b2[1];
-}
-const SafeZoneArea = /* @__PURE__ */ reactExports.memo((props) => {
-  const { debug, onMouseEnter, onMouseMove, onMouseLeave, stateStore } = props;
-  const clipPathId = useId();
-  const styles = useStyles$a();
-  const active = shimExports.useSyncExternalStore(stateStore.subscribe, stateStore.isActive);
-  const svgRef = reactExports.useRef(null);
-  const [state, setState] = reactExports.useState(() => ({
-    containerRect: EMPTY_RECT,
-    targetRect: EMPTY_RECT,
-    mouseCoordinates: [
-      0,
-      0
-    ]
-  }));
-  reactExports.useImperativeHandle(props.imperativeRef, () => ({
-    updateSVG(newState) {
-      setState((prevState) => {
-        if (isSameRect(prevState.containerRect, newState.containerRect) && isSameRect(prevState.targetRect, newState.targetRect) && isSameCoordinates(prevState.mouseCoordinates, newState.mouseCoordinates)) {
-          return prevState;
-        }
-        return newState;
-      });
-    }
-  }), []);
-  const { containerRect, targetRect, mouseCoordinates } = state;
-  const topOffset = Math.min(targetRect.top, containerRect.top);
-  const leftOffset = Math.min(targetRect.left, containerRect.left);
-  const bottomOffset = Math.max(targetRect.bottom, containerRect.bottom);
-  const rightOffset = Math.max(targetRect.right, containerRect.right);
-  const containerCorners = getRectCorners(containerRect, [
-    leftOffset,
-    topOffset
-  ]);
-  const targetCorners = getRectCorners(targetRect, [
-    leftOffset,
-    topOffset
-  ]);
-  const relativeMouseCoordinates = [
-    mouseCoordinates[0] - leftOffset,
-    mouseCoordinates[1] - topOffset
-  ];
-  const mouseAnchor = getMouseAnchor(containerCorners.topLeft, containerCorners.bottomRight, relativeMouseCoordinates);
-  const triangleA = [
-    mouseAnchor,
-    containerCorners.topLeft,
-    containerCorners.topRight
-  ];
-  const triangleB = [
-    mouseAnchor,
-    containerCorners.topRight,
-    containerCorners.bottomRight
-  ];
-  const triangleC = [
-    mouseAnchor,
-    containerCorners.bottomRight,
-    containerCorners.bottomLeft
-  ];
-  const triangleD = [
-    mouseAnchor,
-    containerCorners.bottomLeft,
-    containerCorners.topLeft
-  ];
-  const svgWidth = rightOffset - leftOffset;
-  const svgHeight = bottomOffset - topOffset;
-  const clipPath = computeOutsideClipPath(svgWidth, svgHeight, {
-    x: targetCorners.topLeft[0],
-    y: targetCorners.topLeft[1],
-    width: targetRect.width,
-    height: targetRect.height
-  }, {
-    x: containerCorners.topLeft[0],
-    y: containerCorners.topLeft[1],
-    width: containerRect.width,
-    height: containerRect.height
-  });
-  return /* @__PURE__ */ reactExports.createElement("div", {
-    className: mergeClasses(styles.wrapper, active && styles.wrapperActive),
-    "data-safe-zone": ""
-  }, active ? /* @__PURE__ */ reactExports.createElement("svg", {
-    "aria-hidden": true,
-    className: styles.svg,
-    xmlns: "http://www.w3.org/2000/svg",
-    ref: svgRef,
-    style: {
-      width: `${svgWidth}px`,
-      height: `${svgHeight}px`,
-      transform: `translate(${leftOffset}px, ${topOffset}px)`
-    }
-  }, /* @__PURE__ */ reactExports.createElement("g", {
-    className: mergeClasses(styles.triangle, debug && styles.triangleDebug),
-    clipPath: `url(#${clipPathId})`,
-    onMouseEnter,
-    onMouseMove,
-    onMouseLeave
-  }, /* @__PURE__ */ reactExports.createElement("path", {
-    d: pointsToSvgPath(triangleA)
-  }), /* @__PURE__ */ reactExports.createElement("path", {
-    d: pointsToSvgPath(triangleB)
-  }), /* @__PURE__ */ reactExports.createElement("path", {
-    d: pointsToSvgPath(triangleC)
-  }), /* @__PURE__ */ reactExports.createElement("path", {
-    d: pointsToSvgPath(triangleD)
-  })), /* @__PURE__ */ reactExports.createElement("clipPath", {
-    id: clipPathId
-  }, /* @__PURE__ */ reactExports.createElement("path", {
-    d: clipPath
-  })), debug && /* @__PURE__ */ reactExports.createElement("path", {
-    className: styles.rectDebug,
-    d: clipPath
-  })) : null);
-});
-const MOUSE_MOVE_TARGET_POLLING_TIMEOUT = 2e3;
-function useSafeZoneArea({ debug = false, disabled = false, onSafeZoneEnter, onSafeZoneMove, onSafeZoneLeave, onSafeZoneTimeout, timeout = 1500 } = {}) {
-  const [stateStore] = reactExports.useState(createSafeZoneAreaStateStore);
-  const safeZoneAreaRef = reactExports.useRef(null);
-  const containerRef = reactExports.useRef(null);
-  const targetRef = reactExports.useRef(null);
-  const [setSafeZoneCloseTimeout, clearSafeZoneCloseTimeout] = useTimeout();
-  const [requestUpdateFrame, clearUpdateFrame] = useAnimationFrame();
-  const mouseCoordinatesRef = reactExports.useRef({
-    x: 0,
-    y: 0
-  });
-  const containerListenerRef = reactExports.useMemo(() => {
-    if (disabled) {
-      return () => {
-      };
-    }
-    let containerEl = null;
-    function onContainerMouseEnter() {
-      clearSafeZoneCloseTimeout();
-      stateStore.toggleActive(false);
-    }
-    return (el) => {
-      if (el === null) {
-        containerEl === null || containerEl === void 0 ? void 0 : containerEl.removeEventListener("mouseenter", onContainerMouseEnter);
-      }
-      containerEl = el;
-      el === null || el === void 0 ? void 0 : el.addEventListener("mouseenter", onContainerMouseEnter);
-    };
-  }, [
-    clearSafeZoneCloseTimeout,
-    disabled,
-    stateStore
-  ]);
-  const targetListenerRef = reactExports.useMemo(() => {
-    if (disabled) {
-      return () => {
-      };
-    }
-    let targetEl = null;
-    function onTargetMouseMove(e2) {
-      mouseCoordinatesRef.current = {
-        x: e2.clientX,
-        y: e2.clientY
-      };
-      if (!stateStore.isActive()) {
-        stateStore.toggleActive(true);
-      }
-      setSafeZoneCloseTimeout(() => {
-        stateStore.toggleActive(false);
-      }, MOUSE_MOVE_TARGET_POLLING_TIMEOUT);
-    }
-    return (el) => {
-      if (el === null) {
-        clearUpdateFrame();
-        clearSafeZoneCloseTimeout();
-        targetEl === null || targetEl === void 0 ? void 0 : targetEl.removeEventListener("mousemove", onTargetMouseMove);
-      }
-      targetEl = el;
-      el === null || el === void 0 ? void 0 : el.addEventListener("mousemove", onTargetMouseMove);
-    };
-  }, [
-    clearUpdateFrame,
-    clearSafeZoneCloseTimeout,
-    disabled,
-    stateStore,
-    setSafeZoneCloseTimeout
-  ]);
-  const onSvgMouseEnter = useEventCallback((e2) => {
-    onSafeZoneEnter === null || onSafeZoneEnter === void 0 ? void 0 : onSafeZoneEnter(e2);
-    setSafeZoneCloseTimeout(() => {
-      stateStore.toggleActive(false);
-      onSafeZoneTimeout === null || onSafeZoneTimeout === void 0 ? void 0 : onSafeZoneTimeout();
-    }, timeout);
-  });
-  const onSvgMouseMove = useEventCallback((e2) => {
-    setSafeZoneCloseTimeout(() => {
-      stateStore.toggleActive(false);
-      onSafeZoneTimeout === null || onSafeZoneTimeout === void 0 ? void 0 : onSafeZoneTimeout();
-    }, timeout);
-    onSafeZoneMove === null || onSafeZoneMove === void 0 ? void 0 : onSafeZoneMove(e2);
-  });
-  const onSvgMouseLeave = useEventCallback((e2) => {
-    onSafeZoneLeave === null || onSafeZoneLeave === void 0 ? void 0 : onSafeZoneLeave(e2);
-  });
-  reactExports.useEffect(() => {
-    return stateStore.subscribe((isActive) => {
-      if (isActive) {
-        let updateSVGs = function() {
-          const containerEl = containerRef.current;
-          const targetEl = targetRef.current;
-          if (containerEl && targetEl) {
-            var _safeZoneAreaRef_current;
-            (_safeZoneAreaRef_current = safeZoneAreaRef.current) === null || _safeZoneAreaRef_current === void 0 ? void 0 : _safeZoneAreaRef_current.updateSVG({
-              containerRect: containerEl.getBoundingClientRect(),
-              mouseCoordinates: [
-                mouseCoordinatesRef.current.x,
-                mouseCoordinatesRef.current.y
-              ],
-              targetRect: targetEl.getBoundingClientRect()
-            });
-          }
-          requestUpdateFrame(updateSVGs);
-        };
-        updateSVGs();
-        return;
-      }
-      clearUpdateFrame();
-    });
-  }, [
-    clearUpdateFrame,
-    requestUpdateFrame,
-    stateStore
-  ]);
-  return {
-    containerRef: useMergedRefs(containerRef, containerListenerRef),
-    targetRef: useMergedRefs(targetRef, targetListenerRef),
-    elementToRender: reactExports.useMemo(() => disabled ? null : /* @__PURE__ */ reactExports.createElement(SafeZoneArea, {
-      debug,
-      onMouseEnter: onSvgMouseEnter,
-      onMouseMove: onSvgMouseMove,
-      onMouseLeave: onSvgMouseLeave,
-      imperativeRef: safeZoneAreaRef,
-      stateStore
-    }), [
-      disabled,
-      debug,
-      onSvgMouseEnter,
-      onSvgMouseMove,
-      onSvgMouseLeave,
-      stateStore
-    ])
-  };
-}
 function toMountNodeProps(mountNode) {
-  if (isHTMLElement$2(mountNode)) {
+  if (isHTMLElement$1(mountNode)) {
     return {
       element: mountNode
     };
@@ -12870,7 +8707,7 @@ const usePortalMountNodeStylesStyles = /* @__PURE__ */ __styles({
 }, {
   d: [".f1euv43f{position:absolute;}", ".f15twtuk{top:0;}", ".f1vgc2s3{left:0;}", ".f1e31b4d{right:0;}", ".f494woh{z-index:1000000;}"]
 });
-const useInsertionEffect = React$1["useInsertionEffect"];
+const useInsertionEffect = React["useInsertionEffect"];
 const useLegacyElementFactory = (options) => {
   "use no memo";
   const { className, dir, focusVisibleRef, targetNode } = options;
@@ -13090,7 +8927,7 @@ const useButtonContext = () => {
 };
 const useButton_unstable = (props, ref) => {
   const { size: contextSize } = useButtonContext();
-  const { appearance = "secondary", as = "button", disabled = false, disabledFocusable = false, icon, iconPosition = "before", shape = "rounded", size: size2 = contextSize !== null && contextSize !== void 0 ? contextSize : "medium" } = props;
+  const { appearance = "secondary", as = "button", disabled = false, disabledFocusable = false, icon, iconPosition = "before", shape = "rounded", size = contextSize !== null && contextSize !== void 0 ? contextSize : "medium" } = props;
   const iconShorthand = optional(icon, {
     elementType: "span"
   });
@@ -13101,7 +8938,7 @@ const useButton_unstable = (props, ref) => {
     disabledFocusable,
     iconPosition,
     shape,
-    size: size2,
+    size,
     iconOnly: Boolean((iconShorthand === null || iconShorthand === void 0 ? void 0 : iconShorthand.children) && !props.children),
     components: {
       root: "button",
@@ -13126,7 +8963,7 @@ const useRootBaseClassName$1 = /* @__PURE__ */ __resetStyles("r1alrhcs", null, {
   s: ["@media screen and (prefers-reduced-motion: reduce){.r1alrhcs{transition-duration:0.01ms;}}", "@media (forced-colors: active){.r1alrhcs:focus{border-color:ButtonText;}.r1alrhcs:hover{background-color:HighlightText;border-color:Highlight;color:Highlight;forced-color-adjust:none;}.r1alrhcs:hover:active{background-color:HighlightText;border-color:Highlight;color:Highlight;forced-color-adjust:none;}}", "@supports (-moz-appearance:button){.r1alrhcs[data-fui-focus-visible]{box-shadow:0 0 0 calc(var(--strokeWidthThin) + 0.25px) var(--colorStrokeFocus2) inset;}}"]
 });
 const useIconBaseClassName = /* @__PURE__ */ __resetStyles("rywnvv2", null, [".rywnvv2{align-items:center;display:inline-flex;justify-content:center;font-size:20px;height:20px;width:20px;--fui-Button__icon--spacing:var(--spacingHorizontalSNudge);}"]);
-const useRootStyles$2 = /* @__PURE__ */ __styles({
+const useRootStyles$1 = /* @__PURE__ */ __styles({
   outline: {
     De3pzq: "f1c21dwh",
     Jwef8y: "fjxutwb",
@@ -13623,7 +9460,7 @@ const useButtonStyles_unstable = (state) => {
   "use no memo";
   const rootBaseClassName = useRootBaseClassName$1();
   const iconBaseClassName = useIconBaseClassName();
-  const rootStyles = useRootStyles$2();
+  const rootStyles = useRootStyles$1();
   const rootDisabledStyles = useRootDisabledStyles();
   const rootFocusStyles = useRootFocusStyles();
   const rootIconOnlyStyles = useRootIconOnlyStyles();
@@ -13636,15 +9473,15 @@ const useButtonStyles_unstable = (state) => {
     iconOnly,
     iconPosition,
     shape,
-    size: size2
+    size
   } = state;
   state.root.className = mergeClasses(
     buttonClassNames.root,
     rootBaseClassName,
     appearance && rootStyles[appearance],
-    rootStyles[size2],
-    icon && size2 === "small" && rootStyles.smallWithIcon,
-    icon && size2 === "large" && rootStyles.largeWithIcon,
+    rootStyles[size],
+    icon && size === "small" && rootStyles.smallWithIcon,
+    icon && size === "large" && rootStyles.largeWithIcon,
     rootStyles[shape],
     // Disabled styles
     (disabled || disabledFocusable) && rootDisabledStyles.base,
@@ -13652,15 +9489,15 @@ const useButtonStyles_unstable = (state) => {
     appearance && (disabled || disabledFocusable) && rootDisabledStyles[appearance],
     // Focus styles
     appearance === "primary" && rootFocusStyles.primary,
-    rootFocusStyles[size2],
+    rootFocusStyles[size],
     rootFocusStyles[shape],
     // Icon-only styles
-    iconOnly && rootIconOnlyStyles[size2],
+    iconOnly && rootIconOnlyStyles[size],
     // User provided class name
     state.root.className
   );
   if (state.icon) {
-    state.icon.className = mergeClasses(buttonClassNames.icon, iconBaseClassName, !!state.root.children && iconStyles[iconPosition], iconStyles[size2], state.icon.className);
+    state.icon.className = mergeClasses(buttonClassNames.icon, iconBaseClassName, !!state.root.children && iconStyles[iconPosition], iconStyles[size], state.icon.className);
   }
   return state;
 };
@@ -13671,62 +9508,8 @@ const Button = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return renderButton_unstable(state);
 });
 Button.displayName = "Button";
-const FieldContext = reactExports.createContext(void 0);
-FieldContext.Provider;
-const useFieldContext_unstable = () => reactExports.useContext(FieldContext);
-function useFieldControlProps_unstable(props, options) {
-  return getFieldControlProps(useFieldContext_unstable(), props, options);
-}
-function getFieldControlProps(context, props, options) {
-  if (!context) {
-    return props;
-  }
-  props = {
-    ...props
-  };
-  const { generatedControlId, hintId, labelFor, labelId, required, validationMessageId, validationState } = context;
-  if (generatedControlId) {
-    var _props;
-    var _id;
-    (_id = (_props = props).id) !== null && _id !== void 0 ? _id : _props.id = generatedControlId;
-  }
-  if (labelId && (!(options === null || options === void 0 ? void 0 : options.supportsLabelFor) || labelFor !== props.id)) {
-    var _props1, _arialabelledby;
-    var _;
-    (_ = (_props1 = props)[_arialabelledby = "aria-labelledby"]) !== null && _ !== void 0 ? _ : _props1[_arialabelledby] = labelId;
-  }
-  if (validationMessageId || hintId) {
-    props["aria-describedby"] = [
-      validationMessageId,
-      hintId,
-      props === null || props === void 0 ? void 0 : props["aria-describedby"]
-    ].filter(Boolean).join(" ");
-  }
-  if (validationState === "error") {
-    var _props2, _ariainvalid;
-    var _1;
-    (_1 = (_props2 = props)[_ariainvalid = "aria-invalid"]) !== null && _1 !== void 0 ? _1 : _props2[_ariainvalid] = true;
-  }
-  if (required) {
-    if (options === null || options === void 0 ? void 0 : options.supportsRequired) {
-      var _props3;
-      var _required;
-      (_required = (_props3 = props).required) !== null && _required !== void 0 ? _required : _props3.required = true;
-    } else {
-      var _props4, _ariarequired;
-      var _2;
-      (_2 = (_props4 = props)[_ariarequired = "aria-required"]) !== null && _2 !== void 0 ? _2 : _props4[_ariarequired] = true;
-    }
-  }
-  if (options === null || options === void 0 ? void 0 : options.supportsSize) {
-    var _props5;
-    var _size;
-    (_size = (_props5 = props).size) !== null && _size !== void 0 ? _size : _props5.size = context.size;
-  }
-  return props;
-}
 const useLabel_unstable = (props, ref) => {
-  const { disabled = false, required = false, weight = "regular", size: size2 = "medium" } = props;
+  const { disabled = false, required = false, weight = "regular", size = "medium" } = props;
   return {
     disabled,
     required: optional(required === true ? "*" : required || void 0, {
@@ -13736,7 +9519,7 @@ const useLabel_unstable = (props, ref) => {
       elementType: "span"
     }),
     weight,
-    size: size2,
+    size,
     components: {
       root: "label",
       required: "span"
@@ -13764,7 +9547,7 @@ const labelClassNames = {
   root: "fui-Label",
   required: "fui-Label__required"
 };
-const useStyles$9 = /* @__PURE__ */ __styles({
+const useStyles$5 = /* @__PURE__ */ __styles({
   root: {
     Bahqtrf: "fk6fouc",
     sj55zd: "f19n0e5"
@@ -13801,7 +9584,7 @@ const useStyles$9 = /* @__PURE__ */ __styles({
 });
 const useLabelStyles_unstable = (state) => {
   "use no memo";
-  const styles = useStyles$9();
+  const styles = useStyles$5();
   state.root.className = mergeClasses(labelClassNames.root, styles.root, state.disabled && styles.disabled, styles[state.size], state.weight === "semibold" && styles.semibold, state.root.className);
   if (state.required) {
     state.required.className = mergeClasses(labelClassNames.required, styles.required, state.disabled && styles.disabled, state.required.className);
@@ -13815,1362 +9598,6 @@ const Label = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return renderLabel_unstable(state);
 });
 Label.displayName = "Label";
-const MenuContext = createContext(void 0);
-const menuContextDefaultValue = {
-  open: false,
-  setOpen: () => false,
-  checkedValues: {},
-  onCheckedValueChange: () => null,
-  isSubmenu: false,
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  triggerRef: {
-    current: null
-  },
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  menuPopoverRef: {
-    current: null
-  },
-  mountNode: null,
-  triggerId: "",
-  openOnContext: false,
-  openOnHover: false,
-  hasIcons: false,
-  hasCheckmarks: false,
-  inline: false,
-  persistOnItemClick: false
-};
-const MenuProvider = MenuContext.Provider;
-const useMenuContext_unstable = (selector) => useContextSelector(MenuContext, (ctx = menuContextDefaultValue) => selector(ctx));
-const MenuTriggerContext = reactExports.createContext(void 0);
-const menuTriggerContextDefaultValue = false;
-const MenuTriggerContextProvider = MenuTriggerContext.Provider;
-const useMenuTriggerContext_unstable = () => {
-  var _React_useContext;
-  return (_React_useContext = reactExports.useContext(MenuTriggerContext)) !== null && _React_useContext !== void 0 ? _React_useContext : menuTriggerContextDefaultValue;
-};
-const MenuListContext = createContext(void 0);
-const menuListContextDefaultValue = {
-  checkedValues: {},
-  setFocusByFirstCharacter: () => null,
-  toggleCheckbox: () => null,
-  selectRadio: () => null,
-  hasIcons: false,
-  hasCheckmarks: false
-};
-const MenuListProvider = MenuListContext.Provider;
-const useMenuListContext_unstable = (selector) => useContextSelector(MenuListContext, (ctx = menuListContextDefaultValue) => selector(ctx));
-const MENU_ENTER_EVENT = "fuimenuenter";
-const useOnMenuMouseEnter = (options) => {
-  const { refs, callback, element, disabled } = options;
-  const listener = useEventCallback((ev) => {
-    const popoverRef = refs[0];
-    const someMenuPopover = ev.target;
-    var _popoverRef_current;
-    const isOutsidePopover = !elementContains((_popoverRef_current = popoverRef.current) !== null && _popoverRef_current !== void 0 ? _popoverRef_current : null, someMenuPopover);
-    if (isOutsidePopover && !disabled) {
-      callback(ev);
-    }
-  });
-  reactExports.useEffect(() => {
-    if (element == null) {
-      return;
-    }
-    if (!disabled) {
-      element.addEventListener(MENU_ENTER_EVENT, listener);
-    }
-    return () => {
-      element.removeEventListener(MENU_ENTER_EVENT, listener);
-    };
-  }, [
-    listener,
-    element,
-    disabled
-  ]);
-};
-const dispatchMenuEnterEvent = (el, nativeEvent) => {
-  el.dispatchEvent(new CustomEvent(MENU_ENTER_EVENT, {
-    bubbles: true,
-    detail: {
-      nativeEvent
-    }
-  }));
-};
-function useIsSubmenu() {
-  const menuContextValue = useMenuContext_unstable((context) => context.isSubmenu);
-  const hasMenuListContext = useHasParentContext(MenuListContext);
-  return menuContextValue || hasMenuListContext;
-}
-const useValidateNesting = (componentName) => {
-  "use no memo";
-  const { targetDocument } = useFluent();
-  useMenuContext_unstable((context) => context.triggerRef);
-  useMenuContext_unstable((context) => context.inline);
-  const ref = reactExports.useRef(null);
-  return ref;
-};
-const MENU_SAFEZONE_TIMEOUT_EVENT = "fuimenusafezonetimeout";
-const useOnMenuSafeZoneTimeout = (listener) => {
-  const elementRef = reactExports.useRef(null);
-  return reactExports.useCallback((element) => {
-    var _elementRef_current;
-    (_elementRef_current = elementRef.current) === null || _elementRef_current === void 0 ? void 0 : _elementRef_current.removeEventListener(MENU_SAFEZONE_TIMEOUT_EVENT, listener);
-    element === null || element === void 0 ? void 0 : element.addEventListener(MENU_SAFEZONE_TIMEOUT_EVENT, listener);
-    elementRef.current = element;
-  }, [
-    listener
-  ]);
-};
-const useStyles$8 = /* @__PURE__ */ __styles({
-  root: {
-    a9b677: "fjw5fx7",
-    Bqenvij: "fd461yt",
-    Bcdw1i0: "fd7fpy0",
-    Bnnss6s: "fi64zpg"
-  },
-  rootChecked: {
-    Bcdw1i0: "f1022m68",
-    Bnnss6s: "fi64zpg"
-  }
-}, {
-  d: [".fjw5fx7{width:16px;}", ".fd461yt{height:16px;}", ".fd7fpy0{visibility:hidden;}", ".fi64zpg{flex-shrink:0;}", ".f1022m68{visibility:visible;}"]
-});
-const useCheckmarkStyles_unstable = (state) => {
-  "use no memo";
-  const styles = useStyles$8();
-  if (state.checkmark) {
-    state.checkmark.className = mergeClasses(styles.root, state.checked && styles.rootChecked, state.checkmark.className);
-  }
-};
-const menuItemClassNames = {
-  root: "fui-MenuItem",
-  icon: "fui-MenuItem__icon",
-  checkmark: "fui-MenuItem__checkmark",
-  submenuIndicator: "fui-MenuItem__submenuIndicator",
-  content: "fui-MenuItem__content",
-  secondaryContent: "fui-MenuItem__secondaryContent",
-  subText: "fui-MenuItem__subText"
-};
-const useRootBaseStyles = /* @__PURE__ */ __resetStyles("rfoezjv", "r8lt3v0", {
-  r: [".rfoezjv{border-radius:var(--borderRadiusMedium);position:relative;color:var(--colorNeutralForeground2);background-color:var(--colorNeutralBackground1);padding-right:var(--spacingVerticalSNudge);padding-left:var(--spacingVerticalSNudge);padding-top:var(--spacingVerticalSNudge);padding-bottom:var(--spacingVerticalSNudge);box-sizing:border-box;max-width:290px;min-height:32px;flex-shrink:0;display:flex;align-items:start;font-size:var(--fontSizeBase300);cursor:pointer;gap:4px;-webkit-user-select:none;-moz-user-select:none;user-select:none;}", ".rfoezjv:hover{background-color:var(--colorNeutralBackground1Hover);color:var(--colorNeutralForeground2Hover);}", ".rfoezjv:hover .fui-Icon-filled{display:inline;}", ".rfoezjv:hover .fui-Icon-regular{display:none;}", ".rfoezjv:hover .fui-MenuItem__icon{color:var(--colorNeutralForeground2BrandSelected);}", ".rfoezjv:hover .fui-MenuItem__subText{color:var(--colorNeutralForeground3Hover);}", ".rfoezjv:hover:active{background-color:var(--colorNeutralBackground1Pressed);color:var(--colorNeutralForeground2Pressed);}", ".rfoezjv:hover:active .fui-MenuItem__subText{color:var(--colorNeutralForeground3Pressed);}", ".rfoezjv:focus{outline-style:none;}", ".rfoezjv:focus-visible{outline-style:none;}", ".rfoezjv[data-fui-focus-visible]{border-top-color:transparent;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent;}", '.rfoezjv[data-fui-focus-visible]::after{content:"";position:absolute;pointer-events:none;z-index:1;border:2px solid var(--colorStrokeFocus2);border-radius:var(--borderRadiusMedium);top:calc(2px * -1);right:calc(2px * -1);bottom:calc(2px * -1);left:calc(2px * -1);}', ".r8lt3v0{border-radius:var(--borderRadiusMedium);position:relative;color:var(--colorNeutralForeground2);background-color:var(--colorNeutralBackground1);padding-left:var(--spacingVerticalSNudge);padding-right:var(--spacingVerticalSNudge);padding-top:var(--spacingVerticalSNudge);padding-bottom:var(--spacingVerticalSNudge);box-sizing:border-box;max-width:290px;min-height:32px;flex-shrink:0;display:flex;align-items:start;font-size:var(--fontSizeBase300);cursor:pointer;gap:4px;-webkit-user-select:none;-moz-user-select:none;user-select:none;}", ".r8lt3v0:hover{background-color:var(--colorNeutralBackground1Hover);color:var(--colorNeutralForeground2Hover);}", ".r8lt3v0:hover .fui-Icon-filled{display:inline;}", ".r8lt3v0:hover .fui-Icon-regular{display:none;}", ".r8lt3v0:hover .fui-MenuItem__icon{color:var(--colorNeutralForeground2BrandSelected);}", ".r8lt3v0:hover .fui-MenuItem__subText{color:var(--colorNeutralForeground3Hover);}", ".r8lt3v0:hover:active{background-color:var(--colorNeutralBackground1Pressed);color:var(--colorNeutralForeground2Pressed);}", ".r8lt3v0:hover:active .fui-MenuItem__subText{color:var(--colorNeutralForeground3Pressed);}", ".r8lt3v0:focus{outline-style:none;}", ".r8lt3v0:focus-visible{outline-style:none;}", ".r8lt3v0[data-fui-focus-visible]{border-top-color:transparent;border-left-color:transparent;border-bottom-color:transparent;border-right-color:transparent;}", '.r8lt3v0[data-fui-focus-visible]::after{content:"";position:absolute;pointer-events:none;z-index:1;border:2px solid var(--colorStrokeFocus2);border-radius:var(--borderRadiusMedium);top:calc(2px * -1);left:calc(2px * -1);bottom:calc(2px * -1);right:calc(2px * -1);}'],
-  s: ['@media (forced-colors: active){.rfoezjv:hover{background-color:Canvas;border-color:Highlight;color:Highlight;}.rfoezjv:focus{outline-style:none;}.rfoezjv:focus-visible{outline-style:none;}.rfoezjv[data-fui-focus-visible]{border-top-color:transparent;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent;}@media (forced-colors: active){.rfoezjv[data-fui-focus-visible]::after{border-top-color:Highlight;border-right-color:Highlight;border-bottom-color:Highlight;border-left-color:Highlight;}}.rfoezjv[data-fui-focus-visible]::after{content:"";position:absolute;pointer-events:none;z-index:1;border:2px solid Highlight;border-radius:var(--borderRadiusMedium);top:calc(2px * -1);right:calc(2px * -1);bottom:calc(2px * -1);left:calc(2px * -1);}}', "@media (forced-colors: active){.rfoezjv[data-fui-focus-visible]::after{border-top-color:Highlight;border-right-color:Highlight;border-bottom-color:Highlight;border-left-color:Highlight;}}", '@media (forced-colors: active){.r8lt3v0:hover{background-color:Canvas;border-color:Highlight;color:Highlight;}.r8lt3v0:focus{outline-style:none;}.r8lt3v0:focus-visible{outline-style:none;}.r8lt3v0[data-fui-focus-visible]{border-top-color:transparent;border-left-color:transparent;border-bottom-color:transparent;border-right-color:transparent;}@media (forced-colors: active){.r8lt3v0[data-fui-focus-visible]::after{border-top-color:Highlight;border-left-color:Highlight;border-bottom-color:Highlight;border-right-color:Highlight;}}.r8lt3v0[data-fui-focus-visible]::after{content:"";position:absolute;pointer-events:none;z-index:1;border:2px solid Highlight;border-radius:var(--borderRadiusMedium);top:calc(2px * -1);left:calc(2px * -1);bottom:calc(2px * -1);right:calc(2px * -1);}}', "@media (forced-colors: active){.r8lt3v0[data-fui-focus-visible]::after{border-top-color:Highlight;border-left-color:Highlight;border-bottom-color:Highlight;border-right-color:Highlight;}}"]
-});
-const useContentBaseStyles = /* @__PURE__ */ __resetStyles("r1ls86vo", "rpbc5dr", [".r1ls86vo{padding-left:2px;padding-right:2px;background-color:transparent;flex-grow:1;}", ".rpbc5dr{padding-right:2px;padding-left:2px;background-color:transparent;flex-grow:1;}"]);
-const useSecondaryContentBaseStyles = /* @__PURE__ */ __resetStyles("r12mwwux", "r1ewgu5j", [".r12mwwux{padding-left:2px;padding-right:2px;font-family:var(--fontFamilyBase);font-size:var(--fontSizeBase200);font-weight:var(--fontWeightRegular);line-height:var(--lineHeightBase300);color:var(--colorNeutralForeground3);}", ".r12mwwux:hover{color:var(--colorNeutralForeground3Hover);}", ".r12mwwux:focus{color:var(--colorNeutralForeground3Hover);}", ".r1ewgu5j{padding-right:2px;padding-left:2px;font-family:var(--fontFamilyBase);font-size:var(--fontSizeBase200);font-weight:var(--fontWeightRegular);line-height:var(--lineHeightBase300);color:var(--colorNeutralForeground3);}", ".r1ewgu5j:hover{color:var(--colorNeutralForeground3Hover);}", ".r1ewgu5j:focus{color:var(--colorNeutralForeground3Hover);}"]);
-const useIconBaseStyles = /* @__PURE__ */ __resetStyles("ro9koqv", null, [".ro9koqv{width:20px;height:20px;font-size:20px;line-height:0;align-items:center;display:inline-flex;justify-content:center;flex-shrink:0;}"]);
-const useSubmenuIndicatorBaseStyles = /* @__PURE__ */ __resetStyles("r9c34qo", null, [".r9c34qo{width:20px;height:20px;font-size:20px;line-height:0;align-items:center;display:inline-flex;justify-content:center;}"]);
-const useSubtextBaseStyles = /* @__PURE__ */ __resetStyles("rk2ppru", null, [".rk2ppru{font-family:var(--fontFamilyBase);font-size:var(--fontSizeBase100);font-weight:var(--fontWeightRegular);line-height:var(--lineHeightBase100);color:var(--colorNeutralForeground3);}"]);
-const useStyles$7 = /* @__PURE__ */ __styles({
-  checkmark: {
-    B6of3ja: "fmnzpld"
-  },
-  splitItemMain: {
-    Bh6795r: "fqerorx"
-  },
-  splitItemTrigger: {
-    Btl43ni: ["f1ozlkrg", "f10ostut"],
-    Beyfa6y: ["f1deotkl", "f1krrbdw"],
-    uwmqm3: ["f1cnd47f", "fhxju0i"],
-    Ftih45: "f1wl9k8s",
-    Ccq8qp: "f1yn80uh",
-    Baz25je: "f68mna0",
-    cmx5o7: "f1p5zmk"
-  },
-  disabled: {
-    sj55zd: "f1s2aq7o",
-    Bi91k9c: "fvgxktp",
-    Jwef8y: "f1ijtazh",
-    eoavqd: "fphbwmw",
-    Bk3fhr4: "f19vpps7",
-    Bmfj8id: "fv5swzo",
-    Bg7n49j: "f1q1x1ba",
-    c7f7en: "ff3wrqt",
-    B2d53fq: "fcvwxyo",
-    iro3zm: "f1to34ca",
-    Bumww26: "fszh5vc",
-    t0hwav: "ft33916",
-    B7iucu3: "f1cyfu5x",
-    Bahaeuw: "fa9u7a5",
-    Bbkh6qg: "f1wzezsb",
-    B3ejlan: "f1egomlm",
-    B41git9: "f1wf2001",
-    Boq1n10: "fied5gk",
-    Dcq74g: "f1efp33f",
-    rxnm8d: "f1m2zpi7",
-    wxluhh: "fei14nx",
-    idgcvv: "f12hmwa5",
-    j9xr24: "f1hzwxd0"
-  }
-}, {
-  d: [".fmnzpld{margin-top:2px;}", ".fqerorx{flex-grow:1;}", ".f1ozlkrg{border-top-left-radius:0;}", ".f10ostut{border-top-right-radius:0;}", ".f1deotkl{border-bottom-left-radius:0;}", ".f1krrbdw{border-bottom-right-radius:0;}", ".f1cnd47f{padding-left:0;}", ".fhxju0i{padding-right:0;}", '.f1wl9k8s::before{content:"";}', ".f1yn80uh::before{width:var(--strokeWidthThin);}", ".f68mna0::before{height:24px;}", ".f1p5zmk::before{background-color:var(--colorNeutralStroke1);}", ".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}"],
-  h: [".fvgxktp:hover{color:var(--colorNeutralForegroundDisabled);}", ".f1ijtazh:hover{background-color:var(--colorNeutralBackground1);}", ".fphbwmw:hover{cursor:not-allowed;}", ".f19vpps7:hover .fui-Icon-filled{display:none;}", ".fv5swzo:hover .fui-Icon-regular{display:inline;}", ".f1q1x1ba:hover .fui-MenuItem__icon{color:var(--colorNeutralForegroundDisabled);}", ".ff3wrqt:hover .fui-MenuItem__subText{color:var(--colorNeutralForegroundDisabled);}", ".fcvwxyo:hover:active{color:var(--colorNeutralForegroundDisabled);}", ".f1to34ca:hover:active{background-color:var(--colorNeutralBackground1);}", ".fszh5vc:hover:active .fui-MenuItem__subText{color:var(--colorNeutralForegroundDisabled);}"],
-  f: [".ft33916:focus{color:var(--colorNeutralForegroundDisabled);}"],
-  m: [["@media (forced-colors: active){.f1cyfu5x{color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.fa9u7a5:hover{color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.f1wzezsb:hover{background-color:Canvas;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.f1egomlm:hover .fui-MenuItem__icon{color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.f1wf2001:hover .fui-MenuItem__icon{background-color:Canvas;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.fied5gk:hover .fui-MenuItem__subText{color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.f1efp33f:hover:active{color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.f1m2zpi7:hover:active{background-color:Canvas;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.fei14nx:hover:active .fui-MenuItem__subText{color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.f12hmwa5:focus{color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.f1hzwxd0:focus{background-color:Canvas;}}", {
-    m: "(forced-colors: active)"
-  }]]
-});
-const useSubTextStyles = /* @__PURE__ */ __styles({
-  disabled: {
-    sj55zd: "f1s2aq7o",
-    B7iucu3: "f1cyfu5x"
-  }
-}, {
-  d: [".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}"],
-  m: [["@media (forced-colors: active){.f1cyfu5x{color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }]]
-});
-const useMultilineStyles = /* @__PURE__ */ __styles({
-  content: {
-    mc9l5x: "f22iagw",
-    Beiy3e4: "f1vx9l62"
-  },
-  secondaryContent: {
-    qb2dma: "f7nlbp4"
-  },
-  submenuIndicator: {
-    qb2dma: "f7nlbp4"
-  }
-}, {
-  d: [".f22iagw{display:flex;}", ".f1vx9l62{flex-direction:column;}", ".f7nlbp4{align-self:center;}"]
-});
-const useMenuItemStyles_unstable = (state) => {
-  "use no memo";
-  const styles = useStyles$7();
-  const rootBaseStyles = useRootBaseStyles();
-  const contentBaseStyles = useContentBaseStyles();
-  const secondaryContentBaseStyles = useSecondaryContentBaseStyles();
-  const iconBaseStyles = useIconBaseStyles();
-  const submenuIndicatorBaseStyles = useSubmenuIndicatorBaseStyles();
-  const multilineStyles = useMultilineStyles();
-  const subtextBaseStyles = useSubtextBaseStyles();
-  const subTextStyles = useSubTextStyles();
-  const multiline = !!state.subText;
-  state.root.className = mergeClasses(menuItemClassNames.root, rootBaseStyles, state.disabled && styles.disabled, state.root.className);
-  if (state.content) {
-    state.content.className = mergeClasses(menuItemClassNames.content, contentBaseStyles, state.content.className, multiline && multilineStyles.content);
-  }
-  if (state.checkmark) {
-    state.checkmark.className = mergeClasses(menuItemClassNames.checkmark, styles.checkmark, state.checkmark.className);
-  }
-  if (state.secondaryContent) {
-    state.secondaryContent.className = mergeClasses(menuItemClassNames.secondaryContent, secondaryContentBaseStyles, state.disabled && styles.disabled, state.secondaryContent.className, multiline && multilineStyles.secondaryContent);
-  }
-  if (state.icon) {
-    state.icon.className = mergeClasses(menuItemClassNames.icon, iconBaseStyles, state.icon.className);
-  }
-  if (state.submenuIndicator) {
-    state.submenuIndicator.className = mergeClasses(menuItemClassNames.submenuIndicator, submenuIndicatorBaseStyles, state.submenuIndicator.className, multiline && multilineStyles.submenuIndicator);
-  }
-  if (state.subText) {
-    state.subText.className = mergeClasses(menuItemClassNames.subText, state.disabled && subTextStyles.disabled, state.subText.className, subtextBaseStyles);
-  }
-  useCheckmarkStyles_unstable(state);
-  return state;
-};
-const submenuFallbackPositions = [
-  "after",
-  "after-bottom",
-  "before-top",
-  "before",
-  "before-bottom",
-  "above"
-];
-const useMenu_unstable = (props) => {
-  const isSubmenu = useIsSubmenu();
-  const { hoverDelay = 500, inline = false, hasCheckmarks = false, hasIcons = false, closeOnScroll = false, openOnContext = false, persistOnItemClick = false, openOnHover = isSubmenu, defaultCheckedValues, mountNode = null, safeZone } = props;
-  const { targetDocument } = useFluent();
-  const triggerId = useId("menu");
-  const [contextTarget, setContextTarget] = usePositioningMouseTarget();
-  const positioningOptions = {
-    position: isSubmenu ? "after" : "below",
-    align: isSubmenu ? "top" : "start",
-    target: props.openOnContext ? contextTarget : void 0,
-    fallbackPositions: isSubmenu ? submenuFallbackPositions : void 0,
-    ...resolvePositioningShorthand(props.positioning)
-  };
-  const children = reactExports.Children.toArray(props.children);
-  let menuTrigger = void 0;
-  let menuPopover = void 0;
-  if (children.length === 2) {
-    menuTrigger = children[0];
-    menuPopover = children[1];
-  } else if (children.length === 1) {
-    menuPopover = children[0];
-  }
-  const { targetRef, containerRef } = usePositioning(positioningOptions);
-  const enableSafeZone = safeZone && openOnHover;
-  const safeZoneDescriptorRef = reactExports.useRef({
-    isInside: false,
-    mouseCoordinates: {
-      x: 0,
-      y: 0
-    }
-  });
-  const safeZoneHandle = useSafeZoneArea({
-    disabled: !enableSafeZone,
-    timeout: typeof safeZone === "object" ? safeZone.timeout : 300,
-    onSafeZoneEnter: (e2) => {
-      setOpen(e2, {
-        open: true,
-        keyboard: false,
-        type: "menuSafeZoneMouseEnter",
-        event: e2
-      });
-      safeZoneDescriptorRef.current.isInside = true;
-    },
-    onSafeZoneLeave: () => {
-      safeZoneDescriptorRef.current.isInside = false;
-    },
-    onSafeZoneMove: (e2) => {
-      safeZoneDescriptorRef.current.mouseCoordinates = {
-        x: e2.clientX,
-        y: e2.clientY
-      };
-    },
-    onSafeZoneTimeout: () => {
-      const event = new CustomEvent(MENU_SAFEZONE_TIMEOUT_EVENT);
-      setOpen(event, {
-        open: false,
-        keyboard: false,
-        type: "menuSafeZoneTimeout",
-        event
-      });
-      if (safeZoneDescriptorRef.current.isInside && targetDocument) {
-        const elementsInPoint = targetDocument.elementsFromPoint(safeZoneDescriptorRef.current.mouseCoordinates.x, safeZoneDescriptorRef.current.mouseCoordinates.y);
-        const menuItemEl = elementsInPoint.find((el) => {
-          return el.classList.contains(menuItemClassNames.root);
-        });
-        menuItemEl === null || menuItemEl === void 0 ? void 0 : menuItemEl.dispatchEvent(event);
-      }
-    }
-  });
-  const triggerRef = useMergedRefs(targetRef, safeZoneHandle.targetRef);
-  const menuPopoverRef = useMergedRefs(containerRef, safeZoneHandle.containerRef);
-  const [open, setOpen] = useMenuOpenState({
-    hoverDelay,
-    isSubmenu,
-    setContextTarget,
-    closeOnScroll,
-    menuPopoverRef,
-    triggerRef,
-    open: props.open,
-    defaultOpen: props.defaultOpen,
-    onOpenChange: props.onOpenChange,
-    openOnContext
-  });
-  const [checkedValues, onCheckedValueChange] = useMenuSelectableState({
-    checkedValues: props.checkedValues,
-    defaultCheckedValues,
-    onCheckedValueChange: props.onCheckedValueChange
-  });
-  return {
-    inline,
-    hoverDelay,
-    triggerId,
-    isSubmenu,
-    openOnHover,
-    contextTarget,
-    setContextTarget,
-    hasCheckmarks,
-    hasIcons,
-    closeOnScroll,
-    menuTrigger,
-    menuPopover,
-    mountNode,
-    triggerRef,
-    menuPopoverRef,
-    components: {},
-    openOnContext,
-    open,
-    setOpen,
-    checkedValues,
-    onCheckedValueChange,
-    persistOnItemClick,
-    safeZone: safeZoneHandle.elementToRender
-  };
-};
-const useMenuSelectableState = (props) => {
-  const [checkedValues, setCheckedValues] = useControllableState({
-    state: props.checkedValues,
-    defaultState: props.defaultCheckedValues,
-    initialState: {}
-  });
-  const onCheckedValueChange = useEventCallback((e2, { name, checkedItems }) => {
-    var _props_onCheckedValueChange;
-    (_props_onCheckedValueChange = props.onCheckedValueChange) === null || _props_onCheckedValueChange === void 0 ? void 0 : _props_onCheckedValueChange.call(props, e2, {
-      name,
-      checkedItems
-    });
-    setCheckedValues((currentValue) => ({
-      ...currentValue,
-      [name]: checkedItems
-    }));
-  });
-  return [
-    checkedValues,
-    onCheckedValueChange
-  ];
-};
-const useMenuOpenState = (state) => {
-  "use no memo";
-  const { targetDocument } = useFluent();
-  const parentSetOpen = useMenuContext_unstable((context) => context.setOpen);
-  const onOpenChange = useEventCallback((e2, data) => {
-    var _state_onOpenChange;
-    return (_state_onOpenChange = state.onOpenChange) === null || _state_onOpenChange === void 0 ? void 0 : _state_onOpenChange.call(state, e2, data);
-  });
-  const enteringTriggerRef = reactExports.useRef(false);
-  const [open, setOpenState] = useControllableState({
-    state: state.open,
-    defaultState: state.defaultOpen,
-    initialState: false
-  });
-  const trySetOpen = useEventCallback((e2, data) => {
-    const event = e2 instanceof CustomEvent && e2.type === MENU_ENTER_EVENT ? e2.detail.nativeEvent : e2;
-    onOpenChange === null || onOpenChange === void 0 ? void 0 : onOpenChange(event, {
-      ...data
-    });
-    if (data.open && e2.type === "contextmenu") {
-      state.setContextTarget(e2);
-    }
-    if (!data.open) {
-      state.setContextTarget(void 0);
-    }
-    if (data.bubble) {
-      parentSetOpen(e2, {
-        ...data
-      });
-    }
-    setOpenState(data.open);
-  });
-  const [setOpenTimeout, clearOpenTimeout] = useTimeout();
-  const setOpen = useEventCallback((e2, data) => {
-    clearOpenTimeout();
-    if (!(e2 instanceof Event) && e2.persist) {
-      e2.persist();
-    }
-    const shouldUseDelay = !data.ignoreHoverDelay && (e2.type === "mouseleave" || e2.type === "mouseover" || e2.type === "mousemove" || e2.type === MENU_ENTER_EVENT);
-    if (shouldUseDelay) {
-      var _state_triggerRef_current;
-      if ((_state_triggerRef_current = state.triggerRef.current) === null || _state_triggerRef_current === void 0 ? void 0 : _state_triggerRef_current.contains(e2.target)) {
-        enteringTriggerRef.current = e2.type === "mouseover" || e2.type === "mousemove";
-      }
-      setOpenTimeout(() => trySetOpen(e2, data), state.hoverDelay);
-    } else {
-      trySetOpen(e2, data);
-    }
-  });
-  useOnClickOutside({
-    contains: elementContains,
-    disabled: !open,
-    element: targetDocument,
-    refs: [
-      state.menuPopoverRef,
-      !state.openOnContext && state.triggerRef
-    ].filter(Boolean),
-    callback: (event) => setOpen(event, {
-      open: false,
-      type: "clickOutside",
-      event
-    })
-  });
-  const closeOnScroll = state.openOnContext || state.closeOnScroll;
-  useOnScrollOutside({
-    contains: elementContains,
-    element: targetDocument,
-    callback: (event) => setOpen(event, {
-      open: false,
-      type: "scrollOutside",
-      event
-    }),
-    refs: [
-      state.menuPopoverRef,
-      !state.openOnContext && state.triggerRef
-    ].filter(Boolean),
-    disabled: !open || !closeOnScroll
-  });
-  useOnMenuMouseEnter({
-    element: targetDocument,
-    callback: (event) => {
-      if (!enteringTriggerRef.current) {
-        setOpen(event, {
-          open: false,
-          type: "menuMouseEnter",
-          event
-        });
-      }
-    },
-    disabled: !open,
-    refs: [
-      state.menuPopoverRef
-    ]
-  });
-  const { findFirstFocusable } = useFocusFinders();
-  const focusFirst = reactExports.useCallback(() => {
-    const firstFocusable = findFirstFocusable(state.menuPopoverRef.current);
-    firstFocusable === null || firstFocusable === void 0 ? void 0 : firstFocusable.focus();
-  }, [
-    findFirstFocusable,
-    state.menuPopoverRef
-  ]);
-  const firstMount = useFirstMount();
-  reactExports.useEffect(() => {
-    if (open) {
-      focusFirst();
-    } else {
-      if (!firstMount) {
-        if ((targetDocument === null || targetDocument === void 0 ? void 0 : targetDocument.activeElement) === (targetDocument === null || targetDocument === void 0 ? void 0 : targetDocument.body)) {
-          var _state_triggerRef_current;
-          (_state_triggerRef_current = state.triggerRef.current) === null || _state_triggerRef_current === void 0 ? void 0 : _state_triggerRef_current.focus();
-        }
-      }
-    }
-  }, [
-    state.triggerRef,
-    state.isSubmenu,
-    open,
-    focusFirst,
-    targetDocument,
-    state.menuPopoverRef
-  ]);
-  return [
-    open,
-    setOpen
-  ];
-};
-function useMenuContextValues_unstable(state) {
-  const { checkedValues, hasCheckmarks, hasIcons, inline, isSubmenu, menuPopoverRef, mountNode, onCheckedValueChange, open, openOnContext, openOnHover, persistOnItemClick, safeZone, setOpen, triggerId, triggerRef } = state;
-  const menu = {
-    checkedValues,
-    hasCheckmarks,
-    hasIcons,
-    inline,
-    isSubmenu,
-    menuPopoverRef,
-    mountNode,
-    onCheckedValueChange,
-    open,
-    openOnContext,
-    openOnHover,
-    persistOnItemClick,
-    safeZone,
-    setOpen,
-    triggerId,
-    triggerRef
-  };
-  return {
-    menu
-  };
-}
-const renderMenu_unstable = (state, contextValues) => {
-  return /* @__PURE__ */ reactExports.createElement(MenuProvider, {
-    value: contextValues.menu
-  }, state.menuTrigger, state.open && state.menuPopover);
-};
-const Menu = (props) => {
-  const state = useMenu_unstable(props);
-  const contextValues = useMenuContextValues_unstable(state);
-  return renderMenu_unstable(state, contextValues);
-};
-Menu.displayName = "Menu";
-const useCharacterSearch = (state, ref) => {
-  "use no memo";
-  const setFocusByFirstCharacter = useMenuListContext_unstable((context) => context.setFocusByFirstCharacter);
-  const { onKeyDown: originalOnKeyDown } = state.root;
-  state.root.onKeyDown = (e2) => {
-    var _e_key;
-    originalOnKeyDown === null || originalOnKeyDown === void 0 ? void 0 : originalOnKeyDown(e2);
-    if (((_e_key = e2.key) === null || _e_key === void 0 ? void 0 : _e_key.length) > 1) {
-      return;
-    }
-    if (ref.current) {
-      setFocusByFirstCharacter === null || setFocusByFirstCharacter === void 0 ? void 0 : setFocusByFirstCharacter(e2, ref.current);
-    }
-  };
-  return state;
-};
-const MenuSplitGroupContext = reactExports.createContext(void 0);
-const menuSplitGroupContextDefaultValue = {
-  setMultiline: () => null
-};
-MenuSplitGroupContext.Provider;
-const useMenuSplitGroupContext_unstable = () => {
-  var _React_useContext;
-  return (_React_useContext = reactExports.useContext(MenuSplitGroupContext)) !== null && _React_useContext !== void 0 ? _React_useContext : menuSplitGroupContextDefaultValue;
-};
-const useIsInMenuSplitGroup = () => {
-  const context = useMenuSplitGroupContext_unstable();
-  return context !== menuSplitGroupContextDefaultValue;
-};
-const ChevronRightIcon = bundleIcon(ChevronRightFilled, ChevronRightRegular);
-const ChevronLeftIcon = bundleIcon(ChevronLeftFilled, ChevronLeftRegular);
-const useMenuItem_unstable = (props, ref) => {
-  const isSubmenuTrigger = useMenuTriggerContext_unstable();
-  const persistOnClickContext = useMenuContext_unstable((context) => context.persistOnItemClick);
-  const { as = "div", disabled = false, hasSubmenu = isSubmenuTrigger, persistOnClick = persistOnClickContext, content: _content, ...rest } = props;
-  const { hasIcons, hasCheckmarks } = useIconAndCheckmarkAlignment({
-    hasSubmenu
-  });
-  const setOpen = useMenuContext_unstable((context) => context.setOpen);
-  useNotifySplitItemMultiline({
-    multiline: !!props.subText,
-    hasSubmenu
-  });
-  const { dir } = useFluent();
-  const innerRef = reactExports.useRef(null);
-  const dismissedWithKeyboardRef = reactExports.useRef(false);
-  const validateNestingRef = useValidateNesting(getValidateNestingComponentName(props.role));
-  const state = {
-    hasSubmenu,
-    disabled,
-    persistOnClick,
-    components: {
-      root: "div",
-      icon: "span",
-      checkmark: "span",
-      submenuIndicator: "span",
-      content: "span",
-      secondaryContent: "span",
-      subText: "span"
-    },
-    root: always(getIntrinsicElementProps(as, useARIAButtonProps(as, {
-      role: "menuitem",
-      ...rest,
-      disabled: false,
-      disabledFocusable: disabled,
-      ref: useMergedRefs(ref, innerRef, validateNestingRef),
-      onKeyDown: useEventCallback((event) => {
-        var _props_onKeyDown;
-        (_props_onKeyDown = props.onKeyDown) === null || _props_onKeyDown === void 0 ? void 0 : _props_onKeyDown.call(props, event);
-        if (!event.isDefaultPrevented() && (event.key === Space || event.key === Enter)) {
-          dismissedWithKeyboardRef.current = true;
-        }
-      }),
-      onMouseMove: useEventCallback((event) => {
-        var _props_onMouseMove;
-        if (event.currentTarget.ownerDocument.activeElement !== event.currentTarget) {
-          var _innerRef_current;
-          (_innerRef_current = innerRef.current) === null || _innerRef_current === void 0 ? void 0 : _innerRef_current.focus();
-        }
-        (_props_onMouseMove = props.onMouseMove) === null || _props_onMouseMove === void 0 ? void 0 : _props_onMouseMove.call(props, event);
-      }),
-      onClick: useEventCallback((event) => {
-        var _props_onClick;
-        if (!hasSubmenu && !persistOnClick) {
-          setOpen(event, {
-            open: false,
-            keyboard: dismissedWithKeyboardRef.current,
-            bubble: true,
-            type: "menuItemClick",
-            event
-          });
-          dismissedWithKeyboardRef.current = false;
-        }
-        (_props_onClick = props.onClick) === null || _props_onClick === void 0 ? void 0 : _props_onClick.call(props, event);
-      })
-    })), {
-      elementType: "div"
-    }),
-    icon: optional(props.icon, {
-      renderByDefault: hasIcons,
-      elementType: "span"
-    }),
-    checkmark: optional(props.checkmark, {
-      renderByDefault: hasCheckmarks,
-      elementType: "span"
-    }),
-    submenuIndicator: optional(props.submenuIndicator, {
-      renderByDefault: hasSubmenu,
-      defaultProps: {
-        children: dir === "ltr" ? /* @__PURE__ */ reactExports.createElement(ChevronRightIcon, null) : /* @__PURE__ */ reactExports.createElement(ChevronLeftIcon, null)
-      },
-      elementType: "span"
-    }),
-    content: optional(props.content, {
-      renderByDefault: !!props.children,
-      defaultProps: {
-        children: props.children
-      },
-      elementType: "span"
-    }),
-    secondaryContent: optional(props.secondaryContent, {
-      elementType: "span"
-    }),
-    subText: optional(props.subText, {
-      elementType: "span"
-    })
-  };
-  useCharacterSearch(state, innerRef);
-  return state;
-};
-const useNotifySplitItemMultiline = (options) => {
-  const { hasSubmenu, multiline } = options;
-  const isSplitItemTrigger = useIsInMenuSplitGroup() && hasSubmenu;
-  const { setMultiline } = useMenuSplitGroupContext_unstable();
-  useIsomorphicLayoutEffect(() => {
-    if (!isSplitItemTrigger) {
-      setMultiline(multiline);
-    }
-  }, [
-    setMultiline,
-    multiline,
-    isSplitItemTrigger
-  ]);
-};
-const useIconAndCheckmarkAlignment = (options) => {
-  const { hasSubmenu } = options;
-  const hasIcons = useMenuListContext_unstable((context) => context.hasIcons);
-  const hasCheckmarks = useMenuListContext_unstable((context) => context.hasCheckmarks);
-  const isSplitItemTrigger = useIsInMenuSplitGroup() && hasSubmenu;
-  return {
-    hasIcons: hasIcons && !isSplitItemTrigger,
-    hasCheckmarks: hasCheckmarks && !isSplitItemTrigger
-  };
-};
-const getValidateNestingComponentName = (role) => {
-  switch (role) {
-    case "menuitemcheckbox":
-      return "MenuItemCheckbox";
-    case "menuitemradio":
-      return "MenuItemRadio";
-  }
-  return "MenuItem";
-};
-const renderMenuItem_unstable = (state) => {
-  return /* @__PURE__ */ jsxs(state.root, {
-    children: [
-      state.checkmark && /* @__PURE__ */ jsx(state.checkmark, {}),
-      state.icon && /* @__PURE__ */ jsx(state.icon, {}),
-      state.content && /* @__PURE__ */ jsxs(state.content, {
-        children: [
-          state.content.children,
-          state.subText && /* @__PURE__ */ jsx(state.subText, {})
-        ]
-      }),
-      state.secondaryContent && /* @__PURE__ */ jsx(state.secondaryContent, {}),
-      state.submenuIndicator && /* @__PURE__ */ jsx(state.submenuIndicator, {})
-    ]
-  });
-};
-const MenuItem = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
-  const state = useMenuItem_unstable(props, ref);
-  useMenuItemStyles_unstable(state);
-  useCustomStyleHook("useMenuItemStyles_unstable")(state);
-  return renderMenuItem_unstable(state);
-});
-MenuItem.displayName = "MenuItem";
-const useMenuList_unstable = (props, ref) => {
-  const { findAllFocusable } = useFocusFinders();
-  const { targetDocument } = useFluent();
-  const menuContext = useMenuContextSelectors();
-  const hasMenuContext = useHasParentContext(MenuContext);
-  const focusAttributes = useArrowNavigationGroup({
-    circular: true
-  });
-  if (usingPropsAndMenuContext(props, menuContext, hasMenuContext)) {
-    console.warn("You are using both MenuList and Menu props, we recommend you to use Menu props when available");
-  }
-  const innerRef = reactExports.useRef(null);
-  const validateNestingRef = useValidateNesting();
-  reactExports.useEffect(() => {
-    const element = innerRef.current;
-    if (hasMenuContext && targetDocument && element) {
-      const onTabsterMoveFocus = (e2) => {
-        const nextElement = e2.detail.next;
-        if (nextElement && element.contains(targetDocument.activeElement) && !element.contains(nextElement)) {
-          e2.preventDefault();
-        }
-      };
-      targetDocument.addEventListener(TabsterMoveFocusEventName, onTabsterMoveFocus);
-      return () => {
-        targetDocument.removeEventListener(TabsterMoveFocusEventName, onTabsterMoveFocus);
-      };
-    }
-  }, [
-    innerRef,
-    targetDocument,
-    hasMenuContext
-  ]);
-  const setFocusByFirstCharacter = reactExports.useCallback((e2, itemEl) => {
-    const acceptedRoles = [
-      "menuitem",
-      "menuitemcheckbox",
-      "menuitemradio"
-    ];
-    if (!innerRef.current) {
-      return;
-    }
-    const menuItems = findAllFocusable(innerRef.current, (el) => el.hasAttribute("role") && acceptedRoles.indexOf(el.getAttribute("role")) !== -1);
-    let startIndex = menuItems.indexOf(itemEl) + 1;
-    if (startIndex === menuItems.length) {
-      startIndex = 0;
-    }
-    const firstChars = menuItems.map((menuItem) => {
-      var _menuItem_textContent;
-      return (_menuItem_textContent = menuItem.textContent) === null || _menuItem_textContent === void 0 ? void 0 : _menuItem_textContent.charAt(0).toLowerCase();
-    });
-    const char = e2.key.toLowerCase();
-    const getIndexFirstChars = (start, firstChar) => {
-      for (let i = start; i < firstChars.length; i++) {
-        if (char === firstChars[i]) {
-          return i;
-        }
-      }
-      return -1;
-    };
-    let index = getIndexFirstChars(startIndex);
-    if (index === -1) {
-      index = getIndexFirstChars(0);
-    }
-    if (index > -1) {
-      menuItems[index].focus();
-    }
-  }, [
-    findAllFocusable
-  ]);
-  var _props_checkedValues;
-  const [checkedValues, setCheckedValues] = useControllableState({
-    state: (_props_checkedValues = props.checkedValues) !== null && _props_checkedValues !== void 0 ? _props_checkedValues : hasMenuContext ? menuContext.checkedValues : void 0,
-    defaultState: props.defaultCheckedValues,
-    initialState: {}
-  });
-  var _props_onCheckedValueChange;
-  const handleCheckedValueChange = (_props_onCheckedValueChange = props.onCheckedValueChange) !== null && _props_onCheckedValueChange !== void 0 ? _props_onCheckedValueChange : hasMenuContext ? menuContext.onCheckedValueChange : void 0;
-  const toggleCheckbox = useEventCallback((e2, name, value, checked) => {
-    const checkedItems = (checkedValues === null || checkedValues === void 0 ? void 0 : checkedValues[name]) || [];
-    const newCheckedItems = [
-      ...checkedItems
-    ];
-    if (checked) {
-      newCheckedItems.splice(newCheckedItems.indexOf(value), 1);
-    } else {
-      newCheckedItems.push(value);
-    }
-    handleCheckedValueChange === null || handleCheckedValueChange === void 0 ? void 0 : handleCheckedValueChange(e2, {
-      name,
-      checkedItems: newCheckedItems
-    });
-    setCheckedValues((s) => ({
-      ...s,
-      [name]: newCheckedItems
-    }));
-  });
-  const selectRadio = useEventCallback((e2, name, value) => {
-    const newCheckedItems = [
-      value
-    ];
-    setCheckedValues((s) => ({
-      ...s,
-      [name]: newCheckedItems
-    }));
-    handleCheckedValueChange === null || handleCheckedValueChange === void 0 ? void 0 : handleCheckedValueChange(e2, {
-      name,
-      checkedItems: newCheckedItems
-    });
-  });
-  return {
-    components: {
-      root: "div"
-    },
-    root: always(getIntrinsicElementProps("div", {
-      // FIXME:
-      // `ref` is wrongly assigned to be `HTMLElement` instead of `HTMLDivElement`
-      // but since it would be a breaking change to fix it, we are casting ref to it's proper type
-      ref: useMergedRefs(ref, innerRef, validateNestingRef),
-      role: "menu",
-      "aria-labelledby": menuContext.triggerId,
-      ...focusAttributes,
-      ...props
-    }), {
-      elementType: "div"
-    }),
-    hasIcons: menuContext.hasIcons || false,
-    hasCheckmarks: menuContext.hasCheckmarks || false,
-    checkedValues,
-    hasMenuContext,
-    setFocusByFirstCharacter,
-    selectRadio,
-    toggleCheckbox
-  };
-};
-const useMenuContextSelectors = () => {
-  const checkedValues = useMenuContext_unstable((context) => context.checkedValues);
-  const onCheckedValueChange = useMenuContext_unstable((context) => context.onCheckedValueChange);
-  const triggerId = useMenuContext_unstable((context) => context.triggerId);
-  const hasIcons = useMenuContext_unstable((context) => context.hasIcons);
-  const hasCheckmarks = useMenuContext_unstable((context) => context.hasCheckmarks);
-  return {
-    checkedValues,
-    onCheckedValueChange,
-    triggerId,
-    hasIcons,
-    hasCheckmarks
-  };
-};
-const usingPropsAndMenuContext = (props, contextValue, hasMenuContext) => {
-  let isUsingPropsAndContext = false;
-  for (const val in contextValue) {
-    if (props[val]) {
-      isUsingPropsAndContext = true;
-    }
-  }
-  return hasMenuContext && isUsingPropsAndContext;
-};
-const renderMenuList_unstable = (state, contextValues) => {
-  return /* @__PURE__ */ jsx(MenuListProvider, {
-    value: contextValues.menuList,
-    children: /* @__PURE__ */ jsx(state.root, {})
-  });
-};
-function useMenuListContextValues_unstable(state) {
-  const { checkedValues, hasCheckmarks, hasIcons, selectRadio, setFocusByFirstCharacter, toggleCheckbox } = state;
-  const menuList = {
-    checkedValues,
-    hasCheckmarks,
-    hasIcons,
-    selectRadio,
-    setFocusByFirstCharacter,
-    toggleCheckbox
-  };
-  return {
-    menuList
-  };
-}
-const menuListClassNames = {
-  root: "fui-MenuList"
-};
-const useStyles$6 = /* @__PURE__ */ __styles({
-  root: {
-    mc9l5x: "f22iagw",
-    Beiy3e4: "f1vx9l62",
-    i8kkvl: 0,
-    Belr9w4: 0,
-    rmohyg: "f1t6b6ee"
-  },
-  hasMenuContext: {
-    Bqenvij: "f1l02sjl"
-  }
-}, {
-  d: [".f22iagw{display:flex;}", ".f1vx9l62{flex-direction:column;}", [".f1t6b6ee{gap:2px;}", {
-    p: -1
-  }], ".f1l02sjl{height:100%;}"]
-});
-const useMenuListStyles_unstable = (state) => {
-  "use no memo";
-  const styles = useStyles$6();
-  state.root.className = mergeClasses(menuListClassNames.root, styles.root, state.hasMenuContext && styles.hasMenuContext, state.root.className);
-  return state;
-};
-const MenuList = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
-  const state = useMenuList_unstable(props, ref);
-  const contextValues = useMenuListContextValues_unstable(state);
-  useMenuListStyles_unstable(state);
-  useCustomStyleHook("useMenuListStyles_unstable")(state);
-  return renderMenuList_unstable(state, contextValues);
-});
-MenuList.displayName = "MenuList";
-const useMenuPopover_unstable = (props, ref) => {
-  "use no memo";
-  const safeZone = useMenuContext_unstable((context) => context.safeZone);
-  const popoverRef = useMenuContext_unstable((context) => context.menuPopoverRef);
-  const setOpen = useMenuContext_unstable((context) => context.setOpen);
-  const open = useMenuContext_unstable((context) => context.open);
-  const openOnHover = useMenuContext_unstable((context) => context.openOnHover);
-  const triggerRef = useMenuContext_unstable((context) => context.triggerRef);
-  const isSubmenu = useIsSubmenu();
-  const canDispatchCustomEventRef = reactExports.useRef(true);
-  const restoreFocusSourceAttributes = useRestoreFocusSource();
-  const [setThrottleTimeout, clearThrottleTimeout] = useTimeout();
-  const { dir } = useFluent();
-  const CloseArrowKey = dir === "ltr" ? ArrowLeft : ArrowRight;
-  const mouseOverListenerCallbackRef = reactExports.useCallback((node) => {
-    if (node) {
-      node.addEventListener("mouseover", (e2) => {
-        if (canDispatchCustomEventRef.current) {
-          canDispatchCustomEventRef.current = false;
-          dispatchMenuEnterEvent(popoverRef.current, e2);
-          setThrottleTimeout(() => {
-            canDispatchCustomEventRef.current = true;
-          }, 250);
-        }
-      });
-    }
-  }, [
-    popoverRef,
-    setThrottleTimeout
-  ]);
-  reactExports.useEffect(() => {
-    return () => clearThrottleTimeout();
-  }, [
-    clearThrottleTimeout
-  ]);
-  var _useMenuContext_unstable;
-  const inline = (_useMenuContext_unstable = useMenuContext_unstable((context) => context.inline)) !== null && _useMenuContext_unstable !== void 0 ? _useMenuContext_unstable : false;
-  const mountNode = useMenuContext_unstable((context) => context.mountNode);
-  const rootProps = always(getIntrinsicElementProps("div", {
-    role: "presentation",
-    ...restoreFocusSourceAttributes,
-    ...props,
-    // FIXME:
-    // `ref` is wrongly assigned to be `HTMLElement` instead of `HTMLDivElement`
-    // but since it would be a breaking change to fix it, we are casting ref to it's proper type
-    ref: useMergedRefs(ref, popoverRef, mouseOverListenerCallbackRef)
-  }), {
-    elementType: "div"
-  });
-  const { onMouseEnter: onMouseEnterOriginal, onKeyDown: onKeyDownOriginal } = rootProps;
-  rootProps.onMouseEnter = useEventCallback((event) => {
-    if (openOnHover || isSubmenu) {
-      setOpen(event, {
-        open: true,
-        keyboard: false,
-        type: "menuPopoverMouseEnter",
-        event
-      });
-    }
-    onMouseEnterOriginal === null || onMouseEnterOriginal === void 0 ? void 0 : onMouseEnterOriginal(event);
-  });
-  rootProps.onKeyDown = useEventCallback((event) => {
-    const key = event.key;
-    if (key === Escape || isSubmenu && key === CloseArrowKey) {
-      var _popoverRef_current;
-      if (open && ((_popoverRef_current = popoverRef.current) === null || _popoverRef_current === void 0 ? void 0 : _popoverRef_current.contains(event.target)) && !event.isDefaultPrevented()) {
-        setOpen(event, {
-          open: false,
-          keyboard: true,
-          type: "menuPopoverKeyDown",
-          event
-        });
-        event.preventDefault();
-      }
-    }
-    if (key === Tab) {
-      setOpen(event, {
-        open: false,
-        keyboard: true,
-        type: "menuPopoverKeyDown",
-        event
-      });
-      if (!isSubmenu) {
-        var _triggerRef_current;
-        (_triggerRef_current = triggerRef.current) === null || _triggerRef_current === void 0 ? void 0 : _triggerRef_current.focus();
-      }
-    }
-    onKeyDownOriginal === null || onKeyDownOriginal === void 0 ? void 0 : onKeyDownOriginal(event);
-  });
-  return {
-    inline,
-    mountNode,
-    safeZone,
-    components: {
-      root: "div"
-    },
-    root: rootProps
-  };
-};
-const menuPopoverClassNames = {
-  root: "fui-MenuPopover"
-};
-const useStyles$5 = /* @__PURE__ */ __styles({
-  root: {
-    Beyfa6y: 0,
-    Bbmb7ep: 0,
-    Btl43ni: 0,
-    B7oj6ja: 0,
-    Dimara: "ft85np5",
-    De3pzq: "fxugw4r",
-    sj55zd: "f19n0e5",
-    B7ck84d: "f1ewtqcl",
-    Bf4jedk: "fl8fusi",
-    B2u0y6b: "f1kaai3v",
-    B68tc82: "f1p9o1ba",
-    a9b677: "f1ahpp82",
-    E5pizo: "f1hg901r",
-    Byoj8tv: 0,
-    uwmqm3: 0,
-    z189sj: 0,
-    z8tnut: 0,
-    B0ocmuz: "fd3pd8h",
-    Bgfg5da: 0,
-    B9xav0g: 0,
-    oivjwe: 0,
-    Bn0qgzm: 0,
-    B4g9neb: 0,
-    zhjwy3: 0,
-    wvpqe5: 0,
-    ibv6hh: 0,
-    u1mtju: 0,
-    h3c5rm: 0,
-    vrafjx: 0,
-    Bekrc4i: 0,
-    i8vvqc: 0,
-    g2u3we: 0,
-    icvyot: 0,
-    B4j52fo: 0,
-    irswps: "f9ggezi",
-    Bahqtrf: "fk6fouc",
-    Be2twd7: "fkhj508",
-    Bhrd7zp: "figsok6",
-    Bg96gwp: "f1i3iumi",
-    B93otf3: "f18k4bn6",
-    vin17d: "fo1kyvf",
-    Ezkn3b: "fetxo7e",
-    nyiy2g: "f8x1vz1",
-    swvrvq: "f8g0anz",
-    Bkovbt3: "fezwn9i",
-    hgjdhn: "fz5efge",
-    fsy9dk: "f1ydixl4",
-    B3ogreh: "f8dgqj5",
-    jv49x5: "fnyfnr8",
-    Bk7o48c: "fgw77r4",
-    Bv12yb3: "f1noc5he",
-    i09l9u: "f1k46bua",
-    Bcrj8ia: "f1lhuzxm",
-    Bmmhre5: "f1f9qikc"
-  }
-}, {
-  d: [[".ft85np5{border-radius:var(--borderRadiusMedium);}", {
-    p: -1
-  }], ".fxugw4r{background-color:var(--colorNeutralBackground1);}", ".f19n0e5{color:var(--colorNeutralForeground1);}", ".f1ewtqcl{box-sizing:border-box;}", ".fl8fusi{min-width:138px;}", ".f1kaai3v{max-width:300px;}", ".f1p9o1ba{overflow-x:hidden;}", ".f1ahpp82{width:max-content;}", ".f1hg901r{box-shadow:var(--shadow16);}", [".fd3pd8h{padding:4px;}", {
-    p: -1
-  }], [".f9ggezi{border:1px solid var(--colorTransparentStroke);}", {
-    p: -2
-  }], ".fk6fouc{font-family:var(--fontFamilyBase);}", ".fkhj508{font-size:var(--fontSizeBase300);}", ".figsok6{font-weight:var(--fontWeightRegular);}", ".f1i3iumi{line-height:var(--lineHeightBase300);}", ".f18k4bn6{animation-composition:accumulate;}", ".fo1kyvf{animation-duration:var(--durationSlower);}", ".fetxo7e{animation-timing-function:var(--curveDecelerateMid);}", ".f8x1vz1{--fui-positioning-slide-distance-x:0px;}", ".f8g0anz{--fui-positioning-slide-distance-y:10px;}", ".fezwn9i[data-popper-placement^=right]{--fui-positioning-slide-distance-x:-10px;}", ".fz5efge[data-popper-placement^=right]{--fui-positioning-slide-distance-y:0px;}", ".f1ydixl4[data-popper-placement^=bottom]{--fui-positioning-slide-distance-x:0px;}", ".f8dgqj5[data-popper-placement^=bottom]{--fui-positioning-slide-distance-y:-10px;}", ".fnyfnr8[data-popper-placement^=left]{--fui-positioning-slide-distance-x:10px;}", ".fgw77r4[data-popper-placement^=left]{--fui-positioning-slide-distance-y:0px;}", ".f1noc5he{animation-name:f1m0q9mo,f79suad;}"],
-  k: ["@keyframes f1m0q9mo{from{opacity:-1;}to{opacity:0;}}", "@keyframes f79suad{from{transform:translate(var(--fui-positioning-slide-distance-x), var(--fui-positioning-slide-distance-y));}}"],
-  m: [["@media (prefers-reduced-motion){.f1k46bua[data-popper-placement]{animation-duration:1ms;}}", {
-    m: "(prefers-reduced-motion)"
-  }], ["@media (prefers-reduced-motion){.f1lhuzxm[data-popper-placement]{animation-name:f1m0q9mo;}}", {
-    m: "(prefers-reduced-motion)"
-  }]],
-  t: ["@supports not (animation-composition: accumulate){.f1f9qikc[data-popper-placement]{animation-name:f1m0q9mo;}}"]
-});
-const useMenuPopoverStyles_unstable = (state) => {
-  "use no memo";
-  const styles = useStyles$5();
-  state.root.className = mergeClasses(menuPopoverClassNames.root, styles.root, state.root.className);
-  return state;
-};
-const renderMenuPopover_unstable = (state) => {
-  if (state.inline) {
-    return /* @__PURE__ */ jsxs(reactExports.Fragment, {
-      children: [
-        /* @__PURE__ */ jsx(state.root, {}),
-        state.safeZone
-      ]
-    });
-  }
-  return /* @__PURE__ */ jsxs(Portal, {
-    mountNode: state.mountNode,
-    children: [
-      /* @__PURE__ */ jsx(state.root, {}),
-      state.safeZone
-    ]
-  });
-};
-const MenuPopover = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
-  const state = useMenuPopover_unstable(props, ref);
-  useMenuPopoverStyles_unstable(state);
-  useCustomStyleHook("useMenuPopoverStyles_unstable")(state);
-  return renderMenuPopover_unstable(state);
-});
-MenuPopover.displayName = "MenuPopover";
-function noop() {
-}
-const useMenuTrigger_unstable = (props) => {
-  const { children, disableButtonEnhancement = false } = props;
-  const triggerRef = useMenuContext_unstable((context) => context.triggerRef);
-  const menuPopoverRef = useMenuContext_unstable((context) => context.menuPopoverRef);
-  const setOpen = useMenuContext_unstable((context) => context.setOpen);
-  const open = useMenuContext_unstable((context) => context.open);
-  const triggerId = useMenuContext_unstable((context) => context.triggerId);
-  const openOnHover = useMenuContext_unstable((context) => context.openOnHover);
-  const openOnContext = useMenuContext_unstable((context) => context.openOnContext);
-  const isSubmenu = useIsSubmenu();
-  const { findFirstFocusable } = useFocusFinders();
-  const focusFirst = reactExports.useCallback(() => {
-    const firstFocusable = findFirstFocusable(menuPopoverRef.current);
-    firstFocusable === null || firstFocusable === void 0 ? void 0 : firstFocusable.focus();
-  }, [
-    findFirstFocusable,
-    menuPopoverRef
-  ]);
-  const openedWithKeyboardRef = reactExports.useRef(false);
-  const openedViaSafeZoneRef = reactExports.useRef(false);
-  const hasMouseMovedRef = reactExports.useRef(false);
-  const { dir } = useFluent();
-  const OpenArrowKey = dir === "ltr" ? ArrowRight : ArrowLeft;
-  const child = getTriggerChild(children);
-  const safeZoneHandlerRef = useOnMenuSafeZoneTimeout(useEventCallback(() => {
-    if (isSubmenu) {
-      openedViaSafeZoneRef.current = true;
-    }
-  }));
-  const onContextMenu = (event) => {
-    if (isTargetDisabled(event) || event.isDefaultPrevented()) {
-      return;
-    }
-    if (openOnContext) {
-      event.preventDefault();
-      setOpen(event, {
-        open: true,
-        keyboard: false,
-        type: "menuTriggerContextMenu",
-        event
-      });
-    }
-  };
-  const onClick = (event) => {
-    if (isTargetDisabled(event)) {
-      return;
-    }
-    if (!openOnContext) {
-      setOpen(event, {
-        open: !open,
-        keyboard: openedWithKeyboardRef.current,
-        type: "menuTriggerClick",
-        event
-      });
-      openedWithKeyboardRef.current = false;
-    }
-  };
-  const onKeyDown = (event) => {
-    if (isTargetDisabled(event) || event.isDefaultPrevented()) {
-      return;
-    }
-    const key = event.key;
-    if (!openOnContext && (isSubmenu && key === OpenArrowKey || !isSubmenu && key === ArrowDown)) {
-      setOpen(event, {
-        open: true,
-        keyboard: true,
-        type: "menuTriggerKeyDown",
-        event
-      });
-    }
-    if (key === Escape && !isSubmenu) {
-      setOpen(event, {
-        open: false,
-        keyboard: true,
-        type: "menuTriggerKeyDown",
-        event
-      });
-    }
-    if (open && key === OpenArrowKey && isSubmenu) {
-      focusFirst();
-    }
-  };
-  const onMouseOver = (event) => {
-    if (isTargetDisabled(event)) {
-      return;
-    }
-    if (openOnHover) {
-      if (hasMouseMovedRef.current) {
-        setOpen(event, {
-          open: true,
-          keyboard: false,
-          type: "menuTriggerMouseEnter",
-          event
-        });
-      } else if (openedViaSafeZoneRef.current) {
-        setOpen(event, {
-          open: true,
-          keyboard: false,
-          ignoreHoverDelay: true,
-          type: "menuTriggerMouseEnter",
-          event
-        });
-        openedViaSafeZoneRef.current = false;
-      }
-    }
-  };
-  const onMouseMove = (event) => {
-    if (isTargetDisabled(event)) {
-      return;
-    }
-    if (openOnHover && !hasMouseMovedRef.current) {
-      setOpen(event, {
-        open: true,
-        keyboard: false,
-        type: "menuTriggerMouseMove",
-        event
-      });
-      hasMouseMovedRef.current = true;
-    }
-  };
-  const onMouseLeave = (event) => {
-    if (isTargetDisabled(event)) {
-      return;
-    }
-    if (openOnHover) {
-      setOpen(event, {
-        open: false,
-        keyboard: false,
-        type: "menuTriggerMouseLeave",
-        event
-      });
-    }
-  };
-  var _child_props_onMouseEnter;
-  const contextMenuProps = {
-    id: triggerId,
-    ...child === null || child === void 0 ? void 0 : child.props,
-    ref: useMergedRefs(triggerRef, getReactElementRef(child), safeZoneHandlerRef),
-    onMouseEnter: useEventCallback((_child_props_onMouseEnter = child === null || child === void 0 ? void 0 : child.props.onMouseEnter) !== null && _child_props_onMouseEnter !== void 0 ? _child_props_onMouseEnter : noop),
-    onMouseLeave: useEventCallback(mergeCallbacks(child === null || child === void 0 ? void 0 : child.props.onMouseLeave, onMouseLeave)),
-    onContextMenu: useEventCallback(mergeCallbacks(child === null || child === void 0 ? void 0 : child.props.onContextMenu, onContextMenu)),
-    onMouseMove: useEventCallback(mergeCallbacks(child === null || child === void 0 ? void 0 : child.props.onMouseMove, onMouseMove)),
-    onMouseOver: useEventCallback(mergeCallbacks(child === null || child === void 0 ? void 0 : child.props.onMouseOver, onMouseOver))
-  };
-  const triggerChildProps = {
-    "aria-haspopup": "menu",
-    "aria-expanded": !open && !isSubmenu ? void 0 : open,
-    ...contextMenuProps,
-    onClick: useEventCallback(mergeCallbacks(child === null || child === void 0 ? void 0 : child.props.onClick, onClick)),
-    onKeyDown: useEventCallback(mergeCallbacks(child === null || child === void 0 ? void 0 : child.props.onKeyDown, onKeyDown))
-  };
-  const ariaButtonTriggerChildProps = useARIAButtonProps((child === null || child === void 0 ? void 0 : child.type) === "button" || (child === null || child === void 0 ? void 0 : child.type) === "a" ? child.type : "div", triggerChildProps);
-  return {
-    isSubmenu,
-    children: applyTriggerPropsToChildren(children, openOnContext ? contextMenuProps : disableButtonEnhancement ? triggerChildProps : ariaButtonTriggerChildProps)
-  };
-};
-const isTargetDisabled = (event) => {
-  const isDisabled = (el) => el.hasAttribute("disabled") || el.hasAttribute("aria-disabled") && el.getAttribute("aria-disabled") === "true";
-  if (isHTMLElement$2(event.target) && isDisabled(event.target)) {
-    return true;
-  }
-  return isHTMLElement$2(event.currentTarget) && isDisabled(event.currentTarget);
-};
-const renderMenuTrigger_unstable = (state) => {
-  return /* @__PURE__ */ reactExports.createElement(MenuTriggerContextProvider, {
-    value: state.isSubmenu
-  }, state.children);
-};
-const MenuTrigger = (props) => {
-  const state = useMenuTrigger_unstable(props);
-  return renderMenuTrigger_unstable(state);
-};
-MenuTrigger.displayName = "MenuTrigger";
-MenuTrigger.isFluentTriggerComponent = true;
 const SpinnerContext = reactExports.createContext(void 0);
 const SpinnerContextDefaultValue = {};
 SpinnerContext.Provider;
@@ -15180,7 +9607,7 @@ const useSpinnerContext = () => {
 };
 const useSpinner_unstable = (props, ref) => {
   const { size: contextSize } = useSpinnerContext();
-  const { appearance = "primary", labelPosition = "after", size: size2 = contextSize !== null && contextSize !== void 0 ? contextSize : "medium", delay = 0 } = props;
+  const { appearance = "primary", labelPosition = "after", size = contextSize !== null && contextSize !== void 0 ? contextSize : "medium", delay = 0 } = props;
   const baseId = useId("spinner");
   const { role = "progressbar", ...rest } = props;
   const nativeRoot = always(getIntrinsicElementProps("div", {
@@ -15230,7 +9657,7 @@ const useSpinner_unstable = (props, ref) => {
     appearance,
     delay,
     labelPosition,
-    size: size2,
+    size,
     shouldRenderSpinner: !delay || isShownAfterDelay,
     components: {
       root: "div",
@@ -15266,7 +9693,7 @@ const spinnerClassNames = {
   label: "fui-Spinner__label"
 };
 const useRootBaseClassName = /* @__PURE__ */ __resetStyles("rpp59a7", null, [".rpp59a7{display:flex;align-items:center;justify-content:center;line-height:0;gap:8px;overflow:hidden;min-width:min-content;}"]);
-const useRootStyles$1 = /* @__PURE__ */ __styles({
+const useRootStyles = /* @__PURE__ */ __styles({
   vertical: {
     Beiy3e4: "f1vx9l62"
   }
@@ -15396,27 +9823,27 @@ const useSpinnerStyles_unstable = (state) => {
   "use no memo";
   const {
     labelPosition,
-    size: size2,
+    size,
     appearance
   } = state;
   const {
     dir
   } = useFluent();
   const rootBaseClassName = useRootBaseClassName();
-  const rootStyles = useRootStyles$1();
+  const rootStyles = useRootStyles();
   const spinnerBaseClassName = useSpinnerBaseClassName();
   const spinnerStyles = useSpinnerStyles();
   const spinnerTailBaseClassName = useSpinnerTailBaseClassName();
   const labelStyles = useLabelStyles();
   state.root.className = mergeClasses(spinnerClassNames.root, rootBaseClassName, (labelPosition === "above" || labelPosition === "below") && rootStyles.vertical, state.root.className);
   if (state.spinner) {
-    state.spinner.className = mergeClasses(spinnerClassNames.spinner, spinnerBaseClassName, spinnerStyles[size2], appearance === "inverted" && spinnerStyles.inverted, state.spinner.className);
+    state.spinner.className = mergeClasses(spinnerClassNames.spinner, spinnerBaseClassName, spinnerStyles[size], appearance === "inverted" && spinnerStyles.inverted, state.spinner.className);
   }
   if (state.spinnerTail) {
     state.spinnerTail.className = mergeClasses(spinnerClassNames.spinnerTail, spinnerTailBaseClassName, dir === "rtl" && spinnerStyles.rtlTail, state.spinnerTail.className);
   }
   if (state.label) {
-    state.label.className = mergeClasses(spinnerClassNames.label, labelStyles[size2], appearance === "inverted" && labelStyles.inverted, state.label.className);
+    state.label.className = mergeClasses(spinnerClassNames.label, labelStyles[size], appearance === "inverted" && labelStyles.inverted, state.label.className);
   }
   return state;
 };
@@ -15427,457 +9854,6 @@ const Spinner = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return renderSpinner_unstable(state);
 });
 Spinner.displayName = "Spinner";
-const renderTextarea_unstable = (state) => {
-  return /* @__PURE__ */ jsx(state.root, {
-    children: /* @__PURE__ */ jsx(state.textarea, {})
-  });
-};
-const useTextarea_unstable = (props, ref) => {
-  props = useFieldControlProps_unstable(props, {
-    supportsLabelFor: true,
-    supportsRequired: true,
-    supportsSize: true
-  });
-  const overrides = useOverrides();
-  var _overrides_inputDefaultAppearance;
-  const { size: size2 = "medium", appearance = (_overrides_inputDefaultAppearance = overrides.inputDefaultAppearance) !== null && _overrides_inputDefaultAppearance !== void 0 ? _overrides_inputDefaultAppearance : "outline", resize = "none", onChange } = props;
-  const [value, setValue] = useControllableState({
-    state: props.value,
-    defaultState: props.defaultValue,
-    initialState: void 0
-  });
-  const nativeProps = getPartitionedNativeProps({
-    props,
-    primarySlotTagName: "textarea",
-    excludedPropNames: [
-      "onChange",
-      "value",
-      "defaultValue"
-    ]
-  });
-  const state = {
-    size: size2,
-    appearance,
-    resize,
-    components: {
-      root: "span",
-      textarea: "textarea"
-    },
-    textarea: always(props.textarea, {
-      defaultProps: {
-        ref,
-        ...nativeProps.primary
-      },
-      elementType: "textarea"
-    }),
-    root: always(props.root, {
-      defaultProps: nativeProps.root,
-      elementType: "span"
-    })
-  };
-  state.textarea.value = value;
-  state.textarea.onChange = useEventCallback((ev) => {
-    const newValue = ev.target.value;
-    onChange === null || onChange === void 0 ? void 0 : onChange(ev, {
-      value: newValue
-    });
-    setValue(newValue);
-  });
-  return state;
-};
-const textareaClassNames = {
-  root: "fui-Textarea",
-  textarea: "fui-Textarea__textarea"
-};
-const useRootStyles = /* @__PURE__ */ __styles({
-  base: {
-    mc9l5x: "ftuwxu6",
-    B7ck84d: "f1ewtqcl",
-    qhf8xq: "f10pi13n",
-    Byoj8tv: 0,
-    uwmqm3: 0,
-    z189sj: 0,
-    z8tnut: 0,
-    B0ocmuz: "f1yiegib",
-    jrapky: 0,
-    Frg6f3: 0,
-    t21cq0: 0,
-    B6of3ja: 0,
-    B74szlk: "f1s184ao",
-    Beyfa6y: 0,
-    Bbmb7ep: 0,
-    Btl43ni: 0,
-    B7oj6ja: 0,
-    Dimara: "ft85np5",
-    ha4doy: "f12kltsn"
-  },
-  disabled: {
-    De3pzq: "f1c21dwh",
-    Bgfg5da: 0,
-    B9xav0g: 0,
-    oivjwe: 0,
-    Bn0qgzm: 0,
-    B4g9neb: 0,
-    zhjwy3: 0,
-    wvpqe5: 0,
-    ibv6hh: 0,
-    u1mtju: 0,
-    h3c5rm: 0,
-    vrafjx: 0,
-    Bekrc4i: 0,
-    i8vvqc: 0,
-    g2u3we: 0,
-    icvyot: 0,
-    B4j52fo: 0,
-    irswps: "ff3nzm7",
-    Bcq6wej: "f9dbb4x",
-    Jcjdmf: ["f3qs60o", "f5u9ap2"],
-    sc4o1m: "fwd1oij",
-    Bosien3: ["f5u9ap2", "f3qs60o"]
-  },
-  interactive: {
-    li1rpt: "f1gw3sf2",
-    Bsft5z2: "f13zj6fq",
-    E3zdtr: "f1mdlcz9",
-    Eqx8gd: ["f1a7op3", "f1cjjd47"],
-    By385i5: "f1gboi2j",
-    B1piin3: ["f1cjjd47", "f1a7op3"],
-    Dlnsje: "ffyw7fx",
-    d9w3h3: ["f1kp91vd", "f1ibwz09"],
-    B3778ie: ["f1ibwz09", "f1kp91vd"],
-    B1q35kw: 0,
-    Bw17bha: 0,
-    Bcgy8vk: 0,
-    Bjuhk93: "f1mnjydx",
-    Gjdm7m: "fj2g8qd",
-    b1kco5: "f1yk9hq",
-    Ba2ppi3: "fhwpy7i",
-    F2fol1: "f14ee0xe",
-    lck23g: "f1xhbsuh",
-    wi16st: "fsrmcvb",
-    ywj3b2: "f1t3k7v9",
-    umuwi5: "fjw5xc1",
-    Blcqepd: "f1xdyd5c",
-    nplu4u: "fatpbeo",
-    Bioka5o: "fb7uyps",
-    Bnupc0a: "fx04xgm",
-    bing71: "f1c7in40",
-    Bercvud: "f1ibeo51",
-    Bbr2w1p: "f1vnc8sk",
-    Bduesf4: "f3e99gv",
-    Bpq79vn: "fhljsf7"
-  },
-  filled: {
-    Bgfg5da: 0,
-    B9xav0g: 0,
-    oivjwe: 0,
-    Bn0qgzm: 0,
-    B4g9neb: 0,
-    zhjwy3: 0,
-    wvpqe5: 0,
-    ibv6hh: 0,
-    u1mtju: 0,
-    h3c5rm: 0,
-    vrafjx: 0,
-    Bekrc4i: 0,
-    i8vvqc: 0,
-    g2u3we: 0,
-    icvyot: 0,
-    B4j52fo: 0,
-    irswps: "f88035w",
-    q7v0qe: "ftmjh5b",
-    kmh5ft: ["f17blpuu", "fsrcdbj"],
-    nagaa4: "f1tpwn32",
-    B1yhkcb: ["fsrcdbj", "f17blpuu"]
-  },
-  "filled-darker": {
-    De3pzq: "f16xq7d1"
-  },
-  "filled-lighter": {
-    De3pzq: "fxugw4r"
-  },
-  "filled-darker-shadow": {
-    De3pzq: "f16xq7d1",
-    Bgfg5da: 0,
-    B9xav0g: 0,
-    oivjwe: 0,
-    Bn0qgzm: 0,
-    B4g9neb: 0,
-    zhjwy3: 0,
-    wvpqe5: 0,
-    ibv6hh: 0,
-    u1mtju: 0,
-    h3c5rm: 0,
-    vrafjx: 0,
-    Bekrc4i: 0,
-    i8vvqc: 0,
-    g2u3we: 0,
-    icvyot: 0,
-    B4j52fo: 0,
-    irswps: "f1gmd7mu",
-    E5pizo: "fyed02w"
-  },
-  "filled-lighter-shadow": {
-    De3pzq: "fxugw4r",
-    Bgfg5da: 0,
-    B9xav0g: 0,
-    oivjwe: 0,
-    Bn0qgzm: 0,
-    B4g9neb: 0,
-    zhjwy3: 0,
-    wvpqe5: 0,
-    ibv6hh: 0,
-    u1mtju: 0,
-    h3c5rm: 0,
-    vrafjx: 0,
-    Bekrc4i: 0,
-    i8vvqc: 0,
-    g2u3we: 0,
-    icvyot: 0,
-    B4j52fo: 0,
-    irswps: "f1gmd7mu",
-    E5pizo: "fyed02w"
-  },
-  outline: {
-    De3pzq: "fxugw4r",
-    Bgfg5da: 0,
-    B9xav0g: "f1c1zstj",
-    oivjwe: 0,
-    Bn0qgzm: 0,
-    B4g9neb: 0,
-    zhjwy3: 0,
-    wvpqe5: 0,
-    ibv6hh: 0,
-    u1mtju: 0,
-    h3c5rm: 0,
-    vrafjx: 0,
-    Bekrc4i: 0,
-    i8vvqc: 0,
-    g2u3we: 0,
-    icvyot: 0,
-    B4j52fo: 0,
-    irswps: "fhz96rm"
-  },
-  outlineInteractive: {
-    kzujx5: 0,
-    oetu4i: "f1l4zc64",
-    gvrnp0: 0,
-    xv9156: 0,
-    jek2p4: 0,
-    gg5e9n: 0,
-    Beu9t3s: 0,
-    dt87k2: 0,
-    Bt1vbvt: 0,
-    Bwzppfd: 0,
-    Bop6t4b: 0,
-    B2zwrfe: 0,
-    Bwp2tzp: 0,
-    Bgoe8wy: 0,
-    Bf40cpq: 0,
-    ckks6v: 0,
-    Baalond: "f9mts5e",
-    v2iqwr: 0,
-    wmxk5l: "f1z0osm6",
-    Bj33j0h: 0,
-    Bs0cc2w: 0,
-    qwjtx1: 0,
-    B50zh58: 0,
-    f7epvg: 0,
-    e1hlit: 0,
-    B7mkhst: 0,
-    ak43y8: 0,
-    Bbcopvn: 0,
-    Bvecx4l: 0,
-    lwioe0: 0,
-    B6oc9vd: 0,
-    e2sjt0: 0,
-    uqwnxt: 0,
-    asj8p9: "f1acnei2",
-    Br8fjdy: 0,
-    zoxjo1: "f1so894s",
-    Bt3ojkv: 0,
-    B7pmvfx: 0,
-    Bfht2n1: 0,
-    an54nd: 0,
-    t1ykpo: 0,
-    Belqbek: 0,
-    bbt1vd: 0,
-    Brahy3i: 0,
-    r7b1zc: 0,
-    rexu52: 0,
-    ovtnii: 0,
-    Bvq3b66: 0,
-    Bawrxx6: 0,
-    Bbs6y8j: 0,
-    B2qpgjt: "f19ezbcq"
-  },
-  invalid: {
-    tvckwq: "fs4k3qj",
-    gk2u95: ["fcee079", "fmyw78r"],
-    hhx65j: "f1fgmyf4",
-    Bxowmz0: ["fmyw78r", "fcee079"]
-  }
-}, {
-  d: [".ftuwxu6{display:inline-flex;}", ".f1ewtqcl{box-sizing:border-box;}", ".f10pi13n{position:relative;}", [".f1yiegib{padding:0 0 var(--strokeWidthThick) 0;}", {
-    p: -1
-  }], [".f1s184ao{margin:0;}", {
-    p: -1
-  }], [".ft85np5{border-radius:var(--borderRadiusMedium);}", {
-    p: -1
-  }], ".f12kltsn{vertical-align:top;}", ".f1c21dwh{background-color:var(--colorTransparentBackground);}", [".ff3nzm7{border:var(--strokeWidthThin) solid var(--colorNeutralStrokeDisabled);}", {
-    p: -2
-  }], ".f1gw3sf2::after{box-sizing:border-box;}", '.f13zj6fq::after{content:"";}', ".f1mdlcz9::after{position:absolute;}", ".f1a7op3::after{left:-1px;}", ".f1cjjd47::after{right:-1px;}", ".f1gboi2j::after{bottom:-1px;}", ".ffyw7fx::after{height:max(var(--strokeWidthThick), var(--borderRadiusMedium));}", ".f1kp91vd::after{border-bottom-left-radius:var(--borderRadiusMedium);}", ".f1ibwz09::after{border-bottom-right-radius:var(--borderRadiusMedium);}", [".f1mnjydx::after{border-bottom:var(--strokeWidthThick) solid var(--colorCompoundBrandStroke);}", {
-    p: -1
-  }], ".fj2g8qd::after{clip-path:inset(calc(100% - var(--strokeWidthThick)) 0 0 0);}", ".f1yk9hq::after{transform:scaleX(0);}", ".fhwpy7i::after{transition-property:transform;}", ".f14ee0xe::after{transition-duration:var(--durationUltraFast);}", ".f1xhbsuh::after{transition-delay:var(--curveAccelerateMid);}", [".f88035w{border:var(--strokeWidthThin) solid var(--colorTransparentStroke);}", {
-    p: -2
-  }], ".f16xq7d1{background-color:var(--colorNeutralBackground3);}", ".fxugw4r{background-color:var(--colorNeutralBackground1);}", [".f1gmd7mu{border:var(--strokeWidthThin) solid var(--colorTransparentStrokeInteractive);}", {
-    p: -2
-  }], ".fyed02w{box-shadow:var(--shadow2);}", [".f1gmd7mu{border:var(--strokeWidthThin) solid var(--colorTransparentStrokeInteractive);}", {
-    p: -2
-  }], [".fhz96rm{border:var(--strokeWidthThin) solid var(--colorNeutralStroke1);}", {
-    p: -2
-  }], ".f1c1zstj{border-bottom-color:var(--colorNeutralStrokeAccessible);}", ".fs4k3qj:not(:focus-within),.fs4k3qj:hover:not(:focus-within){border-top-color:var(--colorPaletteRedBorder2);}", ".fcee079:not(:focus-within),.fcee079:hover:not(:focus-within){border-right-color:var(--colorPaletteRedBorder2);}", ".fmyw78r:not(:focus-within),.fmyw78r:hover:not(:focus-within){border-left-color:var(--colorPaletteRedBorder2);}", ".f1fgmyf4:not(:focus-within),.f1fgmyf4:hover:not(:focus-within){border-bottom-color:var(--colorPaletteRedBorder2);}"],
-  m: [["@media (forced-colors: active){.f9dbb4x{border-top-color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.f3qs60o{border-right-color:GrayText;}.f5u9ap2{border-left-color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media (forced-colors: active){.fwd1oij{border-bottom-color:GrayText;}}", {
-    m: "(forced-colors: active)"
-  }], ["@media screen and (prefers-reduced-motion: reduce){.fsrmcvb::after{transition-duration:0.01ms;}}", {
-    m: "screen and (prefers-reduced-motion: reduce)"
-  }], ["@media screen and (prefers-reduced-motion: reduce){.f1t3k7v9::after{transition-delay:0.01ms;}}", {
-    m: "screen and (prefers-reduced-motion: reduce)"
-  }], ["@media screen and (prefers-reduced-motion: reduce){.fx04xgm:focus-within::after{transition-duration:0.01ms;}}", {
-    m: "screen and (prefers-reduced-motion: reduce)"
-  }], ["@media screen and (prefers-reduced-motion: reduce){.f1c7in40:focus-within::after{transition-delay:0.01ms;}}", {
-    m: "screen and (prefers-reduced-motion: reduce)"
-  }]],
-  w: [".fjw5xc1:focus-within::after{transform:scaleX(1);}", ".f1xdyd5c:focus-within::after{transition-property:transform;}", ".fatpbeo:focus-within::after{transition-duration:var(--durationNormal);}", ".fb7uyps:focus-within::after{transition-delay:var(--curveDecelerateMid);}", ".f1ibeo51:focus-within:active::after{border-bottom-color:var(--colorCompoundBrandStrokePressed);}", ".f1vnc8sk:focus-within{outline-width:var(--strokeWidthThick);}", ".f3e99gv:focus-within{outline-style:solid;}", ".fhljsf7:focus-within{outline-color:transparent;}", [".f19ezbcq:focus-within{border:var(--strokeWidthThin) solid var(--colorNeutralStroke1Pressed);}", {
-    p: -2
-  }], ".f1so894s:focus-within{border-bottom-color:var(--colorCompoundBrandStroke);}"],
-  h: [".ftmjh5b:hover,.ftmjh5b:focus-within{border-top-color:var(--colorTransparentStrokeInteractive);}", ".f17blpuu:hover,.f17blpuu:focus-within{border-right-color:var(--colorTransparentStrokeInteractive);}", ".fsrcdbj:hover,.fsrcdbj:focus-within{border-left-color:var(--colorTransparentStrokeInteractive);}", ".f1tpwn32:hover,.f1tpwn32:focus-within{border-bottom-color:var(--colorTransparentStrokeInteractive);}", [".f9mts5e:hover{border:var(--strokeWidthThin) solid var(--colorNeutralStroke1Hover);}", {
-    p: -2
-  }], ".f1l4zc64:hover{border-bottom-color:var(--colorNeutralStrokeAccessibleHover);}"],
-  a: [[".f1acnei2:active{border:var(--strokeWidthThin) solid var(--colorNeutralStroke1Pressed);}", {
-    p: -2
-  }], ".f1z0osm6:active{border-bottom-color:var(--colorNeutralStrokeAccessiblePressed);}"]
-});
-const useTextareaStyles = /* @__PURE__ */ __styles({
-  base: {
-    icvyot: "f1ern45e",
-    vrafjx: ["f1n71otn", "f1deefiw"],
-    oivjwe: "f1h8hb77",
-    wvpqe5: ["f1deefiw", "f1n71otn"],
-    jrapky: 0,
-    Frg6f3: 0,
-    t21cq0: 0,
-    B6of3ja: 0,
-    B74szlk: "f1s184ao",
-    De3pzq: "f3rmtva",
-    B7ck84d: "f1ewtqcl",
-    sj55zd: "f19n0e5",
-    Bh6795r: "fqerorx",
-    Bahqtrf: "fk6fouc",
-    Bqenvij: "f1l02sjl",
-    yvdlaj: "fwyc1cq",
-    B3o7kgh: "f13ta7ih",
-    oeaueh: "f1s6fcnf"
-  },
-  disabled: {
-    sj55zd: "f1s2aq7o",
-    Bceei9c: "fdrzuqr",
-    yvdlaj: "fahhnxm"
-  },
-  small: {
-    sshi5w: "f1w5jphr",
-    Byoj8tv: 0,
-    uwmqm3: 0,
-    z189sj: 0,
-    z8tnut: 0,
-    B0ocmuz: "f1pnffij",
-    Bxyxcbc: "f192z54u",
-    Bahqtrf: "fk6fouc",
-    Be2twd7: "fy9rknc",
-    Bhrd7zp: "figsok6",
-    Bg96gwp: "fwrc4pm"
-  },
-  medium: {
-    sshi5w: "fvmd9f",
-    Byoj8tv: 0,
-    uwmqm3: 0,
-    z189sj: 0,
-    z8tnut: 0,
-    B0ocmuz: "f1ww82xo",
-    Bxyxcbc: "f1if7ixc",
-    Bahqtrf: "fk6fouc",
-    Be2twd7: "fkhj508",
-    Bhrd7zp: "figsok6",
-    Bg96gwp: "f1i3iumi"
-  },
-  large: {
-    sshi5w: "f1kfson",
-    Byoj8tv: 0,
-    uwmqm3: 0,
-    z189sj: 0,
-    z8tnut: 0,
-    B0ocmuz: "f15hvtkj",
-    Bxyxcbc: "f3kip1f",
-    Bahqtrf: "fk6fouc",
-    Be2twd7: "fod5ikn",
-    Bhrd7zp: "figsok6",
-    Bg96gwp: "faaz57k"
-  }
-}, {
-  d: [".f1ern45e{border-top-style:none;}", ".f1n71otn{border-right-style:none;}", ".f1deefiw{border-left-style:none;}", ".f1h8hb77{border-bottom-style:none;}", [".f1s184ao{margin:0;}", {
-    p: -1
-  }], ".f3rmtva{background-color:transparent;}", ".f1ewtqcl{box-sizing:border-box;}", ".f19n0e5{color:var(--colorNeutralForeground1);}", ".fqerorx{flex-grow:1;}", ".fk6fouc{font-family:var(--fontFamilyBase);}", ".f1l02sjl{height:100%;}", ".fwyc1cq::-webkit-input-placeholder{color:var(--colorNeutralForeground4);}", ".fwyc1cq::-moz-placeholder{color:var(--colorNeutralForeground4);}", ".f13ta7ih::-webkit-input-placeholder{opacity:1;}", ".f13ta7ih::-moz-placeholder{opacity:1;}", ".f1s6fcnf{outline-style:none;}", ".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}", ".fdrzuqr{cursor:not-allowed;}", ".fahhnxm::-webkit-input-placeholder{color:var(--colorNeutralForegroundDisabled);}", ".fahhnxm::-moz-placeholder{color:var(--colorNeutralForegroundDisabled);}", ".f1w5jphr{min-height:40px;}", [".f1pnffij{padding:var(--spacingVerticalXS) calc(var(--spacingHorizontalSNudge) + var(--spacingHorizontalXXS));}", {
-    p: -1
-  }], ".f192z54u{max-height:200px;}", ".fy9rknc{font-size:var(--fontSizeBase200);}", ".figsok6{font-weight:var(--fontWeightRegular);}", ".fwrc4pm{line-height:var(--lineHeightBase200);}", ".fvmd9f{min-height:52px;}", [".f1ww82xo{padding:var(--spacingVerticalSNudge) calc(var(--spacingHorizontalMNudge) + var(--spacingHorizontalXXS));}", {
-    p: -1
-  }], ".f1if7ixc{max-height:260px;}", ".fkhj508{font-size:var(--fontSizeBase300);}", ".f1i3iumi{line-height:var(--lineHeightBase300);}", ".f1kfson{min-height:64px;}", [".f15hvtkj{padding:var(--spacingVerticalS) calc(var(--spacingHorizontalM) + var(--spacingHorizontalXXS));}", {
-    p: -1
-  }], ".f3kip1f{max-height:320px;}", ".fod5ikn{font-size:var(--fontSizeBase400);}", ".faaz57k{line-height:var(--lineHeightBase400);}"]
-});
-const useTextareaResizeStyles = /* @__PURE__ */ __styles({
-  none: {
-    B3rzk8w: "f1o1s39h"
-  },
-  both: {
-    B3rzk8w: "f1pxm0xe"
-  },
-  horizontal: {
-    B3rzk8w: "fq6nmtn"
-  },
-  vertical: {
-    B3rzk8w: "f1f5ktr4"
-  }
-}, {
-  d: [".f1o1s39h{resize:none;}", ".f1pxm0xe{resize:both;}", ".fq6nmtn{resize:horizontal;}", ".f1f5ktr4{resize:vertical;}"]
-});
-const useTextareaStyles_unstable = (state) => {
-  "use no memo";
-  const {
-    size: size2,
-    appearance,
-    resize
-  } = state;
-  const disabled = state.textarea.disabled;
-  const invalid = `${state.textarea["aria-invalid"]}` === "true";
-  const filled = appearance.startsWith("filled");
-  const rootStyles = useRootStyles();
-  state.root.className = mergeClasses(textareaClassNames.root, rootStyles.base, disabled && rootStyles.disabled, !disabled && filled && rootStyles.filled, !disabled && rootStyles[appearance], !disabled && rootStyles.interactive, !disabled && appearance === "outline" && rootStyles.outlineInteractive, !disabled && invalid && rootStyles.invalid, state.root.className);
-  const textareaStyles = useTextareaStyles();
-  const textareaResizeStyles = useTextareaResizeStyles();
-  state.textarea.className = mergeClasses(textareaClassNames.textarea, textareaStyles.base, textareaStyles[size2], textareaResizeStyles[resize], disabled && textareaStyles.disabled, state.textarea.className);
-  return state;
-};
-const Textarea = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
-  const state = useTextarea_unstable(props, ref);
-  useTextareaStyles_unstable(state);
-  useCustomStyleHook("useTextareaStyles_unstable")(state);
-  return renderTextarea_unstable(state);
-});
-Textarea.displayName = "Textarea";
 const useHTMLNoScrollStyles = /* @__PURE__ */ __resetStyles("r6pzz3z", null, [".r6pzz3z{overflow-y:hidden;overflow-y:clip;scrollbar-gutter:stable;}"]);
 const useBodyNoScrollStyles = /* @__PURE__ */ __resetStyles("r144vlu9", null, [".r144vlu9{overflow-y:hidden;}"]);
 function useDisableBodyScroll() {
@@ -16641,7 +10617,7 @@ const useCardInteractive = ({ focusMode: initialFocusMode, disabled = false, ...
   };
 };
 const useCard_unstable = (props, ref) => {
-  const { appearance = "filled", orientation = "vertical", size: size2 = "medium", disabled = false, ...restProps } = props;
+  const { appearance = "filled", orientation = "vertical", size = "medium", disabled = false, ...restProps } = props;
   const [referenceId, setReferenceId] = reactExports.useState(cardContextDefaultValue.selectableA11yProps.referenceId);
   const [referenceLabel, setReferenceLabel] = reactExports.useState(cardContextDefaultValue.selectableA11yProps.referenceId);
   const cardBaseRef = useFocusWithin();
@@ -16666,7 +10642,7 @@ const useCard_unstable = (props, ref) => {
   return {
     appearance,
     orientation,
-    size: size2,
+    size,
     interactive,
     selectable,
     selectFocused,
@@ -17531,37 +11507,25 @@ const __vitePreload = function preload(baseModule, deps, importerUrl) {
 export {
   ArrowRight24Regular as A,
   Button as B,
-  Code24Regular as C,
+  Card as C,
   Dialog as D,
   FluentProvider as F,
   Globe24Regular as G,
-  Menu as M,
-  Navigation24Regular as N,
   Play24Regular as P,
   Spinner as S,
-  Textarea as T,
   __vitePreload as _,
-  MenuTrigger as a,
-  MenuPopover as b,
-  MenuList as c,
-  MenuItem as d,
-  Mail24Regular as e,
-  DialogTrigger as f,
-  Bot24Regular as g,
-  DialogSurface as h,
-  DialogTitle as i,
+  DialogTrigger as a,
+  Bot24Regular as b,
+  DialogSurface as c,
+  DialogTitle as d,
+  Dismiss24Regular as e,
+  DialogContent as f,
+  DialogBody as g,
+  CardHeader as h,
+  CardPreview as i,
   jsxRuntimeExports as j,
-  Dismiss24Regular as k,
-  DialogContent as l,
-  DialogBody as m,
-  Card as n,
-  CardHeader as o,
-  CardPreview as p,
-  CloudSync24Regular as q,
-  Shield24Regular as r,
-  schedulerExports as s,
-  Badge as t,
-  Server24Regular as u,
-  Copy24Regular as v,
+  CloudSync24Regular as k,
+  Shield24Regular as l,
+  Badge as m,
   webLightTheme as w
 };
