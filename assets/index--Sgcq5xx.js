@@ -1,7 +1,7 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./HomePage-tTm3zkNX.js","./microsoft-5X6QwgJe.js","./vendor-1ctSgPI3.js","./three-zb4emQ8Q.js","./EntitlementServer-B6QY4ACD.js","./Features-C2jwKcpH.js","./Architecture-CwRnBr5g.js","./Technology-Cv1aeaep.js","./Devices-DNgy-Q7g.js","./Transfer-DhGES9wg.js","./Migration-D518T9p1.js","./Roaming-DsWeWSYf.js","./FiveG-D0iV4k3X.js","./VoLTE-B7Hy9tx4.js","./Security-BIwxp1iT.js","./Compliance-ViKNKl05.js","./Partners-DfxnqYUa.js","./Enterprise-CXYeBnJT.js","./API-WtkgTDBg.js"])))=>i.map(i=>d[i]);
-import { j as jsxRuntimeExports, B as Button, D as Dialog, a as DialogTrigger, b as Bot24Regular, c as DialogSurface, d as DialogTitle, e as Dismiss24Regular, f as DialogContent, g as DialogBody, _ as __vitePreload, S as Spinner, F as FluentProvider, w as webLightTheme } from "./microsoft-5X6QwgJe.js";
-import { r as reactExports, R as React, b as React$1 } from "./vendor-1ctSgPI3.js";
-import { c as client } from "./three-zb4emQ8Q.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./HomePage-CivWTSzY.js","./microsoft-DzWYVBzk.js","./vendor-CNj5xcql.js","./three-DPyFhS_9.js","./ScrollTrigger-yeD_1Ynm.js","./EntitlementServer-v7FHsyaG.js","./Features-WQu32zEj.js","./Architecture-Bg7njR8Y.js","./Technology-g_P4zXUJ.js","./Devices-DmRkCVLg.js","./Transfer-PFCF1N9T.js","./Migration-C5BblDD_.js","./Roaming-CxS-STkF.js","./FiveG-BN09enBW.js","./VoLTE-DMDs-TX-.js","./Security-BKeQBZ0Z.js","./Compliance-BHFmomNg.js","./Partners-CgZT32TB.js","./Enterprise-CGc17QY5.js","./API-B4OA01ib.js","./Contact-CLZm_1SQ.js","./Support-Ey8HgXqh.js","./FAQ-C83lwxgg.js","./About-BGSYnpx_.js","./Team-CZMvzJrb.js","./Careers-2vQN1cZp.js","./News-x7NBC_nq.js","./Blog-thb9vOKY.js","./Press-DFuM0ezp.js","./Whitepaper-CodQTE73.js","./Brochure-uIEPjBXl.js","./Flyer-BjacB6ov.js","./RegionalPages-BZMFEMs8.js","./MPT-CGIyJs43.js","./eSIMArchitecture-C4WIokEq.js","./Telecommunications-CLe6Xe0k.js"])))=>i.map(i=>d[i]);
+import { j as jsxRuntimeExports, M as Menu, a as MenuTrigger, B as Button, b as MenuPopover, c as MenuList, d as MenuItem, G as Globe24Regular, N as Navigation24Regular, e as Mail24Regular, C as Code24Regular, D as Dialog, f as DialogTrigger, g as Bot24Regular, h as DialogSurface, i as DialogTitle, k as Dismiss24Regular, l as DialogContent, m as DialogBody, _ as __vitePreload, S as Spinner, F as FluentProvider, w as webLightTheme } from "./microsoft-DzWYVBzk.js";
+import { r as reactExports, R as React, b as React$1 } from "./vendor-CNj5xcql.js";
+import { c as client } from "./three-DPyFhS_9.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -40,7 +40,7 @@ import { c as client } from "./three-zb4emQ8Q.js";
   }
 })();
 /**
- * @remix-run/router v1.23.1
+ * @remix-run/router v1.23.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -541,8 +541,6 @@ function stripBasename(pathname, basename) {
   }
   return pathname.slice(startIndex) || "/";
 }
-const ABSOLUTE_URL_REGEX$1 = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-const isAbsoluteUrl = (url) => ABSOLUTE_URL_REGEX$1.test(url);
 function resolvePath(to, fromPathname) {
   if (fromPathname === void 0) {
     fromPathname = "/";
@@ -552,25 +550,7 @@ function resolvePath(to, fromPathname) {
     search = "",
     hash = ""
   } = typeof to === "string" ? parsePath(to) : to;
-  let pathname;
-  if (toPathname) {
-    if (isAbsoluteUrl(toPathname)) {
-      pathname = toPathname;
-    } else {
-      if (toPathname.includes("//")) {
-        let oldPathname = toPathname;
-        toPathname = toPathname.replace(/\/\/+/g, "/");
-        warning(false, "Pathnames cannot have embedded double slashes - normalizing " + (oldPathname + " -> " + toPathname));
-      }
-      if (toPathname.startsWith("/")) {
-        pathname = resolvePathname(toPathname.substring(1), "/");
-      } else {
-        pathname = resolvePathname(toPathname, fromPathname);
-      }
-    }
-  } else {
-    pathname = fromPathname;
-  }
+  let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
   return {
     pathname,
     search: normalizeSearch(search),
@@ -652,7 +632,7 @@ new Set(validMutationMethodsArr);
 const validRequestMethodsArr = ["get", ...validMutationMethodsArr];
 new Set(validRequestMethodsArr);
 /**
- * React Router v6.30.2
+ * React Router v6.30.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -1226,7 +1206,7 @@ function createRoutesFromChildren(children, parentPath) {
   return routes;
 }
 /**
- * React Router DOM v6.30.2
+ * React Router DOM v6.30.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -1433,21 +1413,84 @@ const Header = () => {
     { path: "/features", label: "Features" },
     { path: "/architecture", label: "Architecture" },
     { path: "/technology", label: "Technology" },
+    { path: "/devices", label: "Devices" },
     { path: "/api", label: "API" }
+  ];
+  const solutionsItems = [
+    { path: "/transfer", label: "eSIM Transfer" },
+    { path: "/migration", label: "SIM Migration" },
+    { path: "/roaming", label: "Global Roaming" },
+    { path: "/5g", label: "5G Streaming" },
+    { path: "/volte", label: "VoLTE HD" },
+    { path: "/security", label: "Security" },
+    { path: "/compliance", label: "Compliance" }
+  ];
+  const companyItems = [
+    { path: "/about", label: "About" },
+    { path: "/team", label: "Team" },
+    { path: "/careers", label: "Careers" },
+    { path: "/news", label: "News" },
+    { path: "/blog", label: "Blog" },
+    { path: "/press", label: "Press" }
+  ];
+  const supportItems = [
+    { path: "/contact", label: "Contact" },
+    { path: "/support", label: "Support" },
+    { path: "/faq", label: "FAQ" },
+    { path: "/whitepaper", label: "Whitepaper" },
+    { path: "/brochure", label: "Brochure" },
+    { path: "/flyer", label: "Flyer" }
+  ];
+  const languages = [
+    { code: "en", label: "English" },
+    { code: "zh", label: "中文" },
+    { code: "th", label: "ไทย" },
+    { code: "vi", label: "Tiếng Việt" },
+    { code: "id", label: "Bahasa Indonesia" },
+    { code: "ms", label: "Bahasa Malaysia" },
+    { code: "mm", label: "မြန်မာ" }
   ];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: `dynamic-island ${isScrolled ? "scrolled" : ""}`, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { className: "header-nav", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/", className: "logo", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "logo-text", children: "NexoraSIM" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "nav-menu", children: mainNavItems.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Link,
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "nav-menu", children: [
+        mainNavItems.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Link,
+          {
+            to: item.path,
+            className: `nav-link ${location.pathname === item.path ? "active" : ""}`,
+            children: item.label
+          },
+          item.path
+        )),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Menu, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { appearance: "subtle", children: "Solutions" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuPopover, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuList, { children: solutionsItems.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: item.path, className: "menu-item-link", children: item.label }) }, item.path)) }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Menu, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { appearance: "subtle", children: "Company" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuPopover, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuList, { children: companyItems.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: item.path, className: "menu-item-link", children: item.label }) }, item.path)) }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Menu, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { appearance: "subtle", children: "Support" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuPopover, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuList, { children: supportItems.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: item.path, className: "menu-item-link", children: item.label }) }, item.path)) }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-actions", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Menu, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { appearance: "subtle", icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe24Regular, {}), children: "Language" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuPopover, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuList, { children: languages.map((lang) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/${lang.code}`, className: "menu-item-link", children: lang.label }) }, lang.code)) }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { appearance: "primary", as: Link, to: "/enterprise", children: "Enterprise" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Button,
         {
-          to: item.path,
-          className: `nav-link ${location.pathname === item.path ? "active" : ""}`,
-          children: item.label
-        },
-        item.path
-      )) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "header-actions", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { appearance: "primary", as: Link, to: "/enterprise", children: "Enterprise" }) })
+          appearance: "subtle",
+          icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Navigation24Regular, {}),
+          className: "mobile-menu-toggle"
+        }
+      )
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("style", { jsx: true, children: `
         .header-nav {
@@ -1502,6 +1545,18 @@ const Header = () => {
           gap: var(--space-md);
         }
 
+        .menu-item-link {
+          text-decoration: none;
+          color: var(--black);
+          display: block;
+          width: 100%;
+          padding: var(--space-sm);
+        }
+
+        .mobile-menu-toggle {
+          display: none;
+        }
+
         @media (max-width: 768px) {
           .nav-menu {
             display: none;
@@ -1510,12 +1565,85 @@ const Header = () => {
           .header-actions {
             display: none;
           }
+
+          .mobile-menu-toggle {
+            display: flex;
+          }
         }
       ` })
   ] });
 };
 const Footer = () => {
   const currentYear = (/* @__PURE__ */ new Date()).getFullYear();
+  const footerSections = [
+    {
+      title: "Platform",
+      links: [
+        { path: "/entitlement-server", label: "Entitlement Server" },
+        { path: "/features", label: "Features" },
+        { path: "/architecture", label: "Architecture" },
+        { path: "/technology", label: "Technology" },
+        { path: "/devices", label: "Devices" },
+        { path: "/api", label: "API Documentation" }
+      ]
+    },
+    {
+      title: "Solutions",
+      links: [
+        { path: "/transfer", label: "eSIM Transfer" },
+        { path: "/migration", label: "SIM Migration" },
+        { path: "/roaming", label: "Global Roaming" },
+        { path: "/5g", label: "5G Streaming" },
+        { path: "/volte", label: "VoLTE HD Voice" },
+        { path: "/security", label: "Security" }
+      ]
+    },
+    {
+      title: "Networks",
+      links: [
+        { path: "/partners/mpt", label: "MPT Myanmar" },
+        { path: "/partners/mytel", label: "MYTEL" },
+        { path: "/partners/atom", label: "ATOM" },
+        { path: "/partners/u9", label: "U9 Network" },
+        { path: "/partners", label: "All Partners" },
+        { path: "/enterprise", label: "Enterprise" }
+      ]
+    },
+    {
+      title: "Company",
+      links: [
+        { path: "/about", label: "About NexoraSIM" },
+        { path: "/team", label: "Team" },
+        { path: "/careers", label: "Careers" },
+        { path: "/news", label: "News" },
+        { path: "/blog", label: "Blog" },
+        { path: "/press", label: "Press Kit" }
+      ]
+    },
+    {
+      title: "Resources",
+      links: [
+        { path: "/whitepaper", label: "Whitepaper" },
+        { path: "/brochure", label: "Brochure" },
+        { path: "/flyer", label: "Flyer" },
+        { path: "/compliance", label: "Compliance" },
+        { path: "/support", label: "Support" },
+        { path: "/faq", label: "FAQ" }
+      ]
+    },
+    {
+      title: "Languages",
+      links: [
+        { path: "/en", label: "English" },
+        { path: "/zh", label: "中文 (Chinese)" },
+        { path: "/th", label: "ไทย (Thai)" },
+        { path: "/vi", label: "Tiếng Việt" },
+        { path: "/id", label: "Bahasa Indonesia" },
+        { path: "/ms", label: "Bahasa Malaysia" },
+        { path: "/mm", label: "မြန်မာ (Myanmar)" }
+      ]
+    }
+  ];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("footer", { className: "premium-footer", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-content", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-brand", children: [
@@ -1523,52 +1651,49 @@ const Footer = () => {
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "logo-text", children: "NexoraSIM" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "logo-subtitle", children: "Entertainment Server" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "brand-description", children: "Enterprise-grade eSIM Profile Management platform for MPT, MYTEL, ATOM, and U9 networks in Myanmar. Premium streaming, 5G, and VoLTE support across ASEAN and globally." })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-sections", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-section", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "section-title", children: "Platform" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: "section-links", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/entitlement-server", className: "footer-link", children: "Entitlement Server" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/features", className: "footer-link", children: "Features" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/architecture", className: "footer-link", children: "Architecture" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/technology", className: "footer-link", children: "Technology" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/api", className: "footer-link", children: "API Documentation" }) })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-section", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "section-title", children: "Solutions" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: "section-links", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/transfer", className: "footer-link", children: "eSIM Transfer" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/migration", className: "footer-link", children: "SIM Migration" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/roaming", className: "footer-link", children: "Global Roaming" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/5g", className: "footer-link", children: "5G Streaming" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/volte", className: "footer-link", children: "VoLTE HD Voice" }) })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-section", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "section-title", children: "Company" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: "section-links", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/about", className: "footer-link", children: "About NexoraSIM" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/team", className: "footer-link", children: "Team" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/careers", className: "footer-link", children: "Careers" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/news", className: "footer-link", children: "News" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/press", className: "footer-link", children: "Press Kit" }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "brand-description", children: "Enterprise-grade eSIM Profile Management platform for MPT, MYTEL, ATOM, and U9 networks in Myanmar. Premium streaming, 5G, and VoLTE support across ASEAN and globally." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "contact-info", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "contact-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Globe24Regular, {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "nexorasim.com" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "contact-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Mail24Regular, {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "info@nexorasim.com" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "contact-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Code24Regular, {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "github.com/nexorasim" })
           ] })
         ] })
-      ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "footer-sections", children: footerSections.map((section, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "section-title", children: section.title }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "section-links", children: section.links.map((link, linkIndex) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: link.path, className: "footer-link", children: link.label }) }, linkIndex)) })
+      ] }, index)) })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "footer-bottom", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-bottom-content", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "copyright", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-        "© ",
-        currentYear,
-        " NexoraSIM. All rights reserved."
-      ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "contact-info", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "nexorasim.com | info@nexorasim.com | github.com/nexorasim | nexorasim.github.io" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "deployment-status", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "status-indicator", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "status-dot active" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "System Operational" })
-      ] }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "copyright", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+          "© ",
+          currentYear,
+          " NexoraSIM. All rights reserved."
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Proprietary - Enterprise eSIM Platform" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-links", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/privacy", className: "legal-link", children: "Privacy Policy" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/terms", className: "legal-link", children: "Terms of Service" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/security", className: "legal-link", children: "Security" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/compliance", className: "legal-link", children: "Compliance" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "deployment-status", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "status-indicator", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "status-dot active" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "System Operational" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "build-info", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "v2.0.0 | Production Ready" }) })
+      ] })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("style", { jsx: true, children: `
         .premium-footer {
@@ -1615,12 +1740,32 @@ const Footer = () => {
         .brand-description {
           color: var(--graphite);
           line-height: 1.6;
+          margin-bottom: var(--space-lg);
+        }
+
+        .contact-info {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-sm);
+        }
+
+        .contact-item {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+          color: var(--graphite);
+          font-size: 0.9rem;
         }
 
         .footer-sections {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           gap: var(--space-xl);
+        }
+
+        .footer-section {
+          display: flex;
+          flex-direction: column;
         }
 
         .section-title {
@@ -1669,9 +1814,27 @@ const Footer = () => {
           font-size: 0.85rem;
         }
 
-        .contact-info {
+        .footer-links {
+          display: flex;
+          gap: var(--space-lg);
+        }
+
+        .legal-link {
           color: var(--graphite);
+          text-decoration: none;
           font-size: 0.85rem;
+          transition: color 0.3s ease;
+        }
+
+        .legal-link:hover {
+          color: var(--accent);
+        }
+
+        .deployment-status {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: var(--space-xs);
         }
 
         .status-indicator {
@@ -1693,6 +1856,11 @@ const Footer = () => {
           animation: pulse 2s infinite;
         }
 
+        .build-info {
+          font-size: 0.75rem;
+          color: var(--graphite);
+        }
+
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.5; }
@@ -1703,13 +1871,34 @@ const Footer = () => {
             grid-template-columns: 1fr;
             gap: var(--space-xl);
           }
+
+          .footer-sections {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
 
         @media (max-width: 768px) {
+          .footer-content {
+            padding: var(--space-xl) var(--space-lg);
+          }
+
+          .footer-sections {
+            grid-template-columns: 1fr;
+          }
+
           .footer-bottom-content {
             flex-direction: column;
             text-align: center;
             gap: var(--space-md);
+          }
+
+          .footer-links {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+
+          .deployment-status {
+            align-items: center;
           }
         }
       ` })
@@ -1717,6 +1906,28 @@ const Footer = () => {
 };
 const CopilotOrb = () => {
   const [isOpen, setIsOpen] = reactExports.useState(false);
+  const copilotFeatures = [
+    {
+      title: "eSIM Technology Expert",
+      description: "Get instant answers about eSIM provisioning, GSMA standards, and technical specifications"
+    },
+    {
+      title: "Network Integration Guide",
+      description: "Learn about MPT, MYTEL, ATOM, and U9 network integration processes"
+    },
+    {
+      title: "API Documentation Helper",
+      description: "Navigate our comprehensive API documentation with intelligent assistance"
+    },
+    {
+      title: "Compliance Advisor",
+      description: "Understand global telecom regulations and compliance requirements"
+    },
+    {
+      title: "Multilingual Support",
+      description: "Available in English, Chinese, Thai, Vietnamese, Indonesian, Malay, and Myanmar"
+    }
+  ];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog, { open: isOpen, onOpenChange: (event, data) => setIsOpen(data.open), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "copilot-orb", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Bot24Regular, {}) }) }),
@@ -1738,16 +1949,28 @@ const CopilotOrb = () => {
             /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Your eSIM Technology Assistant" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Powered by Microsoft Copilot Studio with custom GPT trained on 3000+ eSIM FAQs, global telecom regulations, and NexoraSIM architecture documentation." })
           ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "copilot-features", children: copilotFeatures.map((feature, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "feature-card", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: feature.title }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: feature.description })
+          ] }, index)) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "copilot-chat", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "chat-header", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Start a Conversation" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Ask me anything about eSIM technology, network integration, or NexoraSIM platform" })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "chat-interface", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "chat-placeholder", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Microsoft Copilot Studio integration ready" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Custom GPT trained on eSIM technology" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Real-time translation: EN/ZH/TH/VI/ID/MS/MM" })
-            ] }) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "chat-interface", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "iframe",
+              {
+                src: "https://web.powerva.microsoft.com/environments/Default-YOUR-TENANT/bots/YOUR-BOT-ID/webchat",
+                style: {
+                  width: "100%",
+                  height: "400px",
+                  border: "none",
+                  borderRadius: "var(--radius-medium)"
+                },
+                title: "NexoraSIM AI Copilot"
+              }
+            ) })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "copilot-footer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "disclaimer", children: "Powered by Microsoft Copilot Studio | Real-time translation via Azure AI Translator" }) })
         ] }) }) })
@@ -1781,9 +2004,9 @@ const CopilotOrb = () => {
         }
 
         .copilot-dialog {
-          max-width: 600px;
+          max-width: 800px;
           width: 90vw;
-          max-height: 80vh;
+          max-height: 90vh;
           overflow-y: auto;
           backdrop-filter: var(--blur-intense);
           background: var(--glass);
@@ -1799,6 +2022,10 @@ const CopilotOrb = () => {
           font-weight: 600;
           color: var(--black);
           margin-bottom: var(--space-lg);
+        }
+
+        .close-button {
+          margin-left: auto;
         }
 
         .copilot-content {
@@ -1819,6 +2046,41 @@ const CopilotOrb = () => {
           line-height: 1.6;
         }
 
+        .copilot-features {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: var(--space-md);
+        }
+
+        .feature-card {
+          padding: var(--space-md);
+          border-radius: var(--radius-medium);
+          background: rgba(255,255,255,0.5);
+          border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .feature-card h4 {
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--black);
+          margin-bottom: var(--space-sm);
+        }
+
+        .feature-card p {
+          font-size: 0.9rem;
+          color: var(--graphite);
+          line-height: 1.5;
+        }
+
+        .copilot-chat {
+          border-top: 1px solid rgba(0,0,0,0.1);
+          padding-top: var(--space-lg);
+        }
+
+        .chat-header {
+          margin-bottom: var(--space-lg);
+        }
+
         .chat-header h4 {
           font-size: 1.2rem;
           font-weight: 600;
@@ -1831,19 +2093,14 @@ const CopilotOrb = () => {
         }
 
         .chat-interface {
-          margin-top: var(--space-lg);
-          padding: var(--space-lg);
-          background: rgba(0,0,0,0.02);
           border-radius: var(--radius-medium);
+          overflow: hidden;
+          box-shadow: var(--shadow-glass);
         }
 
-        .chat-placeholder {
-          text-align: center;
-          color: var(--graphite);
-        }
-
-        .chat-placeholder p {
-          margin-bottom: var(--space-sm);
+        .copilot-footer {
+          border-top: 1px solid rgba(0,0,0,0.1);
+          padding-top: var(--space-md);
         }
 
         .disclaimer {
@@ -1864,26 +2121,50 @@ const CopilotOrb = () => {
             width: 95vw;
             max-height: 85vh;
           }
+
+          .copilot-features {
+            grid-template-columns: 1fr;
+          }
+
+          .chat-interface iframe {
+            height: 300px !important;
+          }
         }
       ` })
   ] });
 };
-const HomePage = React$1.lazy(() => __vitePreload(() => import("./HomePage-tTm3zkNX.js"), true ? __vite__mapDeps([0,1,2,3]) : void 0, import.meta.url));
-const EntitlementServer = React$1.lazy(() => __vitePreload(() => import("./EntitlementServer-B6QY4ACD.js"), true ? __vite__mapDeps([4,1,2]) : void 0, import.meta.url));
-const Features = React$1.lazy(() => __vitePreload(() => import("./Features-C2jwKcpH.js"), true ? __vite__mapDeps([5,1,2]) : void 0, import.meta.url));
-const Architecture = React$1.lazy(() => __vitePreload(() => import("./Architecture-CwRnBr5g.js"), true ? __vite__mapDeps([6,1,2]) : void 0, import.meta.url));
-const Technology = React$1.lazy(() => __vitePreload(() => import("./Technology-Cv1aeaep.js"), true ? __vite__mapDeps([7,1,2]) : void 0, import.meta.url));
-const Devices = React$1.lazy(() => __vitePreload(() => import("./Devices-DNgy-Q7g.js"), true ? __vite__mapDeps([8,1,2]) : void 0, import.meta.url));
-const Transfer = React$1.lazy(() => __vitePreload(() => import("./Transfer-DhGES9wg.js"), true ? __vite__mapDeps([9,1,2]) : void 0, import.meta.url));
-const Migration = React$1.lazy(() => __vitePreload(() => import("./Migration-D518T9p1.js"), true ? __vite__mapDeps([10,1,2]) : void 0, import.meta.url));
-const Roaming = React$1.lazy(() => __vitePreload(() => import("./Roaming-DsWeWSYf.js"), true ? __vite__mapDeps([11,1,2]) : void 0, import.meta.url));
-const FiveG = React$1.lazy(() => __vitePreload(() => import("./FiveG-D0iV4k3X.js"), true ? __vite__mapDeps([12,1,2]) : void 0, import.meta.url));
-const VoLTE = React$1.lazy(() => __vitePreload(() => import("./VoLTE-B7Hy9tx4.js"), true ? __vite__mapDeps([13,1,2]) : void 0, import.meta.url));
-const Security = React$1.lazy(() => __vitePreload(() => import("./Security-BIwxp1iT.js"), true ? __vite__mapDeps([14,1,2]) : void 0, import.meta.url));
-const Compliance = React$1.lazy(() => __vitePreload(() => import("./Compliance-ViKNKl05.js"), true ? __vite__mapDeps([15,1,2]) : void 0, import.meta.url));
-const Partners = React$1.lazy(() => __vitePreload(() => import("./Partners-DfxnqYUa.js"), true ? __vite__mapDeps([16,1,2]) : void 0, import.meta.url));
-const Enterprise = React$1.lazy(() => __vitePreload(() => import("./Enterprise-CXYeBnJT.js"), true ? __vite__mapDeps([17,1,2]) : void 0, import.meta.url));
-const API = React$1.lazy(() => __vitePreload(() => import("./API-WtkgTDBg.js"), true ? __vite__mapDeps([18,1,2]) : void 0, import.meta.url));
+const HomePage = React$1.lazy(() => __vitePreload(() => import("./HomePage-CivWTSzY.js"), true ? __vite__mapDeps([0,1,2,3,4]) : void 0, import.meta.url));
+const EntitlementServer = React$1.lazy(() => __vitePreload(() => import("./EntitlementServer-v7FHsyaG.js"), true ? __vite__mapDeps([5,1,2,4,3]) : void 0, import.meta.url));
+const Features = React$1.lazy(() => __vitePreload(() => import("./Features-WQu32zEj.js"), true ? __vite__mapDeps([6,1,2,4,3]) : void 0, import.meta.url));
+const Architecture = React$1.lazy(() => __vitePreload(() => import("./Architecture-Bg7njR8Y.js"), true ? __vite__mapDeps([7,1,2]) : void 0, import.meta.url));
+const Technology = React$1.lazy(() => __vitePreload(() => import("./Technology-g_P4zXUJ.js"), true ? __vite__mapDeps([8,1,2]) : void 0, import.meta.url));
+const Devices = React$1.lazy(() => __vitePreload(() => import("./Devices-DmRkCVLg.js"), true ? __vite__mapDeps([9,1,2]) : void 0, import.meta.url));
+const Transfer = React$1.lazy(() => __vitePreload(() => import("./Transfer-PFCF1N9T.js"), true ? __vite__mapDeps([10,1,2]) : void 0, import.meta.url));
+const Migration = React$1.lazy(() => __vitePreload(() => import("./Migration-C5BblDD_.js"), true ? __vite__mapDeps([11,1,2]) : void 0, import.meta.url));
+const Roaming = React$1.lazy(() => __vitePreload(() => import("./Roaming-CxS-STkF.js"), true ? __vite__mapDeps([12,1,2]) : void 0, import.meta.url));
+const FiveG = React$1.lazy(() => __vitePreload(() => import("./FiveG-BN09enBW.js"), true ? __vite__mapDeps([13,1,2]) : void 0, import.meta.url));
+const VoLTE = React$1.lazy(() => __vitePreload(() => import("./VoLTE-DMDs-TX-.js"), true ? __vite__mapDeps([14,1,2]) : void 0, import.meta.url));
+const Security = React$1.lazy(() => __vitePreload(() => import("./Security-BKeQBZ0Z.js"), true ? __vite__mapDeps([15,1,2]) : void 0, import.meta.url));
+const Compliance = React$1.lazy(() => __vitePreload(() => import("./Compliance-BHFmomNg.js"), true ? __vite__mapDeps([16,1,2]) : void 0, import.meta.url));
+const Partners = React$1.lazy(() => __vitePreload(() => import("./Partners-CgZT32TB.js"), true ? __vite__mapDeps([17,1,2]) : void 0, import.meta.url));
+const Enterprise = React$1.lazy(() => __vitePreload(() => import("./Enterprise-CGc17QY5.js"), true ? __vite__mapDeps([18,1,2]) : void 0, import.meta.url));
+const API = React$1.lazy(() => __vitePreload(() => import("./API-B4OA01ib.js"), true ? __vite__mapDeps([19,1,2]) : void 0, import.meta.url));
+const Contact = React$1.lazy(() => __vitePreload(() => import("./Contact-CLZm_1SQ.js"), true ? __vite__mapDeps([20,1,2]) : void 0, import.meta.url));
+const Support = React$1.lazy(() => __vitePreload(() => import("./Support-Ey8HgXqh.js"), true ? __vite__mapDeps([21,1,2]) : void 0, import.meta.url));
+const FAQ = React$1.lazy(() => __vitePreload(() => import("./FAQ-C83lwxgg.js"), true ? __vite__mapDeps([22,1,2]) : void 0, import.meta.url));
+const About = React$1.lazy(() => __vitePreload(() => import("./About-BGSYnpx_.js"), true ? __vite__mapDeps([23,1,2]) : void 0, import.meta.url));
+const Team = React$1.lazy(() => __vitePreload(() => import("./Team-CZMvzJrb.js"), true ? __vite__mapDeps([24,1,2]) : void 0, import.meta.url));
+const Careers = React$1.lazy(() => __vitePreload(() => import("./Careers-2vQN1cZp.js"), true ? __vite__mapDeps([25,1,2]) : void 0, import.meta.url));
+const News = React$1.lazy(() => __vitePreload(() => import("./News-x7NBC_nq.js"), true ? __vite__mapDeps([26,1,2]) : void 0, import.meta.url));
+const Blog = React$1.lazy(() => __vitePreload(() => import("./Blog-thb9vOKY.js"), true ? __vite__mapDeps([27,1,2]) : void 0, import.meta.url));
+const Press = React$1.lazy(() => __vitePreload(() => import("./Press-DFuM0ezp.js"), true ? __vite__mapDeps([28,1,2]) : void 0, import.meta.url));
+const Whitepaper = React$1.lazy(() => __vitePreload(() => import("./Whitepaper-CodQTE73.js"), true ? __vite__mapDeps([29,1,2]) : void 0, import.meta.url));
+const Brochure = React$1.lazy(() => __vitePreload(() => import("./Brochure-uIEPjBXl.js"), true ? __vite__mapDeps([30,1,2]) : void 0, import.meta.url));
+const Flyer = React$1.lazy(() => __vitePreload(() => import("./Flyer-BjacB6ov.js"), true ? __vite__mapDeps([31,1,2]) : void 0, import.meta.url));
+const RegionalPages = React$1.lazy(() => __vitePreload(() => import("./RegionalPages-BZMFEMs8.js"), true ? __vite__mapDeps([32,1,2]) : void 0, import.meta.url));
+const MPT = React$1.lazy(() => __vitePreload(() => import("./MPT-CGIyJs43.js"), true ? __vite__mapDeps([33,1,2,3]) : void 0, import.meta.url));
+React$1.lazy(() => __vitePreload(() => import("./eSIMArchitecture-C4WIokEq.js"), true ? __vite__mapDeps([34,1,2,3]) : void 0, import.meta.url));
+const Telecommunications = React$1.lazy(() => __vitePreload(() => import("./Telecommunications-CLe6Xe0k.js"), true ? __vite__mapDeps([35,1,2,3]) : void 0, import.meta.url));
 const LoadingSpinner = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "loading-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Spinner, { size: "large", label: "Loading NexoraSIM..." }) });
 function App() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "app", children: [
@@ -1904,7 +2185,23 @@ function App() {
       /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/compliance", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Compliance, {}) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/partners", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Partners, {}) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/enterprise", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Enterprise, {}) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/api", element: /* @__PURE__ */ jsxRuntimeExports.jsx(API, {}) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/api", element: /* @__PURE__ */ jsxRuntimeExports.jsx(API, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/contact", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Contact, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/support", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Support, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/faq", element: /* @__PURE__ */ jsxRuntimeExports.jsx(FAQ, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/about", element: /* @__PURE__ */ jsxRuntimeExports.jsx(About, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/team", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Team, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/careers", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Careers, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/news", element: /* @__PURE__ */ jsxRuntimeExports.jsx(News, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/blog", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Blog, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/press", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Press, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/whitepaper", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Whitepaper, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/brochure", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Brochure, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/flyer", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Flyer, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/operators/mpt", element: /* @__PURE__ */ jsxRuntimeExports.jsx(MPT, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/tech/esim-architecture", element: /* @__PURE__ */ jsxRuntimeExports.jsx("eSIMArchitecture", {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/industries/telecommunications", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Telecommunications, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/:lang/*", element: /* @__PURE__ */ jsxRuntimeExports.jsx(RegionalPages, {}) })
     ] }) }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(CopilotOrb, {})

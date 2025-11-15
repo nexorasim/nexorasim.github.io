@@ -1,5 +1,5 @@
-import { a as reactDomExports, r as reactExports, g as getDefaultExportFromCjs } from "./vendor-1ctSgPI3.js";
-import { j as jsxRuntimeExports } from "./microsoft-5X6QwgJe.js";
+import { a as reactDomExports, r as reactExports, g as getDefaultExportFromCjs } from "./vendor-CNj5xcql.js";
+import { s as schedulerExports, j as jsxRuntimeExports } from "./microsoft-DzWYVBzk.js";
 var client = {};
 var m = reactDomExports;
 {
@@ -29945,261 +29945,6 @@ function create$1(createState) {
   return useStore2;
 }
 var reactReconciler = { exports: {} };
-var scheduler$1 = { exports: {} };
-var scheduler_production_min$1 = {};
-/**
- * @license React
- * scheduler.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var hasRequiredScheduler_production_min;
-function requireScheduler_production_min() {
-  if (hasRequiredScheduler_production_min) return scheduler_production_min$1;
-  hasRequiredScheduler_production_min = 1;
-  (function(exports$1) {
-    function f(a, b) {
-      var c = a.length;
-      a.push(b);
-      a: for (; 0 < c; ) {
-        var d = c - 1 >>> 1, e = a[d];
-        if (0 < g2(e, b)) a[d] = b, a[c] = e, c = d;
-        else break a;
-      }
-    }
-    function h(a) {
-      return 0 === a.length ? null : a[0];
-    }
-    function k2(a) {
-      if (0 === a.length) return null;
-      var b = a[0], c = a.pop();
-      if (c !== b) {
-        a[0] = c;
-        a: for (var d = 0, e = a.length, w = e >>> 1; d < w; ) {
-          var m2 = 2 * (d + 1) - 1, C = a[m2], n = m2 + 1, x = a[n];
-          if (0 > g2(C, c)) n < e && 0 > g2(x, C) ? (a[d] = x, a[n] = c, d = n) : (a[d] = C, a[m2] = c, d = m2);
-          else if (n < e && 0 > g2(x, c)) a[d] = x, a[n] = c, d = n;
-          else break a;
-        }
-      }
-      return b;
-    }
-    function g2(a, b) {
-      var c = a.sortIndex - b.sortIndex;
-      return 0 !== c ? c : a.id - b.id;
-    }
-    if ("object" === typeof performance && "function" === typeof performance.now) {
-      var l = performance;
-      exports$1.unstable_now = function() {
-        return l.now();
-      };
-    } else {
-      var p = Date, q = p.now();
-      exports$1.unstable_now = function() {
-        return p.now() - q;
-      };
-    }
-    var r = [], t = [], u = 1, v = null, y = 3, z = false, A = false, B = false, D2 = "function" === typeof setTimeout ? setTimeout : null, E2 = "function" === typeof clearTimeout ? clearTimeout : null, F = "undefined" !== typeof setImmediate ? setImmediate : null;
-    "undefined" !== typeof navigator && void 0 !== navigator.scheduling && void 0 !== navigator.scheduling.isInputPending && navigator.scheduling.isInputPending.bind(navigator.scheduling);
-    function G(a) {
-      for (var b = h(t); null !== b; ) {
-        if (null === b.callback) k2(t);
-        else if (b.startTime <= a) k2(t), b.sortIndex = b.expirationTime, f(r, b);
-        else break;
-        b = h(t);
-      }
-    }
-    function H(a) {
-      B = false;
-      G(a);
-      if (!A) if (null !== h(r)) A = true, I(J);
-      else {
-        var b = h(t);
-        null !== b && K(H, b.startTime - a);
-      }
-    }
-    function J(a, b) {
-      A = false;
-      B && (B = false, E2(L), L = -1);
-      z = true;
-      var c = y;
-      try {
-        G(b);
-        for (v = h(r); null !== v && (!(v.expirationTime > b) || a && !M()); ) {
-          var d = v.callback;
-          if ("function" === typeof d) {
-            v.callback = null;
-            y = v.priorityLevel;
-            var e = d(v.expirationTime <= b);
-            b = exports$1.unstable_now();
-            "function" === typeof e ? v.callback = e : v === h(r) && k2(r);
-            G(b);
-          } else k2(r);
-          v = h(r);
-        }
-        if (null !== v) var w = true;
-        else {
-          var m2 = h(t);
-          null !== m2 && K(H, m2.startTime - b);
-          w = false;
-        }
-        return w;
-      } finally {
-        v = null, y = c, z = false;
-      }
-    }
-    var N = false, O = null, L = -1, P = 5, Q = -1;
-    function M() {
-      return exports$1.unstable_now() - Q < P ? false : true;
-    }
-    function R() {
-      if (null !== O) {
-        var a = exports$1.unstable_now();
-        Q = a;
-        var b = true;
-        try {
-          b = O(true, a);
-        } finally {
-          b ? S() : (N = false, O = null);
-        }
-      } else N = false;
-    }
-    var S;
-    if ("function" === typeof F) S = function() {
-      F(R);
-    };
-    else if ("undefined" !== typeof MessageChannel) {
-      var T = new MessageChannel(), U = T.port2;
-      T.port1.onmessage = R;
-      S = function() {
-        U.postMessage(null);
-      };
-    } else S = function() {
-      D2(R, 0);
-    };
-    function I(a) {
-      O = a;
-      N || (N = true, S());
-    }
-    function K(a, b) {
-      L = D2(function() {
-        a(exports$1.unstable_now());
-      }, b);
-    }
-    exports$1.unstable_IdlePriority = 5;
-    exports$1.unstable_ImmediatePriority = 1;
-    exports$1.unstable_LowPriority = 4;
-    exports$1.unstable_NormalPriority = 3;
-    exports$1.unstable_Profiling = null;
-    exports$1.unstable_UserBlockingPriority = 2;
-    exports$1.unstable_cancelCallback = function(a) {
-      a.callback = null;
-    };
-    exports$1.unstable_continueExecution = function() {
-      A || z || (A = true, I(J));
-    };
-    exports$1.unstable_forceFrameRate = function(a) {
-      0 > a || 125 < a ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : P = 0 < a ? Math.floor(1e3 / a) : 5;
-    };
-    exports$1.unstable_getCurrentPriorityLevel = function() {
-      return y;
-    };
-    exports$1.unstable_getFirstCallbackNode = function() {
-      return h(r);
-    };
-    exports$1.unstable_next = function(a) {
-      switch (y) {
-        case 1:
-        case 2:
-        case 3:
-          var b = 3;
-          break;
-        default:
-          b = y;
-      }
-      var c = y;
-      y = b;
-      try {
-        return a();
-      } finally {
-        y = c;
-      }
-    };
-    exports$1.unstable_pauseExecution = function() {
-    };
-    exports$1.unstable_requestPaint = function() {
-    };
-    exports$1.unstable_runWithPriority = function(a, b) {
-      switch (a) {
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-          break;
-        default:
-          a = 3;
-      }
-      var c = y;
-      y = a;
-      try {
-        return b();
-      } finally {
-        y = c;
-      }
-    };
-    exports$1.unstable_scheduleCallback = function(a, b, c) {
-      var d = exports$1.unstable_now();
-      "object" === typeof c && null !== c ? (c = c.delay, c = "number" === typeof c && 0 < c ? d + c : d) : c = d;
-      switch (a) {
-        case 1:
-          var e = -1;
-          break;
-        case 2:
-          e = 250;
-          break;
-        case 5:
-          e = 1073741823;
-          break;
-        case 4:
-          e = 1e4;
-          break;
-        default:
-          e = 5e3;
-      }
-      e = c + e;
-      a = { id: u++, callback: b, priorityLevel: a, startTime: c, expirationTime: e, sortIndex: -1 };
-      c > d ? (a.sortIndex = c, f(t, a), null === h(r) && a === h(t) && (B ? (E2(L), L = -1) : B = true, K(H, c - d))) : (a.sortIndex = e, f(r, a), A || z || (A = true, I(J)));
-      return a;
-    };
-    exports$1.unstable_shouldYield = M;
-    exports$1.unstable_wrapCallback = function(a) {
-      var b = y;
-      return function() {
-        var c = y;
-        y = b;
-        try {
-          return a.apply(this, arguments);
-        } finally {
-          y = c;
-        }
-      };
-    };
-  })(scheduler_production_min$1);
-  return scheduler_production_min$1;
-}
-var hasRequiredScheduler;
-function requireScheduler() {
-  if (hasRequiredScheduler) return scheduler$1.exports;
-  hasRequiredScheduler = 1;
-  {
-    scheduler$1.exports = requireScheduler_production_min();
-  }
-  return scheduler$1.exports;
-}
 /**
  * @license React
  * react-reconciler.production.min.js
@@ -30210,8 +29955,8 @@ function requireScheduler() {
  * LICENSE file in the root directory of this source tree.
  */
 var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
-  var exports$1 = {};
-  var aa = reactExports, ba = requireScheduler(), ca = Object.assign;
+  var exports = {};
+  var aa = reactExports, ba = schedulerExports, ca = Object.assign;
   function n(a) {
     for (var b = "https://reactjs.org/docs/error-decoder.html?invariant=" + a, c = 1; c < arguments.length; c++) b += "&args[]=" + encodeURIComponent(arguments[c]);
     return "Minified React error #" + a + "; visit " + b + " for the full message or use the non-minified dev environment for full errors and additional helpful warnings.";
@@ -34699,21 +34444,21 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
   function ei() {
     return null;
   }
-  exports$1.attemptContinuousHydration = function(a) {
+  exports.attemptContinuousHydration = function(a) {
     if (13 === a.tag) {
       var b = H();
       Ad(a, 134217728, b);
       ci(a, 134217728);
     }
   };
-  exports$1.attemptHydrationAtCurrentPriority = function(a) {
+  exports.attemptHydrationAtCurrentPriority = function(a) {
     if (13 === a.tag) {
       var b = H(), c = zd(a);
       Ad(a, c, b);
       ci(a, c);
     }
   };
-  exports$1.attemptSynchronousHydration = function(a) {
+  exports.attemptSynchronousHydration = function(a) {
     switch (a.tag) {
       case 3:
         var b = a.stateNode;
@@ -34730,7 +34475,7 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
         ci(a, 1);
     }
   };
-  exports$1.batchedUpdates = function(a, b) {
+  exports.batchedUpdates = function(a, b) {
     var c = G;
     G |= 1;
     try {
@@ -34739,16 +34484,16 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
       G = c, 0 === G && (sh(), Tc && Xc());
     }
   };
-  exports$1.createComponentSelector = function(a) {
+  exports.createComponentSelector = function(a) {
     return { $$typeof: ah, value: a };
   };
-  exports$1.createContainer = function(a, b, c, d, e, f, g2) {
+  exports.createContainer = function(a, b, c, d, e, f, g2) {
     return Zh(a, b, false, null, c, d, e, f, g2);
   };
-  exports$1.createHasPseudoClassSelector = function(a) {
+  exports.createHasPseudoClassSelector = function(a) {
     return { $$typeof: bh, value: a };
   };
-  exports$1.createHydrationContainer = function(a, b, c, d, e, f, g2, h, k2) {
+  exports.createHydrationContainer = function(a, b, c, d, e, f, g2, h, k2) {
     a = Zh(c, d, true, a, e, f, g2, h, k2);
     a.context = $h(null);
     c = a.current;
@@ -34762,20 +34507,20 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
     Z(a, d);
     return a;
   };
-  exports$1.createPortal = function(a, b, c) {
+  exports.createPortal = function(a, b, c) {
     var d = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null;
     return { $$typeof: ha, key: null == d ? null : "" + d, children: a, containerInfo: b, implementation: c };
   };
-  exports$1.createRoleSelector = function(a) {
+  exports.createRoleSelector = function(a) {
     return { $$typeof: ch, value: a };
   };
-  exports$1.createTestNameSelector = function(a) {
+  exports.createTestNameSelector = function(a) {
     return { $$typeof: dh, value: a };
   };
-  exports$1.createTextSelector = function(a) {
+  exports.createTextSelector = function(a) {
     return { $$typeof: eh, value: a };
   };
-  exports$1.deferredUpdates = function(a) {
+  exports.deferredUpdates = function(a) {
     var b = D2, c = U.transition;
     try {
       return U.transition = null, D2 = 16, a();
@@ -34783,7 +34528,7 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
       D2 = b, U.transition = c;
     }
   };
-  exports$1.discreteUpdates = function(a, b, c, d, e) {
+  exports.discreteUpdates = function(a, b, c, d, e) {
     var f = D2, g2 = U.transition;
     try {
       return U.transition = null, D2 = 1, a(b, c, d, e);
@@ -34791,8 +34536,8 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
       D2 = f, U.transition = g2, 0 === G && sh();
     }
   };
-  exports$1.findAllNodes = kh;
-  exports$1.findBoundingRects = function(a, b) {
+  exports.findAllNodes = kh;
+  exports.findBoundingRects = function(a, b) {
     if (!bb) throw Error(n(363));
     b = kh(a, b);
     a = [];
@@ -34819,16 +34564,16 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
     }
     return a;
   };
-  exports$1.findHostInstance = ai;
-  exports$1.findHostInstanceWithNoPortals = function(a) {
+  exports.findHostInstance = ai;
+  exports.findHostInstanceWithNoPortals = function(a) {
     a = Aa(a);
     a = null !== a ? Da(a) : null;
     return null === a ? null : a.stateNode;
   };
-  exports$1.findHostInstanceWithWarning = function(a) {
+  exports.findHostInstanceWithWarning = function(a) {
     return ai(a);
   };
-  exports$1.flushControlled = function(a) {
+  exports.flushControlled = function(a) {
     var b = G;
     G |= 1;
     var c = U.transition, d = D2;
@@ -34838,9 +34583,9 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
       D2 = d, U.transition = c, G = b, 0 === G && (sh(), Xc());
     }
   };
-  exports$1.flushPassiveEffects = Fh;
-  exports$1.flushSync = Oh;
-  exports$1.focusWithin = function(a, b) {
+  exports.flushPassiveEffects = Fh;
+  exports.flushSync = Oh;
+  exports.focusWithin = function(a, b) {
     if (!bb) throw Error(n(363));
     a = gh(a);
     b = jh(a, b);
@@ -34854,10 +34599,10 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
     }
     return false;
   };
-  exports$1.getCurrentUpdatePriority = function() {
+  exports.getCurrentUpdatePriority = function() {
     return D2;
   };
-  exports$1.getFindAllNodesFailureDescription = function(a, b) {
+  exports.getFindAllNodesFailureDescription = function(a, b) {
     if (!bb) throw Error(n(363));
     var c = 0, d = [];
     a = [gh(a), 0];
@@ -34873,7 +34618,7 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
     }
     return null;
   };
-  exports$1.getPublicRootInstance = function(a) {
+  exports.getPublicRootInstance = function(a) {
     a = a.current;
     if (!a.child) return null;
     switch (a.child.tag) {
@@ -34883,7 +34628,7 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
         return a.child.stateNode;
     }
   };
-  exports$1.injectIntoDevTools = function(a) {
+  exports.injectIntoDevTools = function(a) {
     a = { bundleType: a.bundleType, version: a.version, rendererPackageName: a.rendererPackageName, rendererConfig: a.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: ea.ReactCurrentDispatcher, findHostInstanceByFiber: di, findFiberByHostInstance: a.findFiberByHostInstance || ei, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.0.0-fc46dba67-20220329" };
     if ("undefined" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) a = false;
     else {
@@ -34899,10 +34644,10 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
     }
     return a;
   };
-  exports$1.isAlreadyRendering = function() {
+  exports.isAlreadyRendering = function() {
     return false;
   };
-  exports$1.observeVisibleRects = function(a, b, c, d) {
+  exports.observeVisibleRects = function(a, b, c, d) {
     if (!bb) throw Error(n(363));
     a = kh(a, b);
     var e = ib(a, c, d).disconnect;
@@ -34910,12 +34655,12 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
       e();
     } };
   };
-  exports$1.registerMutableSourceForHydration = function(a, b) {
+  exports.registerMutableSourceForHydration = function(a, b) {
     var c = b._getVersion;
     c = c(b._source);
     null == a.mutableSourceEagerHydrationData ? a.mutableSourceEagerHydrationData = [b, c] : a.mutableSourceEagerHydrationData.push(b, c);
   };
-  exports$1.runWithPriority = function(a, b) {
+  exports.runWithPriority = function(a, b) {
     var c = D2;
     try {
       return D2 = a, b();
@@ -34923,13 +34668,13 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
       D2 = c;
     }
   };
-  exports$1.shouldError = function() {
+  exports.shouldError = function() {
     return null;
   };
-  exports$1.shouldSuspend = function() {
+  exports.shouldSuspend = function() {
     return false;
   };
-  exports$1.updateContainer = function(a, b, c, d) {
+  exports.updateContainer = function(a, b, c, d) {
     var e = b.current, f = H(), g2 = zd(e);
     c = $h(c);
     null === b.context ? b.context = c : b.pendingContext = c;
@@ -34942,257 +34687,13 @@ var reactReconciler_production_min = function $$$reconciler($$$hostConfig) {
     null !== a && sd(a, e, g2);
     return g2;
   };
-  return exports$1;
+  return exports;
 };
 {
   reactReconciler.exports = reactReconciler_production_min;
 }
 var reactReconcilerExports = reactReconciler.exports;
 const Reconciler = /* @__PURE__ */ getDefaultExportFromCjs(reactReconcilerExports);
-var scheduler = { exports: {} };
-var scheduler_production_min = {};
-/**
- * @license React
- * scheduler.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-(function(exports$1) {
-  function f(a, b) {
-    var c = a.length;
-    a.push(b);
-    a: for (; 0 < c; ) {
-      var d = c - 1 >>> 1, e = a[d];
-      if (0 < g2(e, b)) a[d] = b, a[c] = e, c = d;
-      else break a;
-    }
-  }
-  function h(a) {
-    return 0 === a.length ? null : a[0];
-  }
-  function k2(a) {
-    if (0 === a.length) return null;
-    var b = a[0], c = a.pop();
-    if (c !== b) {
-      a[0] = c;
-      a: for (var d = 0, e = a.length, w = e >>> 1; d < w; ) {
-        var m2 = 2 * (d + 1) - 1, C = a[m2], n = m2 + 1, x = a[n];
-        if (0 > g2(C, c)) n < e && 0 > g2(x, C) ? (a[d] = x, a[n] = c, d = n) : (a[d] = C, a[m2] = c, d = m2);
-        else if (n < e && 0 > g2(x, c)) a[d] = x, a[n] = c, d = n;
-        else break a;
-      }
-    }
-    return b;
-  }
-  function g2(a, b) {
-    var c = a.sortIndex - b.sortIndex;
-    return 0 !== c ? c : a.id - b.id;
-  }
-  if ("object" === typeof performance && "function" === typeof performance.now) {
-    var l = performance;
-    exports$1.unstable_now = function() {
-      return l.now();
-    };
-  } else {
-    var p = Date, q = p.now();
-    exports$1.unstable_now = function() {
-      return p.now() - q;
-    };
-  }
-  var r = [], t = [], u = 1, v = null, y = 3, z = false, A = false, B = false, D2 = "function" === typeof setTimeout ? setTimeout : null, E2 = "function" === typeof clearTimeout ? clearTimeout : null, F = "undefined" !== typeof setImmediate ? setImmediate : null;
-  "undefined" !== typeof navigator && void 0 !== navigator.scheduling && void 0 !== navigator.scheduling.isInputPending && navigator.scheduling.isInputPending.bind(navigator.scheduling);
-  function G(a) {
-    for (var b = h(t); null !== b; ) {
-      if (null === b.callback) k2(t);
-      else if (b.startTime <= a) k2(t), b.sortIndex = b.expirationTime, f(r, b);
-      else break;
-      b = h(t);
-    }
-  }
-  function H(a) {
-    B = false;
-    G(a);
-    if (!A) if (null !== h(r)) A = true, I(J);
-    else {
-      var b = h(t);
-      null !== b && K(H, b.startTime - a);
-    }
-  }
-  function J(a, b) {
-    A = false;
-    B && (B = false, E2(L), L = -1);
-    z = true;
-    var c = y;
-    try {
-      G(b);
-      for (v = h(r); null !== v && (!(v.expirationTime > b) || a && !M()); ) {
-        var d = v.callback;
-        if ("function" === typeof d) {
-          v.callback = null;
-          y = v.priorityLevel;
-          var e = d(v.expirationTime <= b);
-          b = exports$1.unstable_now();
-          "function" === typeof e ? v.callback = e : v === h(r) && k2(r);
-          G(b);
-        } else k2(r);
-        v = h(r);
-      }
-      if (null !== v) var w = true;
-      else {
-        var m2 = h(t);
-        null !== m2 && K(H, m2.startTime - b);
-        w = false;
-      }
-      return w;
-    } finally {
-      v = null, y = c, z = false;
-    }
-  }
-  var N = false, O = null, L = -1, P = 5, Q = -1;
-  function M() {
-    return exports$1.unstable_now() - Q < P ? false : true;
-  }
-  function R() {
-    if (null !== O) {
-      var a = exports$1.unstable_now();
-      Q = a;
-      var b = true;
-      try {
-        b = O(true, a);
-      } finally {
-        b ? S() : (N = false, O = null);
-      }
-    } else N = false;
-  }
-  var S;
-  if ("function" === typeof F) S = function() {
-    F(R);
-  };
-  else if ("undefined" !== typeof MessageChannel) {
-    var T = new MessageChannel(), U = T.port2;
-    T.port1.onmessage = R;
-    S = function() {
-      U.postMessage(null);
-    };
-  } else S = function() {
-    D2(R, 0);
-  };
-  function I(a) {
-    O = a;
-    N || (N = true, S());
-  }
-  function K(a, b) {
-    L = D2(function() {
-      a(exports$1.unstable_now());
-    }, b);
-  }
-  exports$1.unstable_IdlePriority = 5;
-  exports$1.unstable_ImmediatePriority = 1;
-  exports$1.unstable_LowPriority = 4;
-  exports$1.unstable_NormalPriority = 3;
-  exports$1.unstable_Profiling = null;
-  exports$1.unstable_UserBlockingPriority = 2;
-  exports$1.unstable_cancelCallback = function(a) {
-    a.callback = null;
-  };
-  exports$1.unstable_continueExecution = function() {
-    A || z || (A = true, I(J));
-  };
-  exports$1.unstable_forceFrameRate = function(a) {
-    0 > a || 125 < a ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : P = 0 < a ? Math.floor(1e3 / a) : 5;
-  };
-  exports$1.unstable_getCurrentPriorityLevel = function() {
-    return y;
-  };
-  exports$1.unstable_getFirstCallbackNode = function() {
-    return h(r);
-  };
-  exports$1.unstable_next = function(a) {
-    switch (y) {
-      case 1:
-      case 2:
-      case 3:
-        var b = 3;
-        break;
-      default:
-        b = y;
-    }
-    var c = y;
-    y = b;
-    try {
-      return a();
-    } finally {
-      y = c;
-    }
-  };
-  exports$1.unstable_pauseExecution = function() {
-  };
-  exports$1.unstable_requestPaint = function() {
-  };
-  exports$1.unstable_runWithPriority = function(a, b) {
-    switch (a) {
-      case 1:
-      case 2:
-      case 3:
-      case 4:
-      case 5:
-        break;
-      default:
-        a = 3;
-    }
-    var c = y;
-    y = a;
-    try {
-      return b();
-    } finally {
-      y = c;
-    }
-  };
-  exports$1.unstable_scheduleCallback = function(a, b, c) {
-    var d = exports$1.unstable_now();
-    "object" === typeof c && null !== c ? (c = c.delay, c = "number" === typeof c && 0 < c ? d + c : d) : c = d;
-    switch (a) {
-      case 1:
-        var e = -1;
-        break;
-      case 2:
-        e = 250;
-        break;
-      case 5:
-        e = 1073741823;
-        break;
-      case 4:
-        e = 1e4;
-        break;
-      default:
-        e = 5e3;
-    }
-    e = c + e;
-    a = { id: u++, callback: b, priorityLevel: a, startTime: c, expirationTime: e, sortIndex: -1 };
-    c > d ? (a.sortIndex = c, f(t, a), null === h(r) && a === h(t) && (B ? (E2(L), L = -1) : B = true, K(H, c - d))) : (a.sortIndex = e, f(r, a), A || z || (A = true, I(J)));
-    return a;
-  };
-  exports$1.unstable_shouldYield = M;
-  exports$1.unstable_wrapCallback = function(a) {
-    var b = y;
-    return function() {
-      var c = y;
-      y = b;
-      try {
-        return a.apply(this, arguments);
-      } finally {
-        y = c;
-      }
-    };
-  };
-})(scheduler_production_min);
-{
-  scheduler.exports = scheduler_production_min;
-}
-var schedulerExports = scheduler.exports;
 const catalogue = {};
 const extend = (objects) => void Object.assign(catalogue, objects);
 function createRenderer(_roots, _getEventPriority) {
