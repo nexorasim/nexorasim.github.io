@@ -1,7 +1,7 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./EntitlementServer-SJcxMDXC.js","./microsoft-BaXPpqWe.js","./vendor-CNj5xcql.js","./three-CwYOZUp7.js","./Features-DVskcB4O.js","./Architecture-CBt8-kfe.js","./Technology-C0bcFRRK.js","./Enterprise-BWgcF3xV.js","./API--eXc3L97.js","./MPT-BiFlQvmm.js","./eSIMArchitecture-WdjmW0bX.js","./Telecommunications-FIcp49-F.js"])))=>i.map(i=>d[i]);
-import { j as jsxRuntimeExports, M as Menu, a as MenuTrigger, B as Button, b as Badge, c as MenuPopover, d as MenuList, e as MenuItem, S as Search24Regular, G as Globe24Regular, N as Navigation24Regular, D as Dialog, f as DialogTrigger, g as Bot24Regular, h as DialogSurface, i as DialogTitle, k as Dismiss24Regular, l as DialogBody, m as DialogActions, I as Input, n as Mic24Regular, o as Send24Regular, C as Card, p as CardHeader, q as CardPreview, r as Spinner, P as ProgressBar, t as Phone24Regular, u as Server24Regular, W as Wifi124Regular, A as ArrowRight24Regular, v as Play24Regular, w as Shield24Regular, x as CloudSync24Regular, _ as __vitePreload, F as FluentProvider, y as webLightTheme } from "./microsoft-BaXPpqWe.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./EntitlementServer-B9RmW-KT.js","./microsoft-BN5Ld_HN.js","./vendor-CNj5xcql.js","./three-ARRUQTc-.js","./Features-BVTIRivw.js","./Architecture-DQaawee_.js","./Technology-DMgySRsI.js","./Enterprise-qc59lyoJ.js","./API-BH_vbSW_.js","./MPT-_A_4W_LF.js","./eSIMArchitecture-GIAiHCxJ.js","./Telecommunications-DvIEFtyM.js","./PrivacyPolicy-C7QN0E2y.js","./SearchPage-B6ZyfW0D.js"])))=>i.map(i=>d[i]);
+import { j as jsxRuntimeExports, M as Menu, a as MenuTrigger, B as Button, b as Badge, c as MenuPopover, d as MenuList, e as MenuItem, S as Search24Regular, G as Globe24Regular, N as Navigation24Regular, D as Dialog, f as DialogTrigger, g as Bot24Regular, h as DialogSurface, i as DialogTitle, k as Dismiss24Regular, l as DialogBody, m as DialogActions, I as Input, n as Mic24Regular, o as Send24Regular, C as Card, p as CardHeader, q as CardPreview, r as Spinner, P as ProgressBar, t as Phone24Regular, u as Server24Regular, W as Wifi124Regular, A as ArrowRight24Regular, v as Play24Regular, w as Shield24Regular, x as CloudSync24Regular, _ as __vitePreload, F as FluentProvider, y as webLightTheme } from "./microsoft-BN5Ld_HN.js";
 import { r as reactExports, R as React, b as React$1 } from "./vendor-CNj5xcql.js";
-import { C as Canvas, E as Environment, O as OrbitControls, u as useFrame, F as Float, T as Text3D, c as client } from "./three-CwYOZUp7.js";
+import { C as Canvas, E as Environment, O as OrbitControls, u as useFrame, F as Float, T as Text3D, c as client } from "./three-ARRUQTc-.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -1504,7 +1504,7 @@ const NexoraCoreHeader = ({
         }
       ) }) }, item.path)) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-actions", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/search", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           Button,
           {
             appearance: "transparent",
@@ -1512,7 +1512,7 @@ const NexoraCoreHeader = ({
             className: "action-button",
             "aria-label": "Search"
           }
-        ),
+        ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(Menu, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(MenuTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Button,
@@ -9508,15 +9508,17 @@ const nexoraCoreConfig = {
     ]
   }
 };
-const EntitlementServer = React$1.lazy(() => __vitePreload(() => import("./EntitlementServer-SJcxMDXC.js"), true ? __vite__mapDeps([0,1,2,3]) : void 0, import.meta.url));
-const Features = React$1.lazy(() => __vitePreload(() => import("./Features-DVskcB4O.js"), true ? __vite__mapDeps([4,1,2,3]) : void 0, import.meta.url));
-const Architecture = React$1.lazy(() => __vitePreload(() => import("./Architecture-CBt8-kfe.js"), true ? __vite__mapDeps([5,1,2]) : void 0, import.meta.url));
-const Technology = React$1.lazy(() => __vitePreload(() => import("./Technology-C0bcFRRK.js"), true ? __vite__mapDeps([6,1,2]) : void 0, import.meta.url));
-const Enterprise = React$1.lazy(() => __vitePreload(() => import("./Enterprise-BWgcF3xV.js"), true ? __vite__mapDeps([7,1,2]) : void 0, import.meta.url));
-const API = React$1.lazy(() => __vitePreload(() => import("./API--eXc3L97.js"), true ? __vite__mapDeps([8,1,2]) : void 0, import.meta.url));
-const MPT = React$1.lazy(() => __vitePreload(() => import("./MPT-BiFlQvmm.js"), true ? __vite__mapDeps([9,1,2,3]) : void 0, import.meta.url));
-React$1.lazy(() => __vitePreload(() => import("./eSIMArchitecture-WdjmW0bX.js"), true ? __vite__mapDeps([10,1,2,3]) : void 0, import.meta.url));
-const Telecommunications = React$1.lazy(() => __vitePreload(() => import("./Telecommunications-FIcp49-F.js"), true ? __vite__mapDeps([11,1,2,3]) : void 0, import.meta.url));
+const EntitlementServer = React$1.lazy(() => __vitePreload(() => import("./EntitlementServer-B9RmW-KT.js"), true ? __vite__mapDeps([0,1,2,3]) : void 0, import.meta.url));
+const Features = React$1.lazy(() => __vitePreload(() => import("./Features-BVTIRivw.js"), true ? __vite__mapDeps([4,1,2,3]) : void 0, import.meta.url));
+const Architecture = React$1.lazy(() => __vitePreload(() => import("./Architecture-DQaawee_.js"), true ? __vite__mapDeps([5,1,2]) : void 0, import.meta.url));
+const Technology = React$1.lazy(() => __vitePreload(() => import("./Technology-DMgySRsI.js"), true ? __vite__mapDeps([6,1,2]) : void 0, import.meta.url));
+const Enterprise = React$1.lazy(() => __vitePreload(() => import("./Enterprise-qc59lyoJ.js"), true ? __vite__mapDeps([7,1,2]) : void 0, import.meta.url));
+const API = React$1.lazy(() => __vitePreload(() => import("./API-BH_vbSW_.js"), true ? __vite__mapDeps([8,1,2]) : void 0, import.meta.url));
+const MPT = React$1.lazy(() => __vitePreload(() => import("./MPT-_A_4W_LF.js"), true ? __vite__mapDeps([9,1,2,3]) : void 0, import.meta.url));
+React$1.lazy(() => __vitePreload(() => import("./eSIMArchitecture-GIAiHCxJ.js"), true ? __vite__mapDeps([10,1,2,3]) : void 0, import.meta.url));
+const Telecommunications = React$1.lazy(() => __vitePreload(() => import("./Telecommunications-DvIEFtyM.js"), true ? __vite__mapDeps([11,1,2,3]) : void 0, import.meta.url));
+const PrivacyPolicy = React$1.lazy(() => __vitePreload(() => import("./PrivacyPolicy-C7QN0E2y.js"), true ? __vite__mapDeps([12,1,2]) : void 0, import.meta.url));
+const SearchPage = React$1.lazy(() => __vitePreload(() => import("./SearchPage-B6ZyfW0D.js"), true ? __vite__mapDeps([13,1,2,3]) : void 0, import.meta.url));
 const nexoraTheme = {
   ...webLightTheme,
   colorBrandBackground: "#00D1FF",
@@ -9604,7 +9606,8 @@ const NexoraCoreApp = () => {
     document.documentElement.lang = language;
     document.body.classList.remove("lang-myanmar", "lang-chinese", "lang-thai", "lang-vietnamese", "lang-indonesian", "lang-malay");
     if (language !== "en") {
-      document.body.classList.add(`lang-${language === "my" ? "myanmar" : language === "zh" ? "chinese" : language === "th" ? "thai" : language === "vi" ? "vietnamese" : language === "id" ? "indonesian" : "malay"}`);
+      const langClass = language === "my" ? "myanmar" : language === "zh" ? "chinese" : language === "th" ? "thai" : language === "vi" ? "vietnamese" : language === "id" ? "indonesian" : "malay";
+      document.body.classList.add(`lang-${langClass}`);
     }
   };
   if (appState.isLoading) {
@@ -9642,6 +9645,8 @@ const NexoraCoreApp = () => {
         /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/operators/mpt", element: /* @__PURE__ */ jsxRuntimeExports.jsx(MPT, {}) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/tech/esim-architecture", element: /* @__PURE__ */ jsxRuntimeExports.jsx("eSIMArchitecture", {}) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/industries/telecommunications", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Telecommunications, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/privacy", element: /* @__PURE__ */ jsxRuntimeExports.jsx(PrivacyPolicy, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/search", element: /* @__PURE__ */ jsxRuntimeExports.jsx(SearchPage, {}) }),
         nexoraCoreConfig.languages.supported.map((lang) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           Route,
           {

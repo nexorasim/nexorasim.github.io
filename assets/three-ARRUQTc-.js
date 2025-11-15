@@ -1,5 +1,5 @@
 import { a as reactDomExports, r as reactExports, g as getDefaultExportFromCjs } from "./vendor-CNj5xcql.js";
-import { s as schedulerExports, j as jsxRuntimeExports } from "./microsoft-BaXPpqWe.js";
+import { s as schedulerExports, j as jsxRuntimeExports } from "./microsoft-BN5Ld_HN.js";
 var client = {};
 var m = reactDomExports;
 {

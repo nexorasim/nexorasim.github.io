@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports, b as Badge, C as Card, p as CardHeader, q as CardPreview, B as Button, v as Play24Regular, T as Textarea, z as Copy24Regular } from "./microsoft-BaXPpqWe.js";
+import { j as jsxRuntimeExports, b as Badge, C as Card, p as CardHeader, q as CardPreview, B as Button, v as Play24Regular, T as Textarea, z as Copy24Regular } from "./microsoft-BN5Ld_HN.js";
 import { r as reactExports } from "./vendor-CNj5xcql.js";
 const API = () => {
   const [selectedEndpoint, setSelectedEndpoint] = reactExports.useState("profiles");

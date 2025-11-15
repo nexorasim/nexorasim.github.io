@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports, b as Badge, B as Button, C as Card, p as CardHeader, u as Server24Regular, q as CardPreview, x as CloudSync24Regular, H as Settings24Regular, w as Shield24Regular } from "./microsoft-BaXPpqWe.js";
+import { j as jsxRuntimeExports, b as Badge, B as Button, C as Card, p as CardHeader, u as Server24Regular, q as CardPreview, x as CloudSync24Regular, H as Settings24Regular, w as Shield24Regular } from "./microsoft-BN5Ld_HN.js";
 import "./vendor-CNj5xcql.js";
-import { L as Link } from "./index-fJ3brm8E.js";
-import "./three-CwYOZUp7.js";
+import { L as Link } from "./index-CstSpp-M.js";
+import "./three-ARRUQTc-.js";
 const eSIMArchitecture = () => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "technical-page", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "hero-section parallax-section", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "section-content", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-content", children: [

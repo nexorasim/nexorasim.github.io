@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports, b as Badge } from "./microsoft-BaXPpqWe.js";
+import { j as jsxRuntimeExports, b as Badge } from "./microsoft-BN5Ld_HN.js";
 import "./vendor-CNj5xcql.js";
 const Technology = () => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "technology-page", children: /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "hero-section parallax-section", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "section-content", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-content", children: [
