@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports, t as Badge, B as Button, n as Card, o as CardHeader, W as Wifi124Regular, p as CardPreview, G as Globe24Regular, x as Phone24Regular, y as Building24Regular } from "./microsoft-DzWYVBzk.js";
+import { j as jsxRuntimeExports, b as Badge, B as Button, C as Card, p as CardHeader, W as Wifi124Regular, q as CardPreview, G as Globe24Regular, t as Phone24Regular, E as Building24Regular } from "./microsoft-BaXPpqWe.js";
 import "./vendor-CNj5xcql.js";
-import { L as Link } from "./index--Sgcq5xx.js";
-import "./three-DPyFhS_9.js";
+import { L as Link } from "./index-fJ3brm8E.js";
+import "./three-CwYOZUp7.js";
 const MPT = () => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "operator-page", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "hero-section parallax-section", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "section-content", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-content", children: [

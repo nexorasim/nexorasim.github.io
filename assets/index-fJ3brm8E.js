@@ -1,3 +1,2316 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./EntitlementServer-SJcxMDXC.js","./microsoft-BaXPpqWe.js","./vendor-CNj5xcql.js","./three-CwYOZUp7.js","./Features-DVskcB4O.js","./Architecture-CBt8-kfe.js","./Technology-C0bcFRRK.js","./Enterprise-BWgcF3xV.js","./API--eXc3L97.js","./MPT-BiFlQvmm.js","./eSIMArchitecture-WdjmW0bX.js","./Telecommunications-FIcp49-F.js"])))=>i.map(i=>d[i]);
+import { j as jsxRuntimeExports, M as Menu, a as MenuTrigger, B as Button, b as Badge, c as MenuPopover, d as MenuList, e as MenuItem, S as Search24Regular, G as Globe24Regular, N as Navigation24Regular, D as Dialog, f as DialogTrigger, g as Bot24Regular, h as DialogSurface, i as DialogTitle, k as Dismiss24Regular, l as DialogBody, m as DialogActions, I as Input, n as Mic24Regular, o as Send24Regular, C as Card, p as CardHeader, q as CardPreview, r as Spinner, P as ProgressBar, t as Phone24Regular, u as Server24Regular, W as Wifi124Regular, A as ArrowRight24Regular, v as Play24Regular, w as Shield24Regular, x as CloudSync24Regular, _ as __vitePreload, F as FluentProvider, y as webLightTheme } from "./microsoft-BaXPpqWe.js";
+import { r as reactExports, R as React, b as React$1 } from "./vendor-CNj5xcql.js";
+import { C as Canvas, E as Environment, O as OrbitControls, u as useFrame, F as Float, T as Text3D, c as client } from "./three-CwYOZUp7.js";
+(function polyfill() {
+  const relList = document.createElement("link").relList;
+  if (relList && relList.supports && relList.supports("modulepreload")) {
+    return;
+  }
+  for (const link of document.querySelectorAll('link[rel="modulepreload"]')) {
+    processPreload(link);
+  }
+  new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type !== "childList") {
+        continue;
+      }
+      for (const node of mutation.addedNodes) {
+        if (node.tagName === "LINK" && node.rel === "modulepreload")
+          processPreload(node);
+      }
+    }
+  }).observe(document, { childList: true, subtree: true });
+  function getFetchOpts(link) {
+    const fetchOpts = {};
+    if (link.integrity) fetchOpts.integrity = link.integrity;
+    if (link.referrerPolicy) fetchOpts.referrerPolicy = link.referrerPolicy;
+    if (link.crossOrigin === "use-credentials")
+      fetchOpts.credentials = "include";
+    else if (link.crossOrigin === "anonymous") fetchOpts.credentials = "omit";
+    else fetchOpts.credentials = "same-origin";
+    return fetchOpts;
+  }
+  function processPreload(link) {
+    if (link.ep)
+      return;
+    link.ep = true;
+    const fetchOpts = getFetchOpts(link);
+    fetch(link.href, fetchOpts);
+  }
+})();
+/**
+ * @remix-run/router v1.23.0
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+function _extends$2() {
+  _extends$2 = Object.assign ? Object.assign.bind() : function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends$2.apply(this, arguments);
+}
+var Action;
+(function(Action2) {
+  Action2["Pop"] = "POP";
+  Action2["Push"] = "PUSH";
+  Action2["Replace"] = "REPLACE";
+})(Action || (Action = {}));
+const PopStateEventType = "popstate";
+function createBrowserHistory(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  function createBrowserLocation(window2, globalHistory) {
+    let {
+      pathname,
+      search,
+      hash
+    } = window2.location;
+    return createLocation(
+      "",
+      {
+        pathname,
+        search,
+        hash
+      },
+      // state defaults to `null` because `window.history.state` does
+      globalHistory.state && globalHistory.state.usr || null,
+      globalHistory.state && globalHistory.state.key || "default"
+    );
+  }
+  function createBrowserHref(window2, to) {
+    return typeof to === "string" ? to : createPath(to);
+  }
+  return getUrlBasedHistory(createBrowserLocation, createBrowserHref, null, options);
+}
+function invariant(value, message) {
+  if (value === false || value === null || typeof value === "undefined") {
+    throw new Error(message);
+  }
+}
+function warning(cond, message) {
+  if (!cond) {
+    if (typeof console !== "undefined") console.warn(message);
+    try {
+      throw new Error(message);
+    } catch (e) {
+    }
+  }
+}
+function createKey() {
+  return Math.random().toString(36).substr(2, 8);
+}
+function getHistoryState(location, index) {
+  return {
+    usr: location.state,
+    key: location.key,
+    idx: index
+  };
+}
+function createLocation(current, to, state, key) {
+  if (state === void 0) {
+    state = null;
+  }
+  let location = _extends$2({
+    pathname: typeof current === "string" ? current : current.pathname,
+    search: "",
+    hash: ""
+  }, typeof to === "string" ? parsePath(to) : to, {
+    state,
+    // TODO: This could be cleaned up.  push/replace should probably just take
+    // full Locations now and avoid the need to run through this flow at all
+    // But that's a pretty big refactor to the current test suite so going to
+    // keep as is for the time being and just let any incoming keys take precedence
+    key: to && to.key || key || createKey()
+  });
+  return location;
+}
+function createPath(_ref) {
+  let {
+    pathname = "/",
+    search = "",
+    hash = ""
+  } = _ref;
+  if (search && search !== "?") pathname += search.charAt(0) === "?" ? search : "?" + search;
+  if (hash && hash !== "#") pathname += hash.charAt(0) === "#" ? hash : "#" + hash;
+  return pathname;
+}
+function parsePath(path) {
+  let parsedPath = {};
+  if (path) {
+    let hashIndex = path.indexOf("#");
+    if (hashIndex >= 0) {
+      parsedPath.hash = path.substr(hashIndex);
+      path = path.substr(0, hashIndex);
+    }
+    let searchIndex = path.indexOf("?");
+    if (searchIndex >= 0) {
+      parsedPath.search = path.substr(searchIndex);
+      path = path.substr(0, searchIndex);
+    }
+    if (path) {
+      parsedPath.pathname = path;
+    }
+  }
+  return parsedPath;
+}
+function getUrlBasedHistory(getLocation, createHref, validateLocation, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  let {
+    window: window2 = document.defaultView,
+    v5Compat = false
+  } = options;
+  let globalHistory = window2.history;
+  let action = Action.Pop;
+  let listener = null;
+  let index = getIndex();
+  if (index == null) {
+    index = 0;
+    globalHistory.replaceState(_extends$2({}, globalHistory.state, {
+      idx: index
+    }), "");
+  }
+  function getIndex() {
+    let state = globalHistory.state || {
+      idx: null
+    };
+    return state.idx;
+  }
+  function handlePop() {
+    action = Action.Pop;
+    let nextIndex = getIndex();
+    let delta = nextIndex == null ? null : nextIndex - index;
+    index = nextIndex;
+    if (listener) {
+      listener({
+        action,
+        location: history.location,
+        delta
+      });
+    }
+  }
+  function push(to, state) {
+    action = Action.Push;
+    let location = createLocation(history.location, to, state);
+    index = getIndex() + 1;
+    let historyState = getHistoryState(location, index);
+    let url = history.createHref(location);
+    try {
+      globalHistory.pushState(historyState, "", url);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "DataCloneError") {
+        throw error;
+      }
+      window2.location.assign(url);
+    }
+    if (v5Compat && listener) {
+      listener({
+        action,
+        location: history.location,
+        delta: 1
+      });
+    }
+  }
+  function replace(to, state) {
+    action = Action.Replace;
+    let location = createLocation(history.location, to, state);
+    index = getIndex();
+    let historyState = getHistoryState(location, index);
+    let url = history.createHref(location);
+    globalHistory.replaceState(historyState, "", url);
+    if (v5Compat && listener) {
+      listener({
+        action,
+        location: history.location,
+        delta: 0
+      });
+    }
+  }
+  function createURL(to) {
+    let base = window2.location.origin !== "null" ? window2.location.origin : window2.location.href;
+    let href = typeof to === "string" ? to : createPath(to);
+    href = href.replace(/ $/, "%20");
+    invariant(base, "No window.location.(origin|href) available to create URL for href: " + href);
+    return new URL(href, base);
+  }
+  let history = {
+    get action() {
+      return action;
+    },
+    get location() {
+      return getLocation(window2, globalHistory);
+    },
+    listen(fn) {
+      if (listener) {
+        throw new Error("A history only accepts one active listener");
+      }
+      window2.addEventListener(PopStateEventType, handlePop);
+      listener = fn;
+      return () => {
+        window2.removeEventListener(PopStateEventType, handlePop);
+        listener = null;
+      };
+    },
+    createHref(to) {
+      return createHref(window2, to);
+    },
+    createURL,
+    encodeLocation(to) {
+      let url = createURL(to);
+      return {
+        pathname: url.pathname,
+        search: url.search,
+        hash: url.hash
+      };
+    },
+    push,
+    replace,
+    go(n) {
+      return globalHistory.go(n);
+    }
+  };
+  return history;
+}
+var ResultType;
+(function(ResultType2) {
+  ResultType2["data"] = "data";
+  ResultType2["deferred"] = "deferred";
+  ResultType2["redirect"] = "redirect";
+  ResultType2["error"] = "error";
+})(ResultType || (ResultType = {}));
+function matchRoutes(routes, locationArg, basename) {
+  if (basename === void 0) {
+    basename = "/";
+  }
+  return matchRoutesImpl(routes, locationArg, basename);
+}
+function matchRoutesImpl(routes, locationArg, basename, allowPartial) {
+  let location = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
+  let pathname = stripBasename(location.pathname || "/", basename);
+  if (pathname == null) {
+    return null;
+  }
+  let branches = flattenRoutes(routes);
+  rankRouteBranches(branches);
+  let matches = null;
+  for (let i = 0; matches == null && i < branches.length; ++i) {
+    let decoded = decodePath(pathname);
+    matches = matchRouteBranch(branches[i], decoded);
+  }
+  return matches;
+}
+function flattenRoutes(routes, branches, parentsMeta, parentPath) {
+  if (branches === void 0) {
+    branches = [];
+  }
+  if (parentsMeta === void 0) {
+    parentsMeta = [];
+  }
+  if (parentPath === void 0) {
+    parentPath = "";
+  }
+  let flattenRoute = (route, index, relativePath) => {
+    let meta = {
+      relativePath: relativePath === void 0 ? route.path || "" : relativePath,
+      caseSensitive: route.caseSensitive === true,
+      childrenIndex: index,
+      route
+    };
+    if (meta.relativePath.startsWith("/")) {
+      invariant(meta.relativePath.startsWith(parentPath), 'Absolute route path "' + meta.relativePath + '" nested under path ' + ('"' + parentPath + '" is not valid. An absolute child route path ') + "must start with the combined path of all its parent routes.");
+      meta.relativePath = meta.relativePath.slice(parentPath.length);
+    }
+    let path = joinPaths([parentPath, meta.relativePath]);
+    let routesMeta = parentsMeta.concat(meta);
+    if (route.children && route.children.length > 0) {
+      invariant(
+        // Our types know better, but runtime JS may not!
+        // @ts-expect-error
+        route.index !== true,
+        "Index routes must not have child routes. Please remove " + ('all child routes from route path "' + path + '".')
+      );
+      flattenRoutes(route.children, branches, routesMeta, path);
+    }
+    if (route.path == null && !route.index) {
+      return;
+    }
+    branches.push({
+      path,
+      score: computeScore(path, route.index),
+      routesMeta
+    });
+  };
+  routes.forEach((route, index) => {
+    var _route$path;
+    if (route.path === "" || !((_route$path = route.path) != null && _route$path.includes("?"))) {
+      flattenRoute(route, index);
+    } else {
+      for (let exploded of explodeOptionalSegments(route.path)) {
+        flattenRoute(route, index, exploded);
+      }
+    }
+  });
+  return branches;
+}
+function explodeOptionalSegments(path) {
+  let segments = path.split("/");
+  if (segments.length === 0) return [];
+  let [first, ...rest] = segments;
+  let isOptional = first.endsWith("?");
+  let required = first.replace(/\?$/, "");
+  if (rest.length === 0) {
+    return isOptional ? [required, ""] : [required];
+  }
+  let restExploded = explodeOptionalSegments(rest.join("/"));
+  let result = [];
+  result.push(...restExploded.map((subpath) => subpath === "" ? required : [required, subpath].join("/")));
+  if (isOptional) {
+    result.push(...restExploded);
+  }
+  return result.map((exploded) => path.startsWith("/") && exploded === "" ? "/" : exploded);
+}
+function rankRouteBranches(branches) {
+  branches.sort((a, b) => a.score !== b.score ? b.score - a.score : compareIndexes(a.routesMeta.map((meta) => meta.childrenIndex), b.routesMeta.map((meta) => meta.childrenIndex)));
+}
+const paramRe = /^:[\w-]+$/;
+const dynamicSegmentValue = 3;
+const indexRouteValue = 2;
+const emptySegmentValue = 1;
+const staticSegmentValue = 10;
+const splatPenalty = -2;
+const isSplat = (s) => s === "*";
+function computeScore(path, index) {
+  let segments = path.split("/");
+  let initialScore = segments.length;
+  if (segments.some(isSplat)) {
+    initialScore += splatPenalty;
+  }
+  if (index) {
+    initialScore += indexRouteValue;
+  }
+  return segments.filter((s) => !isSplat(s)).reduce((score, segment) => score + (paramRe.test(segment) ? dynamicSegmentValue : segment === "" ? emptySegmentValue : staticSegmentValue), initialScore);
+}
+function compareIndexes(a, b) {
+  let siblings = a.length === b.length && a.slice(0, -1).every((n, i) => n === b[i]);
+  return siblings ? (
+    // If two routes are siblings, we should try to match the earlier sibling
+    // first. This allows people to have fine-grained control over the matching
+    // behavior by simply putting routes with identical paths in the order they
+    // want them tried.
+    a[a.length - 1] - b[b.length - 1]
+  ) : (
+    // Otherwise, it doesn't really make sense to rank non-siblings by index,
+    // so they sort equally.
+    0
+  );
+}
+function matchRouteBranch(branch, pathname, allowPartial) {
+  let {
+    routesMeta
+  } = branch;
+  let matchedParams = {};
+  let matchedPathname = "/";
+  let matches = [];
+  for (let i = 0; i < routesMeta.length; ++i) {
+    let meta = routesMeta[i];
+    let end = i === routesMeta.length - 1;
+    let remainingPathname = matchedPathname === "/" ? pathname : pathname.slice(matchedPathname.length) || "/";
+    let match = matchPath({
+      path: meta.relativePath,
+      caseSensitive: meta.caseSensitive,
+      end
+    }, remainingPathname);
+    let route = meta.route;
+    if (!match) {
+      return null;
+    }
+    Object.assign(matchedParams, match.params);
+    matches.push({
+      // TODO: Can this as be avoided?
+      params: matchedParams,
+      pathname: joinPaths([matchedPathname, match.pathname]),
+      pathnameBase: normalizePathname(joinPaths([matchedPathname, match.pathnameBase])),
+      route
+    });
+    if (match.pathnameBase !== "/") {
+      matchedPathname = joinPaths([matchedPathname, match.pathnameBase]);
+    }
+  }
+  return matches;
+}
+function matchPath(pattern, pathname) {
+  if (typeof pattern === "string") {
+    pattern = {
+      path: pattern,
+      caseSensitive: false,
+      end: true
+    };
+  }
+  let [matcher, compiledParams] = compilePath(pattern.path, pattern.caseSensitive, pattern.end);
+  let match = pathname.match(matcher);
+  if (!match) return null;
+  let matchedPathname = match[0];
+  let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
+  let captureGroups = match.slice(1);
+  let params = compiledParams.reduce((memo, _ref, index) => {
+    let {
+      paramName,
+      isOptional
+    } = _ref;
+    if (paramName === "*") {
+      let splatValue = captureGroups[index] || "";
+      pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
+    }
+    const value = captureGroups[index];
+    if (isOptional && !value) {
+      memo[paramName] = void 0;
+    } else {
+      memo[paramName] = (value || "").replace(/%2F/g, "/");
+    }
+    return memo;
+  }, {});
+  return {
+    params,
+    pathname: matchedPathname,
+    pathnameBase,
+    pattern
+  };
+}
+function compilePath(path, caseSensitive, end) {
+  if (caseSensitive === void 0) {
+    caseSensitive = false;
+  }
+  if (end === void 0) {
+    end = true;
+  }
+  warning(path === "*" || !path.endsWith("*") || path.endsWith("/*"), 'Route path "' + path + '" will be treated as if it were ' + ('"' + path.replace(/\*$/, "/*") + '" because the `*` character must ') + "always follow a `/` in the pattern. To get rid of this warning, " + ('please change the route path to "' + path.replace(/\*$/, "/*") + '".'));
+  let params = [];
+  let regexpSource = "^" + path.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^${}|()[\]]/g, "\\$&").replace(/\/:([\w-]+)(\?)?/g, (_, paramName, isOptional) => {
+    params.push({
+      paramName,
+      isOptional: isOptional != null
+    });
+    return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
+  });
+  if (path.endsWith("*")) {
+    params.push({
+      paramName: "*"
+    });
+    regexpSource += path === "*" || path === "/*" ? "(.*)$" : "(?:\\/(.+)|\\/*)$";
+  } else if (end) {
+    regexpSource += "\\/*$";
+  } else if (path !== "" && path !== "/") {
+    regexpSource += "(?:(?=\\/|$))";
+  } else ;
+  let matcher = new RegExp(regexpSource, caseSensitive ? void 0 : "i");
+  return [matcher, params];
+}
+function decodePath(value) {
+  try {
+    return value.split("/").map((v) => decodeURIComponent(v).replace(/\//g, "%2F")).join("/");
+  } catch (error) {
+    warning(false, 'The URL path "' + value + '" could not be decoded because it is is a malformed URL segment. This is probably due to a bad percent ' + ("encoding (" + error + ")."));
+    return value;
+  }
+}
+function stripBasename(pathname, basename) {
+  if (basename === "/") return pathname;
+  if (!pathname.toLowerCase().startsWith(basename.toLowerCase())) {
+    return null;
+  }
+  let startIndex = basename.endsWith("/") ? basename.length - 1 : basename.length;
+  let nextChar = pathname.charAt(startIndex);
+  if (nextChar && nextChar !== "/") {
+    return null;
+  }
+  return pathname.slice(startIndex) || "/";
+}
+function resolvePath(to, fromPathname) {
+  if (fromPathname === void 0) {
+    fromPathname = "/";
+  }
+  let {
+    pathname: toPathname,
+    search = "",
+    hash = ""
+  } = typeof to === "string" ? parsePath(to) : to;
+  let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
+  return {
+    pathname,
+    search: normalizeSearch(search),
+    hash: normalizeHash(hash)
+  };
+}
+function resolvePathname(relativePath, fromPathname) {
+  let segments = fromPathname.replace(/\/+$/, "").split("/");
+  let relativeSegments = relativePath.split("/");
+  relativeSegments.forEach((segment) => {
+    if (segment === "..") {
+      if (segments.length > 1) segments.pop();
+    } else if (segment !== ".") {
+      segments.push(segment);
+    }
+  });
+  return segments.length > 1 ? segments.join("/") : "/";
+}
+function getInvalidPathError(char, field, dest, path) {
+  return "Cannot include a '" + char + "' character in a manually specified " + ("`to." + field + "` field [" + JSON.stringify(path) + "].  Please separate it out to the ") + ("`to." + dest + "` field. Alternatively you may provide the full path as ") + 'a string in <Link to="..."> and the router will parse it for you.';
+}
+function getPathContributingMatches(matches) {
+  return matches.filter((match, index) => index === 0 || match.route.path && match.route.path.length > 0);
+}
+function getResolveToMatches(matches, v7_relativeSplatPath) {
+  let pathMatches = getPathContributingMatches(matches);
+  if (v7_relativeSplatPath) {
+    return pathMatches.map((match, idx) => idx === pathMatches.length - 1 ? match.pathname : match.pathnameBase);
+  }
+  return pathMatches.map((match) => match.pathnameBase);
+}
+function resolveTo(toArg, routePathnames, locationPathname, isPathRelative) {
+  if (isPathRelative === void 0) {
+    isPathRelative = false;
+  }
+  let to;
+  if (typeof toArg === "string") {
+    to = parsePath(toArg);
+  } else {
+    to = _extends$2({}, toArg);
+    invariant(!to.pathname || !to.pathname.includes("?"), getInvalidPathError("?", "pathname", "search", to));
+    invariant(!to.pathname || !to.pathname.includes("#"), getInvalidPathError("#", "pathname", "hash", to));
+    invariant(!to.search || !to.search.includes("#"), getInvalidPathError("#", "search", "hash", to));
+  }
+  let isEmptyPath = toArg === "" || to.pathname === "";
+  let toPathname = isEmptyPath ? "/" : to.pathname;
+  let from;
+  if (toPathname == null) {
+    from = locationPathname;
+  } else {
+    let routePathnameIndex = routePathnames.length - 1;
+    if (!isPathRelative && toPathname.startsWith("..")) {
+      let toSegments = toPathname.split("/");
+      while (toSegments[0] === "..") {
+        toSegments.shift();
+        routePathnameIndex -= 1;
+      }
+      to.pathname = toSegments.join("/");
+    }
+    from = routePathnameIndex >= 0 ? routePathnames[routePathnameIndex] : "/";
+  }
+  let path = resolvePath(to, from);
+  let hasExplicitTrailingSlash = toPathname && toPathname !== "/" && toPathname.endsWith("/");
+  let hasCurrentTrailingSlash = (isEmptyPath || toPathname === ".") && locationPathname.endsWith("/");
+  if (!path.pathname.endsWith("/") && (hasExplicitTrailingSlash || hasCurrentTrailingSlash)) {
+    path.pathname += "/";
+  }
+  return path;
+}
+const joinPaths = (paths) => paths.join("/").replace(/\/\/+/g, "/");
+const normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
+const normalizeSearch = (search) => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
+const normalizeHash = (hash) => !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
+function isRouteErrorResponse(error) {
+  return error != null && typeof error.status === "number" && typeof error.statusText === "string" && typeof error.internal === "boolean" && "data" in error;
+}
+const validMutationMethodsArr = ["post", "put", "patch", "delete"];
+new Set(validMutationMethodsArr);
+const validRequestMethodsArr = ["get", ...validMutationMethodsArr];
+new Set(validRequestMethodsArr);
+/**
+ * React Router v6.30.1
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+function _extends$1() {
+  _extends$1 = Object.assign ? Object.assign.bind() : function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends$1.apply(this, arguments);
+}
+const DataRouterContext = /* @__PURE__ */ reactExports.createContext(null);
+const DataRouterStateContext = /* @__PURE__ */ reactExports.createContext(null);
+const NavigationContext = /* @__PURE__ */ reactExports.createContext(null);
+const LocationContext = /* @__PURE__ */ reactExports.createContext(null);
+const RouteContext = /* @__PURE__ */ reactExports.createContext({
+  outlet: null,
+  matches: [],
+  isDataRoute: false
+});
+const RouteErrorContext = /* @__PURE__ */ reactExports.createContext(null);
+function useHref(to, _temp) {
+  let {
+    relative
+  } = _temp === void 0 ? {} : _temp;
+  !useInRouterContext() ? invariant(false) : void 0;
+  let {
+    basename,
+    navigator: navigator2
+  } = reactExports.useContext(NavigationContext);
+  let {
+    hash,
+    pathname,
+    search
+  } = useResolvedPath(to, {
+    relative
+  });
+  let joinedPathname = pathname;
+  if (basename !== "/") {
+    joinedPathname = pathname === "/" ? basename : joinPaths([basename, pathname]);
+  }
+  return navigator2.createHref({
+    pathname: joinedPathname,
+    search,
+    hash
+  });
+}
+function useInRouterContext() {
+  return reactExports.useContext(LocationContext) != null;
+}
+function useLocation() {
+  !useInRouterContext() ? invariant(false) : void 0;
+  return reactExports.useContext(LocationContext).location;
+}
+function useIsomorphicLayoutEffect(cb) {
+  let isStatic = reactExports.useContext(NavigationContext).static;
+  if (!isStatic) {
+    reactExports.useLayoutEffect(cb);
+  }
+}
+function useNavigate() {
+  let {
+    isDataRoute
+  } = reactExports.useContext(RouteContext);
+  return isDataRoute ? useNavigateStable() : useNavigateUnstable();
+}
+function useNavigateUnstable() {
+  !useInRouterContext() ? invariant(false) : void 0;
+  let dataRouterContext = reactExports.useContext(DataRouterContext);
+  let {
+    basename,
+    future,
+    navigator: navigator2
+  } = reactExports.useContext(NavigationContext);
+  let {
+    matches
+  } = reactExports.useContext(RouteContext);
+  let {
+    pathname: locationPathname
+  } = useLocation();
+  let routePathnamesJson = JSON.stringify(getResolveToMatches(matches, future.v7_relativeSplatPath));
+  let activeRef = reactExports.useRef(false);
+  useIsomorphicLayoutEffect(() => {
+    activeRef.current = true;
+  });
+  let navigate = reactExports.useCallback(function(to, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    if (!activeRef.current) return;
+    if (typeof to === "number") {
+      navigator2.go(to);
+      return;
+    }
+    let path = resolveTo(to, JSON.parse(routePathnamesJson), locationPathname, options.relative === "path");
+    if (dataRouterContext == null && basename !== "/") {
+      path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
+    }
+    (!!options.replace ? navigator2.replace : navigator2.push)(path, options.state, options);
+  }, [basename, navigator2, routePathnamesJson, locationPathname, dataRouterContext]);
+  return navigate;
+}
+function useResolvedPath(to, _temp2) {
+  let {
+    relative
+  } = _temp2 === void 0 ? {} : _temp2;
+  let {
+    future
+  } = reactExports.useContext(NavigationContext);
+  let {
+    matches
+  } = reactExports.useContext(RouteContext);
+  let {
+    pathname: locationPathname
+  } = useLocation();
+  let routePathnamesJson = JSON.stringify(getResolveToMatches(matches, future.v7_relativeSplatPath));
+  return reactExports.useMemo(() => resolveTo(to, JSON.parse(routePathnamesJson), locationPathname, relative === "path"), [to, routePathnamesJson, locationPathname, relative]);
+}
+function useRoutes(routes, locationArg) {
+  return useRoutesImpl(routes, locationArg);
+}
+function useRoutesImpl(routes, locationArg, dataRouterState, future) {
+  !useInRouterContext() ? invariant(false) : void 0;
+  let {
+    navigator: navigator2
+  } = reactExports.useContext(NavigationContext);
+  let {
+    matches: parentMatches
+  } = reactExports.useContext(RouteContext);
+  let routeMatch = parentMatches[parentMatches.length - 1];
+  let parentParams = routeMatch ? routeMatch.params : {};
+  routeMatch ? routeMatch.pathname : "/";
+  let parentPathnameBase = routeMatch ? routeMatch.pathnameBase : "/";
+  routeMatch && routeMatch.route;
+  let locationFromContext = useLocation();
+  let location;
+  if (locationArg) {
+    var _parsedLocationArg$pa;
+    let parsedLocationArg = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
+    !(parentPathnameBase === "/" || ((_parsedLocationArg$pa = parsedLocationArg.pathname) == null ? void 0 : _parsedLocationArg$pa.startsWith(parentPathnameBase))) ? invariant(false) : void 0;
+    location = parsedLocationArg;
+  } else {
+    location = locationFromContext;
+  }
+  let pathname = location.pathname || "/";
+  let remainingPathname = pathname;
+  if (parentPathnameBase !== "/") {
+    let parentSegments = parentPathnameBase.replace(/^\//, "").split("/");
+    let segments = pathname.replace(/^\//, "").split("/");
+    remainingPathname = "/" + segments.slice(parentSegments.length).join("/");
+  }
+  let matches = matchRoutes(routes, {
+    pathname: remainingPathname
+  });
+  let renderedMatches = _renderMatches(matches && matches.map((match) => Object.assign({}, match, {
+    params: Object.assign({}, parentParams, match.params),
+    pathname: joinPaths([
+      parentPathnameBase,
+      // Re-encode pathnames that were decoded inside matchRoutes
+      navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
+    ]),
+    pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
+      parentPathnameBase,
+      // Re-encode pathnames that were decoded inside matchRoutes
+      navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
+    ])
+  })), parentMatches, dataRouterState, future);
+  if (locationArg && renderedMatches) {
+    return /* @__PURE__ */ reactExports.createElement(LocationContext.Provider, {
+      value: {
+        location: _extends$1({
+          pathname: "/",
+          search: "",
+          hash: "",
+          state: null,
+          key: "default"
+        }, location),
+        navigationType: Action.Pop
+      }
+    }, renderedMatches);
+  }
+  return renderedMatches;
+}
+function DefaultErrorComponent() {
+  let error = useRouteError();
+  let message = isRouteErrorResponse(error) ? error.status + " " + error.statusText : error instanceof Error ? error.message : JSON.stringify(error);
+  let stack = error instanceof Error ? error.stack : null;
+  let lightgrey = "rgba(200,200,200, 0.5)";
+  let preStyles = {
+    padding: "0.5rem",
+    backgroundColor: lightgrey
+  };
+  let devInfo = null;
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ reactExports.createElement("h3", {
+    style: {
+      fontStyle: "italic"
+    }
+  }, message), stack ? /* @__PURE__ */ reactExports.createElement("pre", {
+    style: preStyles
+  }, stack) : null, devInfo);
+}
+const defaultErrorElement = /* @__PURE__ */ reactExports.createElement(DefaultErrorComponent, null);
+class RenderErrorBoundary extends reactExports.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: props.location,
+      revalidation: props.revalidation,
+      error: props.error
+    };
+  }
+  static getDerivedStateFromError(error) {
+    return {
+      error
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+    if (state.location !== props.location || state.revalidation !== "idle" && props.revalidation === "idle") {
+      return {
+        error: props.error,
+        location: props.location,
+        revalidation: props.revalidation
+      };
+    }
+    return {
+      error: props.error !== void 0 ? props.error : state.error,
+      location: state.location,
+      revalidation: props.revalidation || state.revalidation
+    };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("React Router caught the following error during render", error, errorInfo);
+  }
+  render() {
+    return this.state.error !== void 0 ? /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, {
+      value: this.props.routeContext
+    }, /* @__PURE__ */ reactExports.createElement(RouteErrorContext.Provider, {
+      value: this.state.error,
+      children: this.props.component
+    })) : this.props.children;
+  }
+}
+function RenderedRoute(_ref) {
+  let {
+    routeContext,
+    match,
+    children
+  } = _ref;
+  let dataRouterContext = reactExports.useContext(DataRouterContext);
+  if (dataRouterContext && dataRouterContext.static && dataRouterContext.staticContext && (match.route.errorElement || match.route.ErrorBoundary)) {
+    dataRouterContext.staticContext._deepestRenderedBoundaryId = match.route.id;
+  }
+  return /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, {
+    value: routeContext
+  }, children);
+}
+function _renderMatches(matches, parentMatches, dataRouterState, future) {
+  var _dataRouterState;
+  if (parentMatches === void 0) {
+    parentMatches = [];
+  }
+  if (dataRouterState === void 0) {
+    dataRouterState = null;
+  }
+  if (future === void 0) {
+    future = null;
+  }
+  if (matches == null) {
+    var _future;
+    if (!dataRouterState) {
+      return null;
+    }
+    if (dataRouterState.errors) {
+      matches = dataRouterState.matches;
+    } else if ((_future = future) != null && _future.v7_partialHydration && parentMatches.length === 0 && !dataRouterState.initialized && dataRouterState.matches.length > 0) {
+      matches = dataRouterState.matches;
+    } else {
+      return null;
+    }
+  }
+  let renderedMatches = matches;
+  let errors = (_dataRouterState = dataRouterState) == null ? void 0 : _dataRouterState.errors;
+  if (errors != null) {
+    let errorIndex = renderedMatches.findIndex((m) => m.route.id && (errors == null ? void 0 : errors[m.route.id]) !== void 0);
+    !(errorIndex >= 0) ? invariant(false) : void 0;
+    renderedMatches = renderedMatches.slice(0, Math.min(renderedMatches.length, errorIndex + 1));
+  }
+  let renderFallback = false;
+  let fallbackIndex = -1;
+  if (dataRouterState && future && future.v7_partialHydration) {
+    for (let i = 0; i < renderedMatches.length; i++) {
+      let match = renderedMatches[i];
+      if (match.route.HydrateFallback || match.route.hydrateFallbackElement) {
+        fallbackIndex = i;
+      }
+      if (match.route.id) {
+        let {
+          loaderData,
+          errors: errors2
+        } = dataRouterState;
+        let needsToRunLoader = match.route.loader && loaderData[match.route.id] === void 0 && (!errors2 || errors2[match.route.id] === void 0);
+        if (match.route.lazy || needsToRunLoader) {
+          renderFallback = true;
+          if (fallbackIndex >= 0) {
+            renderedMatches = renderedMatches.slice(0, fallbackIndex + 1);
+          } else {
+            renderedMatches = [renderedMatches[0]];
+          }
+          break;
+        }
+      }
+    }
+  }
+  return renderedMatches.reduceRight((outlet, match, index) => {
+    let error;
+    let shouldRenderHydrateFallback = false;
+    let errorElement = null;
+    let hydrateFallbackElement = null;
+    if (dataRouterState) {
+      error = errors && match.route.id ? errors[match.route.id] : void 0;
+      errorElement = match.route.errorElement || defaultErrorElement;
+      if (renderFallback) {
+        if (fallbackIndex < 0 && index === 0) {
+          warningOnce("route-fallback");
+          shouldRenderHydrateFallback = true;
+          hydrateFallbackElement = null;
+        } else if (fallbackIndex === index) {
+          shouldRenderHydrateFallback = true;
+          hydrateFallbackElement = match.route.hydrateFallbackElement || null;
+        }
+      }
+    }
+    let matches2 = parentMatches.concat(renderedMatches.slice(0, index + 1));
+    let getChildren = () => {
+      let children;
+      if (error) {
+        children = errorElement;
+      } else if (shouldRenderHydrateFallback) {
+        children = hydrateFallbackElement;
+      } else if (match.route.Component) {
+        children = /* @__PURE__ */ reactExports.createElement(match.route.Component, null);
+      } else if (match.route.element) {
+        children = match.route.element;
+      } else {
+        children = outlet;
+      }
+      return /* @__PURE__ */ reactExports.createElement(RenderedRoute, {
+        match,
+        routeContext: {
+          outlet,
+          matches: matches2,
+          isDataRoute: dataRouterState != null
+        },
+        children
+      });
+    };
+    return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index === 0) ? /* @__PURE__ */ reactExports.createElement(RenderErrorBoundary, {
+      location: dataRouterState.location,
+      revalidation: dataRouterState.revalidation,
+      component: errorElement,
+      error,
+      children: getChildren(),
+      routeContext: {
+        outlet: null,
+        matches: matches2,
+        isDataRoute: true
+      }
+    }) : getChildren();
+  }, null);
+}
+var DataRouterHook$1 = /* @__PURE__ */ function(DataRouterHook2) {
+  DataRouterHook2["UseBlocker"] = "useBlocker";
+  DataRouterHook2["UseRevalidator"] = "useRevalidator";
+  DataRouterHook2["UseNavigateStable"] = "useNavigate";
+  return DataRouterHook2;
+}(DataRouterHook$1 || {});
+var DataRouterStateHook$1 = /* @__PURE__ */ function(DataRouterStateHook2) {
+  DataRouterStateHook2["UseBlocker"] = "useBlocker";
+  DataRouterStateHook2["UseLoaderData"] = "useLoaderData";
+  DataRouterStateHook2["UseActionData"] = "useActionData";
+  DataRouterStateHook2["UseRouteError"] = "useRouteError";
+  DataRouterStateHook2["UseNavigation"] = "useNavigation";
+  DataRouterStateHook2["UseRouteLoaderData"] = "useRouteLoaderData";
+  DataRouterStateHook2["UseMatches"] = "useMatches";
+  DataRouterStateHook2["UseRevalidator"] = "useRevalidator";
+  DataRouterStateHook2["UseNavigateStable"] = "useNavigate";
+  DataRouterStateHook2["UseRouteId"] = "useRouteId";
+  return DataRouterStateHook2;
+}(DataRouterStateHook$1 || {});
+function useDataRouterContext(hookName) {
+  let ctx = reactExports.useContext(DataRouterContext);
+  !ctx ? invariant(false) : void 0;
+  return ctx;
+}
+function useDataRouterState(hookName) {
+  let state = reactExports.useContext(DataRouterStateContext);
+  !state ? invariant(false) : void 0;
+  return state;
+}
+function useRouteContext(hookName) {
+  let route = reactExports.useContext(RouteContext);
+  !route ? invariant(false) : void 0;
+  return route;
+}
+function useCurrentRouteId(hookName) {
+  let route = useRouteContext();
+  let thisRoute = route.matches[route.matches.length - 1];
+  !thisRoute.route.id ? invariant(false) : void 0;
+  return thisRoute.route.id;
+}
+function useRouteError() {
+  var _state$errors;
+  let error = reactExports.useContext(RouteErrorContext);
+  let state = useDataRouterState();
+  let routeId = useCurrentRouteId();
+  if (error !== void 0) {
+    return error;
+  }
+  return (_state$errors = state.errors) == null ? void 0 : _state$errors[routeId];
+}
+function useNavigateStable() {
+  let {
+    router
+  } = useDataRouterContext(DataRouterHook$1.UseNavigateStable);
+  let id = useCurrentRouteId(DataRouterStateHook$1.UseNavigateStable);
+  let activeRef = reactExports.useRef(false);
+  useIsomorphicLayoutEffect(() => {
+    activeRef.current = true;
+  });
+  let navigate = reactExports.useCallback(function(to, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    if (!activeRef.current) return;
+    if (typeof to === "number") {
+      router.navigate(to);
+    } else {
+      router.navigate(to, _extends$1({
+        fromRouteId: id
+      }, options));
+    }
+  }, [router, id]);
+  return navigate;
+}
+const alreadyWarned$1 = {};
+function warningOnce(key, cond, message) {
+  if (!alreadyWarned$1[key]) {
+    alreadyWarned$1[key] = true;
+  }
+}
+function logV6DeprecationWarnings(renderFuture, routerFuture) {
+  if ((renderFuture == null ? void 0 : renderFuture.v7_startTransition) === void 0) ;
+  if ((renderFuture == null ? void 0 : renderFuture.v7_relativeSplatPath) === void 0 && true) ;
+}
+function Route(_props) {
+  invariant(false);
+}
+function Router(_ref5) {
+  let {
+    basename: basenameProp = "/",
+    children = null,
+    location: locationProp,
+    navigationType = Action.Pop,
+    navigator: navigator2,
+    static: staticProp = false,
+    future
+  } = _ref5;
+  !!useInRouterContext() ? invariant(false) : void 0;
+  let basename = basenameProp.replace(/^\/*/, "/");
+  let navigationContext = reactExports.useMemo(() => ({
+    basename,
+    navigator: navigator2,
+    static: staticProp,
+    future: _extends$1({
+      v7_relativeSplatPath: false
+    }, future)
+  }), [basename, future, navigator2, staticProp]);
+  if (typeof locationProp === "string") {
+    locationProp = parsePath(locationProp);
+  }
+  let {
+    pathname = "/",
+    search = "",
+    hash = "",
+    state = null,
+    key = "default"
+  } = locationProp;
+  let locationContext = reactExports.useMemo(() => {
+    let trailingPathname = stripBasename(pathname, basename);
+    if (trailingPathname == null) {
+      return null;
+    }
+    return {
+      location: {
+        pathname: trailingPathname,
+        search,
+        hash,
+        state,
+        key
+      },
+      navigationType
+    };
+  }, [basename, pathname, search, hash, state, key, navigationType]);
+  if (locationContext == null) {
+    return null;
+  }
+  return /* @__PURE__ */ reactExports.createElement(NavigationContext.Provider, {
+    value: navigationContext
+  }, /* @__PURE__ */ reactExports.createElement(LocationContext.Provider, {
+    children,
+    value: locationContext
+  }));
+}
+function Routes(_ref6) {
+  let {
+    children,
+    location
+  } = _ref6;
+  return useRoutes(createRoutesFromChildren(children), location);
+}
+new Promise(() => {
+});
+function createRoutesFromChildren(children, parentPath) {
+  if (parentPath === void 0) {
+    parentPath = [];
+  }
+  let routes = [];
+  reactExports.Children.forEach(children, (element, index) => {
+    if (!/* @__PURE__ */ reactExports.isValidElement(element)) {
+      return;
+    }
+    let treePath = [...parentPath, index];
+    if (element.type === reactExports.Fragment) {
+      routes.push.apply(routes, createRoutesFromChildren(element.props.children, treePath));
+      return;
+    }
+    !(element.type === Route) ? invariant(false) : void 0;
+    !(!element.props.index || !element.props.children) ? invariant(false) : void 0;
+    let route = {
+      id: element.props.id || treePath.join("-"),
+      caseSensitive: element.props.caseSensitive,
+      element: element.props.element,
+      Component: element.props.Component,
+      index: element.props.index,
+      path: element.props.path,
+      loader: element.props.loader,
+      action: element.props.action,
+      errorElement: element.props.errorElement,
+      ErrorBoundary: element.props.ErrorBoundary,
+      hasErrorBoundary: element.props.ErrorBoundary != null || element.props.errorElement != null,
+      shouldRevalidate: element.props.shouldRevalidate,
+      handle: element.props.handle,
+      lazy: element.props.lazy
+    };
+    if (element.props.children) {
+      route.children = createRoutesFromChildren(element.props.children, treePath);
+    }
+    routes.push(route);
+  });
+  return routes;
+}
+/**
+ * React Router DOM v6.30.1
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
+function isModifiedEvent(event) {
+  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+}
+function shouldProcessLinkClick(event, target) {
+  return event.button === 0 && // Ignore everything but left clicks
+  (!target || target === "_self") && // Let browser handle "target=_blank" etc.
+  !isModifiedEvent(event);
+}
+const _excluded = ["onClick", "relative", "reloadDocument", "replace", "state", "target", "to", "preventScrollReset", "viewTransition"];
+const REACT_ROUTER_VERSION = "6";
+try {
+  window.__reactRouterVersion = REACT_ROUTER_VERSION;
+} catch (e) {
+}
+const START_TRANSITION = "startTransition";
+const startTransitionImpl = React[START_TRANSITION];
+function BrowserRouter(_ref4) {
+  let {
+    basename,
+    children,
+    future,
+    window: window2
+  } = _ref4;
+  let historyRef = reactExports.useRef();
+  if (historyRef.current == null) {
+    historyRef.current = createBrowserHistory({
+      window: window2,
+      v5Compat: true
+    });
+  }
+  let history = historyRef.current;
+  let [state, setStateImpl] = reactExports.useState({
+    action: history.action,
+    location: history.location
+  });
+  let {
+    v7_startTransition
+  } = future || {};
+  let setState = reactExports.useCallback((newState) => {
+    v7_startTransition && startTransitionImpl ? startTransitionImpl(() => setStateImpl(newState)) : setStateImpl(newState);
+  }, [setStateImpl, v7_startTransition]);
+  reactExports.useLayoutEffect(() => history.listen(setState), [history, setState]);
+  reactExports.useEffect(() => logV6DeprecationWarnings(future), [future]);
+  return /* @__PURE__ */ reactExports.createElement(Router, {
+    basename,
+    children,
+    location: state.location,
+    navigationType: state.action,
+    navigator: history,
+    future
+  });
+}
+const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
+const ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+const Link = /* @__PURE__ */ reactExports.forwardRef(function LinkWithRef(_ref7, ref2) {
+  let {
+    onClick,
+    relative,
+    reloadDocument,
+    replace: replace2,
+    state,
+    target,
+    to,
+    preventScrollReset,
+    viewTransition
+  } = _ref7, rest = _objectWithoutPropertiesLoose(_ref7, _excluded);
+  let {
+    basename
+  } = reactExports.useContext(NavigationContext);
+  let absoluteHref;
+  let isExternal = false;
+  if (typeof to === "string" && ABSOLUTE_URL_REGEX.test(to)) {
+    absoluteHref = to;
+    if (isBrowser) {
+      try {
+        let currentUrl = new URL(window.location.href);
+        let targetUrl = to.startsWith("//") ? new URL(currentUrl.protocol + to) : new URL(to);
+        let path = stripBasename(targetUrl.pathname, basename);
+        if (targetUrl.origin === currentUrl.origin && path != null) {
+          to = path + targetUrl.search + targetUrl.hash;
+        } else {
+          isExternal = true;
+        }
+      } catch (e) {
+      }
+    }
+  }
+  let href = useHref(to, {
+    relative
+  });
+  let internalOnClick = useLinkClickHandler(to, {
+    replace: replace2,
+    state,
+    target,
+    preventScrollReset,
+    relative,
+    viewTransition
+  });
+  function handleClick(event) {
+    if (onClick) onClick(event);
+    if (!event.defaultPrevented) {
+      internalOnClick(event);
+    }
+  }
+  return (
+    // eslint-disable-next-line jsx-a11y/anchor-has-content
+    /* @__PURE__ */ reactExports.createElement("a", _extends({}, rest, {
+      href: absoluteHref || href,
+      onClick: isExternal || reloadDocument ? onClick : handleClick,
+      ref: ref2,
+      target
+    }))
+  );
+});
+var DataRouterHook;
+(function(DataRouterHook2) {
+  DataRouterHook2["UseScrollRestoration"] = "useScrollRestoration";
+  DataRouterHook2["UseSubmit"] = "useSubmit";
+  DataRouterHook2["UseSubmitFetcher"] = "useSubmitFetcher";
+  DataRouterHook2["UseFetcher"] = "useFetcher";
+  DataRouterHook2["useViewTransitionState"] = "useViewTransitionState";
+})(DataRouterHook || (DataRouterHook = {}));
+var DataRouterStateHook;
+(function(DataRouterStateHook2) {
+  DataRouterStateHook2["UseFetcher"] = "useFetcher";
+  DataRouterStateHook2["UseFetchers"] = "useFetchers";
+  DataRouterStateHook2["UseScrollRestoration"] = "useScrollRestoration";
+})(DataRouterStateHook || (DataRouterStateHook = {}));
+function useLinkClickHandler(to, _temp) {
+  let {
+    target,
+    replace: replaceProp,
+    state,
+    preventScrollReset,
+    relative,
+    viewTransition
+  } = _temp === void 0 ? {} : _temp;
+  let navigate = useNavigate();
+  let location = useLocation();
+  let path = useResolvedPath(to, {
+    relative
+  });
+  return reactExports.useCallback((event) => {
+    if (shouldProcessLinkClick(event, target)) {
+      event.preventDefault();
+      let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location) === createPath(path);
+      navigate(to, {
+        replace: replace2,
+        state,
+        preventScrollReset,
+        relative,
+        viewTransition
+      });
+    }
+  }, [location, navigate, path, replaceProp, state, target, to, preventScrollReset, relative, viewTransition]);
+}
+const navigationItems = [
+  {
+    label: "Platform",
+    path: "/",
+    children: [
+      { label: "Home", path: "/" },
+      { label: "Entitlement Server", path: "/entitlement-server" },
+      { label: "Features", path: "/features", badge: "3D" },
+      { label: "Architecture", path: "/architecture" },
+      { label: "Technology", path: "/technology" }
+    ]
+  },
+  {
+    label: "Solutions",
+    path: "/solutions",
+    children: [
+      { label: "eSIM Transfer", path: "/transfer" },
+      { label: "Migration", path: "/migration" },
+      { label: "Global Roaming", path: "/roaming" },
+      { label: "5G Integration", path: "/5g", badge: "New" },
+      { label: "VoLTE HD", path: "/volte" }
+    ]
+  },
+  {
+    label: "Networks",
+    path: "/networks",
+    children: [
+      { label: "MPT Myanmar", path: "/operators/mpt" },
+      { label: "MYTEL", path: "/operators/mytel" },
+      { label: "ATOM", path: "/operators/atom" },
+      { label: "U9 Network", path: "/operators/u9" }
+    ]
+  },
+  {
+    label: "Enterprise",
+    path: "/enterprise",
+    badge: "Pro"
+  },
+  {
+    label: "Developers",
+    path: "/api",
+    children: [
+      { label: "API Playground", path: "/api" },
+      { label: "Documentation", path: "/docs" },
+      { label: "SDKs", path: "/sdks" },
+      { label: "Support", path: "/support" }
+    ]
+  }
+];
+const languageOptions = [
+  { code: "en", name: "English", flag: "🇺🇸" },
+  { code: "my", name: "မြန်မာ", flag: "🇲🇲" },
+  { code: "zh", name: "中文", flag: "🇨🇳" },
+  { code: "th", name: "ไทย", flag: "🇹🇭" },
+  { code: "vi", name: "Tiếng Việt", flag: "🇻🇳" },
+  { code: "id", name: "Bahasa Indonesia", flag: "🇮🇩" },
+  { code: "ms", name: "Bahasa Malaysia", flag: "🇲🇾" }
+];
+const NexoraCoreHeader = ({
+  currentLanguage,
+  onLanguageChange
+}) => {
+  const [isScrolled, setIsScrolled] = reactExports.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = reactExports.useState(false);
+  const location = useLocation();
+  reactExports.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  const currentLang = languageOptions.find((lang) => lang.code === currentLanguage) || languageOptions[0];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: `dynamic-island-header ${isScrolled ? "scrolled" : ""}`, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/", className: "header-logo", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "logo-container", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "logo-icon", children: "N" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "logo-text", children: "NexoraSIM" })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "desktop-nav", children: navigationItems.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "nav-item", children: item.children ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Menu, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(MenuTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Button,
+          {
+            appearance: "transparent",
+            className: `nav-button ${location.pathname.startsWith(item.path) ? "active" : ""}`,
+            children: [
+              item.label,
+              item.badge && /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "brand", size: "small", children: item.badge })
+            ]
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(MenuPopover, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuList, { children: item.children.map((child) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Link, { to: child.path, className: "menu-link", children: [
+          child.label,
+          child.badge && /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "outline", color: "brand", size: "extra-small", children: child.badge })
+        ] }) }, child.path)) }) })
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: item.path, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Button,
+        {
+          appearance: "transparent",
+          className: `nav-button ${location.pathname === item.path ? "active" : ""}`,
+          children: [
+            item.label,
+            item.badge && /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "brand", size: "small", children: item.badge })
+          ]
+        }
+      ) }) }, item.path)) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-actions", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button,
+          {
+            appearance: "transparent",
+            icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Search24Regular, {}),
+            className: "action-button",
+            "aria-label": "Search"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Menu, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button,
+            {
+              appearance: "transparent",
+              icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe24Regular, {}),
+              className: "action-button",
+              children: currentLang.name
+            }
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(MenuPopover, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuList, { children: languageOptions.map((lang) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            MenuItem,
+            {
+              onClick: () => onLanguageChange(lang.code),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "lang-flag", children: lang.flag }),
+                lang.name
+              ]
+            },
+            lang.code
+          )) }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button,
+          {
+            appearance: "transparent",
+            icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Navigation24Regular, {}),
+            className: "mobile-menu-toggle",
+            onClick: () => setIsMobileMenuOpen(!isMobileMenuOpen),
+            "aria-label": "Toggle mobile menu"
+          }
+        )
+      ] })
+    ] }),
+    isMobileMenuOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mobile-menu-overlay", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mobile-menu-content", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mobile-menu-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Navigation" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button,
+          {
+            appearance: "transparent",
+            onClick: () => setIsMobileMenuOpen(false),
+            "aria-label": "Close menu",
+            children: "✕"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "mobile-nav", children: navigationItems.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mobile-nav-section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Link,
+          {
+            to: item.path,
+            className: "mobile-nav-item primary",
+            onClick: () => setIsMobileMenuOpen(false),
+            children: [
+              item.label,
+              item.badge && /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "brand", size: "small", children: item.badge })
+            ]
+          }
+        ),
+        item.children && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mobile-nav-children", children: item.children.map((child) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Link,
+          {
+            to: child.path,
+            className: "mobile-nav-item secondary",
+            onClick: () => setIsMobileMenuOpen(false),
+            children: [
+              child.label,
+              child.badge && /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "outline", color: "brand", size: "extra-small", children: child.badge })
+            ]
+          },
+          child.path
+        )) })
+      ] }, item.path)) })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("style", { jsx: true, children: `
+        .dynamic-island-header {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dynamic-island-header.scrolled {
+          background: rgba(245, 245, 245, 0.95);
+          backdrop-filter: blur(32px);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-logo {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        .logo-container {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+        }
+
+        .logo-icon {
+          width: 32px;
+          height: 32px;
+          background: linear-gradient(135deg, var(--accent) 0%, #0099CC 100%);
+          border-radius: var(--radius-md);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: 700;
+          font-size: var(--font-size-lg);
+        }
+
+        .logo-text {
+          font-weight: 600;
+          font-size: var(--font-size-lg);
+          color: var(--black);
+        }
+
+        .desktop-nav {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+        }
+
+        .nav-item {
+          position: relative;
+        }
+
+        .nav-button {
+          color: var(--graphite);
+          font-weight: 500;
+          transition: all 0.2s ease;
+          gap: var(--space-xs);
+        }
+
+        .nav-button:hover,
+        .nav-button.active {
+          color: var(--accent);
+          background: rgba(0, 209, 255, 0.1);
+        }
+
+        .header-actions {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+        }
+
+        .action-button {
+          color: var(--graphite);
+          transition: all 0.2s ease;
+        }
+
+        .action-button:hover {
+          color: var(--accent);
+          background: rgba(0, 209, 255, 0.1);
+        }
+
+        .mobile-menu-toggle {
+          display: none;
+        }
+
+        .mobile-menu-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 2000;
+          display: none;
+        }
+
+        .mobile-menu-content {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 300px;
+          height: 100vh;
+          background: var(--glass);
+          backdrop-filter: var(--glass-blur);
+          border-left: var(--glass-border);
+          padding: var(--space-xl);
+          overflow-y: auto;
+        }
+
+        .mobile-menu-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: var(--space-xl);
+          padding-bottom: var(--space-lg);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-nav-section {
+          margin-bottom: var(--space-lg);
+        }
+
+        .mobile-nav-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: var(--space-md);
+          text-decoration: none;
+          color: var(--black);
+          border-radius: var(--radius-md);
+          transition: all 0.2s ease;
+          margin-bottom: var(--space-xs);
+        }
+
+        .mobile-nav-item.primary {
+          font-weight: 600;
+          background: rgba(0, 209, 255, 0.05);
+        }
+
+        .mobile-nav-item.secondary {
+          font-weight: 400;
+          margin-left: var(--space-lg);
+          font-size: var(--font-size-sm);
+        }
+
+        .mobile-nav-item:hover {
+          background: rgba(0, 209, 255, 0.1);
+          color: var(--accent);
+        }
+
+        .mobile-nav-children {
+          margin-top: var(--space-sm);
+        }
+
+        .menu-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          text-decoration: none;
+          color: inherit;
+        }
+
+        .lang-flag {
+          margin-right: var(--space-sm);
+        }
+
+        @media (max-width: 768px) {
+          .desktop-nav {
+            display: none;
+          }
+
+          .mobile-menu-toggle {
+            display: flex;
+          }
+
+          .mobile-menu-overlay {
+            display: block;
+          }
+
+          .dynamic-island-header {
+            padding: var(--space-sm) var(--space-lg);
+            gap: var(--space-md);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .logo-text {
+            display: none;
+          }
+
+          .mobile-menu-content {
+            width: 100vw;
+          }
+        }
+      ` })
+  ] });
+};
+const copilotCapabilities = [
+  {
+    id: "esim-transfer",
+    title: "eSIM Transfer Guide",
+    description: "Step-by-step eSIM transfer between devices",
+    icon: "📱",
+    category: "esim"
+  },
+  {
+    id: "network-coverage",
+    title: "Network Coverage",
+    description: "Real-time coverage maps and network status",
+    icon: "📡",
+    category: "network"
+  },
+  {
+    id: "technical-support",
+    title: "Technical Support",
+    description: "24/7 technical assistance and troubleshooting",
+    icon: "🔧",
+    category: "support"
+  },
+  {
+    id: "api-documentation",
+    title: "API Documentation",
+    description: "Interactive API guides and code examples",
+    icon: "📚",
+    category: "technical"
+  },
+  {
+    id: "roaming-plans",
+    title: "Global Roaming",
+    description: "International roaming plans and pricing",
+    icon: "🌍",
+    category: "esim"
+  },
+  {
+    id: "device-compatibility",
+    title: "Device Compatibility",
+    description: "Check eSIM compatibility for your device",
+    icon: "✅",
+    category: "technical"
+  }
+];
+const quickResponses = [
+  "How do I transfer my eSIM?",
+  "Check network coverage",
+  "API documentation",
+  "Roaming plans",
+  "Technical support",
+  "Device compatibility"
+];
+const NexoraCoreCopilot = ({ currentLanguage }) => {
+  const [isOpen, setIsOpen] = reactExports.useState(false);
+  const [messages, setMessages] = reactExports.useState([]);
+  const [inputValue, setInputValue] = reactExports.useState("");
+  const [isTyping, setIsTyping] = reactExports.useState(false);
+  const [isListening, setIsListening] = reactExports.useState(false);
+  const messagesEndRef = reactExports.useRef(null);
+  const inputRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      const welcomeMessage = {
+        id: "welcome",
+        type: "bot",
+        content: getLocalizedText("welcome", currentLanguage),
+        timestamp: /* @__PURE__ */ new Date()
+      };
+      setMessages([welcomeMessage]);
+    }
+  }, [isOpen, currentLanguage]);
+  reactExports.useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+  const scrollToBottom = () => {
+    var _a;
+    (_a = messagesEndRef.current) == null ? void 0 : _a.scrollIntoView({ behavior: "smooth" });
+  };
+  const getLocalizedText = (key, language) => {
+    var _a, _b;
+    const texts = {
+      welcome: {
+        en: "Hello! I'm your NexoraSIM AI assistant. How can I help you with eSIM services today?",
+        my: "မင်္ဂလာပါ! ကျွန်ုပ်သည် သင့်၏ NexoraSIM AI လက်ထောက်ဖြစ်ပါသည်။ eSIM ဝန်ဆောင်မှုများနှင့် ပတ်သက်၍ ဘယ်လိုကူညီပေးရမလဲ?",
+        zh: "您好！我是您的 NexoraSIM AI 助手。今天我可以如何帮助您使用 eSIM 服务？",
+        th: "สวัสดี! ฉันเป็นผู้ช่วย AI ของ NexoraSIM คุณต้องการความช่วยเหลือเกี่ยวกับบริการ eSIM อย่างไรบ้าง?",
+        vi: "Xin chào! Tôi là trợ lý AI NexoraSIM của bạn. Hôm nay tôi có thể giúp bạn gì về dịch vụ eSIM?",
+        id: "Halo! Saya adalah asisten AI NexoraSIM Anda. Bagaimana saya bisa membantu Anda dengan layanan eSIM hari ini?",
+        ms: "Hello! Saya adalah pembantu AI NexoraSIM anda. Bagaimana saya boleh membantu anda dengan perkhidmatan eSIM hari ini?"
+      },
+      typing: {
+        en: "NexoraSIM AI is typing...",
+        my: "NexoraSIM AI ရိုက်နေသည်...",
+        zh: "NexoraSIM AI 正在输入...",
+        th: "NexoraSIM AI กำลังพิมพ์...",
+        vi: "NexoraSIM AI đang nhập...",
+        id: "NexoraSIM AI sedang mengetik...",
+        ms: "NexoraSIM AI sedang menaip..."
+      }
+    };
+    return ((_a = texts[key]) == null ? void 0 : _a[language]) || ((_b = texts[key]) == null ? void 0 : _b["en"]) || key;
+  };
+  const handleSendMessage = async (content) => {
+    if (!content.trim()) return;
+    const userMessage = {
+      id: Date.now().toString(),
+      type: "user",
+      content: content.trim(),
+      timestamp: /* @__PURE__ */ new Date(),
+      language: currentLanguage
+    };
+    setMessages((prev) => [...prev, userMessage]);
+    setInputValue("");
+    setIsTyping(true);
+    setTimeout(() => {
+      const botResponse = generateBotResponse(content, currentLanguage);
+      const botMessage = {
+        id: (Date.now() + 1).toString(),
+        type: "bot",
+        content: botResponse,
+        timestamp: /* @__PURE__ */ new Date(),
+        language: currentLanguage
+      };
+      setMessages((prev) => [...prev, botMessage]);
+      setIsTyping(false);
+    }, 1500);
+  };
+  const generateBotResponse = (userInput, language) => {
+    const input = userInput.toLowerCase();
+    if (input.includes("transfer") || input.includes("ပြောင်း")) {
+      return getLocalizedText("transfer_response", language) || "To transfer your eSIM, go to Settings > Cellular > Add Cellular Plan on your new device and scan the QR code from your current device.";
+    }
+    if (input.includes("coverage") || input.includes("network") || input.includes("ကွန်ယက်")) {
+      return getLocalizedText("coverage_response", language) || "Our network covers 95% of Myanmar with MPT, MYTEL, ATOM, and U9 partnerships. You can check real-time coverage at nexorasim.com/coverage";
+    }
+    if (input.includes("api") || input.includes("developer")) {
+      return getLocalizedText("api_response", language) || "Our API documentation is available at nexorasim.com/api with interactive examples and SDKs for multiple platforms.";
+    }
+    if (input.includes("roaming") || input.includes("international")) {
+      return getLocalizedText("roaming_response", language) || "We offer global roaming in 200+ countries with competitive rates. Check our roaming plans at nexorasim.com/roaming";
+    }
+    return getLocalizedText("default_response", language) || "I understand you need help. Let me connect you with the right information. You can also visit our support center at nexorasim.com/support";
+  };
+  const handleVoiceInput = () => {
+    if ("webkitSpeechRecognition" in window) {
+      const recognition = new window.webkitSpeechRecognition();
+      recognition.lang = currentLanguage === "my" ? "my-MM" : `${currentLanguage}-${currentLanguage.toUpperCase()}`;
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.onstart = () => setIsListening(true);
+      recognition.onend = () => setIsListening(false);
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInputValue(transcript);
+      };
+      recognition.start();
+    }
+  };
+  const handleCapabilityClick = (capability) => {
+    handleSendMessage(capability.title);
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog, { open: isOpen, onOpenChange: (event, data) => setIsOpen(data.open), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTrigger, { disableButtonEnhancement: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "copilot-orb", onClick: () => setIsOpen(true), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Bot24Regular, { className: "copilot-icon" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pulse-ring" })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogSurface, { className: "copilot-dialog", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "copilot-header", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-content", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-info", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Bot24Regular, { className: "header-icon" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "NexoraSIM AI Assistant" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "success", size: "small", children: "Online" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button,
+            {
+              appearance: "transparent",
+              icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Dismiss24Regular, {}),
+              onClick: () => setIsOpen(false),
+              "aria-label": "Close"
+            }
+          )
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogBody, { className: "copilot-body", children: [
+          messages.length <= 1 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "capabilities-grid", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "How can I help you?" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "capabilities-list", children: copilotCapabilities.map((capability) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                className: "capability-card",
+                onClick: () => handleCapabilityClick(capability),
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "capability-icon", children: capability.icon }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "capability-content", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("h5", { children: capability.title }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: capability.description })
+                  ] })
+                ]
+              },
+              capability.id
+            )) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "messages-container", children: [
+            messages.map((message) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: `message ${message.type}`,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "message-content", children: message.content }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "message-time", children: message.timestamp.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                  }) })
+                ]
+              },
+              message.id
+            )),
+            isTyping && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "message bot typing", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "message-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "typing-indicator", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", {})
+              ] }),
+              getLocalizedText("typing", currentLanguage)
+            ] }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: messagesEndRef })
+          ] }),
+          messages.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "quick-responses", children: quickResponses.map((response, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              className: "quick-response",
+              onClick: () => handleSendMessage(response),
+              children: response
+            },
+            index
+          )) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DialogActions, { className: "copilot-input", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "input-container", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Input,
+            {
+              ref: inputRef,
+              value: inputValue,
+              onChange: (e) => setInputValue(e.target.value),
+              placeholder: "Type your message...",
+              onKeyPress: (e) => e.key === "Enter" && handleSendMessage(inputValue),
+              className: "message-input"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button,
+            {
+              appearance: "transparent",
+              icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Mic24Regular, {}),
+              onClick: handleVoiceInput,
+              disabled: isListening,
+              className: `voice-button ${isListening ? "listening" : ""}`,
+              "aria-label": "Voice input"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button,
+            {
+              appearance: "primary",
+              icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Send24Regular, {}),
+              onClick: () => handleSendMessage(inputValue),
+              disabled: !inputValue.trim(),
+              "aria-label": "Send message"
+            }
+          )
+        ] }) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("style", { jsx: true, children: `
+        .copilot-orb {
+          cursor: pointer;
+          position: relative;
+        }
+
+        .copilot-icon {
+          font-size: 24px;
+          color: white;
+        }
+
+        .pulse-ring {
+          position: absolute;
+          top: -8px;
+          left: -8px;
+          right: -8px;
+          bottom: -8px;
+          border: 2px solid rgba(0, 209, 255, 0.3);
+          border-radius: 50%;
+          animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1.2);
+            opacity: 0;
+          }
+        }
+
+        .copilot-dialog {
+          width: 400px;
+          height: 600px;
+          max-height: 80vh;
+          background: var(--glass);
+          backdrop-filter: var(--glass-blur);
+          border: var(--glass-border);
+          border-radius: var(--radius-xl);
+          display: flex;
+          flex-direction: column;
+        }
+
+        .copilot-header {
+          padding: var(--space-lg);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .header-info {
+          display: flex;
+          align-items: center;
+          gap: var(--space-md);
+        }
+
+        .header-icon {
+          font-size: 24px;
+          color: var(--accent);
+        }
+
+        .copilot-body {
+          flex: 1;
+          padding: var(--space-lg);
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-lg);
+        }
+
+        .capabilities-grid h4 {
+          margin-bottom: var(--space-md);
+          color: var(--black);
+        }
+
+        .capabilities-list {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: var(--space-sm);
+        }
+
+        .capability-card {
+          display: flex;
+          align-items: center;
+          gap: var(--space-md);
+          padding: var(--space-md);
+          background: rgba(0, 209, 255, 0.05);
+          border: 1px solid rgba(0, 209, 255, 0.2);
+          border-radius: var(--radius-md);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          text-align: left;
+        }
+
+        .capability-card:hover {
+          background: rgba(0, 209, 255, 0.1);
+          transform: translateY(-1px);
+        }
+
+        .capability-icon {
+          font-size: 20px;
+        }
+
+        .capability-content h5 {
+          margin: 0 0 var(--space-xs) 0;
+          font-size: var(--font-size-sm);
+          font-weight: 600;
+        }
+
+        .capability-content p {
+          margin: 0;
+          font-size: var(--font-size-xs);
+          color: var(--graphite);
+        }
+
+        .messages-container {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-md);
+          max-height: 300px;
+          overflow-y: auto;
+        }
+
+        .message {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-xs);
+        }
+
+        .message.user {
+          align-items: flex-end;
+        }
+
+        .message.bot {
+          align-items: flex-start;
+        }
+
+        .message-content {
+          max-width: 80%;
+          padding: var(--space-md);
+          border-radius: var(--radius-lg);
+          font-size: var(--font-size-sm);
+          line-height: 1.4;
+        }
+
+        .message.user .message-content {
+          background: var(--accent);
+          color: white;
+        }
+
+        .message.bot .message-content {
+          background: rgba(0, 0, 0, 0.05);
+          color: var(--black);
+        }
+
+        .message-time {
+          font-size: var(--font-size-xs);
+          color: var(--graphite);
+          opacity: 0.7;
+        }
+
+        .typing-indicator {
+          display: flex;
+          gap: 4px;
+          margin-bottom: var(--space-xs);
+        }
+
+        .typing-indicator span {
+          width: 6px;
+          height: 6px;
+          background: var(--accent);
+          border-radius: 50%;
+          animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+          0%, 60%, 100% {
+            transform: translateY(0);
+          }
+          30% {
+            transform: translateY(-10px);
+          }
+        }
+
+        .quick-responses {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-xs);
+        }
+
+        .quick-response {
+          padding: var(--space-xs) var(--space-sm);
+          background: rgba(0, 209, 255, 0.1);
+          border: 1px solid rgba(0, 209, 255, 0.3);
+          border-radius: var(--radius-lg);
+          font-size: var(--font-size-xs);
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .quick-response:hover {
+          background: rgba(0, 209, 255, 0.2);
+        }
+
+        .copilot-input {
+          padding: var(--space-lg);
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .input-container {
+          display: flex;
+          gap: var(--space-sm);
+          align-items: center;
+        }
+
+        .message-input {
+          flex: 1;
+        }
+
+        .voice-button.listening {
+          color: var(--accent);
+          background: rgba(0, 209, 255, 0.1);
+        }
+
+        @media (max-width: 480px) {
+          .copilot-dialog {
+            width: 100vw;
+            height: 100vh;
+            max-height: 100vh;
+            border-radius: 0;
+          }
+        }
+      ` })
+  ] });
+};
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -6227,7 +8540,1316 @@ ScrollTrigger.core = {
   }
 };
 _getGSAP2() && gsap.registerPlugin(ScrollTrigger);
+gsapWithCSS.registerPlugin(ScrollTrigger);
+const NetworkNode = ({ position, connections }) => {
+  const nodeRef = reactExports.useRef(null);
+  const linesRef = reactExports.useRef(null);
+  useFrame((state) => {
+    if (nodeRef.current) {
+      nodeRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.1);
+    }
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("group", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("mesh", { ref: nodeRef, position, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("sphereGeometry", { args: [0.1, 16, 16] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "meshStandardMaterial",
+        {
+          color: "#00D1FF",
+          emissive: "#00D1FF",
+          emissiveIntensity: 0.3
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("group", { ref: linesRef, children: connections.map((target, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("line", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("bufferGeometry", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "bufferAttribute",
+        {
+          attach: "attributes-position",
+          count: 2,
+          array: new Float32Array([
+            position[0],
+            position[1],
+            position[2],
+            target[0],
+            target[1],
+            target[2]
+          ]),
+          itemSize: 3
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("lineBasicMaterial", { color: "#00D1FF", opacity: 0.3, transparent: true })
+    ] }, index)) })
+  ] });
+};
+const DataStream = () => {
+  const particlesRef = reactExports.useRef(null);
+  useFrame((state) => {
+    if (particlesRef.current) {
+      const positions2 = particlesRef.current.geometry.attributes.position.array;
+      for (let i = 0; i < positions2.length; i += 3) {
+        positions2[i + 1] += 0.02;
+        if (positions2[i + 1] > 5) {
+          positions2[i + 1] = -5;
+        }
+      }
+      particlesRef.current.geometry.attributes.position.needsUpdate = true;
+    }
+  });
+  const particleCount = 1e3;
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 20;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("points", { ref: particlesRef, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("bufferGeometry", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "bufferAttribute",
+      {
+        attach: "attributes-position",
+        count: particleCount,
+        array: positions,
+        itemSize: 3
+      }
+    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "pointsMaterial",
+      {
+        color: "#00D1FF",
+        size: 0.05,
+        transparent: true,
+        opacity: 0.6,
+        sizeAttenuation: true
+      }
+    )
+  ] });
+};
+const NexoraSIM3DLogo = () => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Float, { speed: 1, rotationIntensity: 0.5, floatIntensity: 1, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    Text3D,
+    {
+      font: "/fonts/segoe-ui-bold.json",
+      size: 0.8,
+      height: 0.1,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 0.02,
+      bevelSize: 0.02,
+      bevelOffset: 0,
+      bevelSegments: 5,
+      position: [-2, 0, 0],
+      children: [
+        "NexoraSIM",
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "meshStandardMaterial",
+          {
+            color: "#00D1FF",
+            metalness: 0.8,
+            roughness: 0.2
+          }
+        )
+      ]
+    }
+  ) });
+};
+const Scene3D = () => {
+  const networkNodes = [
+    [-3, 2, -2],
+    [3, 1, -1],
+    [-2, -1, 1],
+    [2, -2, 2],
+    [0, 3, 0]
+  ];
+  const nodeConnections = [
+    [[-3, 2, -2], [3, 1, -1], [0, 3, 0]],
+    [[3, 1, -1], [-2, -1, 1], [2, -2, 2]],
+    [[-2, -1, 1], [0, 3, 0]],
+    [[2, -2, 2], [-3, 2, -2]],
+    [[0, 3, 0], [2, -2, 2], [-2, -1, 1]]
+  ];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Environment, { preset: "city" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("ambientLight", { intensity: 0.4 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("directionalLight", { position: [10, 10, 5], intensity: 1 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("pointLight", { position: [-10, -10, -10], color: "#00D1FF", intensity: 0.5 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("eSIMCard", { position: [-4, 1, -3], rotation: [0.2, 0.3, 0.1], scale: 1 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("eSIMCard", { position: [4, -1, -2], rotation: [-0.1, -0.2, 0.2], scale: 0.8 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("eSIMCard", { position: [2, 3, -4], rotation: [0.3, -0.1, -0.1], scale: 1.2 }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("eSIMCard", { position: [-3, -2, -1], rotation: [-0.2, 0.4, 0.3], scale: 0.9 }),
+    networkNodes.map((position, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      NetworkNode,
+      {
+        position,
+        connections: nodeConnections[index]
+      },
+      index
+    )),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DataStream, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(NexoraSIM3DLogo, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      OrbitControls,
+      {
+        enableZoom: false,
+        enablePan: false,
+        enableRotate: true,
+        autoRotate: true,
+        autoRotateSpeed: 0.5,
+        maxPolarAngle: Math.PI / 2,
+        minPolarAngle: Math.PI / 2
+      }
+    )
+  ] });
+};
+const NexoraCore3DHero = ({
+  title,
+  subtitle,
+  ctaText,
+  onCtaClick
+}) => {
+  const heroRef = reactExports.useRef(null);
+  const titleRef = reactExports.useRef(null);
+  const subtitleRef = reactExports.useRef(null);
+  const ctaRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    if (titleRef.current && subtitleRef.current && ctaRef.current) {
+      const tl = gsapWithCSS.timeline();
+      tl.fromTo(
+        titleRef.current,
+        { opacity: 0, y: 100, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out" }
+      ).fromTo(
+        subtitleRef.current,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+        "-=0.6"
+      ).fromTo(
+        ctaRef.current,
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" },
+        "-=0.4"
+      );
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          if (titleRef.current) {
+            gsapWithCSS.to(titleRef.current, {
+              y: progress * 100,
+              opacity: 1 - progress * 0.5,
+              duration: 0.3
+            });
+          }
+        }
+      });
+    }
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { ref: heroRef, className: "hero-3d-container", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Canvas,
+      {
+        className: "hero-3d-canvas",
+        camera: { position: [0, 0, 10], fov: 60 },
+        gl: { antialias: true, alpha: true },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Suspense, { fallback: null, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Scene3D, {}) })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-content", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { ref: titleRef, className: "hero-title", children: title }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { ref: subtitleRef, className: "hero-subtitle", children: subtitle }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          ref: ctaRef,
+          className: "fluent-button-primary hero-cta",
+          onClick: onCtaClick,
+          children: ctaText
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("style", { jsx: true, children: `
+        .hero-loading {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          color: var(--graphite);
+        }
+
+        .loading-spinner {
+          width: 40px;
+          height: 40px;
+          border: 3px solid var(--glass);
+          border-top: 3px solid var(--accent);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin-bottom: var(--space-lg);
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .hero-cta {
+          font-size: var(--font-size-lg);
+          padding: var(--space-lg) var(--space-2xl);
+          margin-top: var(--space-xl);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .hero-cta:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-xl);
+        }
+      ` })
+  ] });
+};
+gsapWithCSS.registerPlugin(ScrollTrigger);
+const capabilities = [
+  {
+    id: "esim-transfer",
+    title: "eSIM Transfer Android → Apple",
+    description: "Seamless cross-platform eSIM transfer with Microsoft Graph integration",
+    icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Phone24Regular, {}),
+    badge: "Cross-Platform",
+    category: "esim"
+  },
+  {
+    id: "network-auth",
+    title: "Network Authentication",
+    description: "Enterprise-grade authentication with Entra ID and Zero Trust",
+    icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Shield24Regular, {}),
+    badge: "Zero Trust",
+    category: "security"
+  },
+  {
+    id: "global-roaming",
+    title: "Advanced Global Roaming",
+    description: "Real-time roaming across 200+ countries with Azure optimization",
+    icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe24Regular, {}),
+    badge: "200+ Countries",
+    category: "network"
+  },
+  {
+    id: "cloud-native",
+    title: "Cloud-native Microservices",
+    description: "Scalable architecture with Azure Functions and Service Fabric",
+    icon: /* @__PURE__ */ jsxRuntimeExports.jsx(CloudSync24Regular, {}),
+    badge: "Azure Native",
+    category: "enterprise"
+  },
+  {
+    id: "sm-dp-plus",
+    title: "SM-DP+ Integration",
+    description: "GSMA-compliant subscription management with carrier bundles",
+    icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Server24Regular, {}),
+    badge: "GSMA Certified",
+    category: "enterprise"
+  },
+  {
+    id: "5g-integration",
+    title: "5G Network Integration",
+    description: "Next-generation 5G with VoLTE HD and network slicing",
+    icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Wifi124Regular, {}),
+    badge: "5G Ready",
+    category: "network"
+  }
+];
+const networkOperators = [
+  {
+    name: "MPT Myanmar",
+    coverage: "95%",
+    technology: "5G + VoLTE",
+    status: "Active",
+    logo: "/images/operators/mpt-logo.svg"
+  },
+  {
+    name: "MYTEL",
+    coverage: "92%",
+    technology: "5G + VoLTE",
+    status: "Active",
+    logo: "/images/operators/mytel-logo.svg"
+  },
+  {
+    name: "ATOM",
+    coverage: "88%",
+    technology: "LTE + IoT",
+    status: "Active",
+    logo: "/images/operators/atom-logo.svg"
+  },
+  {
+    name: "U9 Network",
+    coverage: "85%",
+    technology: "LTE-M + NB-IoT",
+    status: "Active",
+    logo: "/images/operators/u9-logo.svg"
+  }
+];
+const NexoraCoreHomePage = ({ currentLanguage }) => {
+  const [networkStats, setNetworkStats] = reactExports.useState({
+    coverage: 0,
+    users: 0,
+    uptime: 0,
+    speed: 0
+  });
+  const [isStatsLoading, setIsStatsLoading] = reactExports.useState(true);
+  const heroRef = reactExports.useRef(null);
+  const statsRef = reactExports.useRef(null);
+  const capabilitiesRef = reactExports.useRef(null);
+  const operatorsRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    const loadStats = async () => {
+      setIsStatsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 2e3));
+      const targetStats = {
+        coverage: 95,
+        users: 2.4,
+        uptime: 99.9,
+        speed: 1.2
+      };
+      const duration = 2e3;
+      const steps = 60;
+      const stepDuration = duration / steps;
+      for (let i = 0; i <= steps; i++) {
+        setTimeout(() => {
+          const progress = i / steps;
+          setNetworkStats({
+            coverage: Math.round(targetStats.coverage * progress),
+            users: Math.round(targetStats.users * progress * 10) / 10,
+            uptime: Math.round(targetStats.uptime * progress * 10) / 10,
+            speed: Math.round(targetStats.speed * progress * 10) / 10
+          });
+        }, i * stepDuration);
+      }
+      setIsStatsLoading(false);
+    };
+    loadStats();
+  }, []);
+  reactExports.useEffect(() => {
+    const ctx = gsapWithCSS.context(() => {
+      ScrollTrigger.create({
+        trigger: statsRef.current,
+        start: "top 80%",
+        onEnter: () => {
+          gsapWithCSS.fromTo(
+            ".stat-card",
+            { opacity: 0, y: 50, scale: 0.9 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.8,
+              stagger: 0.2,
+              ease: "power3.out"
+            }
+          );
+        }
+      });
+      ScrollTrigger.create({
+        trigger: capabilitiesRef.current,
+        start: "top 80%",
+        onEnter: () => {
+          gsapWithCSS.fromTo(
+            ".capability-card",
+            { opacity: 0, x: -50, rotationY: -15 },
+            {
+              opacity: 1,
+              x: 0,
+              rotationY: 0,
+              duration: 1,
+              stagger: 0.15,
+              ease: "power3.out"
+            }
+          );
+        }
+      });
+      ScrollTrigger.create({
+        trigger: operatorsRef.current,
+        start: "top 80%",
+        onEnter: () => {
+          gsapWithCSS.fromTo(
+            ".operator-card",
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: 0.1,
+              ease: "power2.out"
+            }
+          );
+        }
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+  const handleHeroCTA = () => {
+    var _a;
+    (_a = capabilitiesRef.current) == null ? void 0 : _a.scrollIntoView({ behavior: "smooth" });
+  };
+  const getLocalizedContent = (key) => {
+    var _a, _b;
+    const content = {
+      heroTitle: {
+        en: "NexoraSIM Entertainment Server",
+        my: "NexoraSIM ဖျော်ဖြေရေး ဆာဗာ",
+        zh: "NexoraSIM 娱乐服务器",
+        th: "เซิร์ฟเวอร์บันเทิง NexoraSIM",
+        vi: "Máy chủ giải trí NexoraSIM",
+        id: "Server Hiburan NexoraSIM",
+        ms: "Pelayan Hiburan NexoraSIM"
+      },
+      heroSubtitle: {
+        en: "Premium eSIM platform for Myanmar networks with Microsoft-only architecture, 5G streaming, and enterprise-grade security",
+        my: "မြန်မာကွန်ယက်များအတွက် Microsoft-only ဗိသုကာ၊ 5G streaming နှင့် enterprise-grade လုံခြုံရေးပါရှိသော premium eSIM platform",
+        zh: "面向缅甸网络的高级 eSIM 平台，采用纯 Microsoft 架构、5G 流媒体和企业级安全",
+        th: "แพลตฟอร์ม eSIM พรีเมียมสำหรับเครือข่ายพม่า พร้อมสถาปัตยกรรม Microsoft เท่านั้น การสตรีมมิ่ง 5G และความปลอดภัยระดับองค์กร",
+        vi: "Nền tảng eSIM cao cấp cho mạng Myanmar với kiến trúc chỉ Microsoft, streaming 5G và bảo mật cấp doanh nghiệp",
+        id: "Platform eSIM premium untuk jaringan Myanmar dengan arsitektur khusus Microsoft, streaming 5G, dan keamanan tingkat enterprise",
+        ms: "Platform eSIM premium untuk rangkaian Myanmar dengan seni bina Microsoft sahaja, streaming 5G, dan keselamatan gred perusahaan"
+      },
+      heroCTA: {
+        en: "Explore Platform",
+        my: "Platform ကို လေ့လာရန်",
+        zh: "探索平台",
+        th: "สำรวจแพลตฟอร์ม",
+        vi: "Khám phá nền tảng",
+        id: "Jelajahi Platform",
+        ms: "Terokai Platform"
+      }
+    };
+    return ((_a = content[key]) == null ? void 0 : _a[currentLanguage]) || ((_b = content[key]) == null ? void 0 : _b["en"]) || key;
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "nexora-home-page", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { ref: heroRef, className: "hero-section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      NexoraCore3DHero,
+      {
+        title: getLocalizedContent("heroTitle"),
+        subtitle: getLocalizedContent("heroSubtitle"),
+        ctaText: getLocalizedContent("heroCTA"),
+        onCtaClick: handleHeroCTA
+      }
+    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { ref: statsRef, className: "stats-section nexora-section", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "nexora-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "section-title", children: "Live Network Performance" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stats-grid", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "stat-card glass-card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-header", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Globe24Regular, { className: "stat-icon" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "success", children: "Live" })
+          ] }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardPreview, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-content", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-value", children: isStatsLoading ? /* @__PURE__ */ jsxRuntimeExports.jsx(Spinner, { size: "small" }) : `${networkStats.coverage}%` }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-label", children: "Network Coverage" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { value: networkStats.coverage / 100, className: "stat-progress" })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "stat-card glass-card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-header", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Phone24Regular, { className: "stat-icon" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "brand", children: "Active" })
+          ] }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardPreview, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-content", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-value", children: isStatsLoading ? /* @__PURE__ */ jsxRuntimeExports.jsx(Spinner, { size: "small" }) : `${networkStats.users}M` }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-label", children: "Active Users" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { value: networkStats.users / 5, className: "stat-progress" })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "stat-card glass-card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-header", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Server24Regular, { className: "stat-icon" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "success", children: "Operational" })
+          ] }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardPreview, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-content", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-value", children: isStatsLoading ? /* @__PURE__ */ jsxRuntimeExports.jsx(Spinner, { size: "small" }) : `${networkStats.uptime}%` }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-label", children: "System Uptime" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { value: networkStats.uptime / 100, className: "stat-progress" })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "stat-card glass-card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-header", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Wifi124Regular, { className: "stat-icon" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "brand", children: "5G" })
+          ] }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardPreview, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-content", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-value", children: isStatsLoading ? /* @__PURE__ */ jsxRuntimeExports.jsx(Spinner, { size: "small" }) : `${networkStats.speed}Gbps` }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-label", children: "Average Speed" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressBar, { value: networkStats.speed / 2, className: "stat-progress" })
+          ] }) })
+        ] })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { ref: capabilitiesRef, className: "capabilities-section nexora-section", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "nexora-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "section-title", children: "Platform Capabilities" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "section-subtitle", children: "Enterprise-grade eSIM solutions powered by Microsoft technologies" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "capabilities-grid", children: capabilities.map((capability) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "capability-card glass-card", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "capability-header", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "capability-icon", children: capability.icon }),
+            capability.badge && /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { appearance: "filled", color: "brand", size: "small", children: capability.badge })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "capability-title", children: capability.title })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardPreview, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "capability-description", children: capability.description }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button,
+            {
+              appearance: "transparent",
+              icon: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowRight24Regular, {}),
+              iconPosition: "after",
+              className: "capability-link",
+              children: "Learn More"
+            }
+          )
+        ] })
+      ] }, capability.id)) })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { ref: operatorsRef, className: "operators-section nexora-section", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "nexora-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "section-title", children: "Network Partners" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "section-subtitle", children: "Integrated with Myanmar's leading telecommunications operators" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "operators-grid", children: networkOperators.map((operator, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "operator-card glass-card", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "operator-header", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "operator-logo", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: operator.logo, alt: operator.name }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Badge,
+              {
+                appearance: "filled",
+                color: operator.status === "Active" ? "success" : "warning",
+                size: "small",
+                children: operator.status
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "operator-name", children: operator.name })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardPreview, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "operator-stats", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "operator-stat", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label", children: "Coverage" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-value", children: operator.coverage })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "operator-stat", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label", children: "Technology" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-value", children: operator.technology })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/operators/${operator.name.toLowerCase().replace(" ", "-")}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button,
+            {
+              appearance: "outline",
+              icon: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowRight24Regular, {}),
+              iconPosition: "after",
+              className: "operator-link",
+              children: "View Details"
+            }
+          ) })
+        ] })
+      ] }, index)) })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "cta-section nexora-section", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "nexora-container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cta-content glass-morphism", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "cta-title", children: "Ready to Transform Your eSIM Experience?" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cta-subtitle", children: "Join the next generation of telecommunications with NexoraSIM's Microsoft-powered platform" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cta-actions", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/enterprise", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { appearance: "primary", size: "large", className: "cta-button", children: "Get Started" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/api", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button,
+          {
+            appearance: "outline",
+            size: "large",
+            icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Play24Regular, {}),
+            className: "cta-button",
+            children: "View Demo"
+          }
+        ) })
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("style", { jsx: true, children: `
+        .nexora-home-page {
+          min-height: 100vh;
+        }
+
+        .section-title {
+          font-size: var(--font-size-3xl);
+          font-weight: 600;
+          text-align: center;
+          margin-bottom: var(--space-lg);
+          color: var(--black);
+        }
+
+        .section-subtitle {
+          font-size: var(--font-size-lg);
+          text-align: center;
+          color: var(--graphite);
+          margin-bottom: var(--space-2xl);
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .section-header {
+          margin-bottom: var(--space-3xl);
+        }
+
+        /* Stats Section */
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: var(--space-xl);
+        }
+
+        .stat-card {
+          padding: var(--space-xl);
+          text-align: center;
+        }
+
+        .stat-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: var(--space-lg);
+        }
+
+        .stat-icon {
+          font-size: 2rem;
+          color: var(--accent);
+        }
+
+        .stat-content {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-sm);
+        }
+
+        .stat-value {
+          font-size: var(--font-size-3xl);
+          font-weight: 700;
+          color: var(--accent);
+        }
+
+        .stat-label {
+          font-size: var(--font-size-sm);
+          color: var(--graphite);
+          font-weight: 500;
+        }
+
+        .stat-progress {
+          margin-top: var(--space-sm);
+        }
+
+        /* Capabilities Section */
+        .capabilities-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: var(--space-xl);
+        }
+
+        .capability-card {
+          padding: var(--space-xl);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .capability-card:hover {
+          transform: translateY(-8px);
+          box-shadow: var(--shadow-xl);
+        }
+
+        .capability-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: var(--space-lg);
+        }
+
+        .capability-icon {
+          font-size: 2.5rem;
+          color: var(--accent);
+        }
+
+        .capability-title {
+          font-size: var(--font-size-xl);
+          font-weight: 600;
+          margin-bottom: var(--space-md);
+          color: var(--black);
+        }
+
+        .capability-description {
+          color: var(--graphite);
+          line-height: 1.6;
+          margin-bottom: var(--space-lg);
+        }
+
+        .capability-link {
+          color: var(--accent);
+          font-weight: 500;
+        }
+
+        /* Operators Section */
+        .operators-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: var(--space-xl);
+        }
+
+        .operator-card {
+          padding: var(--space-xl);
+        }
+
+        .operator-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: var(--space-md);
+        }
+
+        .operator-logo {
+          width: 48px;
+          height: 48px;
+          background: var(--pearl);
+          border-radius: var(--radius-md);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .operator-logo img {
+          width: 32px;
+          height: 32px;
+          object-fit: contain;
+        }
+
+        .operator-name {
+          font-size: var(--font-size-lg);
+          font-weight: 600;
+          margin-bottom: var(--space-lg);
+          color: var(--black);
+        }
+
+        .operator-stats {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-md);
+          margin-bottom: var(--space-lg);
+        }
+
+        .operator-stat {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .operator-stat .stat-label {
+          color: var(--graphite);
+          font-size: var(--font-size-sm);
+        }
+
+        .operator-stat .stat-value {
+          color: var(--black);
+          font-weight: 600;
+        }
+
+        .operator-link {
+          width: 100%;
+        }
+
+        /* CTA Section */
+        .cta-content {
+          text-align: center;
+          padding: var(--space-3xl);
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .cta-title {
+          font-size: var(--font-size-3xl);
+          font-weight: 600;
+          margin-bottom: var(--space-lg);
+          color: var(--black);
+        }
+
+        .cta-subtitle {
+          font-size: var(--font-size-lg);
+          color: var(--graphite);
+          margin-bottom: var(--space-2xl);
+          line-height: 1.6;
+        }
+
+        .cta-actions {
+          display: flex;
+          gap: var(--space-lg);
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .cta-button {
+          padding: var(--space-lg) var(--space-2xl);
+          font-size: var(--font-size-lg);
+        }
+
+        @media (max-width: 768px) {
+          .stats-grid,
+          .capabilities-grid,
+          .operators-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .cta-actions {
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .cta-button {
+            width: 100%;
+            max-width: 300px;
+          }
+        }
+      ` })
+  ] });
+};
+const nexoraCoreConfig = {
+  platform: {
+    domain: "nexorasim.com",
+    repository: "github.com/nexorasim/nexorasim.github.io",
+    architecture: "2026 Microsoft Global Black Belt Standard",
+    deployment: "Azure Static Web Apps Premium"
+  },
+  microsoft: {
+    graphApi: "v6.2 + Beta",
+    fluentUi: "React 10 (November 2025)",
+    graphToolkit: "6.2",
+    azureStaticApps: "Premium",
+    entraId: "Conditional Access + PIM",
+    fabric: "Real-Time Intelligence + KQL",
+    copilotStudio: "Embedded Agent"
+  },
+  design: {
+    colors: {
+      pearl: "#F5F5F5",
+      black: "#000000",
+      accent: "#00D1FF",
+      graphite: "#333333",
+      glass: "rgba(245,245,245,0.7)"
+    },
+    typography: [
+      "Segoe UI Variable",
+      "Leelawadee UI",
+      "Noto Sans",
+      "system-ui"
+    ],
+    layout: {
+      hero: "Full-viewport 3D with GSAP + Three.js",
+      header: "Dynamic island (iOS 26 style)",
+      scrolling: "Parallax sections",
+      cards: "Glass with blur(24px)",
+      navigation: "Fixed mobile navigation",
+      copilot: "Floating glassmorphic orb"
+    }
+  },
+  languages: {
+    supported: ["en", "my", "zh", "th", "vi", "id", "ms"],
+    primary: "en",
+    translator: "Microsoft AI Translator"
+  },
+  security: {
+    zeroTrust: true,
+    ipAllowList: ["Myanmar", "Singapore", "Japan", "USA", "GB", "EU"],
+    cloudflare: true,
+    azureFrontDoor: true,
+    waf: true
+  },
+  capabilities: {
+    esim: [
+      "eSIM Transfer Android → Apple",
+      "Phone Number Registration",
+      "5G Network Integration",
+      "SIM → eSIM Migration",
+      "VoLTE HD Voice",
+      "Advanced Global Roaming",
+      "iPad eSIM Support",
+      "Quick Transfer iOS",
+      "Apple Watch Integration",
+      "Android Device Transfer",
+      "Wearables Support"
+    ],
+    enterprise: [
+      "Cloud-native Microservices",
+      "Network Authentication",
+      "Real-time Reporting & Analytics",
+      "Device Upgrade/Swap",
+      "Primary & Secondary Device Positioning",
+      "OpenID & Device Authentication",
+      "Push Notifications",
+      "Carrier Bundle Integration",
+      "SM-DP+ Integration",
+      "Multi-channel Service Orchestrator"
+    ],
+    realtime: [
+      "Microsoft Graph change notifications",
+      "SignalR streaming",
+      "Fabric Real-Time dashboards",
+      "Live network coverage maps",
+      "Speed test results",
+      "Server health monitoring",
+      "Roaming status updates",
+      "Device connectivity status"
+    ]
+  }
+};
+const EntitlementServer = React$1.lazy(() => __vitePreload(() => import("./EntitlementServer-SJcxMDXC.js"), true ? __vite__mapDeps([0,1,2,3]) : void 0, import.meta.url));
+const Features = React$1.lazy(() => __vitePreload(() => import("./Features-DVskcB4O.js"), true ? __vite__mapDeps([4,1,2,3]) : void 0, import.meta.url));
+const Architecture = React$1.lazy(() => __vitePreload(() => import("./Architecture-CBt8-kfe.js"), true ? __vite__mapDeps([5,1,2]) : void 0, import.meta.url));
+const Technology = React$1.lazy(() => __vitePreload(() => import("./Technology-C0bcFRRK.js"), true ? __vite__mapDeps([6,1,2]) : void 0, import.meta.url));
+const Enterprise = React$1.lazy(() => __vitePreload(() => import("./Enterprise-BWgcF3xV.js"), true ? __vite__mapDeps([7,1,2]) : void 0, import.meta.url));
+const API = React$1.lazy(() => __vitePreload(() => import("./API--eXc3L97.js"), true ? __vite__mapDeps([8,1,2]) : void 0, import.meta.url));
+const MPT = React$1.lazy(() => __vitePreload(() => import("./MPT-BiFlQvmm.js"), true ? __vite__mapDeps([9,1,2,3]) : void 0, import.meta.url));
+React$1.lazy(() => __vitePreload(() => import("./eSIMArchitecture-WdjmW0bX.js"), true ? __vite__mapDeps([10,1,2,3]) : void 0, import.meta.url));
+const Telecommunications = React$1.lazy(() => __vitePreload(() => import("./Telecommunications-FIcp49-F.js"), true ? __vite__mapDeps([11,1,2,3]) : void 0, import.meta.url));
+const nexoraTheme = {
+  ...webLightTheme,
+  colorBrandBackground: "#00D1FF",
+  colorBrandBackgroundHover: "#0099CC",
+  colorBrandBackgroundPressed: "#007AA3",
+  colorBrandForeground1: "#00D1FF",
+  colorBrandForeground2: "#0099CC",
+  colorNeutralBackground1: "#F5F5F5",
+  colorNeutralForeground1: "#000000",
+  colorNeutralForeground2: "#333333",
+  fontFamilyBase: "Segoe UI Variable, Leelawadee UI, Noto Sans, system-ui, sans-serif"
+};
+const LoadingFallback = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "app-loading", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "loading-container", children: [
+  /* @__PURE__ */ jsxRuntimeExports.jsx(Spinner, { size: "large", label: "Loading NexoraSIM..." }),
+  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Initializing Microsoft-powered platform..." })
+] }) });
+const ErrorBoundary = ({ children }) => {
+  const [hasError, setHasError] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    const handleError = (error) => {
+      console.error("Application error:", error);
+      setHasError(true);
+    };
+    window.addEventListener("error", handleError);
+    return () => window.removeEventListener("error", handleError);
+  }, []);
+  if (hasError) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "error-boundary", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "error-content", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Something went wrong" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "We're experiencing technical difficulties. Please refresh the page." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => window.location.reload(), children: "Refresh Page" })
+    ] }) });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children });
+};
+const NexoraCoreApp = () => {
+  const [appState, setAppState] = reactExports.useState({
+    currentLanguage: "en",
+    isLoading: true,
+    networkStatus: "online",
+    userPreferences: {
+      theme: "light",
+      animations: true,
+      accessibility: false
+    }
+  });
+  reactExports.useEffect(() => {
+    const initializeApp = async () => {
+      try {
+        const savedLanguage = localStorage.getItem("nexora-language") || "en";
+        const savedPreferences = localStorage.getItem("nexora-preferences");
+        let preferences = appState.userPreferences;
+        if (savedPreferences) {
+          preferences = { ...preferences, ...JSON.parse(savedPreferences) };
+        }
+        const browserLanguage = navigator.language.split("-")[0];
+        const supportedLanguages = nexoraCoreConfig.languages.supported;
+        const detectedLanguage = supportedLanguages.includes(browserLanguage) ? browserLanguage : savedLanguage;
+        setAppState((prev) => ({
+          ...prev,
+          currentLanguage: detectedLanguage,
+          userPreferences: preferences,
+          isLoading: false
+        }));
+        document.documentElement.lang = detectedLanguage;
+        document.body.className = `theme-${preferences.theme}`;
+      } catch (error) {
+        console.error("App initialization error:", error);
+        setAppState((prev) => ({ ...prev, isLoading: false }));
+      }
+    };
+    const handleOnline = () => setAppState((prev) => ({ ...prev, networkStatus: "online" }));
+    const handleOffline = () => setAppState((prev) => ({ ...prev, networkStatus: "offline" }));
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+    initializeApp();
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
+  const handleLanguageChange = (language) => {
+    setAppState((prev) => ({ ...prev, currentLanguage: language }));
+    localStorage.setItem("nexora-language", language);
+    document.documentElement.lang = language;
+    document.body.classList.remove("lang-myanmar", "lang-chinese", "lang-thai", "lang-vietnamese", "lang-indonesian", "lang-malay");
+    if (language !== "en") {
+      document.body.classList.add(`lang-${language === "my" ? "myanmar" : language === "zh" ? "chinese" : language === "th" ? "thai" : language === "vi" ? "vietnamese" : language === "id" ? "indonesian" : "malay"}`);
+    }
+  };
+  if (appState.isLoading) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(LoadingFallback, {});
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(ErrorBoundary, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(FluentProvider, { theme: nexoraTheme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(BrowserRouter, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "nexora-app", children: [
+      appState.networkStatus === "offline" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "network-status offline", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "You're currently offline. Some features may be limited." }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        NexoraCoreHeader,
+        {
+          currentLanguage: appState.currentLanguage,
+          onLanguageChange: handleLanguageChange
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "app-main", children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Suspense, { fallback: /* @__PURE__ */ jsxRuntimeExports.jsx(LoadingFallback, {}), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Route,
+          {
+            path: "/",
+            element: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              NexoraCoreHomePage,
+              {
+                currentLanguage: appState.currentLanguage
+              }
+            )
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/entitlement-server", element: /* @__PURE__ */ jsxRuntimeExports.jsx(EntitlementServer, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/features", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Features, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/architecture", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Architecture, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/technology", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Technology, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/enterprise", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Enterprise, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/api", element: /* @__PURE__ */ jsxRuntimeExports.jsx(API, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/operators/mpt", element: /* @__PURE__ */ jsxRuntimeExports.jsx(MPT, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/tech/esim-architecture", element: /* @__PURE__ */ jsxRuntimeExports.jsx("eSIMArchitecture", {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/industries/telecommunications", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Telecommunications, {}) }),
+        nexoraCoreConfig.languages.supported.map((lang) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Route,
+          {
+            path: `/${lang}/*`,
+            element: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              NexoraCoreHomePage,
+              {
+                currentLanguage: lang
+              }
+            )
+          },
+          lang
+        )),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Route,
+          {
+            path: "*",
+            element: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "not-found", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "Page Not Found" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "The page you're looking for doesn't exist." })
+            ] })
+          }
+        )
+      ] }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(NexoraCoreCopilot, { currentLanguage: appState.currentLanguage }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#main-content", className: "skip-link", children: "Skip to main content" })
+    ] }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("style", { jsx: true, children: `
+        .nexora-app {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .app-main {
+          flex: 1;
+          padding-top: 80px; /* Account for fixed header */
+        }
+
+        .app-loading {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          background: var(--pearl);
+        }
+
+        .loading-container {
+          text-align: center;
+          padding: var(--space-2xl);
+        }
+
+        .loading-container p {
+          margin-top: var(--space-lg);
+          color: var(--graphite);
+          font-size: var(--font-size-lg);
+        }
+
+        .error-boundary {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          background: var(--pearl);
+        }
+
+        .error-content {
+          text-align: center;
+          padding: var(--space-3xl);
+          background: white;
+          border-radius: var(--radius-xl);
+          box-shadow: var(--shadow-lg);
+          max-width: 500px;
+        }
+
+        .error-content h2 {
+          color: var(--black);
+          margin-bottom: var(--space-lg);
+        }
+
+        .error-content p {
+          color: var(--graphite);
+          margin-bottom: var(--space-xl);
+        }
+
+        .error-content button {
+          background: var(--accent);
+          color: white;
+          border: none;
+          padding: var(--space-md) var(--space-xl);
+          border-radius: var(--radius-md);
+          font-size: var(--font-size-base);
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .error-content button:hover {
+          background: #0099CC;
+        }
+
+        .network-status {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 2000;
+          padding: var(--space-sm);
+          text-align: center;
+          font-size: var(--font-size-sm);
+          font-weight: 500;
+        }
+
+        .network-status.offline {
+          background: #ff6b6b;
+          color: white;
+        }
+
+        .not-found {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 60vh;
+          text-align: center;
+          padding: var(--space-3xl);
+        }
+
+        .not-found h1 {
+          font-size: var(--font-size-4xl);
+          color: var(--black);
+          margin-bottom: var(--space-lg);
+        }
+
+        .not-found p {
+          font-size: var(--font-size-lg);
+          color: var(--graphite);
+        }
+
+        .skip-link {
+          position: absolute;
+          top: -40px;
+          left: 6px;
+          background: var(--accent);
+          color: white;
+          padding: 8px;
+          text-decoration: none;
+          border-radius: 4px;
+          z-index: 3000;
+          transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+          top: 6px;
+        }
+
+        /* Theme variations */
+        .theme-dark {
+          --pearl: #1a1a1a;
+          --black: #ffffff;
+          --graphite: #cccccc;
+          --glass: rgba(26, 26, 26, 0.7);
+        }
+
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+          .glass-card {
+            border: 2px solid var(--black);
+            background: var(--pearl);
+          }
+        }
+      ` })
+  ] });
+};
+if ("performance" in window && "mark" in window.performance) {
+  performance.mark("nexora-app-start");
+}
+if ("serviceWorker" in navigator && true) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").then((registration) => {
+      console.log("SW registered: ", registration);
+    }).catch((registrationError) => {
+      console.log("SW registration failed: ", registrationError);
+    });
+  });
+}
+const root = client.createRoot(document.getElementById("root"));
+root.render(
+  /* @__PURE__ */ jsxRuntimeExports.jsx(React$1.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(NexoraCoreApp, {}) })
+);
+if ("performance" in window && "measure" in window.performance) {
+  window.addEventListener("load", () => {
+    performance.mark("nexora-app-loaded");
+    performance.measure("nexora-app-load-time", "nexora-app-start", "nexora-app-loaded");
+    const measure = performance.getEntriesByName("nexora-app-load-time")[0];
+    console.log(`NexoraCore loaded in ${measure.duration.toFixed(2)}ms`);
+  });
+}
 export {
+  Link as L,
   ScrollTrigger as S,
   gsapWithCSS as g
 };
