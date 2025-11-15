@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexoraSIM - Page Not Found</title>
+  <meta http-equiv="refresh" content="0; url=./index.html" />
+  <script>
+    // GH Pages SPA redirect: preserve path and let the SPA router handle it
+    (function() {
+      var l = window.location;
+      var redirect = l.protocol + '//' + l.host + l.pathname.replace(/404\.html$/, '') + 'index.html' + (l.search || '') + (l.hash || '');
+      window.location.replace(redirect);
+    })();
+  </script>
+</head>
+<body>
+  <noscript>
+    <h1>Page Not Found</h1>
+    <p>Please enable JavaScript to continue.</p>
+    <a href="./index.html">Go to Home</a>
+  </noscript>
+</body>
+</html>

@@ -1,85 +1,361 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useLanguage } from '../hooks/useLanguage'
+import { Button } from '@fluentui/react-components'
+import { Mail24Regular, Globe24Regular, Code24Regular } from '@fluentui/react-icons'
 
 const Footer = () => {
-  const { language } = useLanguage()
-  
-  const content = {
-    en: {
-      description: 'Enterprise-grade eSIM platform for MPT, MYTEL, ATOM, and U9 networks. Powering the future of IoT connectivity.',
-      company: 'Company',
-      solutions: 'Solutions',
-      developers: 'Developers',
-      support: 'Support',
-      legal: 'Legal',
-      copyright: '2024 NexoraSIM. All rights reserved.'
+  const currentYear = new Date().getFullYear()
+
+  const footerSections = [
+    {
+      title: 'Platform',
+      links: [
+        { path: '/entitlement-server', label: 'Entitlement Server' },
+        { path: '/features', label: 'Features' },
+        { path: '/architecture', label: 'Architecture' },
+        { path: '/technology', label: 'Technology' },
+        { path: '/devices', label: 'Devices' },
+        { path: '/api', label: 'API Documentation' }
+      ]
     },
-    mm: {
-      description: 'MPT။ MYTEL။ ATOM နှင့် U9 ကွန်ယက်မြားအတွက် စီးပွားဖြစ်အဆင့်အမှင့် eSIM ပြက့ဖောင်။',
-      company: 'ကံပနီ',
-      solutions: 'ဖြေဗှေးချက်မြား',
-      developers: 'ဒေဗြေးကာမြား',
-      support: 'ပံ့ပိုးမှူ',
-      legal: 'အဖြစ်အကြင့်',
-      copyright: '2024 NexoraSIM။ အဖွင့်အပိုင်းမြား အချုပ်တောင်းပိုင့်ပါ။'
+    {
+      title: 'Solutions',
+      links: [
+        { path: '/transfer', label: 'eSIM Transfer' },
+        { path: '/migration', label: 'SIM Migration' },
+        { path: '/roaming', label: 'Global Roaming' },
+        { path: '/5g', label: '5G Streaming' },
+        { path: '/volte', label: 'VoLTE HD Voice' },
+        { path: '/security', label: 'Security' }
+      ]
+    },
+    {
+      title: 'Networks',
+      links: [
+        { path: '/partners/mpt', label: 'MPT Myanmar' },
+        { path: '/partners/mytel', label: 'MYTEL' },
+        { path: '/partners/atom', label: 'ATOM' },
+        { path: '/partners/u9', label: 'U9 Network' },
+        { path: '/partners', label: 'All Partners' },
+        { path: '/enterprise', label: 'Enterprise' }
+      ]
+    },
+    {
+      title: 'Company',
+      links: [
+        { path: '/about', label: 'About NexoraSIM' },
+        { path: '/team', label: 'Team' },
+        { path: '/careers', label: 'Careers' },
+        { path: '/news', label: 'News' },
+        { path: '/blog', label: 'Blog' },
+        { path: '/press', label: 'Press Kit' }
+      ]
+    },
+    {
+      title: 'Resources',
+      links: [
+        { path: '/whitepaper', label: 'Whitepaper' },
+        { path: '/brochure', label: 'Brochure' },
+        { path: '/flyer', label: 'Flyer' },
+        { path: '/compliance', label: 'Compliance' },
+        { path: '/support', label: 'Support' },
+        { path: '/faq', label: 'FAQ' }
+      ]
+    },
+    {
+      title: 'Languages',
+      links: [
+        { path: '/en', label: 'English' },
+        { path: '/zh', label: '中文 (Chinese)' },
+        { path: '/th', label: 'ไทย (Thai)' },
+        { path: '/vi', label: 'Tiếng Việt' },
+        { path: '/id', label: 'Bahasa Indonesia' },
+        { path: '/ms', label: 'Bahasa Malaysia' },
+        { path: '/mm', label: 'မြန်မာ (Myanmar)' }
+      ]
     }
-  }
-  
-  const t = content[language]
+  ]
 
   return (
-    <footer className="glass-panel border-t border-white/5 mt-20">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
-          <div className="lg:col-span-2">
-            <h3 className="text-xl font-bold text-gradient mb-4">NexoraSIM</h3>
-            <p className="text-accent/70 text-sm leading-relaxed">
-              {t.description}
-            </p>
+    <footer className="premium-footer">
+      <div className="footer-content">
+        <div className="footer-brand">
+          <div className="brand-logo">
+            <span className="logo-text">NexoraSIM</span>
+            <span className="logo-subtitle">Entertainment Server</span>
           </div>
-          
-          <div>
-            <h4 className="font-semibold text-accent mb-4">{t.company}</h4>
-            <div className="space-y-2 text-sm">
-              <Link to="/about" className="block text-accent/70 hover:text-accent transition-colors">About Us</Link>
-              <Link to="/careers" className="block text-accent/70 hover:text-accent transition-colors">Careers</Link>
-              <Link to="/news" className="block text-accent/70 hover:text-accent transition-colors">News</Link>
+          <p className="brand-description">
+            Enterprise-grade eSIM Profile Management platform for MPT, MYTEL, ATOM, 
+            and U9 networks in Myanmar. Premium streaming, 5G, and VoLTE support 
+            across ASEAN and globally.
+          </p>
+          <div className="contact-info">
+            <div className="contact-item">
+              <Globe24Regular />
+              <span>nexorasim.com</span>
             </div>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold text-accent mb-4">{t.solutions}</h4>
-            <div className="space-y-2 text-sm">
-              <Link to="/enterprise" className="block text-accent/70 hover:text-accent transition-colors">Enterprise</Link>
-              <Link to="/iot-overview" className="block text-accent/70 hover:text-accent transition-colors">IoT Overview</Link>
-              <Link to="/esim-basics" className="block text-accent/70 hover:text-accent transition-colors">eSIM Basics</Link>
+            <div className="contact-item">
+              <Mail24Regular />
+              <span>info@nexorasim.com</span>
             </div>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold text-accent mb-4">{t.developers}</h4>
-            <div className="space-y-2 text-sm">
-              <Link to="/docs" className="block text-accent/70 hover:text-accent transition-colors">Documentation</Link>
-              <Link to="/docs/api-reference" className="block text-accent/70 hover:text-accent transition-colors">API Reference</Link>
-              <Link to="/docs/sdk-guide" className="block text-accent/70 hover:text-accent transition-colors">SDK Guide</Link>
-            </div>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold text-accent mb-4">{t.legal}</h4>
-            <div className="space-y-2 text-sm">
-              <Link to="/terms" className="block text-accent/70 hover:text-accent transition-colors">Terms of Service</Link>
-              <Link to="/privacy" className="block text-accent/70 hover:text-accent transition-colors">Privacy Policy</Link>
-              <Link to="/compliance" className="block text-accent/70 hover:text-accent transition-colors">Compliance</Link>
+            <div className="contact-item">
+              <Code24Regular />
+              <span>github.com/nexorasim</span>
             </div>
           </div>
         </div>
-        
-        <div className="border-t border-white/10 mt-12 pt-8 text-center">
-          <p className="text-accent/60 text-sm">&copy; {t.copyright}</p>
+
+        <div className="footer-sections">
+          {footerSections.map((section, index) => (
+            <div key={index} className="footer-section">
+              <h3 className="section-title">{section.title}</h3>
+              <ul className="section-links">
+                {section.links.map((link, linkIndex) => (
+                  <li key={linkIndex}>
+                    <Link to={link.path} className="footer-link">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
+
+      <div className="footer-bottom">
+        <div className="footer-bottom-content">
+          <div className="copyright">
+            <p>&copy; {currentYear} NexoraSIM. All rights reserved.</p>
+            <p>Proprietary - Enterprise eSIM Platform</p>
+          </div>
+          
+          <div className="footer-links">
+            <Link to="/privacy" className="legal-link">Privacy Policy</Link>
+            <Link to="/terms" className="legal-link">Terms of Service</Link>
+            <Link to="/security" className="legal-link">Security</Link>
+            <Link to="/compliance" className="legal-link">Compliance</Link>
+          </div>
+
+          <div className="deployment-status">
+            <div className="status-indicator">
+              <div className="status-dot active"></div>
+              <span>System Operational</span>
+            </div>
+            <div className="build-info">
+              <span>v2.0.0 | Production Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .premium-footer {
+          background: var(--pearl);
+          border-top: 1px solid rgba(0,0,0,0.1);
+          margin-top: var(--space-3xl);
+        }
+
+        .footer-content {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: var(--space-3xl) var(--space-lg);
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          gap: var(--space-3xl);
+        }
+
+        .footer-brand {
+          max-width: 400px;
+        }
+
+        .brand-logo {
+          margin-bottom: var(--space-lg);
+        }
+
+        .logo-text {
+          display: block;
+          font-size: 2rem;
+          font-weight: 700;
+          background: linear-gradient(135deg, var(--black) 0%, var(--accent) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .logo-subtitle {
+          display: block;
+          font-size: 1rem;
+          color: var(--graphite);
+          font-weight: 500;
+          margin-top: var(--space-xs);
+        }
+
+        .brand-description {
+          color: var(--graphite);
+          line-height: 1.6;
+          margin-bottom: var(--space-lg);
+        }
+
+        .contact-info {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-sm);
+        }
+
+        .contact-item {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+          color: var(--graphite);
+          font-size: 0.9rem;
+        }
+
+        .footer-sections {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: var(--space-xl);
+        }
+
+        .footer-section {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: var(--black);
+          margin-bottom: var(--space-md);
+        }
+
+        .section-links {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-sm);
+        }
+
+        .footer-link {
+          color: var(--graphite);
+          text-decoration: none;
+          font-size: 0.9rem;
+          transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+          color: var(--accent);
+        }
+
+        .footer-bottom {
+          border-top: 1px solid rgba(0,0,0,0.1);
+          background: rgba(0,0,0,0.02);
+        }
+
+        .footer-bottom-content {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: var(--space-lg);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: var(--space-lg);
+        }
+
+        .copyright {
+          color: var(--graphite);
+          font-size: 0.85rem;
+        }
+
+        .footer-links {
+          display: flex;
+          gap: var(--space-lg);
+        }
+
+        .legal-link {
+          color: var(--graphite);
+          text-decoration: none;
+          font-size: 0.85rem;
+          transition: color 0.3s ease;
+        }
+
+        .legal-link:hover {
+          color: var(--accent);
+        }
+
+        .deployment-status {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: var(--space-xs);
+        }
+
+        .status-indicator {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+          font-size: 0.85rem;
+          color: var(--graphite);
+        }
+
+        .status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #10B981;
+        }
+
+        .status-dot.active {
+          animation: pulse 2s infinite;
+        }
+
+        .build-info {
+          font-size: 0.75rem;
+          color: var(--graphite);
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 1024px) {
+          .footer-content {
+            grid-template-columns: 1fr;
+            gap: var(--space-xl);
+          }
+
+          .footer-sections {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .footer-content {
+            padding: var(--space-xl) var(--space-lg);
+          }
+
+          .footer-sections {
+            grid-template-columns: 1fr;
+          }
+
+          .footer-bottom-content {
+            flex-direction: column;
+            text-align: center;
+            gap: var(--space-md);
+          }
+
+          .footer-links {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+
+          .deployment-status {
+            align-items: center;
+          }
+        }
+      `}</style>
     </footer>
   )
 }
