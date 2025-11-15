@@ -97,6 +97,11 @@ self.addEventListener('fetch', (event) => {
 async function handleAppRequest(request) {
   const url = new URL(request.url);
   
+  // Validate request origin for security
+  if (request.referrer && !isValidOrigin(request.referrer)) {
+    return new Response('Forbidden', { status: 403 });
+  }
+  
   try {
     // Try cache first
     const cachedResponse = await caches.match(request);
@@ -104,8 +109,11 @@ async function handleAppRequest(request) {
       return cachedResponse;
     }
 
-    // Try network
-    const networkResponse = await fetch(request);
+    // Try network with security headers
+    const networkResponse = await fetch(request, {
+      credentials: 'same-origin',
+      mode: 'same-origin'
+    });
     
     // Cache successful responses
     if (networkResponse.ok) {
@@ -143,9 +151,17 @@ async function handleAppRequest(request) {
 
 // Handle Microsoft Graph API requests
 async function handleApiRequest(request) {
+  // Validate API request
+  if (!isValidApiRequest(request)) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+  
   try {
     // Always try network first for API requests
-    const networkResponse = await fetch(request);
+    const networkResponse = await fetch(request, {
+      credentials: 'include',
+      mode: 'cors'
+    });
     
     // Cache successful GET requests
     if (networkResponse.ok && request.method === 'GET') {
@@ -284,5 +300,25 @@ self.addEventListener('message', (event) => {
     event.ports[0].postMessage({ version: CACHE_NAME });
   }
 });
+
+// Security validation functions
+function isValidOrigin(referrer) {
+  const allowedOrigins = [
+    'https://nexorasim.github.io',
+    'https://portal.nexorasim.com',
+    'http://localhost:3000'
+  ];
+  try {
+    const origin = new URL(referrer).origin;
+    return allowedOrigins.includes(origin);
+  } catch {
+    return false;
+  }
+}
+
+function isValidApiRequest(request) {
+  const authHeader = request.headers.get('Authorization');
+  return authHeader && authHeader.startsWith('Bearer ');
+}
 
 console.log('NexoraCore Service Worker loaded successfully');
