@@ -8,10 +8,10 @@ export default defineConfig({
     assetsDir: 'assets',
     minify: 'esbuild',
     rollupOptions: {
+      external: ['three', 'gsap', 'gsap/ScrollTrigger'],
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom']
+          vendor: ['react', 'react-dom']
         }
       }
     }
