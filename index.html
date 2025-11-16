@@ -1,12 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NexoraSIM Entertainment Server</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexoraSIM Entertainment Server - Premium IoT eSIM Platform</title>
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https:;">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Premium IoT eSIM Entertainment Server platform with Azure IoT Hub integration, real-time telemetry, and Microsoft-powered architecture">
+  <meta name="keywords" content="IoT eSIM, entertainment server, Azure IoT Hub, digital twins, real-time telemetry, Microsoft Graph">
+  <meta name="author" content="NexoraSIM">
+  <link rel="canonical" href="https://nexorasim.github.io/">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nexorasim.github.io/">
+  <meta property="og:title" content="NexoraSIM Entertainment Server - Premium IoT eSIM Platform">
+  <meta property="og:description" content="Premium IoT eSIM platform with Azure IoT Hub integration and real-time telemetry">
+  <meta property="og:image" content="https://nexorasim.github.io/assets/images/og-image.png">
+  
+  <!-- Microsoft Graph Toolkit -->
+  <script type="module" src="https://unpkg.com/@microsoft/mgt@4/dist/bundle/mgt-loader.js"></script>
+  
+  <!-- Fluent UI Web Components -->
+  <script type="module" src="https://unpkg.com/@fluentui/web-components@3/dist/web-components.js"></script>
+  
+  <!-- GSAP 5.1 Ultimate -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Observer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Flip.min.js"></script>
+  
+  <!-- Three.js r205 WebGPU -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+      }
+    }
+  </script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#00D1FF">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/fluent-pearl-iot-theme.css">
+  <link rel="stylesheet" href="css/glassmorphism-iot-premium.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <!-- Dynamic Island Header -->
+  <header class="dynamic-island-header" id="dynamicHeader">
+    <nav class="pearl-nav">
+      <div class="nav-brand">
+        <span class="brand-text">NexoraSIM</span>
+        <span class="brand-subtitle">IoT Entertainment Server</span>
+      </div>
+      
+      <div class="nav-menu">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#architecture" class="nav-link">Architecture</a>
+        <a href="#iot-dashboard" class="nav-link">IoT Dashboard</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+      
+      <div class="nav-actions">
+        <div class="live-telemetry">
+          <div class="telemetry-dot"></div>
+          <span id="deviceCount">0</span> Devices
+        </div>
+        <fluent-button appearance="accent">Enterprise</fluent-button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 3D IoT Hero Section -->
+  <section class="hero-3d-iot" id="home">
+    <canvas id="iotCanvas" class="iot-canvas"></canvas>
+    
+    <div class="hero-content">
+      <div class="hero-glass-card">
+        <h1 class="hero-title">
+          Premium IoT eSIM
+          <span class="accent-text">Entertainment Server</span>
+        </h1>
+        <p class="hero-subtitle">
+          Azure IoT Hub powered platform with real-time telemetry, 
+          digital twins, and Microsoft Graph integration
+        </p>
+        
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="liveDevices">0</span>
+            <span class="stat-label">Live Devices</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="networkHealth">99.9%</span>
+            <span class="stat-label">Network Health</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="latency">12ms</span>
+            <span class="stat-label">Avg Latency</span>
+          </div>
+        </div>
+        
+        <div class="hero-actions">
+          <fluent-button appearance="accent" size="large">
+            Explore IoT Platform
+          </fluent-button>
+          <fluent-button appearance="outline" size="large">
+            View Architecture
+          </fluent-button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Floating IoT Indicators -->
+    <div class="iot-indicators">
+      <div class="indicator-item" data-type="esim">
+        <div class="indicator-icon"></div>
+        <span>eSIM Cards</span>
+      </div>
+      <div class="indicator-item" data-type="watch">
+        <div class="indicator-icon"></div>
+        <span>Smart Watches</span>
+      </div>
+      <div class="indicator-item" data-type="vehicle">
+        <div class="indicator-icon"></div>
+        <span>Connected Vehicles</span>
+      </div>
+      <div class="indicator-item" data-type="sensor">
+        <div class="indicator-icon"></div>
+        <span>Industrial Sensors</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- IoT Features Grid -->
+  <section class="features-iot" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">IoT Smart Features</h2>
+        <p class="section-subtitle">25 premium features with live telemetry integration</p>
+      </div>
+      
+      <div class="features-grid" id="featuresGrid">
+        <!-- Features will be dynamically generated -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Diagram -->
+  <section class="architecture-iot" id="architecture">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">IoT Architecture</h2>
+        <p class="section-subtitle">Azure IoT Hub + Digital Twins + Real-time Analytics</p>
+      </div>
+      
+      <div class="architecture-diagram">
+        <div class="arch-layer" data-layer="edge">
+          <h3>IoT Edge</h3>
+          <div class="arch-components">
+            <div class="arch-component">Device Provisioning</div>
+            <div class="arch-component">Edge Runtime</div>
+            <div class="arch-component">Local Processing</div>
+          </div>
+        </div>
+        
+        <div class="arch-layer" data-layer="cloud">
+          <h3>Azure Cloud</h3>
+          <div class="arch-components">
+            <div class="arch-component">IoT Hub</div>
+            <div class="arch-component">Digital Twins</div>
+            <div class="arch-component">Stream Analytics</div>
+          </div>
+        </div>
+        
+        <div class="arch-layer" data-layer="intelligence">
+          <h3>Real-time Intelligence</h3>
+          <div class="arch-components">
+            <div class="arch-component">Fabric KQL</div>
+            <div class="arch-component">SignalR Service</div>
+            <div class="arch-component">Power BI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live IoT Dashboard -->
+  <section class="iot-dashboard" id="iot-dashboard">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Live IoT Dashboard</h2>
+        <p class="section-subtitle">Real-time telemetry from global device fleet</p>
+      </div>
+      
+      <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <h3>Device Fleet Status</h3>
+          <div class="fleet-visualization" id="fleetViz"></div>
+        </div>
+        
+        <div class="dashboard-card">
+          <h3>Network Performance</h3>
+          <div class="performance-chart" id="perfChart"></div>
+        </div>
+        
+        <div class="dashboard-card">
+          <h3>Global Coverage Map</h3>
+          <div class="coverage-map" id="coverageMap"></div>
+        </div>
+        
+        <div class="dashboard-card">
+          <h3>Real-time Metrics</h3>
+          <div class="metrics-display" id="metricsDisplay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Copilot Orb -->
+  <div class="copilot-orb" id="copilotOrb">
+    <div class="orb-inner">
+      <div class="orb-pulse"></div>
+    </div>
+  </div>
+
+  <!-- Premium Footer -->
+  <footer class="premium-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>NexoraSIM Entertainment Server</h3>
+          <p>Premium IoT eSIM platform powered by Microsoft Azure</p>
+        </div>
+        
+        <div class="footer-links">
+          <div class="link-group">
+            <h4>Platform</h4>
+            <a href="#features">Features</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#iot-dashboard">IoT Dashboard</a>
+          </div>
+          
+          <div class="link-group">
+            <h4>Resources</h4>
+            <a href="/docs">Documentation</a>
+            <a href="/api">API Reference</a>
+            <a href="/support">Support</a>
+          </div>
+          
+          <div class="link-group">
+            <h4>Connect</h4>
+            <a href="https://github.com/nexorasim">GitHub</a>
+            <a href="/contact">Contact</a>
+            <a href="/enterprise">Enterprise</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 NexoraSIM. All rights reserved.</p>
+        <div class="footer-status">
+          <div class="status-indicator"></div>
+          <span>All systems operational</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="js/three-webgpu-iot-init.js"></script>
+  <script type="module" src="js/azure-iot-hub-client.js"></script>
+  <script type="module" src="js/premium-iot-scroll-animations.js"></script>
+  <script type="module" src="js/gsap-iot-master.js"></script>
+  
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  </script>
 </body>
 </html>
