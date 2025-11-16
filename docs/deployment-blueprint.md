@@ -7,7 +7,7 @@ This blueprint details deployment via GitHub Pages (nexorasim.github.io) and pro
 - GitHub Pages: Publish from `gh-pages` branch or `docs/` folder; we recommend GitHub Action to push `dist/` to `gh-pages`.
 
 ### GitHub Pages Steps
-1. Create repo settings → Pages → Deploy from branch `gh-pages` (root), or use Actions.
+1. Create repo settings  Pages  Deploy from branch `gh-pages` (root), or use Actions.
 2. Add workflow to build and deploy on push to `main`.
 
 ### Sample Workflow (reference)
@@ -43,7 +43,7 @@ jobs:
 - Enforce RBAC in API gateway with route-based policies and claims mapping.
 
 ## Retry Queues
-- Outbox pattern for SM-DP+ calls: persist command → dispatch → track status → retry/backoff (e.g., 1s, 5s, 25s, 2m, 10m) with jitter. Dead-letter after N attempts with alerting.
+- Outbox pattern for SM-DP+ calls: persist command  dispatch  track status  retry/backoff (e.g., 1s, 5s, 25s, 2m, 10m) with jitter. Dead-letter after N attempts with alerting.
 
 ## Monitoring Hooks
 - Health endpoints per adapter: `/health/adapters/{id}`.

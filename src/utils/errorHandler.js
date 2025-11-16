@@ -9,7 +9,7 @@ export class ErrorHandler {
     }
     
     if (process.env.NODE_ENV === 'development') {
-      console.error(`[${context}] Error:`, error)
+      
     }
     
     return errorData

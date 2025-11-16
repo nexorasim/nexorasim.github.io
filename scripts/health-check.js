@@ -138,12 +138,12 @@ class HealthChecker {
   }
 
   async runHealthCheck() {
-    console.log('🏥 NexoraSIM Health Check Starting...')
-    console.log('=' .repeat(60))
-    console.log(`🌐 Target: ${SITE_URL}`)
-    console.log(`⏱️  Timeout: ${TIMEOUT}ms`)
-    console.log(`📊 Pages to check: ${criticalPages.length}`)
-    console.log('')
+    
+    )
+    
+    
+    
+    
 
     const startTime = performance.now()
     let totalResponseTime = 0
@@ -151,7 +151,7 @@ class HealthChecker {
     // Check each critical page
     for (const page of criticalPages) {
       const url = `${SITE_URL}${page}`
-      console.log(`🔍 Checking: ${page}`)
+      
 
       const result = await this.checkUrl(url)
       const seoCheck = await this.checkSEO(url)
@@ -178,21 +178,21 @@ class HealthChecker {
 
       if (result.success) {
         this.results.metrics.passedChecks++
-        console.log(`  ✅ ${result.status} - ${result.responseTime}ms`)
+        
       } else {
         this.results.metrics.failedChecks++
-        console.log(`  ❌ ${result.status || 'ERROR'} - ${result.error || 'Unknown error'}`)
+        
       }
 
       if (!seoCheck.seo && seoCheck.issues.length > 0) {
-        console.log(`  ⚠️  SEO Issues: ${seoCheck.issues.join(', ')}`)
+        }`)
       }
 
       if (!securityCheck.secure && securityCheck.issues.length > 0) {
-        console.log(`  🔒 Security Issues: ${securityCheck.issues.join(', ')}`)
+        }`)
       }
 
-      console.log('')
+      
     }
 
     // Calculate metrics
@@ -216,71 +216,71 @@ class HealthChecker {
   }
 
   displayResults() {
-    console.log('📊 HEALTH CHECK RESULTS')
-    console.log('=' .repeat(60))
-    console.log(`🎯 Overall Status: ${this.getStatusEmoji()} ${this.results.overall}`)
-    console.log(`📈 Availability: ${this.results.metrics.availability.toFixed(1)}%`)
-    console.log(`⚡ Average Response Time: ${this.results.metrics.averageResponseTime}ms`)
-    console.log(`✅ Passed: ${this.results.metrics.passedChecks}/${this.results.metrics.totalChecks}`)
-    console.log(`❌ Failed: ${this.results.metrics.failedChecks}/${this.results.metrics.totalChecks}`)
-    console.log(`⏱️  Total Duration: ${this.results.metrics.totalDuration}ms`)
-    console.log('')
+    
+    )
+    } ${this.results.overall}`)
+    }%`)
+    
+    
+    
+    
+    
 
     // Performance assessment
     if (this.results.metrics.averageResponseTime > thresholds.responseTime) {
-      console.log(`⚠️  WARNING: Average response time (${this.results.metrics.averageResponseTime}ms) exceeds threshold (${thresholds.responseTime}ms)`)
+       exceeds threshold (${thresholds.responseTime}ms)`)
     }
 
     if (this.results.metrics.availability < thresholds.availability) {
-      console.log(`⚠️  WARNING: Availability (${this.results.metrics.availability.toFixed(1)}%) below threshold (${thresholds.availability}%)`)
+      }%) below threshold (${thresholds.availability}%)`)
     }
 
     // Failed checks details
     const failedChecks = this.results.checks.filter(check => !check.success)
     if (failedChecks.length > 0) {
-      console.log('\n❌ FAILED CHECKS:')
+      
       failedChecks.forEach(check => {
-        console.log(`   ${check.page}: ${check.error || 'Unknown error'}`)
+        
       })
     }
 
     // SEO issues
     const seoIssues = this.results.checks.filter(check => !check.seo && check.seoIssues.length > 0)
     if (seoIssues.length > 0) {
-      console.log('\n⚠️  SEO ISSUES:')
+      
       seoIssues.forEach(check => {
-        console.log(`   ${check.page}: ${check.seoIssues.join(', ')}`)
+        }`)
       })
     }
 
     // Security issues
     const securityIssues = this.results.checks.filter(check => !check.security && check.securityIssues.length > 0)
     if (securityIssues.length > 0) {
-      console.log('\n🔒 SECURITY ISSUES:')
+      
       securityIssues.forEach(check => {
-        console.log(`   ${check.page}: ${check.securityIssues.join(', ')}`)
+        }`)
       })
     }
 
-    console.log('')
-    console.log('🏥 Health check completed!')
+    
+    
     
     if (this.results.overall === 'UNHEALTHY') {
-      console.log('🚨 CRITICAL: Site is experiencing significant issues')
+      
       process.exit(1)
     } else if (this.results.overall === 'DEGRADED') {
-      console.log('⚠️  WARNING: Site performance is degraded')
+      
     } else {
-      console.log('✅ SUCCESS: Site is healthy and performing well')
+      
     }
   }
 
   getStatusEmoji() {
     switch (this.results.overall) {
-      case 'HEALTHY': return '✅'
-      case 'DEGRADED': return '⚠️'
-      case 'UNHEALTHY': return '❌'
-      default: return '❓'
+      case 'HEALTHY': return ''
+      case 'DEGRADED': return ''
+      case 'UNHEALTHY': return ''
+      default: return ''
     }
   }
 }
@@ -289,7 +289,7 @@ class HealthChecker {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const checker = new HealthChecker()
   checker.runHealthCheck().catch(error => {
-    console.error('❌ Health check failed:', error)
+    
     process.exit(1)
   })
 }

@@ -163,11 +163,11 @@ const allPages = {
   ]
 }
 
-// Language codes for multi-language support (175 pages = 25 × 7 languages)
+// Language codes for multi-language support (175 pages = 25  7 languages)
 const languages = ['en', 'zh', 'th', 'vi', 'id', 'ms', 'mm']
 
 function generateSitemap() {
-  console.log('🗺️  Generating comprehensive sitemap for 300 pages...')
+  
   
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -223,10 +223,10 @@ function generateSitemap() {
   // Write sitemap file
   fs.writeFileSync(OUTPUT_PATH, xml, 'utf8')
   
-  console.log(`✅ Sitemap generated successfully!`)
-  console.log(`📊 Total URLs: ${totalUrls}`)
-  console.log(`📁 Output: ${OUTPUT_PATH}`)
-  console.log(`🌐 Site URL: ${SITE_URL}`)
+  
+  
+  
+  
   
   // Generate robots.txt
   const robotsContent = `User-agent: *
@@ -256,7 +256,7 @@ Allow: /use-cases/
 
   const robotsPath = path.join(__dirname, '../public/robots.txt')
   fs.writeFileSync(robotsPath, robotsContent, 'utf8')
-  console.log(`🤖 robots.txt updated`)
+  
   
   return totalUrls
 }
@@ -265,10 +265,10 @@ Allow: /use-cases/
 if (import.meta.url === `file://${process.argv[1]}`) {
   try {
     const totalUrls = generateSitemap()
-    console.log(`\n🎉 Sitemap generation completed successfully!`)
-    console.log(`📈 Ready for search engine indexing with ${totalUrls} URLs`)
+    
+    
   } catch (error) {
-    console.error('❌ Sitemap generation failed:', error)
+    
     process.exit(1)
   }
 }

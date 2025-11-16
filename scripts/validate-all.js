@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-console.log('NexoraSIM 100% System Validator')
-console.log('Validating all operations: install, register, download, run, enable')
+
+
 
 const operations = [
   { name: 'Install Operation', status: 'validated', errors: 0, dataCheck: 'passed' },
@@ -11,8 +11,8 @@ const operations = [
 ]
 
 operations.forEach(op => {
-  console.log(`✓ ${op.name}: ${op.status} - ${op.errors} errors - data check ${op.dataCheck}`)
+  
 })
 
-console.log('100% System Validation Complete - All operations validated')
+
 process.exit(0)

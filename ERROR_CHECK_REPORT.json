@@ -1,0 +1,561 @@
+{
+  "timestamp": "2025-11-16T11:26:10.084Z",
+  "summary": {
+    "totalChecks": 82,
+    "errors": 23,
+    "warnings": 0
+  },
+  "checks": [
+    {
+      "file": "dist\\assets\\API-c4397891.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\Architecture-fb82c157.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\Enterprise-6ccbc7c2.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\EntitlementServer-ea9d0589.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\eSIMArchitecture-8cce5916.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\Features-c77c57f3.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\index-e2568c40.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\microsoft-95e6f48a.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\MPT-2edc0d66.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\PrivacyPolicy-5a51a289.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\SearchPage-919dd8bb.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\Technology-743e4d8e.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\Telecommunications-bee30fbc.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\three-d224ca6a.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\assets\\vendor-e900fba2.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\sw-secure.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "dist\\sw.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "enterprise-deployment\\cloudflare\\workers\\api-gateway.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "microsoft-deployment\\scripts\\deploy-github.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "microsoft-deployment\\scripts\\validate-microsoft-stack.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "microsoft-deployment\\src\\data\\routes.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "microsoft-deployment\\vite.config.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "postcss.config.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "public\\sw-secure.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "public\\sw.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\api-validation.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\comprehensive-audit.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\comprehensive-error-scan.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\deploy-github.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\enable-all.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\error-check-fixed.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\error-check.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\fix-audit-issues.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\generate-sitemap.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\git-error-check.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\git-github-check.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\github-operations.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\health-check.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\no-emoji-check.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\operations-manager.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\secure-path-validator.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\validate-all.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\validate-microsoft-stack.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "scripts\\validate-routes.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\config\\security.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\adapters\\AdapterInterface.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\adapters\\ATOMAdapter.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\adapters\\MPTAdapter.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\adapters\\MYTELAdapter.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\adapters\\U9Adapter.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\AndroidIntegration.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\ComplianceManager.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\DataErrorValidator.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\DeploymentManager.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\ePMSystem.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\EUICCManager.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\LPAService.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\NexoraDevelopmentSystem.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\NexoraSIMSystem.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\ProfileLifecycle.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\RSPComponents.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\SystemArchitecture.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\SystemErrorCheck.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\SystemValidator.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\TestingFramework.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\core\\ValidationSystem.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\data\\api-docs-secure.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\data\\api-docs.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\data\\routes.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\utils\\constants.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\utils\\dataValidator.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\utils\\errorHandler.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\utils\\pathValidator.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\utils\\seoHelpers.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "src\\utils\\systemMonitor.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "tailwind.config.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "vite.config.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "wsl-dev\\nexorasim-entertainment-server\\postcss.config.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "wsl-dev\\nexorasim-entertainment-server\\vite.config.js",
+      "type": "JS Syntax",
+      "status": "passed"
+    },
+    {
+      "file": "package.json",
+      "type": "Dependencies",
+      "status": "checked"
+    },
+    {
+      "file": "vite.config.js",
+      "type": "Config",
+      "status": "valid"
+    },
+    {
+      "file": ".eslintrc.json",
+      "type": "Config",
+      "status": "valid"
+    }
+  ],
+  "errors": [
+    {
+      "file": "dist\\assets\\index-e2568c40.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "dist\\assets\\three-d224ca6a.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "microsoft-deployment\\scripts\\deploy-github.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "microsoft-deployment\\scripts\\validate-microsoft-stack.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "microsoft-deployment\\scripts\\validate-microsoft-stack.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\api-validation.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\api-validation.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\comprehensive-audit.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\comprehensive-audit.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\deploy-github.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\error-check-fixed.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\error-check.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\git-error-check.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\git-error-check.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\git-github-check.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\git-github-check.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\github-operations.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\health-check.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\operations-manager.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\operations-manager.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\validate-microsoft-stack.js",
+      "type": "Syntax Error",
+      "message": "Mismatched braces",
+      "severity": "high"
+    },
+    {
+      "file": "scripts\\validate-microsoft-stack.js",
+      "type": "Syntax Error",
+      "message": "Incomplete template literal",
+      "severity": "high"
+    },
+    {
+      "file": "tsconfig.json",
+      "type": "Config Error",
+      "message": "Invalid tsconfig.json: Expected double-quoted property name in JSON at position 195 (line 9 column 5)",
+      "severity": "high"
+    }
+  ],
+  "warnings": []
+}

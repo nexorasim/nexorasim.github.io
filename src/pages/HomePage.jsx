@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, Card, CardHeader, CardPreview } from '@fluentui/react-components'
 import { ArrowRight24Regular, Play24Regular, Shield24Regular, Globe24Regular, CloudSync24Regular } from '@fluentui/react-icons'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Sphere, Box, Text3D } from '@react-three/drei'
-import * as THREE from 'three'
+import { OrbitControls, Sphere, Box } from '@react-three/drei'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -39,7 +38,7 @@ const ThreeBackground = () => {
           scale={[0.3, 0.2, 0.02]}
           rotation={[i * 0.2, i * 0.3, i * 0.1]}
         >
-          <meshStandardMaterial color="#00D1FF" transparent opacity={0.7} />
+          <meshStandardMaterial color="#00D1FF" transparent={true} opacity={0.7} />
         </Box>
       ))}
       
@@ -70,7 +69,7 @@ const ThreeBackground = () => {
           scale={[0.05, 0.05, Math.random() * 2 + 1]}
           rotation={[Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI]}
         >
-          <meshStandardMaterial color="#333333" transparent opacity={0.4} />
+          <meshStandardMaterial color="#333333" transparent={true} opacity={0.4} />
         </Box>
       ))}
     </group>
@@ -194,7 +193,7 @@ const HomePage = () => {
         <div className="hero-content">
           <h1 className="hero-title">NexoraSIM Entertainment Server</h1>
           <p className="hero-subtitle">
-            Enterprise eSIM platform powering premium streaming across Myanmar's leading networks
+            Enterprise eSIM platform powering premium streaming across Myanmar&apos;s leading networks
           </p>
           <div className="hero-actions">
             <Button appearance="primary" size="large" as={Link} to="/entitlement-server">
@@ -298,7 +297,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <style jsx>{`
+      <style>{`
         .home-page {
           min-height: 100vh;
         }

@@ -19,7 +19,7 @@ class GitHubOperations {
     }
 
     log(message) {
-        console.log(`[${new Date().toISOString()}] ${message}`);
+        .toISOString()}] ${message}`);
     }
 
     async create() {
@@ -143,7 +143,7 @@ coverage/
     }
 
     async runAll() {
-        console.log('GitHub Operations - Starting Full Pipeline\n');
+        
         
         const operations = [
             { name: 'CREATE', fn: () => this.create() },
@@ -169,16 +169,16 @@ coverage/
             }
         }
 
-        console.log('\n' + '='.repeat(50));
-        console.log('GITHUB OPERATIONS RESULTS');
-        console.log('='.repeat(50));
-        console.log(`COMPLETED: ${success}/${operations.length}`);
-        console.log(`SUCCESS RATE: ${Math.round((success / operations.length) * 100)}%`);
+        );
+        
+        );
+        
+         * 100)}%`);
         
         if (success === operations.length) {
-            console.log('STATUS: ALL OPERATIONS COMPLETED SUCCESSFULLY');
+            
         } else {
-            console.log('STATUS: SOME OPERATIONS FAILED - REVIEW REQUIRED');
+            
         }
     }
 }
@@ -195,5 +195,5 @@ switch (operation) {
     case 'dev': ops.dev(); break;
     case 'deploy': ops.deploy(); break;
     case 'all': ops.runAll(); break;
-    default: console.log('Usage: node github-operations.js [create|update|delete|install|run|dev|deploy|all]');
+    default: 
 }

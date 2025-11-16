@@ -5,6 +5,7 @@ import { Navigation24Regular, Globe24Regular } from '@fluentui/react-icons'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
@@ -55,22 +56,23 @@ const Header = () => {
 
   const languages = [
     { code: 'en', label: 'English' },
-    { code: 'zh', label: '中文' },
-    { code: 'th', label: 'ไทย' },
-    { code: 'vi', label: 'Tiếng Việt' },
+    { code: 'zh', label: 'Chinese' },
+    { code: 'th', label: 'Thai' },
+    { code: 'vi', label: 'Vietnamese' },
     { code: 'id', label: 'Bahasa Indonesia' },
     { code: 'ms', label: 'Bahasa Malaysia' },
-    { code: 'mm', label: 'မြန်မာ' }
+    { code: 'mm', label: 'Myanmar' }
   ]
 
   return (
     <header className={`dynamic-island ${isScrolled ? 'scrolled' : ''}`}>
-      <nav className="header-nav">
-        <Link to="/" className="logo">
+      <a href="#main-content" className="skip-link">Skip to content</a>
+      <nav className="header-nav" role="navigation" aria-label="Main navigation">
+        <Link to="/" className="logo" aria-label="Go to NexoraSIM home">
           <span className="logo-text">NexoraSIM</span>
         </Link>
 
-        <div className="nav-menu">
+        <div className={`nav-menu ${mobileOpen ? 'open' : ''}`} id="primary-navigation">
           {mainNavItems.map(item => (
             <Link
               key={item.path}
@@ -83,7 +85,7 @@ const Header = () => {
 
           <Menu>
             <MenuTrigger disableButtonEnhancement>
-              <Button appearance="subtle">Solutions</Button>
+              <Button appearance="subtle" aria-label="Open Solutions menu">Solutions</Button>
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
@@ -100,7 +102,7 @@ const Header = () => {
 
           <Menu>
             <MenuTrigger disableButtonEnhancement>
-              <Button appearance="subtle">Company</Button>
+              <Button appearance="subtle" aria-label="Open Company menu">Company</Button>
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
@@ -117,7 +119,7 @@ const Header = () => {
 
           <Menu>
             <MenuTrigger disableButtonEnhancement>
-              <Button appearance="subtle">Support</Button>
+              <Button appearance="subtle" aria-label="Open Support menu">Support</Button>
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
@@ -136,7 +138,7 @@ const Header = () => {
         <div className="header-actions">
           <Menu>
             <MenuTrigger disableButtonEnhancement>
-              <Button appearance="subtle" icon={<Globe24Regular />}>
+              <Button appearance="subtle" icon={<Globe24Regular />} aria-label="Open Language menu">
                 Language
               </Button>
             </MenuTrigger>
@@ -162,10 +164,32 @@ const Header = () => {
           appearance="subtle"
           icon={<Navigation24Regular />}
           className="mobile-menu-toggle"
+          aria-label="Toggle navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen(o => !o)}
         />
       </nav>
 
-      <style jsx>{`
+      <style>{`
+        .skip-link {
+          position: absolute;
+          left: -10000px;
+          top: auto;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+        }
+        .skip-link:focus {
+          position: static;
+          width: auto;
+          height: auto;
+          margin: var(--space-sm);
+          padding: var(--space-sm) var(--space-md);
+          background: var(--accent);
+          color: #fff;
+          border-radius: var(--radius-small);
+        }
         .header-nav {
           display: flex;
           align-items: center;
@@ -233,6 +257,21 @@ const Header = () => {
         @media (max-width: 768px) {
           .nav-menu {
             display: none;
+          }
+
+          .nav-menu.open {
+            display: flex;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            background: var(--glass);
+            backdrop-filter: var(--blur-intense);
+            padding: var(--space-md);
+            gap: var(--space-sm);
+            border-radius: var(--radius-medium);
+            border: 1px solid rgba(255,255,255,0.2);
           }
 
           .header-actions {

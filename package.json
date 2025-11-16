@@ -1,91 +1,68 @@
 {
-  "name": "nexorasim-entertainment-server",
+  "name": "@nexorasim/entertainment-server",
   "version": "2.0.0",
-  "description": "NexoraSIM Entertainment Server - Premium Microsoft-Only Landing Website",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 5173",
-    "build": "npm run sitemap && vite build --base ./",
-    "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist",
-    "validate": "node scripts/validate-microsoft-stack.js",
-    "validate:routes": "node scripts/validate-routes.js",
-    "sitemap": "node scripts/generate-sitemap.js",
-    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint src/ --ext .js,.jsx,.ts,.tsx --fix",
-    "type-check": "tsc --noEmit",
-    "test": "npm run lint && npm run type-check && npm run validate:routes",
-    "audit:security": "npm audit --audit-level moderate",
-    "audit:performance": "lighthouse https://nexorasim.github.io --only-categories=performance --chrome-flags=\"--headless\"",
-    "health-check": "node scripts/health-check.js",
-    "azure:deploy": "az staticwebapp deploy --name nexorasim --source-location ./dist"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0",
-    "@microsoft/mgt-react": "^4.0.0",
-    "@microsoft/mgt-element": "^4.0.0",
-    "@fluentui/react": "^8.110.0",
-    "@fluentui/react-components": "^9.45.0",
-    "three": "^0.158.0",
-    "@react-three/fiber": "^8.15.0",
-    "@react-three/drei": "^9.88.0",
-    "gsap": "^3.12.2",
-    "framer-motion": "^10.16.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.8",
-    "gh-pages": "^6.1.0",
-    "typescript": "^5.3.0",
-    "eslint": "^8.55.0",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-security": "^1.7.1",
-    "@lhci/cli": "^0.12.0",
-    "lighthouse": "^11.4.0",
-    "axe-cli": "^4.8.2",
-    "broken-link-checker": "^0.7.8",
-    "serve": "^14.2.1"
-  },
+  "private": true,
+  "description": "NexoraSIM eSIM Entertainment Server - Enterprise eSIM Platform",
   "homepage": "https://nexorasim.github.io",
-  "keywords": [
-    "esim",
-    "entertainment-server",
-    "myanmar-telecom",
-    "mpt",
-    "mytel",
-    "atom",
-    "u9",
-    "5g-streaming",
-    "volte",
-    "microsoft-stack",
-    "react",
-    "fluent-ui",
-    "three-js",
-    "gsap"
-  ],
-  "license": "MIT",
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/nexorasim/nexorasim.github.io.git"
   },
-  "bugs": {
-    "url": "https://github.com/nexorasim/nexorasim.github.io/issues"
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
+    "test": "vitest",
+    "security:audit": "npm audit --audit-level moderate",
+    "security:fix": "npm audit fix",
+    "validate": "npm run lint && npm run security:audit && npm run test"
   },
-  "author": {
-    "name": "NexoraSIM Team",
-    "email": "info@nexorasim.com",
-    "url": "https://nexorasim.github.io"
+  "dependencies": {
+    "@fluentui/react-components": "^9.47.4",
+    "@fluentui/react-icons": "^2.0.239",
+    "@microsoft/mgt-element": "^4.6.0",
+    "@microsoft/mgt-react": "^4.6.0",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "gsap": "^3.12.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.2",
+    "three": "^0.158.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.26",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-security": "^1.7.1",
+    "gh-pages": "^6.1.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.18",
+    "terser": "^5.44.1",
+    "vite": "^5.4.11",
+    "vitest": "^0.34.6"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /scripts/
+Disallow: /.git/
+Disallow: /node_modules/
 
 Sitemap: https://nexorasim.github.io/sitemap.xml

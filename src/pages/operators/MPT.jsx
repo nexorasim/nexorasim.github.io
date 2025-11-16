@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Card, CardHeader, CardPreview, Badge } from '@fluentui/react-components'
-import { Signal24Regular, Globe24Regular, Phone24Regular, Building24Regular } from '@fluentui/react-icons'
+import { Wifi124Regular as Signal24Regular, Globe24Regular, Phone24Regular, Building24Regular } from '@fluentui/react-icons'
 
 const MPT = () => {
   return (

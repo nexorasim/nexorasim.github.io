@@ -17,7 +17,7 @@ class OperationsManager {
     }
 
     log(msg) {
-        console.log(`[${++this.completed}/7] ${msg}`);
+        
     }
 
     update() {
@@ -66,8 +66,8 @@ class OperationsManager {
             this.operations.forEach(operation => {
                 if (this[operation]()) success++;
             });
-            console.log(`\nOperations Complete: ${success}/7`);
-            console.log(`Success Rate: ${Math.round(success/7*100)}%`);
+            
+            }%`);
             return success === 7;
         }
         return this[op] ? this[op]() : false;

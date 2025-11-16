@@ -80,7 +80,7 @@ const EntitlementServer = () => {
   const networkOperators = [
     {
       name: 'MPT Myanmar',
-      logo: '🇲🇲',
+      logo: '',
       coverage: '95%',
       technology: '4G/5G',
       subscribers: '20M+',
@@ -89,7 +89,7 @@ const EntitlementServer = () => {
     },
     {
       name: 'MYTEL',
-      logo: '📱',
+      logo: '',
       coverage: '90%',
       technology: '4G/5G',
       subscribers: '15M+',
@@ -98,7 +98,7 @@ const EntitlementServer = () => {
     },
     {
       name: 'ATOM',
-      logo: '⚛️',
+      logo: '',
       coverage: '85%',
       technology: '4G/NB-IoT',
       subscribers: '8M+',
@@ -107,7 +107,7 @@ const EntitlementServer = () => {
     },
     {
       name: 'U9 Network',
-      logo: '🔗',
+      logo: '',
       coverage: '80%',
       technology: '4G/LTE-M',
       subscribers: '5M+',

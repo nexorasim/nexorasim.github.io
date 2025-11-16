@@ -65,7 +65,7 @@ Complete audit, refactor, and enhancement of the NexoraSIM Entertainment Server 
 ### Page Structure (300 Pages)
 - Core Platform: 25 pages
 - Network Operators: 20 pages
-- Regional Languages: 175 pages (25 × 7 languages)
+- Regional Languages: 175 pages (25  7 languages)
 - Technical Deep-dive: 30 pages
 - Industries & Use Cases: 50 pages
 

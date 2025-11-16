@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from '@fluentui/react-components'
+
 import { Mail24Regular, Globe24Regular, Code24Regular } from '@fluentui/react-icons'
 
 const Footer = () => {
@@ -32,10 +32,10 @@ const Footer = () => {
     {
       title: 'Networks',
       links: [
-        { path: '/partners/mpt', label: 'MPT Myanmar' },
-        { path: '/partners/mytel', label: 'MYTEL' },
-        { path: '/partners/atom', label: 'ATOM' },
-        { path: '/partners/u9', label: 'U9 Network' },
+        { path: '/operators/mpt', label: 'MPT Myanmar' },
+        { path: '/operators/mytel', label: 'MYTEL' },
+        { path: '/operators/atom', label: 'ATOM' },
+        { path: '/operators/u9', label: 'U9 Network' },
         { path: '/partners', label: 'All Partners' },
         { path: '/enterprise', label: 'Enterprise' }
       ]
@@ -66,12 +66,12 @@ const Footer = () => {
       title: 'Languages',
       links: [
         { path: '/en', label: 'English' },
-        { path: '/zh', label: '中文 (Chinese)' },
-        { path: '/th', label: 'ไทย (Thai)' },
-        { path: '/vi', label: 'Tiếng Việt' },
+        { path: '/zh', label: ' (Chinese)' },
+        { path: '/th', label: ' (Thai)' },
+        { path: '/vi', label: 'Ting Vit' },
         { path: '/id', label: 'Bahasa Indonesia' },
         { path: '/ms', label: 'Bahasa Malaysia' },
-        { path: '/mm', label: 'မြန်မာ (Myanmar)' }
+        { path: '/mm', label: ' (Myanmar)' }
       ]
     }
   ]
@@ -82,7 +82,7 @@ const Footer = () => {
         <div className="footer-brand">
           <div className="brand-logo">
             <span className="logo-text">NexoraSIM</span>
-            <span className="logo-subtitle">Entertainment Server</span>
+            <span className="logo-subtitle">Entitlement Server</span>
           </div>
           <p className="brand-description">
             Enterprise-grade eSIM Profile Management platform for MPT, MYTEL, ATOM, 
@@ -149,7 +149,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .premium-footer {
           background: var(--pearl);
           border-top: 1px solid rgba(0,0,0,0.1);

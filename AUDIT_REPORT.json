@@ -1,0 +1,723 @@
+{
+  "auditDate": "2025-11-15T18:30:24.164Z",
+  "duration": "1 seconds",
+  "summary": {
+    "codeQuality": 71,
+    "performance": 60,
+    "seo": 9,
+    "accessibility": 0,
+    "security": 0,
+    "design": 0
+  },
+  "details": {
+    "codeQuality": [
+      {
+        "file": "404.html",
+        "issue": "Missing semantic main element",
+        "severity": "medium"
+      },
+      {
+        "file": "dist\\404.html",
+        "issue": "Missing semantic main element",
+        "severity": "medium"
+      },
+      {
+        "file": "index.html",
+        "issue": "Missing semantic main element",
+        "severity": "medium"
+      },
+      {
+        "file": "index.html",
+        "issue": "No heading elements found",
+        "severity": "high"
+      },
+      {
+        "file": "microsoft-deployment\\index.html",
+        "issue": "Missing semantic main element",
+        "severity": "medium"
+      },
+      {
+        "file": "microsoft-deployment\\index.html",
+        "issue": "No heading elements found",
+        "severity": "high"
+      },
+      {
+        "file": "public\\404.html",
+        "issue": "Missing semantic main element",
+        "severity": "medium"
+      },
+      {
+        "file": "wsl-dev\\nexorasim-entertainment-server\\index.html",
+        "issue": "Missing semantic main element",
+        "severity": "medium"
+      },
+      {
+        "file": "wsl-dev\\nexorasim-entertainment-server\\index.html",
+        "issue": "No heading elements found",
+        "severity": "high"
+      },
+      {
+        "file": "microsoft-deployment\\src\\styles\\globals.css",
+        "issue": "Consider using autoprefixer for vendor prefixes",
+        "severity": "low"
+      },
+      {
+        "file": "src\\styles\\globals.css",
+        "issue": "Consider using autoprefixer for vendor prefixes",
+        "severity": "low"
+      },
+      {
+        "file": "src\\styles\\nexoracore.css",
+        "issue": "Consider using autoprefixer for vendor prefixes",
+        "severity": "low"
+      },
+      {
+        "file": "wsl-dev\\nexorasim-entertainment-server\\src\\styles\\globals.css",
+        "issue": "Consider using autoprefixer for vendor prefixes",
+        "severity": "low"
+      },
+      {
+        "file": "dist\\sw.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "microsoft-deployment\\scripts\\deploy-github.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "microsoft-deployment\\scripts\\validate-microsoft-stack.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "public\\sw.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\api-validation.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\comprehensive-audit.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\comprehensive-audit.js",
+        "issue": "eval() usage detected - security risk",
+        "severity": "critical"
+      },
+      {
+        "file": "scripts\\comprehensive-error-scan.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\comprehensive-error-scan.js",
+        "issue": "eval() usage detected - security risk",
+        "severity": "critical"
+      },
+      {
+        "file": "scripts\\deploy-github.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\enable-all.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\error-check.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\generate-sitemap.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\git-error-check.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\git-github-check.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\github-operations.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\health-check.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\operations-manager.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\validate-all.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\validate-microsoft-stack.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\validate-routes.js",
+        "issue": "Console.log statements found - remove for production",
+        "severity": "low"
+      },
+      {
+        "file": "microsoft-deployment\\scripts\\deploy-github.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "microsoft-deployment\\scripts\\validate-microsoft-stack.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "microsoft-deployment\\src\\data\\routes.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "scripts\\api-validation.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "scripts\\comprehensive-error-scan.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "scripts\\enable-all.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "scripts\\error-check.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "scripts\\generate-sitemap.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "scripts\\health-check.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "scripts\\validate-all.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "scripts\\validate-routes.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "src\\data\\routes.js",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "microsoft-deployment\\src\\components\\Footer.jsx",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "microsoft-deployment\\src\\components\\Header.jsx",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "microsoft-deployment\\src\\pages\\EntitlementServer.jsx",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "src\\components\\Footer.jsx",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "src\\components\\Header.jsx",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "src\\pages\\EntitlementServer.jsx",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "src\\pages\\Home.jsx",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "src\\pages\\SearchPage.jsx",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "COMPREHENSIVE_AUDIT_EXECUTION.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "COMPREHENSIVE_AUDIT_REPORT.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "COMPREHENSIVE_ENHANCEMENT_PLAN.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "COMPREHENSIVE_WEBSITE_AUDIT.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "docs\\deployment-blueprint.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "FINAL_AUDIT_REPORT.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "FINAL_DEPLOYMENT.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "microsoft-deployment\\DEPLOYMENT_READY.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "microsoft-deployment\\README.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "MICROSOFT_DEPLOYMENT_COMPLETE.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "NEXORACORE_DEPLOYMENT.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "NEXORACORE_DEPLOYMENT_COMPLETE.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "PRODUCTION_DEPLOYMENT_COMPLETE.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "PRODUCTION_ENHANCEMENT_CHECKLIST.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "PRODUCTION_READY_CHECKLIST.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "SECURITY_FIXES_APPLIED.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      },
+      {
+        "file": "wsl-dev\\nexorasim-entertainment-server\\WSL_DEPLOYMENT_GUIDE.md",
+        "issue": "Non-standard characters removed",
+        "severity": "info"
+      }
+    ],
+    "performance": [
+      {
+        "file": "dist\\sw-secure.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "dist\\sw.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "enterprise-deployment\\cloudflare\\workers\\api-gateway.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "microsoft-deployment\\scripts\\deploy-github.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "microsoft-deployment\\scripts\\validate-microsoft-stack.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "microsoft-deployment\\src\\data\\routes.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "microsoft-deployment\\vite.config.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "public\\sw-secure.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "public\\sw.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\api-validation.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\comprehensive-audit.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\comprehensive-error-scan.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\deploy-github.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\enable-all.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\error-check.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\generate-sitemap.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\git-error-check.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\git-github-check.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\github-operations.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\health-check.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\no-emoji-check.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\operations-manager.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\secure-path-validator.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\validate-all.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\validate-microsoft-stack.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "scripts\\validate-routes.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\config\\security.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\adapters\\AdapterInterface.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\adapters\\ATOMAdapter.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\adapters\\MPTAdapter.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\adapters\\MYTELAdapter.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\adapters\\U9Adapter.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\AndroidIntegration.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\ComplianceManager.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\DataErrorValidator.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\DeploymentManager.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\ePMSystem.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\EUICCManager.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\LPAService.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\NexoraDevelopmentSystem.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\NexoraSIMSystem.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\ProfileLifecycle.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\RSPComponents.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\SystemArchitecture.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\SystemErrorCheck.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\SystemValidator.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\TestingFramework.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\core\\ValidationSystem.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\data\\api-docs-secure.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\data\\api-docs.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\data\\routes.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\utils\\constants.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\utils\\dataValidator.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\utils\\errorHandler.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\utils\\pathValidator.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\utils\\seoHelpers.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "src\\utils\\systemMonitor.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "vite.config.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "wsl-dev\\nexorasim-entertainment-server\\postcss.config.js",
+        "issue": "File not minified",
+        "severity": "low"
+      },
+      {
+        "file": "wsl-dev\\nexorasim-entertainment-server\\vite.config.js",
+        "issue": "File not minified",
+        "severity": "low"
+      }
+    ],
+    "seo": [
+      {
+        "file": "404.html",
+        "issue": "Missing meta description",
+        "severity": "high"
+      },
+      {
+        "file": "404.html",
+        "issue": "Missing Open Graph tags",
+        "severity": "medium"
+      },
+      {
+        "file": "dist\\404.html",
+        "issue": "Missing meta description",
+        "severity": "high"
+      },
+      {
+        "file": "dist\\404.html",
+        "issue": "Missing Open Graph tags",
+        "severity": "medium"
+      },
+      {
+        "file": "public\\404.html",
+        "issue": "Missing meta description",
+        "severity": "high"
+      },
+      {
+        "file": "public\\404.html",
+        "issue": "Missing Open Graph tags",
+        "severity": "medium"
+      },
+      {
+        "file": "index.html",
+        "issue": "Missing H1 tag",
+        "severity": "high"
+      },
+      {
+        "file": "microsoft-deployment\\index.html",
+        "issue": "Missing H1 tag",
+        "severity": "high"
+      },
+      {
+        "file": "wsl-dev\\nexorasim-entertainment-server\\index.html",
+        "issue": "Missing H1 tag",
+        "severity": "high"
+      }
+    ],
+    "accessibility": [],
+    "security": [],
+    "design": []
+  }
+}

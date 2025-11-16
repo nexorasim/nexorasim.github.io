@@ -4,7 +4,8 @@ import { Spinner } from '@fluentui/react-components'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import CopilotOrb from './components/CopilotOrb'
-import { pageRoutes } from './data/routes'
+import SecureErrorBoundary from './components/SecureErrorBoundary'
+import { SecurityConfig } from './config/security'
 
 // Lazy load pages for performance
 const HomePage = React.lazy(() => import('./pages/HomePage'))
@@ -39,6 +40,15 @@ const Flyer = React.lazy(() => import('./pages/Flyer'))
 // Regional pages
 const RegionalPages = React.lazy(() => import('./pages/RegionalPages'))
 
+// Operator pages
+const MPT = React.lazy(() => import('./pages/operators/MPT'))
+
+// Technical pages
+const EsimArchitecture = React.lazy(() => import('./pages/technical/eSIMArchitecture'))
+
+// Industry pages
+const Telecommunications = React.lazy(() => import('./pages/industries/Telecommunications'))
+
 const LoadingSpinner = () => (
   <div className="loading-container">
     <Spinner size="large" label="Loading NexoraSIM..." />
@@ -46,11 +56,24 @@ const LoadingSpinner = () => (
 )
 
 function App() {
+  // Apply security configuration
+  React.useEffect(() => {
+    if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
+      const cspMeta = document.createElement('meta');
+      cspMeta.httpEquiv = 'Content-Security-Policy';
+      cspMeta.content = Object.entries(SecurityConfig.csp.directives)
+        .map(([key, values]) => `${key} ${values.join(' ')}`)
+        .join('; ');
+      document.head.appendChild(cspMeta);
+    }
+  }, []);
+
   return (
-    <div className="app">
-      <Header />
-      <main className="main-content">
-        <Suspense fallback={<LoadingSpinner />}>
+    <SecureErrorBoundary>
+      <div className="app">
+        <Header />
+        <main className="main-content" id="main-content" tabIndex="-1">
+          <Suspense fallback={<LoadingSpinner />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/entitlement-server" element={<EntitlementServer />} />
@@ -80,13 +103,25 @@ function App() {
             <Route path="/whitepaper" element={<Whitepaper />} />
             <Route path="/brochure" element={<Brochure />} />
             <Route path="/flyer" element={<Flyer />} />
+            
+            {/* Operator Routes */}
+            <Route path="/operators/mpt" element={<MPT />} />
+            
+            {/* Technical Routes */}
+            <Route path="/tech/esim-architecture" element={<EsimArchitecture />} />
+            
+            {/* Industry Routes */}
+            <Route path="/industries/telecommunications" element={<Telecommunications />} />
+            
+            {/* Regional Language Routes */}
             <Route path="/:lang/*" element={<RegionalPages />} />
-          </Routes>
-        </Suspense>
-      </main>
-      <Footer />
-      <CopilotOrb />
-    </div>
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+        <CopilotOrb />
+      </div>
+    </SecureErrorBoundary>
   )
 }
 

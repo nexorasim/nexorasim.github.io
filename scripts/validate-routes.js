@@ -17,8 +17,8 @@ const routesPath = path.join(__dirname, '../src/data/routes.js')
 const appPath = path.join(__dirname, '../src/App.jsx')
 const pagesDir = path.join(__dirname, '../src/pages')
 
-console.log('🔍 NexoraSIM Route Validation Starting...')
-console.log('=' .repeat(50))
+
+)
 
 let errors = []
 let warnings = []
@@ -26,7 +26,7 @@ let totalRoutes = 0
 
 // Validate routes.js exists and is properly structured
 function validateRoutesConfig() {
-  console.log('📋 Validating routes configuration...')
+  
   
   if (!fs.existsSync(routesPath)) {
     errors.push('routes.js file not found')
@@ -56,10 +56,10 @@ function validateRoutesConfig() {
     if (technicalMatches) totalRoutes += (technicalMatches.match(/path:/g) || []).length
     if (industriesMatches) totalRoutes += (industriesMatches.match(/path:/g) || []).length
     
-    // Add language routes (25 pages × 7 languages = 175)
+    // Add language routes (25 pages  7 languages = 175)
     totalRoutes += 175
     
-    console.log(`✅ Routes configuration valid - ${totalRoutes} total routes expected`)
+    
     return true
     
   } catch (error) {
@@ -70,7 +70,7 @@ function validateRoutesConfig() {
 
 // Validate App.jsx has proper route definitions
 function validateAppRoutes() {
-  console.log('🔗 Validating App.jsx routes...')
+  
   
   if (!fs.existsSync(appPath)) {
     errors.push('App.jsx file not found')
@@ -93,7 +93,7 @@ function validateAppRoutes() {
     const routeMatches = appContent.match(/<Route\s+path="[^"]*"/g) || []
     const definedRoutes = routeMatches.length
     
-    console.log(`✅ App.jsx routes valid - ${definedRoutes} routes defined`)
+    
     
     // Check for essential routes
     const essentialRoutes = ['/features', '/api', '/enterprise', '/architecture']
@@ -113,7 +113,7 @@ function validateAppRoutes() {
 
 // Validate page components exist
 function validatePageComponents() {
-  console.log('📄 Validating page components...')
+  
   
   if (!fs.existsSync(pagesDir)) {
     errors.push('Pages directory not found')
@@ -158,13 +158,13 @@ function validatePageComponents() {
     }
   })
   
-  console.log(`✅ Page components validated - ${foundPages}/${requiredPages.length} found`)
+  
   return foundPages === requiredPages.length
 }
 
 // Validate features route specifically
 function validateFeaturesRoute() {
-  console.log('🎯 Validating /features route specifically...')
+  
   
   const featuresPath = path.join(pagesDir, 'Features.jsx')
   
@@ -191,7 +191,7 @@ function validateFeaturesRoute() {
       }
     })
     
-    console.log('✅ Features route validation complete')
+    
     return true
     
   } catch (error) {
@@ -202,7 +202,7 @@ function validateFeaturesRoute() {
 
 // Validate SPA routing setup
 function validateSPARouting() {
-  console.log('🔄 Validating SPA routing setup...')
+  
   
   const fallbackPath = path.join(__dirname, '../public/404.html')
   
@@ -218,7 +218,7 @@ function validateSPARouting() {
       warnings.push('404.html may not be properly configured for SPA routing')
     }
     
-    console.log('✅ SPA routing setup validated')
+    
     return true
     
   } catch (error) {
@@ -229,7 +229,7 @@ function validateSPARouting() {
 
 // Main validation function
 async function validateRoutes() {
-  console.log('🚀 Starting comprehensive route validation...\n')
+  
   
   const validations = [
     validateRoutesConfig,
@@ -245,35 +245,35 @@ async function validateRoutes() {
     if (validation()) {
       passed++
     }
-    console.log('')
+    
   }
   
   // Summary
-  console.log('📊 VALIDATION SUMMARY')
-  console.log('=' .repeat(50))
-  console.log(`✅ Passed: ${passed}/${validations.length} validations`)
-  console.log(`📋 Total Routes Expected: ${totalRoutes}`)
-  console.log(`⚠️  Warnings: ${warnings.length}`)
-  console.log(`❌ Errors: ${errors.length}`)
+  
+  )
+  
+  
+  
+  
   
   if (warnings.length > 0) {
-    console.log('\n⚠️  WARNINGS:')
-    warnings.forEach(warning => console.log(`   - ${warning}`))
+    
+    warnings.forEach(warning => )
   }
   
   if (errors.length > 0) {
-    console.log('\n❌ ERRORS:')
-    errors.forEach(error => console.log(`   - ${error}`))
-    console.log('\n🔧 Please fix these errors before deployment.')
+    
+    errors.forEach(error => )
+    
     process.exit(1)
   }
   
-  console.log('\n🎉 Route validation completed successfully!')
-  console.log('🚀 All routes are properly configured for deployment.')
+  
+  
 }
 
 // Run validation
 validateRoutes().catch(error => {
-  console.error('❌ Validation failed:', error)
+  
   process.exit(1)
 })

@@ -24,15 +24,15 @@ class GitErrorChecker {
     check(name, condition, errorMsg) {
         if (condition) {
             this.passed++;
-            console.log(`[PASS] ${name}`);
+            
         } else {
             this.errors.push(`[FAIL] ${name}: ${errorMsg}`);
-            console.log(`[FAIL] ${name}: ${errorMsg}`);
+            
         }
     }
 
     async runChecks() {
-        console.log('Git/GitHub Error Check - Starting Validation...\n');
+        
 
         // 1. Git Installation
         const gitVersion = this.exec('git --version');
@@ -107,26 +107,26 @@ class GitErrorChecker {
     }
 
     displayResults() {
-        console.log('\n' + '='.repeat(50));
-        console.log('GIT/GITHUB ERROR CHECK RESULTS');
-        console.log('='.repeat(50));
-        console.log(`PASSED: ${this.passed}/${this.total}`);
-        console.log(`SUCCESS RATE: ${Math.round((this.passed / this.total) * 100)}%`);
+        );
+        
+        );
+        
+         * 100)}%`);
         
         if (this.errors.length > 0) {
-            console.log('\nERRORS FOUND:');
-            this.errors.forEach(error => console.log(`- ${error}`));
+            
+            this.errors.forEach(error => );
         }
         
         if (this.warnings.length > 0) {
-            console.log('\nWARNINGS:');
-            this.warnings.forEach(warning => console.log(`- ${warning}`));
+            
+            this.warnings.forEach(warning => );
         }
 
         if (this.passed === this.total) {
-            console.log('\nSTATUS: ALL CHECKS PASSED - SYSTEM READY');
+            
         } else {
-            console.log('\nSTATUS: ERRORS DETECTED - REVIEW REQUIRED');
+            
         }
     }
 }

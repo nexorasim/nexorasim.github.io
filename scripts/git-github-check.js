@@ -19,15 +19,15 @@ class GitGitHubChecker {
     check(name, condition) {
         if (condition) {
             this.passed++;
-            console.log(`[${this.passed}/100] ${name}: PASS`);
+            
         } else {
             this.errors.push(name);
-            console.log(`[${this.passed}/100] ${name}: FAIL`);
+            
         }
     }
 
     run() {
-        console.log('Git GitHub Error Check 1-100%\n');
+        
 
         // Git Core (1-20)
         this.check('Git installed', this.exec('git --version'));
@@ -139,15 +139,15 @@ class GitGitHubChecker {
         this.check('Analytics ready', true);
         this.check('Error tracking ready', true);
 
-        console.log(`\nGit GitHub Error Check Complete`);
-        console.log(`PASSED: ${this.passed}/100`);
-        console.log(`SUCCESS RATE: ${this.passed}%`);
+        
+        
+        
         
         if (this.errors.length > 0) {
-            console.log(`FAILED: ${this.errors.join(', ')}`);
+            }`);
         }
         
-        console.log(`STATUS: ${this.passed === 100 ? 'ALL SYSTEMS OPERATIONAL' : 'ERRORS DETECTED'}`);
+        
     }
 }
 

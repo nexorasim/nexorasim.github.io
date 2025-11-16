@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useLanguage } from '../hooks/useLanguage'
 import IoTBackground from '../components/3d/IoTBackground'
+import { sanitize } from '../config/security'
 
 const Home = () => {
   const { language } = useLanguage()
@@ -15,10 +16,10 @@ const Home = () => {
     },
     mm: {
       title: 'NexoraSIM Entitlement Server',
-      subtitle: 'စီးပွားဖြစ် အဆင့်အမှင့် eSIM ပြက့ဖောင်',
-      description: 'MPT။ MYTEL။ ATOM နှင့် U9 ကွန်ယက်မြားအတွက် စီးပွားဖြစ်အဆင့်အမှင့် eSIM ပြက့ဖောင်။ အမှင့်မှင့် IoT ချစ်ဆန်မှူ ဖြေဗှေးချက်မြား။',
-      cta1: 'စတင်အစုံးပြူရန်',
-      cta2: 'မှတ်တမ်းမြား ကြင့်ပါရန်'
+      subtitle: '  eSIM ',
+      description: 'MPT MYTEL ATOM  U9   eSIM   IoT  ',
+      cta1: '',
+      cta2: ' '
     }
   }
   

@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-console.log('NexoraSIM API Data Validation System')
-console.log('Validating all API endpoints and data structures...\n')
+
+
 
 const validationResults = []
 
 function validate(category, check, passed) {
   validationResults.push({ category, check, passed })
   const status = passed ? 'PASS' : 'FAIL'
-  const icon = passed ? '✓' : '✗'
-  console.log(`${icon} ${category}: ${check} - ${status}`)
+  const icon = passed ? '' : ''
+  
 }
 
 validate('Authentication API', '/auth/token endpoint structure', true)
@@ -72,19 +72,19 @@ const totalTests = validationResults.length
 const passedTests = validationResults.filter(r => r.passed).length
 const failedTests = totalTests - passedTests
 
-console.log(`\n${'='.repeat(60)}`)
-console.log(`Total Tests: ${totalTests}`)
-console.log(`Passed: ${passedTests}`)
-console.log(`Failed: ${failedTests}`)
-console.log(`Success Rate: ${((passedTests / totalTests) * 100).toFixed(2)}%`)
-console.log(`${'='.repeat(60)}`)
+}`)
+
+
+
+ * 100).toFixed(2)}%`)
+}`)
 
 if (failedTests === 0) {
-  console.log('\n✓ ALL API DATA VALIDATION TESTS PASSED')
-  console.log('✓ System is production-ready')
+  
+  
   process.exit(0)
 } else {
-  console.log('\n✗ SOME VALIDATION TESTS FAILED')
-  console.log('✗ Review failed tests above')
+  
+  
   process.exit(1)
 }
