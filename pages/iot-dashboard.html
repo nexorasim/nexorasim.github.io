@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live IoT Dashboard - NexoraSIM Entertainment Server</title>
+  
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https:;">
+  
+  <meta name="description" content="Real-time IoT dashboard with live telemetry from 100,000+ devices, network health monitoring, and Azure IoT Hub integration">
+  <meta name="keywords" content="IoT dashboard, real-time telemetry, device monitoring, Azure IoT Hub, network health">
+  
+  <link rel="canonical" href="https://nexorasim.github.io/pages/iot-dashboard.html">
+  <link rel="stylesheet" href="../css/fluent-pearl-iot-theme.css">
+  <link rel="stylesheet" href="../css/glassmorphism-iot-premium.css">
+  
+  <script type="module" src="https://unpkg.com/@fluentui/web-components@3/dist/web-components.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+  <header class="dynamic-island-header">
+    <nav class="pearl-nav">
+      <div class="nav-brand">
+        <span class="brand-text">NexoraSIM</span>
+        <span class="brand-subtitle">IoT Dashboard</span>
+      </div>
+      <div class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="architecture.html" class="nav-link">Architecture</a>
+        <a href="iot-dashboard.html" class="nav-link active">Dashboard</a>
+      </div>
+      <div class="nav-actions">
+        <div class="live-telemetry">
+          <div class="telemetry-dot"></div>
+          <span id="liveStatus">Live</span>
+        </div>
+        <div class="refresh-indicator" id="refreshIndicator">
+          <div class="refresh-dot"></div>
+          <span>Auto-refresh: 2s</span>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="dashboard-page">
+    <section class="dashboard-hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="page-title">Live IoT Dashboard</h1>
+          <p class="page-subtitle">Real-time monitoring of global device fleet with Azure IoT Hub integration</p>
+          
+          <div class="dashboard-stats">
+            <div class="stat-card glass-card">
+              <div class="stat-icon">📱</div>
+              <div class="stat-content">
+                <span class="stat-number" id="totalDevices">0</span>
+                <span class="stat-label">Total Devices</span>
+              </div>
+            </div>
+            
+            <div class="stat-card glass-card">
+              <div class="stat-icon">🟢</div>
+              <div class="stat-content">
+                <span class="stat-number" id="activeDevices">0</span>
+                <span class="stat-label">Active Devices</span>
+              </div>
+            </div>
+            
+            <div class="stat-card glass-card">
+              <div class="stat-icon">📊</div>
+              <div class="stat-content">
+                <span class="stat-number" id="networkHealth">0%</span>
+                <span class="stat-label">Network Health</span>
+              </div>
+            </div>
+            
+            <div class="stat-card glass-card">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-content">
+                <span class="stat-number" id="avgLatency">0ms</span>
+                <span class="stat-label">Avg Latency</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-main">
+      <div class="container">
+        <div class="dashboard-grid">
+          <!-- Device Fleet Status -->
+          <div class="dashboard-card glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Device Fleet Status</h3>
+              <div class="card-actions">
+                <button class="glass-button small" onclick="refreshFleetData()">Refresh</button>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="fleet-overview" id="fleetOverview">
+                <div class="device-type-stats">
+                  <div class="device-type">
+                    <div class="type-icon">📱</div>
+                    <div class="type-info">
+                      <span class="type-name">eSIM Cards</span>
+                      <span class="type-count" id="esimCount">0</span>
+                    </div>
+                    <div class="type-status">
+                      <div class="status-bar">
+                        <div class="status-fill" id="esimStatus" style="width: 0%"></div>
+                      </div>
+                      <span class="status-text" id="esimStatusText">0% Active</span>
+                    </div>
+                  </div>
+                  
+                  <div class="device-type">
+                    <div class="type-icon">⌚</div>
+                    <div class="type-info">
+                      <span class="type-name">Smart Watches</span>
+                      <span class="type-count" id="watchCount">0</span>
+                    </div>
+                    <div class="type-status">
+                      <div class="status-bar">
+                        <div class="status-fill" id="watchStatus" style="width: 0%"></div>
+                      </div>
+                      <span class="status-text" id="watchStatusText">0% Active</span>
+                    </div>
+                  </div>
+                  
+                  <div class="device-type">
+                    <div class="type-icon">🚗</div>
+                    <div class="type-info">
+                      <span class="type-name">Connected Vehicles</span>
+                      <span class="type-count" id="vehicleCount">0</span>
+                    </div>
+                    <div class="type-status">
+                      <div class="status-bar">
+                        <div class="status-fill" id="vehicleStatus" style="width: 0%"></div>
+                      </div>
+                      <span class="status-text" id="vehicleStatusText">0% Active</span>
+                    </div>
+                  </div>
+                  
+                  <div class="device-type">
+                    <div class="type-icon">🏭</div>
+                    <div class="type-info">
+                      <span class="type-name">Industrial Sensors</span>
+                      <span class="type-count" id="sensorCount">0</span>
+                    </div>
+                    <div class="type-status">
+                      <div class="status-bar">
+                        <div class="status-fill" id="sensorStatus" style="width: 0%"></div>
+                      </div>
+                      <span class="status-text" id="sensorStatusText">0% Active</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Network Performance Chart -->
+          <div class="dashboard-card glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Network Performance</h3>
+              <div class="card-actions">
+                <select class="glass-select" id="timeRange">
+                  <option value="1h">Last Hour</option>
+                  <option value="24h" selected>Last 24 Hours</option>
+                  <option value="7d">Last 7 Days</option>
+                </select>
+              </div>
+            </div>
+            <div class="card-content">
+              <canvas id="performanceChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+
+          <!-- Global Coverage Map -->
+          <div class="dashboard-card glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Global Coverage Map</h3>
+              <div class="card-actions">
+                <div class="map-legend">
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #10B981;"></div>
+                    <span>Excellent</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #F59E0B;"></div>
+                    <span>Good</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #EF4444;"></div>
+                    <span>Poor</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="coverage-map" id="coverageMap">
+                <div class="map-container">
+                  <div class="region-coverage">
+                    <div class="region" data-region="myanmar">
+                      <div class="region-name">Myanmar</div>
+                      <div class="region-stats">
+                        <span class="coverage-percent" id="myanmarCoverage">95%</span>
+                        <span class="device-count" id="myanmarDevices">45,230</span>
+                      </div>
+                    </div>
+                    
+                    <div class="region" data-region="asean">
+                      <div class="region-name">ASEAN</div>
+                      <div class="region-stats">
+                        <span class="coverage-percent" id="aseanCoverage">88%</span>
+                        <span class="device-count" id="aseanDevices">28,450</span>
+                      </div>
+                    </div>
+                    
+                    <div class="region" data-region="global">
+                      <div class="region-name">Global</div>
+                      <div class="region-stats">
+                        <span class="coverage-percent" id="globalCoverage">76%</span>
+                        <span class="device-count" id="globalDevices">26,320</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-time Telemetry Stream -->
+          <div class="dashboard-card glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Live Telemetry Stream</h3>
+              <div class="card-actions">
+                <button class="glass-button small" id="pauseStream">Pause</button>
+                <button class="glass-button small" id="clearStream">Clear</button>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="telemetry-stream" id="telemetryStream">
+                <!-- Live telemetry data will be inserted here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- System Health Metrics -->
+          <div class="dashboard-card glass-card">
+            <div class="card-header">
+              <h3 class="card-title">System Health</h3>
+              <div class="card-actions">
+                <div class="health-indicator">
+                  <div class="health-dot" id="systemHealthDot"></div>
+                  <span id="systemHealthText">Excellent</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="health-metrics">
+                <div class="health-metric">
+                  <div class="metric-label">CPU Usage</div>
+                  <div class="metric-bar">
+                    <div class="metric-fill" id="cpuUsage" style="width: 0%"></div>
+                  </div>
+                  <div class="metric-value" id="cpuValue">0%</div>
+                </div>
+                
+                <div class="health-metric">
+                  <div class="metric-label">Memory Usage</div>
+                  <div class="metric-bar">
+                    <div class="metric-fill" id="memoryUsage" style="width: 0%"></div>
+                  </div>
+                  <div class="metric-value" id="memoryValue">0%</div>
+                </div>
+                
+                <div class="health-metric">
+                  <div class="metric-label">Network I/O</div>
+                  <div class="metric-bar">
+                    <div class="metric-fill" id="networkIO" style="width: 0%"></div>
+                  </div>
+                  <div class="metric-value" id="networkValue">0 MB/s</div>
+                </div>
+                
+                <div class="health-metric">
+                  <div class="metric-label">Storage Usage</div>
+                  <div class="metric-bar">
+                    <div class="metric-fill" id="storageUsage" style="width: 0%"></div>
+                  </div>
+                  <div class="metric-value" id="storageValue">0%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Alerts -->
+          <div class="dashboard-card glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Alerts</h3>
+              <div class="card-actions">
+                <span class="alert-count" id="alertCount">0 Active</span>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="alerts-list" id="alertsList">
+                <!-- Alerts will be dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Dashboard data and state
+    let dashboardData = {
+      devices: {
+        total: 0,
+        active: 0,
+        esim: 0,
+        watch: 0,
+        vehicle: 0,
+        sensor: 0
+      },
+      network: {
+        health: 0,
+        latency: 0
+      },
+      system: {
+        cpu: 0,
+        memory: 0,
+        network: 0,
+        storage: 0
+      },
+      alerts: []
+    };
+
+    let performanceChart;
+    let telemetryStreamPaused = false;
+    let updateInterval;
+
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeCharts();
+      startRealTimeUpdates();
+      setupEventListeners();
+      
+      // Initial data load
+      updateDashboardData();
+      
+      // Animate dashboard cards
+      gsap.from('.dashboard-card', {
+        duration: 0.8,
+        y: 50,
+        opacity: 0,
+        stagger: 0.15,
+        ease: 'power3.out'
+      });
+    });
+
+    function initializeCharts() {
+      const ctx = document.getElementById('performanceChart').getContext('2d');
+      performanceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Latency (ms)',
+              data: [],
+              borderColor: '#00D1FF',
+              backgroundColor: 'rgba(0, 209, 255, 0.1)',
+              tension: 0.4,
+              fill: true
+            },
+            {
+              label: 'Throughput (Mbps)',
+              data: [],
+              borderColor: '#10B981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              tension: 0.4,
+              fill: true,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top'
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Latency (ms)'
+              }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              title: {
+                display: true,
+                text: 'Throughput (Mbps)'
+              },
+              grid: {
+                drawOnChartArea: false,
+              },
+            }
+          }
+        }
+      });
+    }
+
+    function startRealTimeUpdates() {
+      updateInterval = setInterval(() => {
+        updateDashboardData();
+        updateTelemetryStream();
+        updatePerformanceChart();
+      }, 2000);
+    }
+
+    function updateDashboardData() {
+      // Simulate real-time data updates
+      dashboardData.devices.total = Math.floor(Math.random() * 5000) + 95000;
+      dashboardData.devices.active = Math.floor(dashboardData.devices.total * (0.92 + Math.random() * 0.06));
+      dashboardData.devices.esim = Math.floor(dashboardData.devices.total * 0.4);
+      dashboardData.devices.watch = Math.floor(dashboardData.devices.total * 0.25);
+      dashboardData.devices.vehicle = Math.floor(dashboardData.devices.total * 0.15);
+      dashboardData.devices.sensor = Math.floor(dashboardData.devices.total * 0.2);
+      
+      dashboardData.network.health = (99.0 + Math.random() * 0.9).toFixed(1);
+      dashboardData.network.latency = Math.floor(Math.random() * 15) + 8;
+      
+      dashboardData.system.cpu = Math.floor(Math.random() * 30) + 15;
+      dashboardData.system.memory = Math.floor(Math.random() * 40) + 30;
+      dashboardData.system.network = (Math.random() * 50 + 10).toFixed(1);
+      dashboardData.system.storage = Math.floor(Math.random() * 20) + 45;
+      
+      updateUI();
+    }
+
+    function updateUI() {
+      // Update main stats
+      document.getElementById('totalDevices').textContent = dashboardData.devices.total.toLocaleString();
+      document.getElementById('activeDevices').textContent = dashboardData.devices.active.toLocaleString();
+      document.getElementById('networkHealth').textContent = dashboardData.network.health + '%';
+      document.getElementById('avgLatency').textContent = dashboardData.network.latency + 'ms';
+      
+      // Update device type counts
+      document.getElementById('esimCount').textContent = dashboardData.devices.esim.toLocaleString();
+      document.getElementById('watchCount').textContent = dashboardData.devices.watch.toLocaleString();
+      document.getElementById('vehicleCount').textContent = dashboardData.devices.vehicle.toLocaleString();
+      document.getElementById('sensorCount').textContent = dashboardData.devices.sensor.toLocaleString();
+      
+      // Update device status bars
+      const esimActive = Math.floor(dashboardData.devices.esim * (0.9 + Math.random() * 0.08));
+      const watchActive = Math.floor(dashboardData.devices.watch * (0.85 + Math.random() * 0.1));
+      const vehicleActive = Math.floor(dashboardData.devices.vehicle * (0.8 + Math.random() * 0.15));
+      const sensorActive = Math.floor(dashboardData.devices.sensor * (0.95 + Math.random() * 0.04));
+      
+      updateStatusBar('esim', esimActive, dashboardData.devices.esim);
+      updateStatusBar('watch', watchActive, dashboardData.devices.watch);
+      updateStatusBar('vehicle', vehicleActive, dashboardData.devices.vehicle);
+      updateStatusBar('sensor', sensorActive, dashboardData.devices.sensor);
+      
+      // Update system health
+      updateSystemHealth();
+      
+      // Update coverage stats
+      updateCoverageStats();
+    }
+
+    function updateStatusBar(type, active, total) {
+      const percentage = Math.floor((active / total) * 100);
+      document.getElementById(type + 'Status').style.width = percentage + '%';
+      document.getElementById(type + 'StatusText').textContent = percentage + '% Active';
+      
+      // Color based on percentage
+      const statusBar = document.getElementById(type + 'Status');
+      if (percentage >= 90) {
+        statusBar.style.backgroundColor = '#10B981';
+      } else if (percentage >= 70) {
+        statusBar.style.backgroundColor = '#F59E0B';
+      } else {
+        statusBar.style.backgroundColor = '#EF4444';
+      }
+    }
+
+    function updateSystemHealth() {
+      document.getElementById('cpuUsage').style.width = dashboardData.system.cpu + '%';
+      document.getElementById('cpuValue').textContent = dashboardData.system.cpu + '%';
+      
+      document.getElementById('memoryUsage').style.width = dashboardData.system.memory + '%';
+      document.getElementById('memoryValue').textContent = dashboardData.system.memory + '%';
+      
+      document.getElementById('networkIO').style.width = (dashboardData.system.network / 60 * 100) + '%';
+      document.getElementById('networkValue').textContent = dashboardData.system.network + ' MB/s';
+      
+      document.getElementById('storageUsage').style.width = dashboardData.system.storage + '%';
+      document.getElementById('storageValue').textContent = dashboardData.system.storage + '%';
+      
+      // Update overall health indicator
+      const avgHealth = (100 - dashboardData.system.cpu + 100 - dashboardData.system.memory + 100 - dashboardData.system.storage) / 3;
+      const healthDot = document.getElementById('systemHealthDot');
+      const healthText = document.getElementById('systemHealthText');
+      
+      if (avgHealth >= 80) {
+        healthDot.style.backgroundColor = '#10B981';
+        healthText.textContent = 'Excellent';
+      } else if (avgHealth >= 60) {
+        healthDot.style.backgroundColor = '#F59E0B';
+        healthText.textContent = 'Good';
+      } else {
+        healthDot.style.backgroundColor = '#EF4444';
+        healthText.textContent = 'Poor';
+      }
+    }
+
+    function updateCoverageStats() {
+      document.getElementById('myanmarCoverage').textContent = (94 + Math.random() * 2).toFixed(1) + '%';
+      document.getElementById('myanmarDevices').textContent = (45000 + Math.floor(Math.random() * 1000)).toLocaleString();
+      
+      document.getElementById('aseanCoverage').textContent = (87 + Math.random() * 3).toFixed(1) + '%';
+      document.getElementById('aseanDevices').textContent = (28000 + Math.floor(Math.random() * 1000)).toLocaleString();
+      
+      document.getElementById('globalCoverage').textContent = (75 + Math.random() * 3).toFixed(1) + '%';
+      document.getElementById('globalDevices').textContent = (26000 + Math.floor(Math.random() * 1000)).toLocaleString();
+    }
+
+    function updateTelemetryStream() {
+      if (telemetryStreamPaused) return;
+      
+      const stream = document.getElementById('telemetryStream');
+      const deviceTypes = ['eSIM', 'Watch', 'Vehicle', 'Sensor'];
+      const events = ['Connected', 'Data Transfer', 'Status Update', 'Health Check', 'Profile Update'];
+      
+      const telemetryItem = document.createElement('div');
+      telemetryItem.className = 'telemetry-item';
+      
+      const deviceType = deviceTypes[Math.floor(Math.random() * deviceTypes.length)];
+      const event = events[Math.floor(Math.random() * events.length)];
+      const deviceId = `${deviceType.toLowerCase()}-${Math.floor(Math.random() * 9999).toString().padStart(4, '0')}`;
+      const timestamp = new Date().toLocaleTimeString();
+      
+      telemetryItem.innerHTML = `
+        <div class="telemetry-timestamp">${timestamp}</div>
+        <div class="telemetry-device">${deviceId}</div>
+        <div class="telemetry-event">${event}</div>
+        <div class="telemetry-status success">OK</div>
+      `;
+      
+      stream.insertBefore(telemetryItem, stream.firstChild);
+      
+      // Keep only last 20 items
+      while (stream.children.length > 20) {
+        stream.removeChild(stream.lastChild);
+      }
+      
+      // Animate new item
+      gsap.from(telemetryItem, {
+        duration: 0.3,
+        x: -50,
+        opacity: 0,
+        ease: 'power2.out'
+      });
+    }
+
+    function updatePerformanceChart() {
+      const now = new Date();
+      const timeLabel = now.toLocaleTimeString();
+      
+      performanceChart.data.labels.push(timeLabel);
+      performanceChart.data.datasets[0].data.push(dashboardData.network.latency);
+      performanceChart.data.datasets[1].data.push(Math.floor(Math.random() * 200) + 800);
+      
+      // Keep only last 20 data points
+      if (performanceChart.data.labels.length > 20) {
+        performanceChart.data.labels.shift();
+        performanceChart.data.datasets[0].data.shift();
+        performanceChart.data.datasets[1].data.shift();
+      }
+      
+      performanceChart.update('none');
+    }
+
+    function setupEventListeners() {
+      document.getElementById('pauseStream').addEventListener('click', () => {
+        telemetryStreamPaused = !telemetryStreamPaused;
+        document.getElementById('pauseStream').textContent = telemetryStreamPaused ? 'Resume' : 'Pause';
+      });
+      
+      document.getElementById('clearStream').addEventListener('click', () => {
+        document.getElementById('telemetryStream').innerHTML = '';
+      });
+      
+      document.getElementById('timeRange').addEventListener('change', (e) => {
+        // Reset chart data for new time range
+        performanceChart.data.labels = [];
+        performanceChart.data.datasets[0].data = [];
+        performanceChart.data.datasets[1].data = [];
+        performanceChart.update();
+      });
+    }
+
+    function refreshFleetData() {
+      // Animate refresh
+      const refreshBtn = event.target;
+      refreshBtn.style.transform = 'rotate(360deg)';
+      refreshBtn.style.transition = 'transform 0.5s ease';
+      
+      setTimeout(() => {
+        refreshBtn.style.transform = 'rotate(0deg)';
+        updateDashboardData();
+      }, 500);
+    }
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      if (updateInterval) {
+        clearInterval(updateInterval);
+      }
+    });
+  </script>
+
+  <style>
+    .dashboard-page {
+      padding-top: 120px;
+    }
+    
+    .dashboard-hero {
+      padding: 2rem 0;
+      text-align: center;
+    }
+    
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--pearl-black) 0%, var(--pearl-accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .page-subtitle {
+      font-size: 1.125rem;
+      color: var(--pearl-graphite);
+      margin-bottom: 2rem;
+    }
+    
+    .dashboard-stats {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      min-width: 200px;
+    }
+    
+    .stat-icon {
+      font-size: 2rem;
+    }
+    
+    .stat-content {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--pearl-accent);
+    }
+    
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--pearl-graphite);
+    }
+    
+    .dashboard-main {
+      padding: 2rem 0;
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+    }
+    
+    .dashboard-card {
+      padding: 1.5rem;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--pearl-black);
+    }
+    
+    .card-content {
+      flex: 1;
+    }
+    
+    .device-type-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .device-type {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 8px;
+    }
+    
+    .type-icon {
+      font-size: 1.5rem;
+    }
+    
+    .type-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .type-name {
+      font-weight: 500;
+      color: var(--pearl-black);
+    }
+    
+    .type-count {
+      font-size: 0.875rem;
+      color: var(--pearl-graphite);
+    }
+    
+    .type-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.25rem;
+    }
+    
+    .status-bar {
+      width: 80px;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .status-fill {
+      height: 100%;
+      background: #10B981;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    
+    .status-text {
+      font-size: 0.75rem;
+      color: var(--pearl-graphite);
+    }
+    
+    .coverage-map {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .region-coverage {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+    }
+    
+    .region {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: rgba(0, 209, 255, 0.05);
+      border-radius: 8px;
+      border-left: 4px solid var(--pearl-accent);
+    }
+    
+    .region-name {
+      font-weight: 600;
+      color: var(--pearl-black);
+    }
+    
+    .region-stats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    
+    .coverage-percent {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--pearl-accent);
+    }
+    
+    .device-count {
+      font-size: 0.875rem;
+      color: var(--pearl-graphite);
+    }
+    
+    .telemetry-stream {
+      max-height: 250px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .telemetry-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 1rem;
+      padding: 0.5rem;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+    
+    .telemetry-timestamp {
+      color: var(--pearl-graphite);
+      font-family: monospace;
+    }
+    
+    .telemetry-device {
+      color: var(--pearl-accent);
+      font-weight: 500;
+    }
+    
+    .telemetry-event {
+      color: var(--pearl-black);
+    }
+    
+    .telemetry-status {
+      font-weight: 600;
+    }
+    
+    .telemetry-status.success {
+      color: #10B981;
+    }
+    
+    .health-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .health-metric {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .metric-label {
+      min-width: 100px;
+      font-size: 0.875rem;
+      color: var(--pearl-graphite);
+    }
+    
+    .metric-bar {
+      flex: 1;
+      height: 8px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .metric-fill {
+      height: 100%;
+      background: var(--pearl-accent);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .metric-value {
+      min-width: 60px;
+      text-align: right;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--pearl-black);
+    }
+    
+    .refresh-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--pearl-graphite);
+    }
+    
+    .refresh-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--pearl-accent);
+      animation: pulse 1s infinite;
+    }
+    
+    .glass-select {
+      background: rgba(245, 245, 245, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 0.5rem;
+      color: var(--pearl-black);
+      font-size: 0.875rem;
+    }
+    
+    .map-legend {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--pearl-graphite);
+    }
+    
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    
+    .health-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    .health-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+    }
+    
+    .alert-count {
+      font-size: 0.875rem;
+      color: var(--pearl-graphite);
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .dashboard-stats {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .device-type {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .type-status {
+        align-items: center;
+      }
+    }
+  </style>
+</body>
+</html>

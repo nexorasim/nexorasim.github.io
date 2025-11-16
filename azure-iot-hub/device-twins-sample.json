@@ -1,0 +1,463 @@
+{
+  "deviceTwins": {
+    "esimCards": [
+      {
+        "deviceId": "esim-card-001",
+        "displayName": "Premium eSIM Card - MPT Network",
+        "status": "active",
+        "properties": {
+          "iccid": "8995901234567890123",
+          "imsi": "41401234567890",
+          "carrier": "MPT",
+          "profileStatus": "enabled",
+          "networkType": "5G",
+          "signalStrength": -75,
+          "dataUsage": {
+            "monthly": 15.7,
+            "daily": 0.8,
+            "unit": "GB"
+          },
+          "location": {
+            "latitude": 16.8661,
+            "longitude": 96.1951,
+            "accuracy": 10
+          },
+          "lastSeen": "2025-01-15T18:35:00Z"
+        },
+        "telemetry": {
+          "temperature": 35.2,
+          "batteryLevel": 98,
+          "connectionQuality": 95,
+          "roamingStatus": "home"
+        }
+      },
+      {
+        "deviceId": "esim-card-002",
+        "displayName": "Enterprise eSIM Card - MYTEL Network",
+        "status": "active",
+        "properties": {
+          "iccid": "8995901234567890124",
+          "imsi": "41402234567890",
+          "carrier": "MYTEL",
+          "profileStatus": "enabled",
+          "networkType": "4G",
+          "signalStrength": -68,
+          "dataUsage": {
+            "monthly": 22.3,
+            "daily": 1.2,
+            "unit": "GB"
+          },
+          "location": {
+            "latitude": 16.7967,
+            "longitude": 96.1610,
+            "accuracy": 15
+          },
+          "lastSeen": "2025-01-15T18:34:45Z"
+        },
+        "telemetry": {
+          "temperature": 33.8,
+          "batteryLevel": 87,
+          "connectionQuality": 92,
+          "roamingStatus": "home"
+        }
+      }
+    ],
+    "smartWatches": [
+      {
+        "deviceId": "watch-apple-001",
+        "displayName": "Apple Watch Series 10 - eSIM",
+        "status": "active",
+        "properties": {
+          "model": "Apple Watch Series 10",
+          "osVersion": "watchOS 11.2",
+          "esimProfile": "esim-card-001",
+          "batteryLevel": 78,
+          "heartRate": 72,
+          "steps": 8547,
+          "activeMinutes": 45,
+          "location": {
+            "latitude": 16.8661,
+            "longitude": 96.1951,
+            "accuracy": 5
+          },
+          "lastSeen": "2025-01-15T18:35:15Z"
+        },
+        "telemetry": {
+          "temperature": 36.5,
+          "accelerometer": {
+            "x": 0.12,
+            "y": -0.05,
+            "z": 9.81
+          },
+          "gyroscope": {
+            "x": 0.01,
+            "y": 0.02,
+            "z": -0.01
+          },
+          "connectivity": "cellular"
+        }
+      },
+      {
+        "deviceId": "watch-samsung-001",
+        "displayName": "Samsung Galaxy Watch 7 - eSIM",
+        "status": "active",
+        "properties": {
+          "model": "Samsung Galaxy Watch 7",
+          "osVersion": "Wear OS 5.0",
+          "esimProfile": "esim-card-002",
+          "batteryLevel": 65,
+          "heartRate": 68,
+          "steps": 6234,
+          "activeMinutes": 32,
+          "location": {
+            "latitude": 16.7967,
+            "longitude": 96.1610,
+            "accuracy": 8
+          },
+          "lastSeen": "2025-01-15T18:34:58Z"
+        },
+        "telemetry": {
+          "temperature": 35.9,
+          "accelerometer": {
+            "x": -0.08,
+            "y": 0.15,
+            "z": 9.78
+          },
+          "gyroscope": {
+            "x": -0.02,
+            "y": 0.01,
+            "z": 0.03
+          },
+          "connectivity": "cellular"
+        }
+      }
+    ],
+    "connectedVehicles": [
+      {
+        "deviceId": "vehicle-tesla-001",
+        "displayName": "Tesla Model S - Connected",
+        "status": "active",
+        "properties": {
+          "vin": "5YJ3E1EA1KF123456",
+          "model": "Tesla Model S",
+          "year": 2024,
+          "esimProfile": "esim-card-003",
+          "batteryLevel": 87,
+          "range": 412,
+          "speed": 0,
+          "odometer": 15847,
+          "location": {
+            "latitude": 16.8025,
+            "longitude": 96.1538,
+            "accuracy": 3
+          },
+          "lastSeen": "2025-01-15T18:35:20Z"
+        },
+        "telemetry": {
+          "engineStatus": "off",
+          "fuelLevel": 87,
+          "tirePressure": {
+            "frontLeft": 35.2,
+            "frontRight": 35.1,
+            "rearLeft": 34.8,
+            "rearRight": 34.9
+          },
+          "temperature": {
+            "interior": 24.5,
+            "exterior": 28.3
+          },
+          "connectivity": "5G"
+        }
+      },
+      {
+        "deviceId": "vehicle-bmw-001",
+        "displayName": "BMW iX - Connected Drive",
+        "status": "active",
+        "properties": {
+          "vin": "WBAJA5C50NCB12345",
+          "model": "BMW iX xDrive50",
+          "year": 2024,
+          "esimProfile": "esim-card-004",
+          "batteryLevel": 72,
+          "range": 385,
+          "speed": 45,
+          "odometer": 8932,
+          "location": {
+            "latitude": 16.8156,
+            "longitude": 96.1298,
+            "accuracy": 2
+          },
+          "lastSeen": "2025-01-15T18:35:18Z"
+        },
+        "telemetry": {
+          "engineStatus": "running",
+          "fuelLevel": 72,
+          "tirePressure": {
+            "frontLeft": 36.1,
+            "frontRight": 36.0,
+            "rearLeft": 35.8,
+            "rearRight": 35.9
+          },
+          "temperature": {
+            "interior": 22.1,
+            "exterior": 28.3
+          },
+          "connectivity": "5G"
+        }
+      }
+    ],
+    "industrialSensors": [
+      {
+        "deviceId": "sensor-temp-001",
+        "displayName": "Industrial Temperature Sensor - Factory A",
+        "status": "active",
+        "properties": {
+          "sensorType": "temperature",
+          "model": "TempSense Pro 5000",
+          "serialNumber": "TS5000-001-2024",
+          "esimProfile": "esim-card-005",
+          "location": {
+            "latitude": 16.8445,
+            "longitude": 96.1234,
+            "accuracy": 1,
+            "facility": "Manufacturing Plant A"
+          },
+          "lastSeen": "2025-01-15T18:35:25Z"
+        },
+        "telemetry": {
+          "temperature": 85.7,
+          "humidity": 45.2,
+          "pressure": 1013.25,
+          "vibration": 2.3,
+          "batteryLevel": 94,
+          "signalStrength": -62,
+          "alertStatus": "normal"
+        }
+      },
+      {
+        "deviceId": "sensor-pressure-001",
+        "displayName": "Pressure Monitoring Sensor - Pipeline B",
+        "status": "active",
+        "properties": {
+          "sensorType": "pressure",
+          "model": "PressureMax 3000",
+          "serialNumber": "PM3000-001-2024",
+          "esimProfile": "esim-card-006",
+          "location": {
+            "latitude": 16.8567,
+            "longitude": 96.1456,
+            "accuracy": 1,
+            "facility": "Pipeline Station B"
+          },
+          "lastSeen": "2025-01-15T18:35:22Z"
+        },
+        "telemetry": {
+          "pressure": 125.8,
+          "temperature": 42.1,
+          "flowRate": 87.5,
+          "vibration": 1.8,
+          "batteryLevel": 89,
+          "signalStrength": -58,
+          "alertStatus": "normal"
+        }
+      },
+      {
+        "deviceId": "sensor-air-quality-001",
+        "displayName": "Air Quality Monitor - Smart City Zone 1",
+        "status": "active",
+        "properties": {
+          "sensorType": "air_quality",
+          "model": "AirSense Urban 2000",
+          "serialNumber": "AS2000-001-2024",
+          "esimProfile": "esim-card-007",
+          "location": {
+            "latitude": 16.8789,
+            "longitude": 96.1678,
+            "accuracy": 2,
+            "facility": "Smart City Zone 1"
+          },
+          "lastSeen": "2025-01-15T18:35:28Z"
+        },
+        "telemetry": {
+          "pm25": 15.7,
+          "pm10": 23.4,
+          "co2": 412.5,
+          "no2": 18.9,
+          "o3": 45.2,
+          "temperature": 28.3,
+          "humidity": 67.8,
+          "batteryLevel": 91,
+          "signalStrength": -65,
+          "alertStatus": "good"
+        }
+      }
+    ]
+  },
+  "digitalTwinModels": [
+    {
+      "id": "dtmi:nexorasim:esimcard;1",
+      "displayName": "eSIM Card Digital Twin",
+      "description": "Digital twin model for eSIM cards with telemetry and properties",
+      "properties": {
+        "iccid": "string",
+        "imsi": "string",
+        "carrier": "string",
+        "profileStatus": "string",
+        "networkType": "string",
+        "signalStrength": "integer",
+        "dataUsage": "object",
+        "location": "geopoint"
+      },
+      "telemetry": {
+        "temperature": "double",
+        "batteryLevel": "integer",
+        "connectionQuality": "integer",
+        "roamingStatus": "string"
+      },
+      "commands": {
+        "enableProfile": {},
+        "disableProfile": {},
+        "updateCarrier": {
+          "request": {
+            "carrier": "string"
+          }
+        }
+      }
+    },
+    {
+      "id": "dtmi:nexorasim:smartwatch;1",
+      "displayName": "Smart Watch Digital Twin",
+      "description": "Digital twin model for smart watches with health and connectivity data",
+      "properties": {
+        "model": "string",
+        "osVersion": "string",
+        "esimProfile": "string",
+        "batteryLevel": "integer",
+        "heartRate": "integer",
+        "steps": "integer",
+        "activeMinutes": "integer",
+        "location": "geopoint"
+      },
+      "telemetry": {
+        "temperature": "double",
+        "accelerometer": "object",
+        "gyroscope": "object",
+        "connectivity": "string"
+      },
+      "commands": {
+        "syncHealth": {},
+        "updateProfile": {
+          "request": {
+            "profileId": "string"
+          }
+        }
+      }
+    },
+    {
+      "id": "dtmi:nexorasim:connectedvehicle;1",
+      "displayName": "Connected Vehicle Digital Twin",
+      "description": "Digital twin model for connected vehicles with telematics data",
+      "properties": {
+        "vin": "string",
+        "model": "string",
+        "year": "integer",
+        "esimProfile": "string",
+        "batteryLevel": "integer",
+        "range": "integer",
+        "speed": "double",
+        "odometer": "integer",
+        "location": "geopoint"
+      },
+      "telemetry": {
+        "engineStatus": "string",
+        "fuelLevel": "integer",
+        "tirePressure": "object",
+        "temperature": "object",
+        "connectivity": "string"
+      },
+      "commands": {
+        "startEngine": {},
+        "stopEngine": {},
+        "lockDoors": {},
+        "unlockDoors": {}
+      }
+    },
+    {
+      "id": "dtmi:nexorasim:industrialsensor;1",
+      "displayName": "Industrial Sensor Digital Twin",
+      "description": "Digital twin model for industrial IoT sensors",
+      "properties": {
+        "sensorType": "string",
+        "model": "string",
+        "serialNumber": "string",
+        "esimProfile": "string",
+        "location": "geopoint"
+      },
+      "telemetry": {
+        "temperature": "double",
+        "humidity": "double",
+        "pressure": "double",
+        "vibration": "double",
+        "batteryLevel": "integer",
+        "signalStrength": "integer",
+        "alertStatus": "string"
+      },
+      "commands": {
+        "calibrate": {},
+        "reset": {},
+        "setThreshold": {
+          "request": {
+            "parameter": "string",
+            "value": "double"
+          }
+        }
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "sourceId": "watch-apple-001",
+      "targetId": "esim-card-001",
+      "relationshipName": "uses"
+    },
+    {
+      "sourceId": "watch-samsung-001",
+      "targetId": "esim-card-002",
+      "relationshipName": "uses"
+    },
+    {
+      "sourceId": "vehicle-tesla-001",
+      "targetId": "esim-card-003",
+      "relationshipName": "uses"
+    },
+    {
+      "sourceId": "vehicle-bmw-001",
+      "targetId": "esim-card-004",
+      "relationshipName": "uses"
+    },
+    {
+      "sourceId": "sensor-temp-001",
+      "targetId": "esim-card-005",
+      "relationshipName": "uses"
+    },
+    {
+      "sourceId": "sensor-pressure-001",
+      "targetId": "esim-card-006",
+      "relationshipName": "uses"
+    },
+    {
+      "sourceId": "sensor-air-quality-001",
+      "targetId": "esim-card-007",
+      "relationshipName": "uses"
+    }
+  ],
+  "metadata": {
+    "version": "3.0.0",
+    "lastUpdated": "2025-01-15T18:35:30Z",
+    "totalDevices": 12,
+    "activeDevices": 12,
+    "networkCoverage": "Myanmar (MPT, MYTEL, ATOM, U9)",
+    "dataRetention": "90 days",
+    "updateFrequency": "real-time"
+  }
+}
