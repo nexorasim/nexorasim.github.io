@@ -1,0 +1,154 @@
+name: Build Agent and GUI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'agent/**'
+      - 'gui/**'
+      - '.github/workflows/build-agent.yml'
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [created]
+
+jobs:
+  test-agent:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        working-directory: ./agent
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+      
+      - name: Run tests
+        working-directory: ./agent
+        run: |
+          pytest tests/ -v --cov=nexora_agent --cov-report=term
+
+  build-gui-windows:
+    runs-on: windows-latest
+    if: github.event_name == 'release'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r agent/requirements.txt
+          pip install -r gui/requirements.txt
+      
+      - name: Build with PyInstaller
+        working-directory: ./gui
+        run: |
+          pyinstaller nexora_agent.spec
+      
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexora-agent-windows
+          path: gui/dist/NexoraAgent/
+
+  build-gui-macos:
+    runs-on: macos-latest
+    if: github.event_name == 'release'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r agent/requirements.txt
+          pip install -r gui/requirements.txt
+      
+      - name: Build with PyInstaller
+        working-directory: ./gui
+        run: |
+          pyinstaller nexora_agent.spec
+      
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexora-agent-macos
+          path: gui/dist/NexoraAgent.app/
+
+  build-gui-linux:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r agent/requirements.txt
+          pip install -r gui/requirements.txt
+      
+      - name: Build with PyInstaller
+        working-directory: ./gui
+        run: |
+          pyinstaller nexora_agent.spec
+      
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexora-agent-linux
+          path: gui/dist/NexoraAgent/
+
+  release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    needs: [build-gui-windows, build-gui-macos, build-gui-linux]
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+      
+      - name: Create archives
+        run: |
+          cd nexora-agent-windows && zip -r ../nexora-agent-windows.zip . && cd ..
+          cd nexora-agent-macos && zip -r ../nexora-agent-macos.zip . && cd ..
+          cd nexora-agent-linux && tar czf ../nexora-agent-linux.tar.gz . && cd ..
+      
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            nexora-agent-windows.zip
+            nexora-agent-macos.zip
+            nexora-agent-linux.tar.gz
