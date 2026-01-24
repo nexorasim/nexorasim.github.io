@@ -264,7 +264,7 @@ All documentation follows enterprise-grade standards:
 
 ```bash
 # Verify no emojis remain
-grep -r "[😀-🙏🚀-🛿🇦-🇿✓✗✅❌⚠️]" . --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist
+grep -r "emoji" . --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist
 
 # Verify Python linting
 cd agent

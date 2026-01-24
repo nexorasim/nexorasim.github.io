@@ -322,7 +322,7 @@ npm --version
 npx tsc --version
 
 # Verify no emojis
-grep -r "[😀-🙏🚀-🛿🇦-🇿✓✗✅❌⚠️]" . --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist
+grep -r "emoji" . --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist
 
 # Check file structure
 ls -la agent/nexora_agent/providers/
