@@ -1,0 +1,35 @@
+package:
+  name: "@nexorasim/agent"
+  registry: "https://registry.npmjs.org/"
+  access: public
+
+versioning:
+  strategy: semantic
+  prerelease: false
+  tag_prefix: "v"
+
+automation:
+  auto_changelog: true
+  auto_tag: true
+  require_tests: true
+  require_audit: true
+
+compliance:
+  license: MIT
+  license_check: true
+  dependency_check: true
+
+audit:
+  level: high
+  fix_on_publish: false
+  report_format: json
+
+ci:
+  provider: github-actions
+  node_versions: [18, 20, 22]
+  cache: npm
+
+publish:
+  provenance: true
+  dry_run: false
+  registry: https://registry.npmjs.org/

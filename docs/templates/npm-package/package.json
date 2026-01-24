@@ -1,0 +1,68 @@
+{
+  "name": "@nexorasim/agent",
+  "version": "1.0.0",
+  "description": "Multi-provider AI orchestration agent for NexoraSIM",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.esm.json",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build && npm run test",
+    "version": "npm run build && git add -A",
+    "postversion": "git push && git push --tags",
+    "audit": "npm audit --audit-level=high",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nexorasim/nexorasim.github.io.git"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "orchestration",
+    "openai",
+    "gemini",
+    "nexora"
+  ],
+  "author": "NexoraSIM <nexorasim@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nexorasim/nexorasim.github.io/issues"
+  },
+  "homepage": "https://nexorasim.github.io",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "eslint": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "prettier": "^3.0.0"
+  }
+}

@@ -1,0 +1,41 @@
+# Source files
+src/
+tests/
+scripts/
+
+# Configuration
+.gitignore
+.npmignore
+.eslintrc.js
+.prettierrc
+jest.config.js
+tsconfig.json
+tsconfig.esm.json
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Documentation
+docs/
+examples/
+
+# Development
+coverage/
+.nyc_output/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Environment
+.env
+.env.*
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
