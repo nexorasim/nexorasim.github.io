@@ -198,9 +198,8 @@ All 6 AI providers fully implemented and tested:
 ## Outstanding Tasks
 
 ### Immediate (User Action Required)
-1. npm login authentication
-2. npm publish execution
-3. Create GitHub release tag (v1.0.0)
+1. npm authentication and publish - See PUBLISH_INSTRUCTIONS.md for detailed steps
+2. Create GitHub release tag (v1.0.0)
 
 ### Optional Enhancements
 1. Add more test coverage
@@ -208,6 +207,13 @@ All 6 AI providers fully implemented and tested:
 3. Add provider-specific advanced features
 4. Create video tutorials
 5. Write blog posts
+
+## Security Notes
+
+- .npmrc file is properly excluded in .gitignore
+- Never commit npm tokens to repository
+- Use automation tokens for CI/CD workflows
+- Revoke any exposed tokens immediately
 
 ## Next Steps
 
