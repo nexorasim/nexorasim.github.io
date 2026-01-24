@@ -31,6 +31,9 @@ yarn-error.log*
 .env*.local
 .env
 
+# npm credentials
+.npmrc
+
 # vercel
 .vercel
 
