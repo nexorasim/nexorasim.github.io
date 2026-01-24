@@ -53,6 +53,7 @@ class GoogleGeminiProvider(BaseProvider):
         try:
             temperature = kwargs.get("temperature", 0.7)
             max_tokens = kwargs.get("max_tokens", 1000)
+            timeout = kwargs.get("timeout", 30)
             
             generation_config = genai.types.GenerationConfig(
                 temperature=temperature,
@@ -61,7 +62,8 @@ class GoogleGeminiProvider(BaseProvider):
             
             response = self.model.generate_content(
                 prompt,
-                generation_config=generation_config
+                generation_config=generation_config,
+                request_options={"timeout": timeout},
             )
             
             text = response.text

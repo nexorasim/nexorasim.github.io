@@ -2,8 +2,11 @@
 
 import logging
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from typing import Dict, Any
 from datetime import datetime
+from urllib.parse import urlparse
 
 from .base import BaseProvider, AgentResponse
 
@@ -15,6 +18,16 @@ class GenericHTTPProvider(BaseProvider):
         super().__init__(config)
         self.endpoint = config.get("endpoint", "")
         self.logger = logging.getLogger("nexora_agent.providers.generic_http")
+        self.session = requests.Session()
+        retries = Retry(
+            total=3,
+            backoff_factor=0.5,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=["GET", "POST"],
+        )
+        adapter = HTTPAdapter(max_retries=retries)
+        self.session.mount("https://", adapter)
+        self.session.mount("http://", adapter)
 
     def execute(self, prompt: str, **kwargs) -> AgentResponse:
         """Execute request to generic HTTP endpoint."""
@@ -26,6 +39,15 @@ class GenericHTTPProvider(BaseProvider):
                 text="",
                 provider="generic_http",
                 error="Generic HTTP provider not configured or endpoint missing"
+            )
+        # Enforce HTTPS
+        parsed = urlparse(self.endpoint)
+        if parsed.scheme != "https":
+            return AgentResponse(
+                success=False,
+                text="",
+                provider="generic_http",
+                error="Endpoint must use HTTPS"
             )
         
         try:
@@ -47,14 +69,14 @@ class GenericHTTPProvider(BaseProvider):
             })
             
             if method.upper() == "POST":
-                response = requests.post(
+                response = self.session.post(
                     self.endpoint,
                     json=payload,
                     headers=headers,
                     timeout=timeout
                 )
             else:
-                response = requests.get(
+                response = self.session.get(
                     self.endpoint,
                     params=payload,
                     headers=headers,

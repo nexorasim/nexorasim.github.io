@@ -53,6 +53,7 @@ class OpenAIProvider(BaseProvider):
             model = kwargs.get("model", self.model)
             temperature = kwargs.get("temperature", 0.7)
             max_tokens = kwargs.get("max_tokens", 1000)
+            timeout = kwargs.get("timeout", 30)
             
             response = self.client.chat.completions.create(
                 model=model,
@@ -60,7 +61,8 @@ class OpenAIProvider(BaseProvider):
                     {"role": "user", "content": prompt}
                 ],
                 temperature=temperature,
-                max_tokens=max_tokens
+                max_tokens=max_tokens,
+                timeout=timeout,
             )
             
             text = response.choices[0].message.content
@@ -73,7 +75,7 @@ class OpenAIProvider(BaseProvider):
                 metadata={
                     "model": model,
                     "execution_time": execution_time,
-                    "tokens_used": response.usage.total_tokens if response.usage else 0,
+                    "tokens_used": response.usage.total_tokens if getattr(response, "usage", None) else 0,
                 }
             )
             

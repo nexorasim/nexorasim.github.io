@@ -69,7 +69,7 @@ def test_environment_variable_loading():
     """Test that environment variables are loaded."""
     # Set test environment variable
     os.environ['OPENAI_API_KEY'] = 'test_key_123'
-    os.environ['DEFAULT_PROVIDER'] = 'test_provider'
+    os.environ['DEFAULT_PROVIDER'] = 'openai'
     
     config = ConfigLoader()
     
@@ -82,4 +82,4 @@ def test_environment_variable_loading():
     del os.environ['DEFAULT_PROVIDER']
     
     assert openai_key == 'test_key_123'
-    assert default_provider == 'test_provider'
+    assert default_provider == 'openai'

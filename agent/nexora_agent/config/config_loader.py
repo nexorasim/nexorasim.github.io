@@ -3,8 +3,116 @@
 import os
 import yaml
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from dotenv import load_dotenv
+from pydantic import BaseModel, Field, validator, ValidationError
+
+
+class OpenAIConfig(BaseModel):
+    api_key: str = ""
+    model: str = "gpt-4"
+    enabled: bool = True
+
+    @validator("api_key")
+    def require_key_when_enabled(cls, v: str, values: Dict[str, Any]) -> str:
+        if values.get("enabled", False) and not v:
+            raise ValueError("OPENAI_API_KEY is required when OpenAI is enabled")
+        return v
+
+
+class GoogleGeminiConfig(BaseModel):
+    api_key: str = ""
+    model: str = "gemini-pro"
+    enabled: bool = True
+
+    @validator("api_key")
+    def require_key_when_enabled(cls, v: str, values: Dict[str, Any]) -> str:
+        if values.get("enabled", False) and not v:
+            raise ValueError("GOOGLE_API_KEY is required when Google Gemini is enabled")
+        return v
+
+
+class XAIGrokConfig(BaseModel):
+    api_key: str = ""
+    endpoint: str = "https://api.x.ai/v1"
+    model: str = "grok-1"
+    enabled: bool = False
+
+    @validator("api_key")
+    def require_key_when_enabled(cls, v: str, values: Dict[str, Any]) -> str:
+        if values.get("enabled", False) and not v:
+            raise ValueError("XAI_API_KEY is required when xAI Grok is enabled")
+        return v
+
+    @validator("endpoint")
+    def https_only(cls, v: str) -> str:
+        if v and not v.startswith("https://"):
+            raise ValueError("XAI endpoint must use HTTPS")
+        return v
+
+
+class GenericHTTPConfig(BaseModel):
+    api_key: str = ""
+    endpoint: str = ""
+    enabled: bool = False
+
+    @validator("endpoint")
+    def https_and_nonempty_when_enabled(cls, v: str, values: Dict[str, Any]) -> str:
+        enabled = values.get("enabled", False)
+        if enabled:
+            if not v:
+                raise ValueError("GENERIC_ENDPOINT is required when Generic HTTP provider is enabled")
+            if not v.startswith("https://"):
+                raise ValueError("Generic HTTP endpoint must use HTTPS")
+        return v
+
+
+class ProvidersConfigModel(BaseModel):
+    openai: OpenAIConfig
+    google_gemini: GoogleGeminiConfig
+    xai_grok: XAIGrokConfig
+    generic_http: GenericHTTPConfig
+
+
+class AgentConfigModel(BaseModel):
+    default_provider: str = Field(default="openai")
+    fallback_providers: List[str] = Field(default_factory=lambda: ["google_gemini", "xai_grok"])
+    max_retries: int = Field(default=3, ge=0, le=10)
+    timeout: int = Field(default=30, ge=1, le=300)
+
+    @validator("default_provider")
+    def check_default_provider(cls, v: str) -> str:
+        allowed = {"openai", "google_gemini", "xai_grok", "generic_http"}
+        if v not in allowed:
+            raise ValueError(f"Invalid default provider: {v}")
+        return v
+
+    @validator("fallback_providers")
+    def check_fallbacks(cls, v: List[str]) -> List[str]:
+        allowed = {"openai", "google_gemini", "xai_grok", "generic_http"}
+        invalid = [p for p in v if p not in allowed]
+        if invalid:
+            raise ValueError(f"Invalid fallback providers: {invalid}")
+        return v
+
+
+class LoggingConfigModel(BaseModel):
+    level: str = Field(default="INFO")
+    format: str = Field(default="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+    @validator("level")
+    def validate_level(cls, v: str) -> str:
+        allowed = {"CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"}
+        upper = v.upper()
+        if upper not in allowed:
+            raise ValueError(f"Invalid log level: {v}")
+        return upper
+
+
+class ConfigModel(BaseModel):
+    providers: ProvidersConfigModel
+    agent: AgentConfigModel
+    logging: LoggingConfigModel
 
 
 class ConfigLoader:
@@ -21,7 +129,7 @@ class ConfigLoader:
         self.config = self._load_config()
 
     def _load_config(self) -> Dict[str, Any]:
-        """Load configuration from file and environment."""
+        """Load configuration from file and environment, then validate schema."""
         config = {
             "providers": {
                 "openai": {
@@ -48,7 +156,7 @@ class ConfigLoader:
             },
             "agent": {
                 "default_provider": os.getenv("DEFAULT_PROVIDER", "openai"),
-                "fallback_providers": os.getenv("FALLBACK_PROVIDERS", "google_gemini,xai_grok").split(","),
+                "fallback_providers": [p for p in os.getenv("FALLBACK_PROVIDERS", "google_gemini,xai_grok").split(",") if p],
                 "max_retries": int(os.getenv("MAX_RETRIES", "3")),
                 "timeout": int(os.getenv("REQUEST_TIMEOUT", "30")),
             },
@@ -63,6 +171,18 @@ class ConfigLoader:
                 yaml_config = yaml.safe_load(f) or {}
                 config = self._merge_configs(config, yaml_config)
 
+        # Validate schema
+        try:
+            model = ConfigModel(
+                providers=ProvidersConfigModel(**config["providers"]),
+                agent=AgentConfigModel(**config["agent"]),
+                logging=LoggingConfigModel(**config["logging"]),
+            )
+        except ValidationError as e:
+            raise ValueError(f"Configuration validation error: {e}")
+
+        # Normalize log level back into dict
+        config["logging"]["level"] = model.logging.level
         return config
 
     def _merge_configs(self, base: Dict, override: Dict) -> Dict:

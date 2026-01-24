@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Optional, Dict, Any
 from datetime import datetime
+import uuid
 
 
 @dataclass
@@ -21,6 +22,8 @@ class AgentResponse:
             self.timestamp = datetime.now()
         if self.metadata is None:
             self.metadata = {}
+        # Attach a correlation ID for observability
+        self.metadata.setdefault("correlation_id", str(uuid.uuid4()))
 
 
 class BaseProvider(ABC):

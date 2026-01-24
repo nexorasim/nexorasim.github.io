@@ -35,6 +35,11 @@ class NexoraAgent:
             formatter = logging.Formatter(self.config.get("logging.format"))
             handler.setFormatter(formatter)
             logger.addHandler(handler)
+        else:
+            # Update level/format dynamically if they already exist
+            for handler in logger.handlers:
+                handler.setLevel(getattr(logging, log_level))
+                handler.setFormatter(logging.Formatter(self.config.get("logging.format")))
         
         return logger
 
