@@ -7,6 +7,8 @@ from .base import BaseProvider
 from .openai_provider import OpenAIProvider
 from .google_gemini import GoogleGeminiProvider
 from .xai_grok import XAIGrokProvider
+from .groq_provider import GroqProvider
+from .anthropic_provider import AnthropicProvider
 from .generic_http import GenericHTTPProvider
 
 
@@ -17,6 +19,8 @@ class ProviderFactory:
         "openai": OpenAIProvider,
         "google_gemini": GoogleGeminiProvider,
         "xai_grok": XAIGrokProvider,
+        "groq": GroqProvider,
+        "anthropic": AnthropicProvider,
         "generic_http": GenericHTTPProvider,
     }
 
@@ -65,3 +69,13 @@ class ProviderFactory:
             if provider_config.get("enabled", False):
                 available.append(provider_name)
         return available
+
+    @classmethod
+    def get_supported_providers(cls) -> list:
+        """Get list of all supported provider types."""
+        return list(cls.PROVIDER_MAP.keys())
+    
+    @classmethod
+    def is_provider_supported(cls, provider_type: str) -> bool:
+        """Check if provider type is supported."""
+        return provider_type in cls.PROVIDER_MAP

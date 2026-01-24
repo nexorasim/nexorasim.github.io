@@ -1,4 +1,4 @@
-"""MCP-style CLI implementation for deployment automation."""
+"""MCP-style CLI implementation for deployment automation and package management."""
 
 import os
 import sys
@@ -7,6 +7,7 @@ import argparse
 import subprocess
 from pathlib import Path
 from typing import Dict, Any, List
+from .package_manager import PackageManager
 
 
 class MCPCLI:
@@ -20,6 +21,7 @@ class MCPCLI:
         """
         self.root_path = Path(root_path or os.getcwd())
         self.environments = ["dev", "staging", "prod"]
+        self.package_manager = PackageManager(str(self.root_path))
 
     def apply_config(self, env: str, config_path: str = None) -> bool:
         """Apply environment-specific configuration.
@@ -167,6 +169,46 @@ class MCPCLI:
             print(f"Health check error: {e}")
             return False
 
+    def package_init(self) -> bool:
+        """Initialize NPM package."""
+        try:
+            result = self.package_manager.init_package()
+            print(json.dumps(result, indent=2))
+            return True
+        except Exception as e:
+            print(f"Package init failed: {e}")
+            return False
+
+    def package_version(self, bump_type: str = 'patch') -> bool:
+        """Bump package version."""
+        try:
+            result = self.package_manager.version_bump(bump_type)
+            print(json.dumps(result, indent=2))
+            return True
+        except Exception as e:
+            print(f"Version bump failed: {e}")
+            return False
+
+    def package_publish(self, dry_run: bool = False) -> bool:
+        """Publish package to NPM."""
+        try:
+            result = self.package_manager.publish_package(dry_run)
+            print(json.dumps(result, indent=2))
+            return True
+        except Exception as e:
+            print(f"Package publish failed: {e}")
+            return False
+
+    def package_audit(self) -> bool:
+        """Audit package for compliance and security."""
+        try:
+            result = self.package_manager.audit_package()
+            print(json.dumps(result, indent=2))
+            return result['status'] == 'passed'
+        except Exception as e:
+            print(f"Package audit failed: {e}")
+            return False
+
 
 def main():
     """Main MCP CLI entry point."""
@@ -176,6 +218,21 @@ def main():
     
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
     
+    # Package management commands
+    package_parser = subparsers.add_parser("package", help="Package management")
+    package_subparsers = package_parser.add_subparsers(dest="package_command")
+    
+    package_subparsers.add_parser("init", help="Initialize package")
+    
+    version_parser = package_subparsers.add_parser("version", help="Bump package version")
+    version_parser.add_argument("--type", choices=["patch", "minor", "major"], default="patch")
+    
+    publish_parser = package_subparsers.add_parser("publish", help="Publish package")
+    publish_parser.add_argument("--dry-run", action="store_true", help="Dry run")
+    
+    package_subparsers.add_parser("audit", help="Audit package")
+    
+    # Existing commands
     deploy_parser = subparsers.add_parser("deploy", help="Deploy configuration")
     deploy_parser.add_argument("--env", "-e", required=True, choices=["dev", "staging", "prod"])
     deploy_parser.add_argument("--config", "-c", help="Path to config file")
@@ -199,7 +256,21 @@ def main():
     cli = MCPCLI()
     
     try:
-        if args.command == "deploy":
+        if args.command == "package":
+            if args.package_command == "init":
+                success = cli.package_init()
+            elif args.package_command == "version":
+                success = cli.package_version(args.type)
+            elif args.package_command == "publish":
+                success = cli.package_publish(args.dry_run)
+            elif args.package_command == "audit":
+                success = cli.package_audit()
+            else:
+                print("Unknown package command")
+                return 1
+            return 0 if success else 1
+        
+        elif args.command == "deploy":
             success = cli.apply_config(args.env, args.config)
             return 0 if success else 1
         

@@ -27,23 +27,33 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest pytest-cov flake8
       
-      - name: Lint with flake8
+      - name: Lint with ruff
         working-directory: ./agent
         run: |
-          flake8 nexora_agent --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 nexora_agent --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          ruff check nexora_agent --output-format=github
+      
+      - name: Format check with black
+        working-directory: ./agent
+        run: |
+          black --check nexora_agent
+      
+      - name: Type check with mypy
+        working-directory: ./agent
+        run: |
+          mypy nexora_agent
       
       - name: Run tests
         working-directory: ./agent
         run: |
-          pytest tests/ -v --cov=nexora_agent --cov-report=xml
+          pytest tests/ -v --cov=nexora_agent --cov-report=xml --cov-report=term
       
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           file: ./agent/coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
 
   test-web:
     runs-on: ubuntu-latest

@@ -1,0 +1,139 @@
+name: Publish NPM Package
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      dry_run:
+        description: 'Perform dry run'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+          cache-dependency-path: './npm-package/package-lock.json'
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install semver
+      
+      - name: Install NPM dependencies
+        working-directory: ./npm-package
+        run: npm ci
+      
+      - name: Version bump (if workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        working-directory: ./npm-package
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          npm version ${{ github.event.inputs.version_type }}
+          git push origin --tags
+      
+      - name: Lint code
+        working-directory: ./npm-package
+        run: npm run lint
+      
+      - name: Run tests
+        working-directory: ./npm-package
+        run: npm run test:coverage
+      
+      - name: Build package
+        working-directory: ./npm-package
+        run: npm run build
+      
+      - name: Security audit
+        working-directory: ./npm-package
+        run: npm run audit:security
+        continue-on-error: true
+      
+      - name: License check
+        working-directory: ./npm-package
+        run: npm run audit:licenses
+        continue-on-error: true
+      
+      - name: Verify package contents
+        working-directory: ./npm-package
+        run: |
+          npm pack --dry-run
+          ls -la dist/
+      
+      - name: Publish to NPM (dry run)
+        if: github.event.inputs.dry_run == 'true'
+        working-directory: ./npm-package
+        run: npm publish --dry-run --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Publish to NPM
+        if: github.event.inputs.dry_run != 'true'
+        working-directory: ./npm-package
+        run: npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Create GitHub Release (if workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release v${{ steps.version.outputs.version }}
+          body: |
+            ## Changes
+            
+            - NPM package published to registry
+            - Version bumped to ${{ steps.version.outputs.version }}
+            
+            ## Installation
+            
+            ```bash
+            npm install @nexorasim/nexora-agent@${{ steps.version.outputs.version }}
+            ```
+          files: |
+            npm-package/dist/**/*
+          draft: false
+          prerelease: false
+      
+      - name: Update package status
+        if: always()
+        run: |
+          echo "Package publish status: ${{ job.status }}"
+          echo "Event: ${{ github.event_name }}"
+          echo "Dry run: ${{ github.event.inputs.dry_run }}"

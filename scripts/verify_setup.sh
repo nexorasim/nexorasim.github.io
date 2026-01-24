@@ -25,9 +25,9 @@ echo "Verifying directory structure..."
 required_dirs=("agent" "gui" "web" "docs" ".github/workflows")
 for dir in "${required_dirs[@]}"; do
     if [ -d "/app/$dir" ]; then
-        echo "✓ /$dir exists"
+        echo "[OK] /$dir exists"
     else
-        echo "✗ /$dir missing"
+        echo "[MISSING] /$dir missing"
         exit 1
     fi
 done
@@ -53,9 +53,9 @@ required_files=(
 
 for file in "${required_files[@]}"; do
     if [ -f "/app/$file" ]; then
-        echo "✓ $file exists"
+        echo "[OK] $file exists"
     else
-        echo "✗ $file missing"
+        echo "[MISSING] $file missing"
         exit 1
     fi
 done
@@ -65,9 +65,9 @@ echo ""
 echo "Checking agent installation..."
 cd /app/agent
 if [ -f "requirements.txt" ]; then
-    echo "✓ Agent requirements.txt found"
+    echo "[OK] Agent requirements.txt found"
 else
-    echo "✗ Agent requirements.txt missing"
+    echo "[MISSING] Agent requirements.txt missing"
     exit 1
 fi
 
@@ -76,14 +76,14 @@ echo ""
 echo "Checking web installation..."
 cd /app/web
 if [ -f "package.json" ]; then
-    echo "✓ Web package.json found"
+    echo "[OK] Web package.json found"
     if [ -d "node_modules" ]; then
-        echo "✓ Node modules installed"
+        echo "[OK] Node modules installed"
     else
-        echo "⚠ Node modules not installed (run: npm install)"
+        echo "[WARNING] Node modules not installed (run: npm install)"
     fi
 else
-    echo "✗ Web package.json missing"
+    echo "[MISSING] Web package.json missing"
     exit 1
 fi
 
@@ -93,9 +93,9 @@ echo "Verifying documentation..."
 doc_files=("architecture.md" "deployment.md" "agent-mode.md" "providers.md" "changelog.md")
 for doc in "${doc_files[@]}"; do
     if [ -f "/app/docs/$doc" ]; then
-        echo "✓ docs/$doc exists"
+        echo "[OK] docs/$doc exists"
     else
-        echo "✗ docs/$doc missing"
+        echo "[MISSING] docs/$doc missing"
         exit 1
     fi
 done
@@ -106,9 +106,9 @@ echo "Verifying GitHub workflows..."
 workflow_files=("deploy-web.yml" "build-agent.yml" "ci.yml")
 for workflow in "${workflow_files[@]}"; do
     if [ -f "/app/.github/workflows/$workflow" ]; then
-        echo "✓ .github/workflows/$workflow exists"
+        echo "[OK] .github/workflows/$workflow exists"
     else
-        echo "✗ .github/workflows/$workflow missing"
+        echo "[MISSING] .github/workflows/$workflow missing"
         exit 1
     fi
 done

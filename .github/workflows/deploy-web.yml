@@ -16,14 +16,11 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./web
     
     steps:
       - name: Checkout
@@ -37,9 +34,11 @@ jobs:
           cache-dependency-path: './web/package-lock.json'
       
       - name: Install dependencies
+        working-directory: ./web
         run: npm ci
       
       - name: Build Next.js site
+        working-directory: ./web
         run: npm run build
       
       - name: Upload artifact
