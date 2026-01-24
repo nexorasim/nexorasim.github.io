@@ -1,0 +1,29 @@
+providers:
+  openai:
+    model: gpt-4
+    enabled: true
+  
+  google_gemini:
+    model: gemini-pro
+    enabled: true
+  
+  xai_grok:
+    endpoint: https://api.x.ai/v1
+    model: grok-1
+    enabled: false
+  
+  generic_http:
+    endpoint: ""
+    enabled: false
+
+agent:
+  default_provider: openai
+  fallback_providers:
+    - google_gemini
+    - xai_grok
+  max_retries: 3
+  timeout: 30
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
