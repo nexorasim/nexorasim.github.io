@@ -39,6 +39,11 @@ describe('NexoraAgent', () => {
           apiKey: '',
           model: 'mixtral-8x7b-32768'
         },
+        anthropic: {
+          enabled: false,
+          apiKey: '',
+          model: 'claude-3-opus-20240229'
+        },
         generic_http: {
           enabled: false,
           apiKey: '',

@@ -54,6 +54,15 @@ export class ConfigLoader {
           temperature: parseFloat(process.env.GROQ_TEMPERATURE || '0.7'),
           maxTokens: parseInt(process.env.GROQ_MAX_TOKENS || '2000')
         },
+        anthropic: {
+          enabled: process.env.ANTHROPIC_ENABLED === 'true',
+          apiKey: process.env.ANTHROPIC_API_KEY,
+          model: process.env.ANTHROPIC_MODEL || 'claude-3-sonnet-20240229',
+          timeout: parseInt(process.env.ANTHROPIC_TIMEOUT || '30000'),
+          retries: parseInt(process.env.ANTHROPIC_RETRIES || '3'),
+          temperature: parseFloat(process.env.ANTHROPIC_TEMPERATURE || '0.7'),
+          maxTokens: parseInt(process.env.ANTHROPIC_MAX_TOKENS || '2000')
+        },
         generic_http: {
           enabled: process.env.GENERIC_ENABLED === 'true',
           apiKey: process.env.GENERIC_API_KEY,

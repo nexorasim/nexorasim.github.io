@@ -67,7 +67,7 @@ export class NexoraAgent {
 
       for (let i = 0; i < this.config.fallbackProviders.length; i++) {
         const fallbackProvider = this.config.fallbackProviders[i];
-        if (fallbackProvider === targetProvider) continue;
+        if (!fallbackProvider || fallbackProvider === targetProvider) continue;
 
         response = await this.tryProvider(
           fallbackProvider, 

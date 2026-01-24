@@ -4,7 +4,7 @@
 
 import axios, { AxiosInstance } from 'axios';
 import { BaseProvider } from './base';
-import { AgentResponse, ProviderConfig } from '../types';
+import { ProviderConfig, ProviderResponse } from '../types';
 
 export class AnthropicProvider extends BaseProvider {
   private client: AxiosInstance;
@@ -25,7 +25,7 @@ export class AnthropicProvider extends BaseProvider {
     });
   }
 
-  async execute(prompt: string, options?: Record<string, unknown>): Promise<AgentResponse> {
+  async execute(prompt: string, options?: Record<string, unknown>): Promise<ProviderResponse> {
     this.validateRequest(prompt);
 
     const model = (options?.model as string) || this.config.model || 'claude-3-sonnet-20240229';
@@ -50,7 +50,7 @@ export class AnthropicProvider extends BaseProvider {
     );
   }
 
-  private async makeRequest(payload: Record<string, unknown>): Promise<AgentResponse> {
+  private async makeRequest(payload: Record<string, unknown>): Promise<ProviderResponse> {
     const startTime = Date.now();
 
     try {
@@ -65,20 +65,18 @@ export class AnthropicProvider extends BaseProvider {
       const executionTime = Date.now() - startTime;
 
       return {
-        success: true,
         text: content[0].text.trim(),
-        provider: 'anthropic',
         model: data.model,
+        tokensUsed: (data.usage?.output_tokens || 0) + (data.usage?.input_tokens || 0),
         metadata: {
           executionTime,
-          tokensUsed: (data.usage?.output_tokens || 0) + (data.usage?.input_tokens || 0),
           inputTokens: data.usage?.input_tokens,
           outputTokens: data.usage?.output_tokens,
           stopReason: data.stop_reason,
           responseId: data.id,
           stopSequence: data.stop_sequence,
           timestamp: new Date().toISOString(),
-          requestId: this.generateRequestId(),
+          requestId: `anthropic-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
           attempt: 1
         }
       };

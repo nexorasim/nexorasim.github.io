@@ -22,7 +22,7 @@ export class GenericHTTPProvider extends BaseProvider {
         'Authorization': `Bearer ${this.config.apiKey}`,
         'Content-Type': 'application/json',
         'User-Agent': 'NexoraSIM-Agent/1.0.0',
-        ...this.config.headers
+        ...(this.config.headers as Record<string, string> || {})
       },
       timeout: this.config.timeout || 30000
     });
@@ -45,7 +45,7 @@ export class GenericHTTPProvider extends BaseProvider {
       });
 
       const response = await this.client.post(
-        this.config.path || '/completions',
+        (this.config.path as string) || '/completions',
         requestBody
       );
 
@@ -91,7 +91,7 @@ export class GenericHTTPProvider extends BaseProvider {
           model: options.model,
           temperature: options.temperature,
           max_tokens: options.maxTokens,
-          ...this.config.customFields
+          ...(this.config.customFields as Record<string, unknown> || {})
         };
       
       default:
@@ -153,9 +153,9 @@ export class GenericHTTPProvider extends BaseProvider {
     const tokensPath = this.config.tokensPath || 'tokens_used';
 
     return {
-      text: this.getNestedValue(data, textPath),
-      model: this.getNestedValue(data, modelPath),
-      tokensUsed: this.getNestedValue(data, tokensPath),
+      text: (this.getNestedValue(data as any, textPath as string) || '') as string,
+      model: (this.getNestedValue(data as any, modelPath as string) || '') as string,
+      tokensUsed: (this.getNestedValue(data as any, tokensPath as string) || 0) as number,
       metadata: data
     };
   }
